@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Stringy">
+            <directory>tests/Stringy</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
