@@ -106,3 +106,15 @@ TODO
 **isJson**
 
 **toAnchor**
+
+Tests
+-----
+
+[![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
+
+From the project directory, tests can be ran using `phpunit`
+
+License
+-------
+
+Released under the MIT License - see `LICENSE.txt` for details.
