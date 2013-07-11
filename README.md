@@ -129,7 +129,8 @@ capitalized.
 
 ```php
 $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
-S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore); // 'I Like to Watch DVDs at Home'
+S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore);
+// 'I Like to Watch DVDs at Home'
 ```
 
 ## TODO
