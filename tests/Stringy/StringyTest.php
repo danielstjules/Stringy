@@ -77,7 +77,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('string_with1number', 'stringWith1Number'),
             array('string-with-2-2 numbers', 'stringWith22Numbers'),
             array('camel σase', 'camelΣase', 'UTF-8'),
-            array('Σamel case', 'σamelCase', 'UTF-8'),
+            array('Στανιλ case', 'στανιλCase', 'UTF-8'),
             array('σamel  Case', 'σamelCase', 'UTF-8')
         );
 
@@ -104,8 +104,85 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('string_with1number', 'StringWith1Number'),
             array('string-with-2-2 numbers', 'StringWith22Numbers'),
             array('camel σase', 'CamelΣase', 'UTF-8'),
-            array('σamel case', 'ΣamelCase', 'UTF-8'),
+            array('στανιλ case', 'ΣτανιλCase', 'UTF-8'),
             array('Σamel  Case', 'ΣamelCase', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForDasherize
+     */
+    public function testDasherize($string, $expected, $encoding = null) {
+        $result = S::dasherize($string, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForDasherize() {
+        $testData = array(
+            array('testCase', 'test-case'),
+            array('Test-Case', 'test-case'),
+            array('test case', 'test-case'),
+            array('-test -case', '-test-case'),
+            array('test - case', 'test-case'),
+            array('test_case', 'test-case'),
+            array('test c test', 'test-c-test'),
+            array('TestDCase', 'test-d-case'),
+            array('TestCCTest', 'test-c-c-test'),
+            array('string_with1number', 'string-with1number'),
+            array('String-with_2_2 numbers', 'string-with-2-2-numbers'),
+            array('dash Σase', 'dash-σase', 'UTF-8'),
+            array('Στανιλ case', 'στανιλ-case', 'UTF-8'),
+            array('Σash  Case', 'σash-case', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForUnderscored
+     */
+    public function testUnderscored($string, $expected, $encoding = null) {
+        $result = S::underscored($string, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForUnderscored() {
+        $testData = array(
+            array('testCase', 'test_case'),
+            array('Test-Case', 'test_case'),
+            array('test case', 'test_case'),
+            array('test -case', 'test_case'),
+            array('-test - case', '_test_case'),
+            array('test_case', 'test_case'),
+            array('  test c test', 'test_c_test'),
+            array('TestUCase', 'test_u_case'),
+            array('TestCCTest', 'test_c_c_test'),
+            array('string_with1number', 'string_with1number'),
+            array('String-with_2_2 numbers', 'string_with_2_2_numbers'),
+            array('dash Σase', 'dash_σase', 'UTF-8'),
+            array('Στανιλ case', 'στανιλ_case', 'UTF-8'),
+            array('Σash  Case', 'σash_case', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForSwapCase
+     */
+    public function testSwapCase($string, $expected, $encoding = null) {
+        $result = S::swapCase($string, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForSwapCase() {
+        $testData = array(
+            array('testCase', 'TESTcASE'),
+            array('Test-Case', 'tEST-cASE'),
+            array(' - Σash  Case', ' - σASH  cASE', 'UTF-8'),
+            array('Ντανιλ', 'νΤΑΝΙΛ', 'UTF-8')
         );
 
         return $testData;

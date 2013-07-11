@@ -56,18 +56,44 @@ spaces, dashes and underscores, and removes spaces, dashes, underscores.
 S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 ```
 
-TODO
-----
-
 **dasherize**
+
+S::dasherize($string [, $encoding])
+
+Returns a lowercase and trimmed string seperated by dashes, with
+multibyte support. Dashes are inserted before uppercase characters
+(with the exception of the first character of the string), and in place
+of spaces as well as underscores.
+
+```php
+S::dasherize('TestDCase');  // 'test-d-case'
+```
 
 **underscored**
 
+S::underscored($string [, $encoding])
+
+Returns a lowercase and trimmed string seperated by underscores, with
+multibyte support. Underscores are inserted before uppercase characters
+(with the exception of the first character of the string), and in place
+of spaces as well as dashes.
+
+```php
+S::underscored('TestUCase');  // 'test_u_case'
+```
+
 **swapCase**
 
-**dashes**
+S::swapCase($string [, $encoding])
 
-**underscores**
+Returns a case swapped version of a string, with multibyte support.
+
+```php
+S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
+```
+
+TODO
+----
 
 **title**
 

@@ -32,6 +32,9 @@ class Stringy {
         if (sizeof($args) == 1 || !$args[1])
             $args[1] = mb_internal_encoding();
 
+        // Set character encoding for multibyte regex
+        mb_regex_encoding($args[1]);
+
         return forward_static_call(array(__CLASS__, $method), $args[0], $args[1]);
     }
 
@@ -105,6 +108,59 @@ class Stringy {
         $camelCase = self::camelize($string, $encoding);
 
         return self::upperCaseFirst($camelCase, $encoding);
+    }
+
+    /**
+     * Returns a lowercase and trimmed string seperated by dashes, with
+     * multibyte support. Dashes are inserted before uppercase characters
+     * (with the exception of the first character of the string), and in place
+     * of spaces as well as underscores.
+     *
+     * @param   string  $string  String to convert
+     * @return  string  Dasherized string
+     */
+    private static function dasherize($string, $encoding) {
+        $dasherized = mb_ereg_replace('\B([A-Z])', '-\1', trim($string));
+        $dasherized = mb_ereg_replace('[-_\s]+', '-', $dasherized);
+
+        return mb_strtolower($dasherized, $encoding);
+    }
+
+    /**
+     * Returns a lowercase and trimmed string seperated by underscores, with
+     * multibyte support. Underscores are inserted before uppercase characters
+     * (with the exception of the first character of the string), and in place
+     * of spaces as well as dashes.
+     *
+     * @param   string  $string  String to convert
+     * @return  string  Underscored string
+     */
+    private static function underscored($string, $encoding) {
+        $underscored = mb_ereg_replace('\B([A-Z])', '_\1', trim($string));
+        $underscored = mb_ereg_replace('[-_\s]+', '_', $underscored);
+
+        return mb_strtolower($underscored, $encoding);
+    }
+
+    /**
+     * Returns a case swapped version of a string, with multibyte support.
+     *
+     * @param   string  $string  String to swap case
+     * @return  string  String with each character's case swapped
+     */
+    private static function swapCase($string, $encoding) {
+        $swapped = preg_replace_callback(
+            '/[\S]/u',
+            function ($match) use (&$encoding) {
+                if ($match[0] == mb_strtoupper($match[0], $encoding))
+                    return mb_strtolower($match[0], $encoding);
+                else
+                    return mb_strtoupper($match[0], $encoding);
+            },
+            $string
+        );
+
+        return $swapped;
     }
 }
 
