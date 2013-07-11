@@ -188,6 +188,28 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForTitleize
+     */
+    public function testTitleize($string, $expected, $encoding = null, $ignore = null) {
+        $result = S::titleize($string, $encoding, $ignore);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForTitleize() {
+        $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
+
+        $testData = array(
+            array('testing the method', 'Testing The Method'),
+            array('testing the method', 'Testing the Method', 'UTF-8', $ignore),
+            array('i like to watch DVDs at home', 'I Like to Watch DVDs at Home',
+                'UTF-8', $ignore),
+            array('  Θα ήθελα να φύγει  ', 'Θα Ήθελα Να Φύγει', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

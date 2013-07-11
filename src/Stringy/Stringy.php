@@ -35,15 +35,14 @@ class Stringy {
         // Set character encoding for multibyte regex
         mb_regex_encoding($args[1]);
 
-        return forward_static_call(array(__CLASS__, $method), $args[0], $args[1]);
+        return forward_static_call_array(array(__CLASS__, $method), $args);
     }
 
     /**
-     * Converts the first character of the supplied string to upper case, with
-     * support for multibyte strings.
+     * Converts the first character of the supplied string to upper case.
      *
      * @param   string  $string    String to modify
-     * @param   string  $encoding  The character encodng
+     * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being upper case
      */
     private static function upperCaseFirst($string, $encoding) {
@@ -54,11 +53,10 @@ class Stringy {
     }
 
     /**
-     * Converts the first character of the supplied string to lower case, with
-     * support for multibyte strings.
+     * Converts the first character of the supplied string to lower case.
      *
      * @param   string  $string    String to modify
-     * @param   string  $encoding  The character encodng
+     * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being lower case
      */
     private static function lowerCaseFirst($string, $encoding) {
@@ -69,11 +67,12 @@ class Stringy {
     }
 
     /**
-     * Returns a camelCase version of a supplied string, with multibyte support.
-     * Trims surrounding spaces, capitalizes letters following digits, spaces,
-     * dashes and underscores, and removes spaces, dashes, underscores.
+     * Returns a camelCase version of a supplied string. Trims surrounding
+     * spaces, capitalizes letters following digits, spaces, dashes and
+     * underscores, and removes spaces, dashes, underscores.
      *
-     * @param   string  $string  String to convert to camelCase
+     * @param   string  $string    String to convert to camelCase
+     * @param   string  $encoding  The character encoding
      * @return  string  String in camelCase
      */
     private static function camelize($string, $encoding) {
@@ -97,11 +96,12 @@ class Stringy {
     }
 
     /**
-     * Returns an UpperCamelCase version of a supplied string, with multibyte
-     * support. Trims surrounding spaces, capitalizes letters following digits,
-     * spaces, dashes and underscores, and removes spaces, dashes, underscores.
+     * Returns an UpperCamelCase version of a supplied string. Trims surrounding
+     * spaces, capitalizes letters following digits, spaces, dashes and
+     * underscores, and removes spaces, dashes, underscores.
      *
      * @param   string  $string  String to convert to UpperCamelCase
+     * @param   string  $encoding  The character encoding
      * @return  string  String in UpperCamelCase
      */
     private static function upperCamelize($string, $encoding) {
@@ -111,12 +111,12 @@ class Stringy {
     }
 
     /**
-     * Returns a lowercase and trimmed string seperated by dashes, with
-     * multibyte support. Dashes are inserted before uppercase characters
-     * (with the exception of the first character of the string), and in place
-     * of spaces as well as underscores.
+     * Returns a lowercase and trimmed string seperated by dashes. Dashes are
+     * inserted before uppercase characters (with the exception of the first
+     * character of the string), and in place of spaces as well as underscores.
      *
-     * @param   string  $string  String to convert
+     * @param   string  $string    String to convert
+     * @param   string  $encoding  The character encoding
      * @return  string  Dasherized string
      */
     private static function dasherize($string, $encoding) {
@@ -127,12 +127,13 @@ class Stringy {
     }
 
     /**
-     * Returns a lowercase and trimmed string seperated by underscores, with
-     * multibyte support. Underscores are inserted before uppercase characters
-     * (with the exception of the first character of the string), and in place
-     * of spaces as well as dashes.
+     * Returns a lowercase and trimmed string seperated by underscores.
+     * Underscores are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces as well as
+     * dashes.
      *
-     * @param   string  $string  String to convert
+     * @param   string  $string    String to convert
+     * @param   string  $encoding  The character encoding
      * @return  string  Underscored string
      */
     private static function underscored($string, $encoding) {
@@ -143,9 +144,10 @@ class Stringy {
     }
 
     /**
-     * Returns a case swapped version of a string, with multibyte support.
+     * Returns a case swapped version of a string.
      *
-     * @param   string  $string  String to swap case
+     * @param   string  $string    String to swap case
+     * @param   string  $encoding  The character encoding
      * @return  string  String with each character's case swapped
      */
     private static function swapCase($string, $encoding) {
@@ -161,6 +163,31 @@ class Stringy {
         );
 
         return $swapped;
+    }
+
+    /**
+     * Capitalizes the first letter of each word in a string, after trimming.
+     * Ignores the case of other letters, allowing for the use of acronyms.
+     * Also accepts an array, $ignore, allowing you to list words not to be
+     * capitalized.
+     *
+     * @param   string  $string    String to titleize
+     * @param   string  $encoding  The character encoding
+     * @param   array   $ignore    An array of words not to capitalize
+     * @return  string  Titleized string
+     */
+    private static function titleize($string, $encoding, $ignore = null) {
+        $titleized = preg_replace_callback(
+            '/([\S]+)/u',
+            function ($match) use (&$encoding, &$ignore) {
+                if ($ignore && in_array($match[0], $ignore))
+                    return $match[0];
+                return Stringy::upperCaseFirst($match[0], $encoding);
+            },
+            trim($string)
+        );
+
+        return $titleized;
     }
 }
 

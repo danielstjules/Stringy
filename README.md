@@ -1,14 +1,40 @@
-Stringy
-=======
+# Stringy
 
 A PHP library with a variety of multibyte string manipulation functions.
 
-Usage
------
+## Usage
+
+#### Requiring/Loading
+
+If you're using Composer to manage dependencies, you can include the following in your composer.json file:
+
+    "require": {
+        "danielstjules/Stringy": "dev-master"
+    }
+
+Then, after running `composer update` or `php composer.phar update`, you can load the class using Composer's autoloading:
+
+```php
+require 'vendor/autoload.php';
+```
+
+Otherwise, you can simply require the file directly:
+
+```php
+require_once 'path/to/Stringy/src/Stringy/Stringy.php';
+```
+
+And in either case, I'd suggest using an alias.
 
 ```php
 use Stringy\Stringy as S;
 ```
+
+#### Methods
+
+*Note: All methods will throw a InvalidArgumentException if $string is not of type
+string. Furthermore, if if $encoding is not given, it defaults to
+mb_internal_encoding().*
 
 **upperCaseFirst**
 
@@ -86,16 +112,27 @@ S::underscored('TestUCase');  // 'test_u_case'
 
 S::swapCase($string [, $encoding])
 
-Returns a case swapped version of a string, with multibyte support.
+Returns a case swapped version of a string.
 
 ```php
 S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 ```
 
-TODO
-----
+**titleize**
 
-**title**
+S::titleize($string [, $encoding [, $ignore]])
+
+Capitalizes the first letter of each word in a string, after trimming.
+Ignores the case of other letters, allowing for the use of acronyms.
+Also accepts an array, $ignore, allowing you to list words not to be
+capitalized.
+
+```php
+$ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
+S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore); // 'I Like to Watch DVDs at Home'
+```
+
+## TODO
 
 **sentence**
 
@@ -133,14 +170,12 @@ TODO
 
 **toAnchor**
 
-Tests
------
+## Tests
 
 [![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
 
 From the project directory, tests can be ran using `phpunit`
 
-License
--------
+## License
 
 Released under the MIT License - see `LICENSE.txt` for details.
