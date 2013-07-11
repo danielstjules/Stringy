@@ -1,5 +1,5 @@
 {
-    "name": "danielstjules/Stringy",
+    "name": "danielstjules/stringy",
     "description": "A PHP library with a variety of multibyte string manipulation functions.",
     "keywords": ["multibyte", "string", "manipulation", "utf-8", "helpers", "utils"],
     "license": "MIT",

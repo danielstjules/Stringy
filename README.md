@@ -9,7 +9,7 @@ A PHP library with a variety of multibyte string manipulation functions.
 If you're using Composer to manage dependencies, you can include the following in your composer.json file:
 
     "require": {
-        "danielstjules/Stringy": "dev-master"
+        "danielstjules/stringy": "dev-master"
     }
 
 Then, after running `composer update` or `php composer.phar update`, you can load the class using Composer's autoloading:
