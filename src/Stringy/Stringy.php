@@ -189,6 +189,38 @@ class Stringy {
 
         return $titleized;
     }
+
+    /**
+     * Capitalizes the first word of a string, replaces underscores with spaces,
+     * and strips '_id'.
+     *
+     * @param   string  $string    String to humanize
+     * @param   string  $encoding  The character encoding
+     * @return  string  A humanized string
+     */
+    private static function humanize($string, $encoding) {
+        $humanized = mb_ereg_replace('_id', '', $string);
+        $humanized = mb_ereg_replace('_', ' ', $humanized);
+
+        return self::upperCaseFirst(trim($humanized), $encoding);
+    }
+
+    /**
+     * Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
+     * (and commonly used in Word documents) with their ASCII equivalents.
+     *
+     * @param   string  $string    String to remove special chars
+     * @param   string  $encoding  The character encoding
+     * @return  string  String with those characters removed
+     */
+    private static function tidy($string) {
+        $tidied = preg_replace('/\x{2026}/u', '...', $string);
+        $tidied = preg_replace('/[\x{201C}\x{201D}]/u', '"', $tidied);
+        $tidied = preg_replace('/[\x{2018}\x{2019}]/u', "'", $tidied);
+        $tidied = preg_replace('/[\x{2013}\x{2014}]/u', '-', $tidied);
+
+        return $tidied;
+    }
 }
 
 ?>

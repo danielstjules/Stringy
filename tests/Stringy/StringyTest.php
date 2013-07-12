@@ -210,6 +210,43 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForHumanize
+     */
+    public function testHumanize($string, $expected, $encoding = null) {
+        $result = S::humanize($string, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForHumanize() {
+        $testData = array(
+            array('author_id', 'Author'),
+            array(' _test_user_', 'Test user'),
+            array(' συγγραφέας_id ', 'Συγγραφέας', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForTidy
+     */
+    public function testTidy($string, $expected) {
+        $result = S::tidy($string);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForTidy() {
+        $testData = array(
+            array('“I see…”', '"I see..."'),
+            array("‘This too’", "'This too'"),
+            array('test—dash', 'test-dash'),
+            array('Ο συγγραφέας είπε…', 'Ο συγγραφέας είπε...')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

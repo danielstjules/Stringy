@@ -1,6 +1,6 @@
 # Stringy
 
-A PHP library with a variety of multibyte string manipulation functions.
+A PHP library with a variety of multibyte string manipulation functions. Inspired by underscore.string.js.
 
 ## Usage
 
@@ -133,15 +133,39 @@ S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore);
 // 'I Like to Watch DVDs at Home'
 ```
 
+**humanize**
+
+S::humanize($string [, $encoding])
+
+Capitalizes the first word of a string, replaces underscores with spaces,
+and strips '_id'.
+
+```php
+S::humanize('author_id');  // 'Author'
+```
+
+**tidy**
+
+S::tidy($string)
+
+Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
+(and commonly used in Word documents) with their ASCII equivalents.
+
+```php
+S::tidy('“I see…”');  // '"I see..."'
+```
+
 ## TODO
 
-**sentence**
+**clean**
+
+**standardize**
 
 **center**
 
-**endsWith**
+**startsWith**
 
-**beginsWith**
+**endsWith**
 
 **toSpaces**
 
@@ -149,27 +173,25 @@ S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore);
 
 **slugify**
 
-**contains**
+**toAnchor**
 
-**clean**
+**contains**
 
 **between**
 
 **insert**
 
-**nextChar**
+**replace**
 
-**truncateByChars**
+**truncateChars**
 
-**truncateByWords**
+**truncateWords**
 
 **longestCommonPrefix**
 
 **longestCommonSubstring**
 
 **isJson**
-
-**toAnchor**
 
 ## Tests
 
