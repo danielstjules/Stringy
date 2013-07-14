@@ -33,7 +33,9 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         $testData = array(
             array('Test', 'Test'),
             array('test', 'Test'),
-            array('σ test', 'Σ test', 'UTF-8')
+            array('1a', '1a'),
+            array('σ test', 'Σ test', 'UTF-8'),
+            array(' σ test', ' σ test', 'UTF-8')
         );
 
         return $testData;
@@ -51,7 +53,9 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         $testData = array(
             array('Test', 'test'),
             array('test', 'test'),
-            array('Σ test', 'σ test', 'UTF-8')
+            array('1a', '1a'),
+            array('Σ test', 'σ test', 'UTF-8'),
+            array(' Σ test', ' Σ test', 'UTF-8')
         );
 
         return $testData;
@@ -76,6 +80,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('camel c test', 'camelCTest'),
             array('string_with1number', 'stringWith1Number'),
             array('string-with-2-2 numbers', 'stringWith22Numbers'),
+            array('1camel2case', '1Camel2Case'),
             array('camel σase', 'camelΣase', 'UTF-8'),
             array('Στανιλ case', 'στανιλCase', 'UTF-8'),
             array('σamel  Case', 'σamelCase', 'UTF-8')
@@ -103,6 +108,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('camel c test', 'CamelCTest'),
             array('string_with1number', 'StringWith1Number'),
             array('string-with-2-2 numbers', 'StringWith22Numbers'),
+            array('1camel2case', '1Camel2Case'),
             array('camel σase', 'CamelΣase', 'UTF-8'),
             array('στανιλ case', 'ΣτανιλCase', 'UTF-8'),
             array('Σamel  Case', 'ΣamelCase', 'UTF-8')
@@ -132,6 +138,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('TestCCTest', 'test-c-c-test'),
             array('string_with1number', 'string-with1number'),
             array('String-with_2_2 numbers', 'string-with-2-2-numbers'),
+            array('1test2case', '1test2case'),
             array('dash Σase', 'dash-σase', 'UTF-8'),
             array('Στανιλ case', 'στανιλ-case', 'UTF-8'),
             array('Σash  Case', 'σash-case', 'UTF-8')
@@ -161,7 +168,8 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('TestCCTest', 'test_c_c_test'),
             array('string_with1number', 'string_with1number'),
             array('String-with_2_2 numbers', 'string_with_2_2_numbers'),
-            array('dash Σase', 'dash_σase', 'UTF-8'),
+            array('1test2case', '1test2case'),
+            array('test Σase', 'test_σase', 'UTF-8'),
             array('Στανιλ case', 'στανιλ_case', 'UTF-8'),
             array('Σash  Case', 'σash_case', 'UTF-8')
         );
@@ -259,7 +267,10 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         $testData = array(
             array('  foo   bar  ', 'foo bar'),
             array('test string', 'test string'),
-            array('   Ο     συγγραφέας  ', 'Ο συγγραφέας')
+            array('   Ο     συγγραφέας  ', 'Ο συγγραφέας'),
+            array(' 123 ', '123'),
+            array(' ', ''),
+            array('', ''),
         );
 
         return $testData;
