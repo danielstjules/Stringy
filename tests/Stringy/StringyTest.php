@@ -247,6 +247,42 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForClean
+     */
+    public function testClean($string, $expected) {
+        $result = S::clean($string);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForClean() {
+        $testData = array(
+            array('  foo   bar  ', 'foo bar'),
+            array('test string', 'test string'),
+            array('   Ο     συγγραφέας  ', 'Ο συγγραφέας')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForStandardize
+     */
+    public function testStandardize($string, $expected) {
+        $result = S::standardize($string);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForStandardize() {
+        $testData = array(
+            array('fòô bàř', 'foo bar'),
+            array(' ŤÉŚŢ ', ' TEST '),
+            array('φ = ź = 3', 'φ = z = 3')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

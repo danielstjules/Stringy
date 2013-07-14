@@ -2,9 +2,24 @@
 
 A PHP library with a variety of multibyte string manipulation functions. Inspired by underscore.string.js.
 
-## Usage
+* [Requiring/Loading](#requiringloading)
+* [Methods](#methods)
+    * [upperCaseFirst](#uppercasefirst)
+    * [lowerCaseFirst](#lowercasefirst)
+    * [camelize](#camelize)
+    * [upperCamelize](#uppercamelize)
+    * [dasherize](#dasherize)
+    * [underscored](#underscored)
+    * [swapCase](#swapcase)
+    * [titleize](#titleize)
+    * [humanize](#humanize)
+    * [tidy](#tidy)
+    * [clean](#clean)
+    * [standardize](#standardize)
+* [Tests](#tests)
+* [License](#license)
 
-#### Requiring/Loading
+## Requiring/Loading
 
 If you're using Composer to manage dependencies, you can include the following in your composer.json file:
 
@@ -30,13 +45,13 @@ And in either case, I'd suggest using an alias.
 use Stringy\Stringy as S;
 ```
 
-#### Methods
+## Methods
 
 *Note: All methods will throw a InvalidArgumentException if $string is not of type
 string. Furthermore, if if $encoding is not given, it defaults to
 mb_internal_encoding().*
 
-**upperCaseFirst**
+##### upperCaseFirst
 
 S::upperCaseFirst($string [, $encoding])
 
@@ -47,7 +62,7 @@ support for multibyte strings.
 S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 ```
 
-**lowerCaseFirst**
+##### lowerCaseFirst
 
 S::lowerCaseFirst($string [, $encoding])
 
@@ -58,7 +73,7 @@ support for multibyte strings.
 S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
-**camelize**
+##### camelize
 
 S::camelize($string [, $encoding])
 
@@ -70,7 +85,7 @@ dashes and underscores, and removes spaces, dashes, underscores.
 S::camelize('Camel-Case');  // 'camelCase'
 ```
 
-**upperCamelize**
+##### upperCamelize
 
 S::upperCamelize($string [, $encoding])
 
@@ -82,7 +97,7 @@ spaces, dashes and underscores, and removes spaces, dashes, underscores.
 S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 ```
 
-**dasherize**
+##### dasherize
 
 S::dasherize($string [, $encoding])
 
@@ -95,7 +110,7 @@ of spaces as well as underscores.
 S::dasherize('TestDCase');  // 'test-d-case'
 ```
 
-**underscored**
+##### underscored
 
 S::underscored($string [, $encoding])
 
@@ -108,7 +123,7 @@ of spaces as well as dashes.
 S::underscored('TestUCase');  // 'test_u_case'
 ```
 
-**swapCase**
+##### swapCase
 
 S::swapCase($string [, $encoding])
 
@@ -118,7 +133,7 @@ Returns a case swapped version of a string.
 S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 ```
 
-**titleize**
+##### titleize
 
 S::titleize($string [, $encoding [, $ignore]])
 
@@ -133,7 +148,7 @@ S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore);
 // 'I Like to Watch DVDs at Home'
 ```
 
-**humanize**
+##### humanize
 
 S::humanize($string [, $encoding])
 
@@ -144,7 +159,7 @@ and strips '_id'.
 S::humanize('author_id');  // 'Author'
 ```
 
-**tidy**
+##### tidy
 
 S::tidy($string)
 
@@ -155,11 +170,28 @@ Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
 S::tidy('“I see…”');  // '"I see..."'
 ```
 
+##### clean
+
+S::clean($string)
+
+Trims the string and replaces consecutive whitespace characters with a
+single space.
+
+```php
+S::clean('   Ο     συγγραφέας  '); // 'Ο συγγραφέας'
+```
+
+##### standardize
+
+S::standardize($string)
+
+Converts some non-ASCII characters to their closest ASCII counterparts.
+
+```php
+S::standardize('fòô bàř'); // 'foo bar'
+```
+
 ## TODO
-
-**clean**
-
-**standardize**
 
 **center**
 
@@ -171,9 +203,9 @@ S::tidy('“I see…”');  // '"I see..."'
 
 **toTabs**
 
-**slugify**
-
 **toAnchor**
+
+**slugify**
 
 **contains**
 
@@ -181,11 +213,9 @@ S::tidy('“I see…”');  // '"I see..."'
 
 **insert**
 
-**replace**
+**truncate**
 
-**truncateChars**
-
-**truncateWords**
+**prune**
 
 **longestCommonPrefix**
 

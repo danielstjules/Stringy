@@ -221,6 +221,64 @@ class Stringy {
 
         return $tidied;
     }
+
+    /**
+     * Trims the string and replaces consecutive whitespace characters with a
+     * single space.
+     *
+     * @param   string  $string    The string to cleanup whitespace
+     * @return  string  The trimmed string with condensed whitespace
+     */
+    private static function clean($string) {
+        return preg_replace('/\s+/u', ' ', trim($string));
+    }
+
+    /**
+     * Converts some non-ASCII characters to their closest ASCII counterparts.
+     *
+     * @param   string  $string    A string with non-ASCII characters
+     * @return  string  The string after the replacements
+     */
+    private static function standardize($string) {
+        $charsArray = array(
+            'a' => array('à', 'á', 'â', 'ã', 'ă', 'ä', 'å', 'ą'),
+            'c' => array('ć', 'č', 'ç'),
+            'd' => array('ď', 'đ'),
+            'e' => array('è', 'é', 'ê', 'ě', 'ë', 'ę'),
+            'g' => array('ğ'),
+            'i' => array('ì', 'í', 'ï', 'î'),
+            'l' => array('ĺ', 'ł'),
+            'n' => array('ń', 'ñ', 'ň'),
+            'o' => array('ò', 'ó', 'ô', 'õ', 'ö', 'ø'),
+            'r' => array('ř', 'ŕ'),
+            's' => array('š', 'š', 'ş'),
+            't' => array('ť', 'ţ'),
+            'u' => array('ü', 'ù', 'ú', 'û', 'µ', 'ů'),
+            'y' => array('ý', 'ÿ'),
+            'z' => array('ź', 'ž', 'ż'),
+            'A' => array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ă', 'Ą'),
+            'C' => array('Ć', 'Č', 'Ç'),
+            'D' => array('Ď', 'Ð'),
+            'E' => array('È', 'É', 'Ê', 'Ë', 'Ě', 'Ę'),
+            'G' => array('Ğ'),
+            'I' => array('Ì', 'Í', 'Ï', 'Î'),
+            'L' => array('Ĺ', 'Ł'),
+            'N' => array('Ń', 'Ñ', 'Ň'),
+            'O' => array('Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø'),
+            'R' => array('Ř', 'Ŕ'),
+            'S' => array('Š', 'Ş', 'Ś'),
+            'T' => array('Ť', 'Ţ'),
+            'U' => array('Ü', 'Ù', 'Ú', 'Û', 'Ů'),
+            'Y' => array('Ý', 'Ÿ'),
+            'Z' => array('Ź', 'Ž', 'Ż')
+        );
+
+        foreach ($charsArray as $key => $value) {
+            $string = str_replace($value, $key, $string);
+        }
+
+        return $string;
+    }
 }
 
 ?>
