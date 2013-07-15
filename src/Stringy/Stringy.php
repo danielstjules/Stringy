@@ -5,49 +5,17 @@ namespace Stringy;
 class Stringy {
 
     /**
-     * Checks that the first argument ($ars[0]) supplied to the private method
-     * is a string, and throws an exception if not. And if not provided, sets
-     * the second argument ($ars[1]) to mb_internal_encoding(). It then calls
-     * the static method.
-     *
-     * @param   string  $method  Private static method being called
-     * @param   array   $args    Array of arguments supplied to the method call
-     * @return  string  String returned by the private method called
-     * @throws  BadMethodCallException    If $method doesn't exist
-     * @throws  InvalidArgumentException  If $args[0] is not of type string
-     */
-    public static function __callStatic($method, $args) {
-        if (!method_exists(__CLASS__, $method))
-            throw new \BadMethodCallException("Method doesn't exist");
-
-        if (!is_string($args[0])) {
-            // Scalar type hinting isn't allowed, so have to throw exceptions
-            $message = sprintf('Argument of type string expected, instead ' .
-                'received an argument of type %s', gettype($args[0]));
-
-            throw new \InvalidArgumentException($message, $args[0]);
-        }
-
-        // Set the character encoding ($args[1]/$encoding) if not provided
-        if (sizeof($args) == 1 || !$args[1])
-            $args[1] = mb_internal_encoding();
-
-        // Set character encoding for multibyte regex
-        mb_regex_encoding($args[1]);
-
-        return forward_static_call_array(array(__CLASS__, $method), $args);
-    }
-
-    /**
      * Converts the first character of the supplied string to upper case.
      *
-     * @param   string  $string    String to modify
+     * @param   string  $str       String to modify
      * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being upper case
      */
-    private static function upperCaseFirst($string, $encoding) {
-        $first = mb_substr($string, 0, 1, $encoding);
-        $rest = mb_substr($string, 1, mb_strlen($string, $encoding) - 1, $encoding);
+    public static function upperCaseFirst($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $first = mb_substr($str, 0, 1, $encoding);
+        $rest = mb_substr($str, 1, mb_strlen($str, $encoding) - 1, $encoding);
 
         return mb_strtoupper($first, $encoding) . $rest;
     }
@@ -55,13 +23,15 @@ class Stringy {
     /**
      * Converts the first character of the supplied string to lower case.
      *
-     * @param   string  $string    String to modify
+     * @param   string  $str       String to modify
      * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being lower case
      */
-    private static function lowerCaseFirst($string, $encoding) {
-        $first = mb_substr($string, 0, 1, $encoding);
-        $rest = mb_substr($string, 1, mb_strlen($string, $encoding) - 1, $encoding);
+    public static function lowerCaseFirst($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $first = mb_substr($str, 0, 1, $encoding);
+        $rest = mb_substr($str, 1, mb_strlen($str, $encoding) - 1, $encoding);
 
         return mb_strtolower($first, $encoding) . $rest;
     }
@@ -71,17 +41,19 @@ class Stringy {
      * spaces, capitalizes letters following digits, spaces, dashes and
      * underscores, and removes spaces, dashes, underscores.
      *
-     * @param   string  $string    String to convert to camelCase
+     * @param   string  $str       String to convert to camelCase
      * @param   string  $encoding  The character encoding
      * @return  string  String in camelCase
      */
-    private static function camelize($string, $encoding) {
+    public static function camelize($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
         $camelCase = preg_replace_callback(
             '/[-_\s]+(.)?/u',
             function ($matches) use (&$encoding) {
                 return $matches[1] ? mb_strtoupper($matches[1], $encoding) : "";
             },
-            self::lowerCaseFirst(trim($string), $encoding)
+            self::lowerCaseFirst(trim($str), $encoding)
         );
 
         $camelCase = preg_replace_callback(
@@ -100,12 +72,13 @@ class Stringy {
      * spaces, capitalizes letters following digits, spaces, dashes and
      * underscores, and removes spaces, dashes, underscores.
      *
-     * @param   string  $string  String to convert to UpperCamelCase
+     * @param   string  $str       String to convert to UpperCamelCase
      * @param   string  $encoding  The character encoding
      * @return  string  String in UpperCamelCase
      */
-    private static function upperCamelize($string, $encoding) {
-        $camelCase = self::camelize($string, $encoding);
+    public static function upperCamelize($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+        $camelCase = self::camelize($str, $encoding);
 
         return self::upperCaseFirst($camelCase, $encoding);
     }
@@ -115,12 +88,15 @@ class Stringy {
      * inserted before uppercase characters (with the exception of the first
      * character of the string), and in place of spaces as well as underscores.
      *
-     * @param   string  $string    String to convert
+     * @param   string  $str       String to convert
      * @param   string  $encoding  The character encoding
      * @return  string  Dasherized string
      */
-    private static function dasherize($string, $encoding) {
-        $dasherized = mb_ereg_replace('\B([A-Z])', '-\1', trim($string));
+    public static function dasherize($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+        mb_regex_encoding($encoding);
+
+        $dasherized = mb_ereg_replace('\B([A-Z])', '-\1', trim($str));
         $dasherized = mb_ereg_replace('[-_\s]+', '-', $dasherized);
 
         return mb_strtolower($dasherized, $encoding);
@@ -132,12 +108,15 @@ class Stringy {
      * of the first character of the string), and in place of spaces as well as
      * dashes.
      *
-     * @param   string  $string    String to convert
+     * @param   string  $str       String to convert
      * @param   string  $encoding  The character encoding
      * @return  string  Underscored string
      */
-    private static function underscored($string, $encoding) {
-        $underscored = mb_ereg_replace('\B([A-Z])', '_\1', trim($string));
+    public static function underscored($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+        mb_regex_encoding($encoding);
+
+        $underscored = mb_ereg_replace('\B([A-Z])', '_\1', trim($str));
         $underscored = mb_ereg_replace('[-_\s]+', '_', $underscored);
 
         return mb_strtolower($underscored, $encoding);
@@ -146,11 +125,13 @@ class Stringy {
     /**
      * Returns a case swapped version of a string.
      *
-     * @param   string  $string    String to swap case
+     * @param   string  $str       String to swap case
      * @param   string  $encoding  The character encoding
      * @return  string  String with each character's case swapped
      */
-    private static function swapCase($string, $encoding) {
+    public static function swapCase($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
         $swapped = preg_replace_callback(
             '/[\S]/u',
             function ($match) use (&$encoding) {
@@ -159,7 +140,7 @@ class Stringy {
                 else
                     return mb_strtoupper($match[0], $encoding);
             },
-            $string
+            $str
         );
 
         return $swapped;
@@ -171,12 +152,14 @@ class Stringy {
      * Also accepts an array, $ignore, allowing you to list words not to be
      * capitalized.
      *
-     * @param   string  $string    String to titleize
+     * @param   string  $str       String to titleize
      * @param   string  $encoding  The character encoding
      * @param   array   $ignore    An array of words not to capitalize
      * @return  string  Titleized string
      */
-    private static function titleize($string, $encoding, $ignore = null) {
+    public static function titleize($str, $ignore = null, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
         $titleized = preg_replace_callback(
             '/([\S]+)/u',
             function ($match) use (&$encoding, &$ignore) {
@@ -184,7 +167,7 @@ class Stringy {
                     return $match[0];
                 return Stringy::upperCaseFirst($match[0], $encoding);
             },
-            trim($string)
+            trim($str)
         );
 
         return $titleized;
@@ -194,13 +177,13 @@ class Stringy {
      * Capitalizes the first word of a string, replaces underscores with spaces,
      * and strips '_id'.
      *
-     * @param   string  $string    String to humanize
+     * @param   string  $str       String to humanize
      * @param   string  $encoding  The character encoding
      * @return  string  A humanized string
      */
-    private static function humanize($string, $encoding) {
-        $humanized = mb_ereg_replace('_id', '', $string);
-        $humanized = mb_ereg_replace('_', ' ', $humanized);
+    public static function humanize($str, $encoding = null) {
+        $humanized = str_replace('_id', '', $str);
+        $humanized = str_replace('_', ' ', $humanized);
 
         return self::upperCaseFirst(trim($humanized), $encoding);
     }
@@ -209,12 +192,12 @@ class Stringy {
      * Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
      * (and commonly used in Word documents) with their ASCII equivalents.
      *
-     * @param   string  $string    String to remove special chars
+     * @param   string  $str       String to remove special chars
      * @param   string  $encoding  The character encoding
      * @return  string  String with those characters removed
      */
-    private static function tidy($string) {
-        $tidied = preg_replace('/\x{2026}/u', '...', $string);
+    public static function tidy($str) {
+        $tidied = preg_replace('/\x{2026}/u', '...', $str);
         $tidied = preg_replace('/[\x{201C}\x{201D}]/u', '"', $tidied);
         $tidied = preg_replace('/[\x{2018}\x{2019}]/u', "'", $tidied);
         $tidied = preg_replace('/[\x{2013}\x{2014}]/u', '-', $tidied);
@@ -226,20 +209,20 @@ class Stringy {
      * Trims the string and replaces consecutive whitespace characters with a
      * single space.
      *
-     * @param   string  $string    The string to cleanup whitespace
+     * @param   string  $str  The string to cleanup whitespace
      * @return  string  The trimmed string with condensed whitespace
      */
-    private static function clean($string) {
-        return preg_replace('/\s+/u', ' ', trim($string));
+    public static function clean($str) {
+        return preg_replace('/\s+/u', ' ', trim($str));
     }
 
     /**
      * Converts some non-ASCII characters to their closest ASCII counterparts.
      *
-     * @param   string  $string    A string with non-ASCII characters
+     * @param   string  $str  A string with non-ASCII characters
      * @return  string  The string after the replacements
      */
-    private static function standardize($string) {
+    public static function standardize($str) {
         $charsArray = array(
             'a' => array('à', 'á', 'â', 'ã', 'ă', 'ä', 'å', 'ą'),
             'c' => array('ć', 'č', 'ç'),
@@ -274,10 +257,10 @@ class Stringy {
         );
 
         foreach ($charsArray as $key => $value) {
-            $string = str_replace($value, $key, $string);
+            $str = str_replace($value, $key, $str);
         }
 
-        return $string;
+        return $str;
     }
 }
 

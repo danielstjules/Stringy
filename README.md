@@ -1,6 +1,6 @@
 # Stringy
 
-A PHP library with a variety of multibyte string manipulation functions. Inspired by underscore.string.js.
+A PHP library with a variety of string manipulation functions with multibyte support. Inspired by underscore.string.js.
 
 * [Requiring/Loading](#requiringloading)
 * [Methods](#methods)
@@ -47,13 +47,11 @@ use Stringy\Stringy as S;
 
 ## Methods
 
-*Note: All methods will throw a InvalidArgumentException if $string is not of type
-string. Furthermore, if if $encoding is not given, it defaults to
-mb_internal_encoding().*
+*Note: If $encoding is not given, it defaults to mb_internal_encoding().*
 
 ##### upperCaseFirst
 
-S::upperCaseFirst($string [, $encoding])
+S::upperCaseFirst(string $str [, string $encoding])
 
 Converts the first character of the supplied string to upper case, with
 support for multibyte strings.
@@ -64,7 +62,7 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 
 ##### lowerCaseFirst
 
-S::lowerCaseFirst($string [, $encoding])
+S::lowerCaseFirst(string $str [, string $encoding])
 
 Converts the first character of the supplied string to lower case, with
 support for multibyte strings.
@@ -75,7 +73,7 @@ S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 
 ##### camelize
 
-S::camelize($string [, $encoding])
+S::camelize(string $str [, string $encoding])
 
 Returns a camelCase version of a supplied string, with multibyte support.
 Trims surrounding spaces, capitalizes letters following digits, spaces,
@@ -87,7 +85,7 @@ S::camelize('Camel-Case');  // 'camelCase'
 
 ##### upperCamelize
 
-S::upperCamelize($string [, $encoding])
+S::upperCamelize(string $str [, string $encoding])
 
 Returns an UpperCamelCase version of a supplied string, with multibyte
 support. Trims surrounding spaces, capitalizes letters following digits,
@@ -99,7 +97,7 @@ S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 
 ##### dasherize
 
-S::dasherize($string [, $encoding])
+S::dasherize(string $str [, string $encoding])
 
 Returns a lowercase and trimmed string seperated by dashes, with
 multibyte support. Dashes are inserted before uppercase characters
@@ -112,7 +110,7 @@ S::dasherize('TestDCase');  // 'test-d-case'
 
 ##### underscored
 
-S::underscored($string [, $encoding])
+S::underscored(string $str [, string $encoding])
 
 Returns a lowercase and trimmed string seperated by underscores, with
 multibyte support. Underscores are inserted before uppercase characters
@@ -125,7 +123,7 @@ S::underscored('TestUCase');  // 'test_u_case'
 
 ##### swapCase
 
-S::swapCase($string [, $encoding])
+S::swapCase(string $str [, string $encoding])
 
 Returns a case swapped version of a string.
 
@@ -135,7 +133,7 @@ S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 
 ##### titleize
 
-S::titleize($string [, $encoding [, $ignore]])
+S::titleize(string $str [, array $ignore [, string $encoding]])
 
 Capitalizes the first letter of each word in a string, after trimming.
 Ignores the case of other letters, allowing for the use of acronyms.
@@ -144,13 +142,13 @@ capitalized.
 
 ```php
 $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
-S::titleize('i like to watch DVDs at home', 'UTF-8', $ignore);
+S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 // 'I Like to Watch DVDs at Home'
 ```
 
 ##### humanize
 
-S::humanize($string [, $encoding])
+S::humanize(string $str [, string $encoding])
 
 Capitalizes the first word of a string, replaces underscores with spaces,
 and strips '_id'.
@@ -161,7 +159,7 @@ S::humanize('author_id');  // 'Author'
 
 ##### tidy
 
-S::tidy($string)
+S::tidy(string $str)
 
 Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
 (and commonly used in Word documents) with their ASCII equivalents.
@@ -172,7 +170,7 @@ S::tidy('“I see…”');  // '"I see..."'
 
 ##### clean
 
-S::clean($string)
+S::clean(string $str)
 
 Trims the string and replaces consecutive whitespace characters with a
 single space.
@@ -183,7 +181,7 @@ S::clean('   Ο     συγγραφέας  '); // 'Ο συγγραφέας'
 
 ##### standardize
 
-S::standardize($string)
+S::standardize(string $str)
 
 Converts some non-ASCII characters to their closest ASCII counterparts.
 

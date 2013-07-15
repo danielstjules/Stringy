@@ -8,20 +8,6 @@ use Stringy\Stringy as S;
 class StringyTestCase extends PHPUnit_Framework_TestCase {
 
     /**
-     * @expectedException BadMethodCallException
-     */
-    public function testExceptionOnUndefinedMethod() {
-        S::doesntExist('test', 'UTF-8');
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testExceptionWithInvalidArgument() {
-        S::camelize(1, 'UTF-8');
-    }
-
-    /**
      * @dataProvider stringsForUpperCaseFirst
      */
     public function testUpperCaseFirst($string, $expected, $encoding = null) {
@@ -199,8 +185,8 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForTitleize
      */
-    public function testTitleize($string, $expected, $encoding = null, $ignore = null) {
-        $result = S::titleize($string, $encoding, $ignore);
+    public function testTitleize($string, $expected, $ignore = null, $encoding = null) {
+        $result = S::titleize($string, $ignore, $encoding);
         $this->assertEquals($expected, $result);
     }
 
@@ -209,10 +195,10 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
 
         $testData = array(
             array('testing the method', 'Testing The Method'),
-            array('testing the method', 'Testing the Method', 'UTF-8', $ignore),
+            array('testing the method', 'Testing the Method', $ignore, 'UTF-8'),
             array('i like to watch DVDs at home', 'I Like to Watch DVDs at Home',
-                'UTF-8', $ignore),
-            array('  Θα ήθελα να φύγει  ', 'Θα Ήθελα Να Φύγει', 'UTF-8')
+                $ignore, 'UTF-8'),
+            array('  Θα ήθελα να φύγει  ', 'Θα Ήθελα Να Φύγει', null, 'UTF-8')
         );
 
         return $testData;
