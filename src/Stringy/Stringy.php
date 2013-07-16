@@ -262,6 +262,67 @@ class Stringy {
 
         return $str;
     }
+
+    /**
+     * Pads a string to a given length with another string. If length is less
+     * than or equal to the length of $str, then no padding takes places. The
+     * default string used for padding is a space, and the default type (one of
+     * 'left', 'right', 'both') is 'right'.
+     *
+     * @param   string  $str       String to pad
+     * @param   int     $length    Desired string length after padding
+     * @param   string  $padStr    String used to pad, defaults to space
+     * @param   string  $padType   One of 'left', 'right', 'both'
+     * @param   string  $encoding  The character encoding
+     * @return  string  The padded string
+     * @throws  InvalidArgumentException If $padType isn't one of 'right',
+     *          'left' or 'both'
+     */
+    public static function pad($str, $length, $padStr = ' ', $padType = 'right',
+                               $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        if (!in_array($padType, array('left', 'right', 'both'))) {
+            throw new InvalidArgumentException('Pad expects the fourth ' .
+                "argument to be one of 'left', 'right' or 'both'");
+        }
+
+        $strLength = mb_strlen($str, $encoding);
+        $padStrLength = mb_strlen($padStr, $encoding);
+
+        if ($length <= $strLength || $padStrLength <= 0)
+            return $str;
+
+        // Number of times to repeat the padStr if left or right
+        $times = ceil(($length - $strLength) / $padStrLength);
+        $paddedStr = '';
+
+        if ($padType == 'left') {
+            // Repeat the pad, cut it, and prepend
+            $leftPad = str_repeat($padStr, $times);
+            $leftPad = mb_substr($leftPad, 0, $length - $strLength, $encoding);
+            $paddedStr = $leftPad . $str;
+        } elseif ($padType == 'right') {
+            // Append the repeated pad and get a substring of the given length
+            $paddedStr = $str . str_repeat($padStr, $times);
+            $paddedStr = mb_substr($paddedStr, 0, $length, $encoding);
+        } else {
+            // Number of times to repeat the padStr on both sides
+            $paddingSize = ($length - $strLength) / 2;
+            $times = ceil($paddingSize / $padStrLength);
+
+            // Favour right padding over left, as with str_pad()
+            $rightPad = str_repeat($padStr, $times);
+            $rightPad = mb_substr($rightPad, 0, ceil($paddingSize), $encoding);
+
+            $leftPad = str_repeat($padStr, $times);
+            $leftPad = mb_substr($leftPad, 0, floor($paddingSize), $encoding);
+
+            $paddedStr = $leftPad . $str . $rightPad;
+        }
+
+        return $paddedStr;
+    }
 }
 
 ?>

@@ -16,6 +16,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [tidy](#tidy)
     * [clean](#clean)
     * [standardize](#standardize)
+    * [pad](#pad)
 * [Tests](#tests)
 * [License](#license)
 
@@ -187,6 +188,19 @@ Converts some non-ASCII characters to their closest ASCII counterparts.
 
 ```php
 S::standardize('fòô bàř'); // 'foo bar'
+```
+
+##### pad
+
+S::pad(string $str , int $length [, string $padStr [, string $padType [, string $encoding]]])
+
+Pads a string to a given length with another string. If length is less
+than or equal to the length of $str, then no padding takes places. The
+default string used for padding is a space, and the default type (one of
+'left', 'right', 'both') is 'right'.
+
+```php
+S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8'); // '¬ø¬fòô bàř'
 ```
 
 ## TODO
