@@ -185,7 +185,8 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForTitleize
      */
-    public function testTitleize($string, $expected, $ignore = null, $encoding = null) {
+    public function testTitleize($string, $expected, $ignore = null,
+                                 $encoding = null) {
         $result = S::titleize($string, $ignore, $encoding);
         $this->assertEquals($expected, $result);
     }
@@ -284,39 +285,106 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
      * @dataProvider stringsForPad
      */
     public function testPad($string, $expected, $length, $padStr = ' ',
-                                    $padType = 'right', $encoding = null) {
+                            $padType = 'right', $encoding = null) {
         $result = S::pad($string, $length, $padStr, $padType, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForPad() {
         $testData = array(
+            // $length <= $str
             array('foo bar', 'foo bar', -1),
             array('foo bar', 'foo bar', 7),
+            array('fòô bàř', 'fòô bàř', 7, ' ', 'right', 'UTF-8'),
+
+            // right
             array('foo bar', 'foo bar  ', 9),
-            array('foo bar', '  foo bar', 9, ' ', 'left'),
-            array('foo bar', 'foo bar ', 8, ' ', 'both'),
-            array('foo bar', ' foo bar ', 9, ' ', 'both'),
-            array('foo bar', '_*foo bar', 9, '_*', 'left'),
-            array('foo bar', '_*_foo bar', 10, '_*', 'left'),
             array('foo bar', 'foo bar_*', 9, '_*', 'right'),
             array('foo bar', 'foo bar_*_', 10, '_*', 'right'),
-            array('fòô bàř', 'fòô bàř', -1, 'UTF-8'),
-            array('fòô bàř', 'fòô bàř', 7, 'UTF-8'),
             array('fòô bàř', 'fòô bàř  ', 9, ' ', 'right', 'UTF-8'),
-            array('fòô bàř', '  fòô bàř', 9, ' ', 'left', 'UTF-8'),
-            array('fòô bàř', 'fòô bàř ', 8, ' ', 'both', 'UTF-8'),
-            array('fòô bàř', ' fòô bàř ', 9, ' ', 'both', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř', 9, '¬ø', 'left', 'UTF-8'),
-            array('fòô bàř', '¬ø¬fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
-            array('fòô bàř', '¬ø¬øfòô bàř', 11, '¬ø', 'left', 'UTF-8'),
             array('fòô bàř', 'fòô bàř¬ø', 9, '¬ø', 'right', 'UTF-8'),
             array('fòô bàř', 'fòô bàř¬ø¬', 10, '¬ø', 'right', 'UTF-8'),
             array('fòô bàř', 'fòô bàř¬ø¬ø', 11, '¬ø', 'right', 'UTF-8'),
+
+            // left
+            array('foo bar', '  foo bar', 9, ' ', 'left'),
+            array('foo bar', '_*foo bar', 9, '_*', 'left'),
+            array('foo bar', '_*_foo bar', 10, '_*', 'left'),
+            array('fòô bàř', '  fòô bàř', 9, ' ', 'left', 'UTF-8'),
+            array('fòô bàř', '¬øfòô bàř', 9, '¬ø', 'left', 'UTF-8'),
+            array('fòô bàř', '¬ø¬fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
+            array('fòô bàř', '¬ø¬øfòô bàř', 11, '¬ø', 'left', 'UTF-8'),
+
+            // both
+            array('foo bar', 'foo bar ', 8, ' ', 'both'),
+            array('foo bar', ' foo bar ', 9, ' ', 'both'),
+            array('fòô bàř', 'fòô bàř ', 8, ' ', 'both', 'UTF-8'),
+            array('fòô bàř', ' fòô bàř ', 9, ' ', 'both', 'UTF-8'),
             array('fòô bàř', 'fòô bàř¬', 8, '¬ø', 'both', 'UTF-8'),
             array('fòô bàř', '¬fòô bàř¬', 9, '¬ø', 'both', 'UTF-8'),
             array('fòô bàř', '¬fòô bàř¬ø', 10, '¬ø', 'both', 'UTF-8'),
             array('fòô bàř', '¬øfòô bàř¬ø', 11, '¬ø', 'both', 'UTF-8'),
+            array('fòô bàř', '¬fòô bàř¬ø', 10, '¬øÿ', 'both', 'UTF-8'),
+            array('fòô bàř', '¬øfòô bàř¬ø', 11, '¬øÿ', 'both', 'UTF-8'),
+            array('fòô bàř', '¬øfòô bàř¬øÿ', 12, '¬øÿ', 'both', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForPadLeft
+     */
+    public function testPadLeft($string, $expected, $length, $padStr = ' ',
+                                $encoding = null) {
+        $result = S::padLeft($string, $length, $padStr, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForPadLeft() {
+        $testData = array(
+            array('foo bar', '  foo bar', 9),
+            array('foo bar', '_*_foo bar', 10, '_*'),
+            array('fòô bàř', '¬ø¬øfòô bàř', 11, '¬ø', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForPadRight
+     */
+    public function testPadRight($string, $expected, $length, $padStr = ' ',
+                                 $encoding = null) {
+        $result = S::padRight($string, $length, $padStr, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForPadRight() {
+        $testData = array(
+            array('foo bar', 'foo bar  ', 9),
+            array('foo bar', 'foo bar_*_', 10, '_*'),
+            array('fòô bàř', 'fòô bàř¬ø¬ø', 11, '¬ø', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForPadBoth
+     */
+    public function testPadBoth($string, $expected, $length, $padStr = ' ',
+                                $encoding = null) {
+        $result = S::padBoth($string, $length, $padStr, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForPadBoth() {
+        $testData = array(
+            array('foo bar', 'foo bar ', 8),
+            array('foo bar', ' foo bar ', 9, ' '),
+            array('fòô bàř', '¬fòô bàř¬ø', 10, '¬øÿ', 'UTF-8'),
+            array('fòô bàř', '¬øfòô bàř¬øÿ', 12, '¬øÿ', 'UTF-8')
         );
 
         return $testData;

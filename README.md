@@ -17,6 +17,9 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [clean](#clean)
     * [standardize](#standardize)
     * [pad](#pad)
+    * [padLeft](#padleft)
+    * [padRight](#padright)
+    * [padBoth](#padboth)
 * [Tests](#tests)
 * [License](#license)
 
@@ -203,9 +206,40 @@ default string used for padding is a space, and the default type (one of
 S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8'); // '¬ø¬fòô bàř'
 ```
 
-## TODO
+##### padLeft
 
-**center**
+S::padLeft(string $str , int $length [, string $padStr [, string $encoding]])
+
+Returns a new string of a given length such that the beginning of the
+string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
+
+```php
+S::padLeft('foo bar', 9, ' '); // '  foo bar'
+```
+
+##### padRight
+
+S::padRight(string $str , int $length [, string $padStr [, string $encoding]])
+
+Returns a new string of a given length such that the end of the string is
+padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
+
+```php
+S::padRight('foo bar', 10, '_*'); // 'foo bar_*_'
+```
+
+##### padBoth
+
+S::padBoth(string $str , int $length [, string $padStr [, string $encoding]])
+
+Returns a new string of a given length such that both sides of the string
+string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
+
+```php
+S::padBoth('foo bar', 9, ' '); // ' foo bar '
+```
+
+## TODO
 
 **startsWith**
 

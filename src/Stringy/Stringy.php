@@ -323,6 +323,48 @@ class Stringy {
 
         return $paddedStr;
     }
+
+    /**
+     * Returns a new string of a given length such that the beginning of the
+     * string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
+     *
+     * @param   string  $str       String to pad
+     * @param   int     $length    Desired string length after padding
+     * @param   string  $padStr    String used to pad, defaults to space
+     * @param   string  $encoding  The character encoding
+     * @return  string  The padded string
+     */
+    public static function padLeft($str, $length, $padStr = ' ', $encoding = null) {
+        return self::pad($str, $length, $padStr, 'left', $encoding);
+    }
+
+    /**
+     * Returns a new string of a given length such that the end of the string is
+     * padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
+     *
+     * @param   string  $str       String to pad
+     * @param   int     $length    Desired string length after padding
+     * @param   string  $padStr    String used to pad, defaults to space
+     * @param   string  $encoding  The character encoding
+     * @return  string  The padded string
+     */
+    public static function padRight($str, $length, $padStr = ' ', $encoding = null) {
+        return self::pad($str, $length, $padStr, 'right', $encoding);
+    }
+
+    /**
+     * Returns a new string of a given length such that both sides of the string
+     * string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
+     *
+     * @param   string  $str       String to pad
+     * @param   int     $length    Desired string length after padding
+     * @param   string  $padStr    String used to pad, defaults to space
+     * @param   string  $encoding  The character encoding
+     * @return  string  The padded string
+     */
+    public static function padBoth ($str, $length, $padStr = ' ', $encoding = null) {
+        return self::pad($str, $length, $padStr, 'both', $encoding);
+    }
 }
 
 ?>
