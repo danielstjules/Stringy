@@ -241,6 +241,8 @@ S::padBoth('foo bar', 9, ' '); // ' foo bar '
 
 ## TODO
 
+**char** => chr
+
 **startsWith**
 
 **endsWith**
@@ -257,15 +259,31 @@ S::padBoth('foo bar', 9, ' '); // ' foo bar '
 
 **between**
 
+**replace** => substr_replace
+
 **insert**
 
 **truncate**
 
 **prune**
 
+**wordWrap** => wordwrap
+
+**reverse** => strrev
+
+**shuffle** => str_shuffle
+
+**explode** => explode
+
 **longestCommonPrefix**
 
 **longestCommonSubstring**
+
+**countChars** => count_chars
+
+**wordCount** => str_word_count
+
+**count** => substr_count
 
 **isJson**
 
