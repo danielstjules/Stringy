@@ -390,6 +390,33 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForStartsWith
+     */
+    public function testStartsWith($expected, $string, $substring,
+                                $caseSensitive = true, $encoding = null) {
+        $result = S::startsWith($string, $substring, $caseSensitive, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForStartsWith() {
+        $testData = array(
+            array(true, 'foo bars', 'foo bar'),
+            array(true, 'FOO bars', 'foo bar', false),
+            array(true, 'FOO bars', 'foo BAR', false),
+            array(true, 'FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'),
+            array(true, 'fòô bàřs', 'fòô BÀŘ', false, 'UTF-8'),
+            array(false, 'foo bar', 'bar'),
+            array(false, 'foo bar', 'foo bars'),
+            array(false, 'FOO bar', 'foo bars'),
+            array(false, 'FOO bars', 'foo BAR'),
+            array(false, 'FÒÔ bàřs', 'fòô bàř', true, 'UTF-8'),
+            array(false, 'fòô bàřs', 'fòô BÀŘ', true, 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

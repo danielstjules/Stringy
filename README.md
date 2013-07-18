@@ -55,7 +55,7 @@ use Stringy\Stringy as S;
 
 ##### upperCaseFirst
 
-S::upperCaseFirst(string $str [, string $encoding])
+S::upperCaseFirst(string $str [, string $encoding ])
 
 Converts the first character of the supplied string to upper case, with
 support for multibyte strings.
@@ -66,7 +66,7 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 
 ##### lowerCaseFirst
 
-S::lowerCaseFirst(string $str [, string $encoding])
+S::lowerCaseFirst(string $str [, string $encoding ])
 
 Converts the first character of the supplied string to lower case, with
 support for multibyte strings.
@@ -77,7 +77,7 @@ S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 
 ##### camelize
 
-S::camelize(string $str [, string $encoding])
+S::camelize(string $str [, string $encoding ])
 
 Returns a camelCase version of a supplied string, with multibyte support.
 Trims surrounding spaces, capitalizes letters following digits, spaces,
@@ -89,7 +89,7 @@ S::camelize('Camel-Case');  // 'camelCase'
 
 ##### upperCamelize
 
-S::upperCamelize(string $str [, string $encoding])
+S::upperCamelize(string $str [, string $encoding ])
 
 Returns an UpperCamelCase version of a supplied string, with multibyte
 support. Trims surrounding spaces, capitalizes letters following digits,
@@ -101,7 +101,7 @@ S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 
 ##### dasherize
 
-S::dasherize(string $str [, string $encoding])
+S::dasherize(string $str [, string $encoding ])
 
 Returns a lowercase and trimmed string seperated by dashes, with
 multibyte support. Dashes are inserted before uppercase characters
@@ -114,7 +114,7 @@ S::dasherize('TestDCase');  // 'test-d-case'
 
 ##### underscored
 
-S::underscored(string $str [, string $encoding])
+S::underscored(string $str [, string $encoding ])
 
 Returns a lowercase and trimmed string seperated by underscores, with
 multibyte support. Underscores are inserted before uppercase characters
@@ -127,7 +127,7 @@ S::underscored('TestUCase');  // 'test_u_case'
 
 ##### swapCase
 
-S::swapCase(string $str [, string $encoding])
+S::swapCase(string $str [, string $encoding ])
 
 Returns a case swapped version of a string.
 
@@ -137,7 +137,7 @@ S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 
 ##### titleize
 
-S::titleize(string $str [, array $ignore [, string $encoding]])
+S::titleize(string $str [, array $ignore [, string $encoding ]])
 
 Capitalizes the first letter of each word in a string, after trimming.
 Ignores the case of other letters, allowing for the use of acronyms.
@@ -152,7 +152,7 @@ S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 
 ##### humanize
 
-S::humanize(string $str [, string $encoding])
+S::humanize(string $str [, string $encoding ])
 
 Capitalizes the first word of a string, replaces underscores with spaces,
 and strips '_id'.
@@ -195,7 +195,7 @@ S::standardize('fòô bàř'); // 'foo bar'
 
 ##### pad
 
-S::pad(string $str , int $length [, string $padStr [, string $padType [, string $encoding]]])
+S::pad(string $str , int $length [, string $padStr = ' ' [, string $padType = 'right' [, string $encoding ]]])
 
 Pads a string to a given length with another string. If length is less
 than or equal to the length of $str, then no padding takes places. The
@@ -208,7 +208,7 @@ S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8'); // '¬ø¬fòô bàř'
 
 ##### padLeft
 
-S::padLeft(string $str , int $length [, string $padStr [, string $encoding]])
+S::padLeft(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
 Returns a new string of a given length such that the beginning of the
 string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
@@ -219,7 +219,7 @@ S::padLeft('foo bar', 9, ' '); // '  foo bar'
 
 ##### padRight
 
-S::padRight(string $str , int $length [, string $padStr [, string $encoding]])
+S::padRight(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
 Returns a new string of a given length such that the end of the string is
 padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
@@ -230,7 +230,7 @@ S::padRight('foo bar', 10, '_*'); // 'foo bar_*_'
 
 ##### padBoth
 
-S::padBoth(string $str , int $length [, string $padStr [, string $encoding]])
+S::padBoth(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
 Returns a new string of a given length such that both sides of the string
 string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
@@ -239,13 +239,23 @@ string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
 S::padBoth('foo bar', 9, ' '); // ' foo bar '
 ```
 
+##### startsWith
+
+S::startsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
+
+Returns true if the string $str begins with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+S::startsWith('foo bar', 'another', false, $encoding); // ' foo bar '
+```
+
 ## TODO
 
-**char** => chr
-
-**startsWith**
-
 **endsWith**
+
+**char** => chr
 
 **toSpaces**
 

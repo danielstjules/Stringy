@@ -362,9 +362,36 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  The padded string
      */
-    public static function padBoth ($str, $length, $padStr = ' ', $encoding = null) {
+    public static function padBoth($str, $length, $padStr = ' ', $encoding = null) {
         return self::pad($str, $length, $padStr, 'both', $encoding);
     }
+
+    /**
+     * Returns true if the string $str begins with $substring, false otherwise.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param   string  $str            String to check the start of
+     * @param   string  $substring      The substring to look for
+     * @param   bool    $caseSensitive  Whether or not to enfore case-sensitivity
+     * @param   string  $encoding       The character encoding
+     * @return  bool    Whether or not $str starts with $substring
+     */
+    public static function startsWith($str, $substring, $caseSensitive = true,
+                                      $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $substringLength = mb_strlen($substring, $encoding);
+        $startOfStr = mb_substr($str, 0, $substringLength, $encoding);
+
+        if (!$caseSensitive) {
+            $substring = mb_strtolower($substring, $encoding);
+            $startOfStr = mb_strtolower($startOfStr, $encoding);
+        }
+
+        return $substring === $startOfStr;
+    }
+
 }
 
 ?>
