@@ -20,6 +20,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [padLeft](#padleft)
     * [padRight](#padright)
     * [padBoth](#padboth)
+    * [startsWith](#startswith)
 * [Tests](#tests)
 * [License](#license)
 
@@ -248,7 +249,7 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::startsWith('foo bar', 'another', false, $encoding); // ' foo bar '
+S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'), // true
 ```
 
 ## TODO
