@@ -417,6 +417,33 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForEndsWith
+     */
+    public function testEndsWith($expected, $string, $substring,
+                                $caseSensitive = true, $encoding = null) {
+        $result = S::endsWith($string, $substring, $caseSensitive, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForEndsWith() {
+        $testData = array(
+            array(true, 'foo bars', 'o bars'),
+            array(true, 'FOO bars', 'o bars', false),
+            array(true, 'FOO bars', 'o BARs', false),
+            array(true, 'FÒÔ bàřs', 'ô bàřs', false, 'UTF-8'),
+            array(true, 'fòô bàřs', 'ô BÀŘs', false, 'UTF-8'),
+            array(false, 'foo bar', 'foo'),
+            array(false, 'foo bar', 'foo bars'),
+            array(false, 'FOO bar', 'foo bars'),
+            array(false, 'FOO bars', 'foo BARS'),
+            array(false, 'FÒÔ bàřs', 'fòô bàřs', true, 'UTF-8'),
+            array(false, 'fòô bàřs', 'fòô BÀŘS', true, 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

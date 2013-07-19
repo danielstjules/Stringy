@@ -392,6 +392,35 @@ class Stringy {
         return $substring === $startOfStr;
     }
 
+    /**
+     * Returns true if the string $str ends with $substring, false otherwise.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param   string  $str            String to check the end of
+     * @param   string  $substring      The substring to look for
+     * @param   bool    $caseSensitive  Whether or not to enfore case-sensitivity
+     * @param   string  $encoding       The character encoding
+     * @return  bool    Whether or not $str ends with $substring
+     */
+    public static function endsWith($str, $substring, $caseSensitive = true,
+                                    $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $substringLength = mb_strlen($substring, $encoding);
+        $strLength = mb_strlen($str, $encoding);
+
+        $endOfStr = mb_substr($str, $strLength - $substringLength,
+            $substringLength, $encoding);
+
+        if (!$caseSensitive) {
+            $substring = mb_strtolower($substring, $encoding);
+            $endOfStr = mb_strtolower($endOfStr, $encoding);
+        }
+
+        return $substring === $endOfStr;
+    }
+
 }
 
 ?>

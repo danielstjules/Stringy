@@ -21,6 +21,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [padRight](#padright)
     * [padBoth](#padboth)
     * [startsWith](#startswith)
+    * [endsWith](#endswith)
 * [Tests](#tests)
 * [License](#license)
 
@@ -249,14 +250,22 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'), // true
+S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'); // true
+```
+
+##### endsWith
+
+S::endsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
+
+Returns true if the string $str ends with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8'); // true
 ```
 
 ## TODO
-
-**endsWith**
-
-**char** => chr
 
 **toSpaces**
 
