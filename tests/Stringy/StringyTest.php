@@ -10,7 +10,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForUpperCaseFirst
      */
-    public function testUpperCaseFirst($string, $expected, $encoding = null) {
+    public function testUpperCaseFirst($expected, $string, $encoding = null) {
         $result = S::upperCaseFirst($string, $encoding);
         $this->assertEquals($expected, $result);
     }
@@ -18,9 +18,9 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     public function stringsForUpperCaseFirst() {
         $testData = array(
             array('Test', 'Test'),
-            array('test', 'Test'),
+            array('Test', 'test'),
             array('1a', '1a'),
-            array('σ test', 'Σ test', 'UTF-8'),
+            array('Σ test', 'σ test', 'UTF-8'),
             array(' σ test', ' σ test', 'UTF-8')
         );
 
@@ -30,17 +30,17 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForLowerCaseFirst
      */
-    public function testLowerCaseFirst($string, $expected, $encoding = null) {
+    public function testLowerCaseFirst($expected, $string, $encoding = null) {
         $result = S::lowerCaseFirst($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForLowerCaseFirst() {
         $testData = array(
-            array('Test', 'test'),
+            array('test', 'Test'),
             array('test', 'test'),
             array('1a', '1a'),
-            array('Σ test', 'σ test', 'UTF-8'),
+            array('σ test', 'Σ test', 'UTF-8'),
             array(' Σ test', ' Σ test', 'UTF-8')
         );
 
@@ -50,26 +50,26 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForCamelize
      */
-    public function testCamelize($string, $expected, $encoding = null) {
+    public function testCamelize($expected, $string, $encoding = null) {
         $result = S::camelize($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForCamelize() {
         $testData = array(
-            array('CamelCase', 'camelCase'),
-            array('Camel-Case', 'camelCase'),
-            array('camel case', 'camelCase'),
-            array('camel -case', 'camelCase'),
-            array('camel - case', 'camelCase'),
-            array('camel_case', 'camelCase'),
-            array('camel c test', 'camelCTest'),
-            array('string_with1number', 'stringWith1Number'),
-            array('string-with-2-2 numbers', 'stringWith22Numbers'),
-            array('1camel2case', '1Camel2Case'),
-            array('camel σase', 'camelΣase', 'UTF-8'),
-            array('Στανιλ case', 'στανιλCase', 'UTF-8'),
-            array('σamel  Case', 'σamelCase', 'UTF-8')
+            array('camelCase', 'CamelCase'),
+            array('camelCase', 'Camel-Case'),
+            array('camelCase', 'camel case'),
+            array('camelCase', 'camel -case'),
+            array('camelCase', 'camel - case'),
+            array('camelCase', 'camel_case'),
+            array('camelCTest', 'camel c test'),
+            array('stringWith1Number', 'string_with1number'),
+            array('stringWith22Numbers', 'string-with-2-2 numbers'),
+            array('1Camel2Case', '1camel2case'),
+            array('camelΣase', 'camel σase', 'UTF-8'),
+            array('στανιλCase', 'Στανιλ case', 'UTF-8'),
+            array('σamelCase', 'σamel  Case', 'UTF-8')
         );
 
         return $testData;
@@ -78,26 +78,26 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForUpperCamelize
      */
-    public function testUpperCamelize($string, $expected, $encoding = null) {
+    public function testUpperCamelize($expected, $string, $encoding = null) {
         $result = S::upperCamelize($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForUpperCamelize() {
         $testData = array(
-            array('camelCase', 'CamelCase'),
-            array('Camel-Case', 'CamelCase'),
-            array('camel case', 'CamelCase'),
-            array('camel -case', 'CamelCase'),
-            array('camel - case', 'CamelCase'),
-            array('camel_case', 'CamelCase'),
-            array('camel c test', 'CamelCTest'),
-            array('string_with1number', 'StringWith1Number'),
-            array('string-with-2-2 numbers', 'StringWith22Numbers'),
-            array('1camel2case', '1Camel2Case'),
-            array('camel σase', 'CamelΣase', 'UTF-8'),
-            array('στανιλ case', 'ΣτανιλCase', 'UTF-8'),
-            array('Σamel  Case', 'ΣamelCase', 'UTF-8')
+            array('CamelCase', 'camelCase'),
+            array('CamelCase', 'Camel-Case'),
+            array('CamelCase', 'camel case'),
+            array('CamelCase', 'camel -case'),
+            array('CamelCase', 'camel - case'),
+            array('CamelCase', 'camel_case'),
+            array('CamelCTest', 'camel c test'),
+            array('StringWith1Number', 'string_with1number'),
+            array('StringWith22Numbers', 'string-with-2-2 numbers'),
+            array('1Camel2Case', '1camel2case'),
+            array('CamelΣase', 'camel σase', 'UTF-8'),
+            array('ΣτανιλCase', 'στανιλ case', 'UTF-8'),
+            array('ΣamelCase', 'Σamel  Case', 'UTF-8')
         );
 
         return $testData;
@@ -106,28 +106,28 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForDasherize
      */
-    public function testDasherize($string, $expected, $encoding = null) {
+    public function testDasherize($expected, $string, $encoding = null) {
         $result = S::dasherize($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForDasherize() {
         $testData = array(
-            array('testCase', 'test-case'),
-            array('Test-Case', 'test-case'),
-            array('test case', 'test-case'),
-            array('-test -case', '-test-case'),
-            array('test - case', 'test-case'),
-            array('test_case', 'test-case'),
-            array('test c test', 'test-c-test'),
-            array('TestDCase', 'test-d-case'),
-            array('TestCCTest', 'test-c-c-test'),
-            array('string_with1number', 'string-with1number'),
-            array('String-with_2_2 numbers', 'string-with-2-2-numbers'),
+            array('test-case', 'testCase'),
+            array('test-case', 'Test-Case'),
+            array('test-case', 'test case'),
+            array('-test-case', '-test -case'),
+            array('test-case', 'test - case'),
+            array('test-case', 'test_case'),
+            array('test-c-test', 'test c test'),
+            array('test-d-case', 'TestDCase'),
+            array('test-c-c-test', 'TestCCTest'),
+            array('string-with1number', 'string_with1number'),
+            array('string-with-2-2-numbers', 'String-with_2_2 numbers'),
             array('1test2case', '1test2case'),
-            array('dash Σase', 'dash-σase', 'UTF-8'),
-            array('Στανιλ case', 'στανιλ-case', 'UTF-8'),
-            array('Σash  Case', 'σash-case', 'UTF-8')
+            array('dash-σase', 'dash Σase', 'UTF-8'),
+            array('στανιλ-case', 'Στανιλ case', 'UTF-8'),
+            array('σash-case', 'Σash  Case', 'UTF-8')
         );
 
         return $testData;
@@ -136,28 +136,28 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForUnderscored
      */
-    public function testUnderscored($string, $expected, $encoding = null) {
+    public function testUnderscored($expected, $string, $encoding = null) {
         $result = S::underscored($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForUnderscored() {
         $testData = array(
-            array('testCase', 'test_case'),
-            array('Test-Case', 'test_case'),
-            array('test case', 'test_case'),
-            array('test -case', 'test_case'),
-            array('-test - case', '_test_case'),
+            array('test_case', 'testCase'),
+            array('test_case', 'Test-Case'),
+            array('test_case', 'test case'),
+            array('test_case', 'test -case'),
+            array('_test_case', '-test - case'),
             array('test_case', 'test_case'),
-            array('  test c test', 'test_c_test'),
-            array('TestUCase', 'test_u_case'),
-            array('TestCCTest', 'test_c_c_test'),
+            array('test_c_test', '  test c test'),
+            array('test_u_case', 'TestUCase'),
+            array('test_c_c_test', 'TestCCTest'),
             array('string_with1number', 'string_with1number'),
-            array('String-with_2_2 numbers', 'string_with_2_2_numbers'),
+            array('string_with_2_2_numbers', 'String-with_2_2 numbers'),
             array('1test2case', '1test2case'),
-            array('test Σase', 'test_σase', 'UTF-8'),
-            array('Στανιλ case', 'στανιλ_case', 'UTF-8'),
-            array('Σash  Case', 'σash_case', 'UTF-8')
+            array('test_σase', 'test Σase', 'UTF-8'),
+            array('στανιλ_case', 'Στανιλ case', 'UTF-8'),
+            array('σash_case', 'Σash  Case', 'UTF-8')
         );
 
         return $testData;
@@ -166,17 +166,17 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForSwapCase
      */
-    public function testSwapCase($string, $expected, $encoding = null) {
+    public function testSwapCase($expected, $string, $encoding = null) {
         $result = S::swapCase($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForSwapCase() {
         $testData = array(
-            array('testCase', 'TESTcASE'),
-            array('Test-Case', 'tEST-cASE'),
-            array(' - Σash  Case', ' - σASH  cASE', 'UTF-8'),
-            array('Ντανιλ', 'νΤΑΝΙΛ', 'UTF-8')
+            array('TESTcASE', 'testCase'),
+            array('tEST-cASE', 'Test-Case'),
+            array(' - σASH  cASE', ' - Σash  Case', 'UTF-8'),
+            array('νΤΑΝΙΛ', 'Ντανιλ', 'UTF-8')
         );
 
         return $testData;
@@ -185,7 +185,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForTitleize
      */
-    public function testTitleize($string, $expected, $ignore = null,
+    public function testTitleize($expected, $string, $ignore = null,
                                  $encoding = null) {
         $result = S::titleize($string, $ignore, $encoding);
         $this->assertEquals($expected, $result);
@@ -195,11 +195,11 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
 
         $testData = array(
-            array('testing the method', 'Testing The Method'),
-            array('testing the method', 'Testing the Method', $ignore, 'UTF-8'),
-            array('i like to watch DVDs at home', 'I Like to Watch DVDs at Home',
+            array('Testing The Method', 'testing the method'),
+            array('Testing the Method', 'testing the method', $ignore, 'UTF-8'),
+            array('I Like to Watch DVDs at Home', 'i like to watch DVDs at home',
                 $ignore, 'UTF-8'),
-            array('  Θα ήθελα να φύγει  ', 'Θα Ήθελα Να Φύγει', null, 'UTF-8')
+            array('Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', null, 'UTF-8')
         );
 
         return $testData;
@@ -208,16 +208,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForHumanize
      */
-    public function testHumanize($string, $expected, $encoding = null) {
+    public function testHumanize($expected, $string, $encoding = null) {
         $result = S::humanize($string, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForHumanize() {
         $testData = array(
-            array('author_id', 'Author'),
-            array(' _test_user_', 'Test user'),
-            array(' συγγραφέας_id ', 'Συγγραφέας', 'UTF-8')
+            array('Author', 'author_id'),
+            array('Test user', ' _test_user_'),
+            array('Συγγραφέας', ' συγγραφέας_id ', 'UTF-8')
         );
 
         return $testData;
@@ -226,17 +226,17 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForTidy
      */
-    public function testTidy($string, $expected) {
+    public function testTidy($expected, $string) {
         $result = S::tidy($string);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForTidy() {
         $testData = array(
-            array('“I see…”', '"I see..."'),
-            array("‘This too’", "'This too'"),
-            array('test—dash', 'test-dash'),
-            array('Ο συγγραφέας είπε…', 'Ο συγγραφέας είπε...')
+            array('"I see..."', '“I see…”'),
+            array("'This too'", "‘This too’"),
+            array('test-dash', 'test—dash'),
+            array('Ο συγγραφέας είπε...', 'Ο συγγραφέας είπε…')
         );
 
         return $testData;
@@ -245,18 +245,18 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForClean
      */
-    public function testClean($string, $expected) {
+    public function testClean($expected, $string) {
         $result = S::clean($string);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForClean() {
         $testData = array(
-            array('  foo   bar  ', 'foo bar'),
+            array('foo bar', '  foo   bar  '),
             array('test string', 'test string'),
-            array('   Ο     συγγραφέας  ', 'Ο συγγραφέας'),
-            array(' 123 ', '123'),
-            array(' ', ''),
+            array('Ο συγγραφέας', '   Ο     συγγραφέας  '),
+            array('123', ' 123 '),
+            array('', ' '),
             array('', ''),
         );
 
@@ -266,16 +266,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForStandardize
      */
-    public function testStandardize($string, $expected) {
+    public function testStandardize($expected, $string) {
         $result = S::standardize($string);
         $this->assertEquals($expected, $result);
     }
 
     public function stringsForStandardize() {
         $testData = array(
-            array('fòô bàř', 'foo bar'),
-            array(' ŤÉŚŢ ', ' TEST '),
-            array('φ = ź = 3', 'φ = z = 3')
+            array('foo bar', 'fòô bàř'),
+            array(' TEST ', ' ŤÉŚŢ '),
+            array('φ = z = 3', 'φ = ź = 3')
         );
 
         return $testData;
@@ -284,7 +284,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForPad
      */
-    public function testPad($string, $expected, $length, $padStr = ' ',
+    public function testPad($expected, $string, $length, $padStr = ' ',
                             $padType = 'right', $encoding = null) {
         $result = S::pad($string, $length, $padStr, $padType, $encoding);
         $this->assertEquals($expected, $result);
@@ -298,35 +298,35 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
             array('fòô bàř', 'fòô bàř', 7, ' ', 'right', 'UTF-8'),
 
             // right
-            array('foo bar', 'foo bar  ', 9),
-            array('foo bar', 'foo bar_*', 9, '_*', 'right'),
-            array('foo bar', 'foo bar_*_', 10, '_*', 'right'),
-            array('fòô bàř', 'fòô bàř  ', 9, ' ', 'right', 'UTF-8'),
-            array('fòô bàř', 'fòô bàř¬ø', 9, '¬ø', 'right', 'UTF-8'),
-            array('fòô bàř', 'fòô bàř¬ø¬', 10, '¬ø', 'right', 'UTF-8'),
-            array('fòô bàř', 'fòô bàř¬ø¬ø', 11, '¬ø', 'right', 'UTF-8'),
+            array('foo bar  ', 'foo bar', 9),
+            array('foo bar_*', 'foo bar', 9, '_*', 'right'),
+            array('foo bar_*_', 'foo bar', 10, '_*', 'right'),
+            array('fòô bàř  ', 'fòô bàř', 9, ' ', 'right', 'UTF-8'),
+            array('fòô bàř¬ø', 'fòô bàř', 9, '¬ø', 'right', 'UTF-8'),
+            array('fòô bàř¬ø¬', 'fòô bàř', 10, '¬ø', 'right', 'UTF-8'),
+            array('fòô bàř¬ø¬ø', 'fòô bàř', 11, '¬ø', 'right', 'UTF-8'),
 
             // left
-            array('foo bar', '  foo bar', 9, ' ', 'left'),
-            array('foo bar', '_*foo bar', 9, '_*', 'left'),
-            array('foo bar', '_*_foo bar', 10, '_*', 'left'),
-            array('fòô bàř', '  fòô bàř', 9, ' ', 'left', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř', 9, '¬ø', 'left', 'UTF-8'),
-            array('fòô bàř', '¬ø¬fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
-            array('fòô bàř', '¬ø¬øfòô bàř', 11, '¬ø', 'left', 'UTF-8'),
+            array('  foo bar', 'foo bar', 9, ' ', 'left'),
+            array('_*foo bar', 'foo bar', 9, '_*', 'left'),
+            array('_*_foo bar', 'foo bar', 10, '_*', 'left'),
+            array('  fòô bàř', 'fòô bàř', 9, ' ', 'left', 'UTF-8'),
+            array('¬øfòô bàř', 'fòô bàř', 9, '¬ø', 'left', 'UTF-8'),
+            array('¬ø¬fòô bàř', 'fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
+            array('¬ø¬øfòô bàř', 'fòô bàř', 11, '¬ø', 'left', 'UTF-8'),
 
             // both
-            array('foo bar', 'foo bar ', 8, ' ', 'both'),
-            array('foo bar', ' foo bar ', 9, ' ', 'both'),
-            array('fòô bàř', 'fòô bàř ', 8, ' ', 'both', 'UTF-8'),
-            array('fòô bàř', ' fòô bàř ', 9, ' ', 'both', 'UTF-8'),
-            array('fòô bàř', 'fòô bàř¬', 8, '¬ø', 'both', 'UTF-8'),
-            array('fòô bàř', '¬fòô bàř¬', 9, '¬ø', 'both', 'UTF-8'),
-            array('fòô bàř', '¬fòô bàř¬ø', 10, '¬ø', 'both', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř¬ø', 11, '¬ø', 'both', 'UTF-8'),
-            array('fòô bàř', '¬fòô bàř¬ø', 10, '¬øÿ', 'both', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř¬ø', 11, '¬øÿ', 'both', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř¬øÿ', 12, '¬øÿ', 'both', 'UTF-8')
+            array('foo bar ', 'foo bar', 8, ' ', 'both'),
+            array(' foo bar ', 'foo bar', 9, ' ', 'both'),
+            array('fòô bàř ', 'fòô bàř', 8, ' ', 'both', 'UTF-8'),
+            array(' fòô bàř ', 'fòô bàř', 9, ' ', 'both', 'UTF-8'),
+            array('fòô bàř¬', 'fòô bàř', 8, '¬ø', 'both', 'UTF-8'),
+            array('¬fòô bàř¬', 'fòô bàř', 9, '¬ø', 'both', 'UTF-8'),
+            array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬ø', 'both', 'UTF-8'),
+            array('¬øfòô bàř¬ø', 'fòô bàř', 11, '¬ø', 'both', 'UTF-8'),
+            array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬øÿ', 'both', 'UTF-8'),
+            array('¬øfòô bàř¬ø', 'fòô bàř', 11, '¬øÿ', 'both', 'UTF-8'),
+            array('¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'both', 'UTF-8')
         );
 
         return $testData;
@@ -335,7 +335,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForPadLeft
      */
-    public function testPadLeft($string, $expected, $length, $padStr = ' ',
+    public function testPadLeft($expected, $string, $length, $padStr = ' ',
                                 $encoding = null) {
         $result = S::padLeft($string, $length, $padStr, $encoding);
         $this->assertEquals($expected, $result);
@@ -343,9 +343,9 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
 
     public function stringsForPadLeft() {
         $testData = array(
-            array('foo bar', '  foo bar', 9),
-            array('foo bar', '_*_foo bar', 10, '_*'),
-            array('fòô bàř', '¬ø¬øfòô bàř', 11, '¬ø', 'UTF-8'),
+            array('  foo bar', 'foo bar', 9),
+            array('_*_foo bar', 'foo bar', 10, '_*'),
+            array('¬ø¬øfòô bàř', 'fòô bàř', 11, '¬ø', 'UTF-8'),
         );
 
         return $testData;
@@ -354,7 +354,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForPadRight
      */
-    public function testPadRight($string, $expected, $length, $padStr = ' ',
+    public function testPadRight($expected, $string, $length, $padStr = ' ',
                                  $encoding = null) {
         $result = S::padRight($string, $length, $padStr, $encoding);
         $this->assertEquals($expected, $result);
@@ -362,9 +362,9 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
 
     public function stringsForPadRight() {
         $testData = array(
-            array('foo bar', 'foo bar  ', 9),
-            array('foo bar', 'foo bar_*_', 10, '_*'),
-            array('fòô bàř', 'fòô bàř¬ø¬ø', 11, '¬ø', 'UTF-8'),
+            array('foo bar  ', 'foo bar', 9),
+            array('foo bar_*_', 'foo bar', 10, '_*'),
+            array('fòô bàř¬ø¬ø', 'fòô bàř', 11, '¬ø', 'UTF-8'),
         );
 
         return $testData;
@@ -373,7 +373,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider stringsForPadBoth
      */
-    public function testPadBoth($string, $expected, $length, $padStr = ' ',
+    public function testPadBoth($expected, $string, $length, $padStr = ' ',
                                 $encoding = null) {
         $result = S::padBoth($string, $length, $padStr, $encoding);
         $this->assertEquals($expected, $result);
@@ -381,10 +381,10 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
 
     public function stringsForPadBoth() {
         $testData = array(
-            array('foo bar', 'foo bar ', 8),
-            array('foo bar', ' foo bar ', 9, ' '),
-            array('fòô bàř', '¬fòô bàř¬ø', 10, '¬øÿ', 'UTF-8'),
-            array('fòô bàř', '¬øfòô bàř¬øÿ', 12, '¬øÿ', 'UTF-8')
+            array('foo bar ', 'foo bar', 8),
+            array(' foo bar ', 'foo bar', 9, ' '),
+            array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬øÿ', 'UTF-8'),
+            array('¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'UTF-8')
         );
 
         return $testData;
