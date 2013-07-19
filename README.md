@@ -22,6 +22,8 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [padBoth](#padboth)
     * [startsWith](#startswith)
     * [endsWith](#endswith)
+    * [toSpaces](#tospaces)
+    * [toTabs](#totabs)
 * [Tests](#tests)
 * [License](#license)
 
@@ -265,11 +267,30 @@ by setting $caseSensitive to false.
 S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8'); // true
 ```
 
+##### toSpaces
+
+S::toSpaces(string $str, [, int $tabLength = 4 ])
+
+Converts each tab in a string to some number of spaces, as defined by
+$tabLength. By default, each tab is converted to 4 consecutive spaces.
+
+```php
+S:::toSpaces('	String speech = "Hi"') \\ '    String speech = "Hi"'
+```
+
+##### toTabs
+
+S::toTabs(string $str, [, int $tabLength = 4 ])
+
+Converts each occurence of some consecutive number of spaces, as defined
+by $tabLength, to a tab. By default, each 4 consecutive spaces are
+converted to a tab.
+
+```php
+S:::toTabs("    fòô    bàř") \\ "	fòô	bàř"
+```
+
 ## TODO
-
-**toSpaces**
-
-**toTabs**
 
 **toAnchor**
 

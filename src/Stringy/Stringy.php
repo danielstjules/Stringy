@@ -421,6 +421,35 @@ class Stringy {
         return $substring === $endOfStr;
     }
 
+    /**
+     * Converts each tab in a string to some number of spaces, as defined by
+     * $tabLength. By default, each tab is converted to 4 consecutive spaces.
+     *
+     * @param   string  $str        String to convert tabs to spaces
+     * @param   int     $tabLength  Number of spaces to replace each tab with
+     * @return  string  String with tabs switched to spaces
+     */
+    public static function toSpaces($str, $tabLength = 4) {
+        $spaces = str_repeat(' ', $tabLength);
+
+        return str_replace("\t", $spaces, $str);
+    }
+
+    /**
+     * Converts each occurence of some consecutive number of spaces, as defined
+     * by $tabLength, to a tab. By default, each 4 consecutive spaces are
+     * converted to a tab.
+     *
+     * @param   string  $str        String to convert spaces to tabs
+     * @param   int     $tabLength  Number of spaces to replace with a tab
+     * @return  string  String with spaces switched to tabs
+     */
+    public static function toTabs($str, $tabLength = 4) {
+        $spaces = str_repeat(' ', $tabLength);
+
+        return str_replace($spaces, "\t", $str);
+    }
+
 }
 
 ?>

@@ -444,6 +444,47 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForToSpaces
+     */
+    public function testToSpaces($expected, $string, $tabLength = 4) {
+        $result = S::toSpaces($string, $tabLength);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForToSpaces() {
+        $testData = array(
+            array('    foo    bar    ', '	foo	bar	'),
+            array('     foo     bar     ', '	foo	bar	', 5),
+            array('    foo  bar  ', '		foo	bar	', 2),
+            array('foobar', '	foo	bar	', 0),
+            array("    foo\n    bar", "	foo\n	bar"),
+            array("    fòô\n    bàř", "	fòô\n	bàř")
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForToTabs
+     */
+    public function testToTabs($expected, $string, $tabLength = 4) {
+        $result = S::toTabs($string, $tabLength);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForToTabs() {
+        $testData = array(
+            array('	foo	bar	', '    foo    bar    '),
+            array('	foo	bar	', '     foo     bar     ', 5),
+            array('		foo	bar	', '    foo  bar  ', 2),
+            array("	foo\n	bar", "    foo\n    bar"),
+            array("	fòô\n	bàř", "    fòô\n    bàř")
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>
