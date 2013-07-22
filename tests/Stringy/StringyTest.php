@@ -485,6 +485,27 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForSlugify
+     */
+    public function testSlugify($expected, $string) {
+        $result = S::slugify($string);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForSlugify() {
+        $testData = array(
+            array('foo-bar', ' foo  bar '),
+            array('foo-dbar', " Foo d'Bar "),
+            array('a-string-with-dashes', 'A string-with-dashes'),
+            array('using-strings-like-foo-bar', 'Using strings like fòô bàř'),
+            array('unrecognized-chars-like', 'unrecognized chars like συγγρ'),
+            array('numbers-1234', 'numbers 1234')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

@@ -275,7 +275,7 @@ Converts each tab in a string to some number of spaces, as defined by
 $tabLength. By default, each tab is converted to 4 consecutive spaces.
 
 ```php
-S:::toSpaces('	String speech = "Hi"') \\ '    String speech = "Hi"'
+S::toSpaces('	String speech = "Hi"') \\ '    String speech = "Hi"'
 ```
 
 ##### toTabs
@@ -287,14 +287,23 @@ by $tabLength, to a tab. By default, each 4 consecutive spaces are
 converted to a tab.
 
 ```php
-S:::toTabs("    fòô    bàř") \\ "	fòô	bàř"
+S::toTabs("    fòô    bàř") \\ "	fòô	bàř"
+```
+
+##### slugify
+
+S::slugify(string $str)
+
+Converts the supplied text into an URL slug. This includes replacing
+non-ASCII characters with their closest ASCII equivalents, removing
+non-alphanumeric and non-ASCII characters, and replacing whitespace with
+dashes. The string is also converted to lowercase.
+
+```php
+S::slugify('Using strings like fòô bàř') // 'using-strings-like-foo-bar'
 ```
 
 ## TODO
-
-**toAnchor**
-
-**slugify**
 
 **contains**
 

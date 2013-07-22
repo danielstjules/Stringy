@@ -450,6 +450,22 @@ class Stringy {
         return str_replace($spaces, "\t", $str);
     }
 
+    /**
+     * Converts the supplied text into an URL slug. This includes replacing
+     * non-ASCII characters with their closest ASCII equivalents, removing
+     * non-alphanumeric and non-ASCII characters, and replacing whitespace with
+     * dashes. The string is also converted to lowercase.
+     *
+     * @param   string  $str  Text to transform into an URL slug
+     * @return  string  The corresponding URL slug
+     */
+    public static function slugify($str) {
+        $str = preg_replace('/[^a-zA-Z\d -]/u', '', self::standardize($str));
+        $str = self::clean($str);
+
+        return self::dasherize(strtolower($str));
+    }
+
 }
 
 ?>
