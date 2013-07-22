@@ -466,6 +466,23 @@ class Stringy {
         return self::dasherize(strtolower($str));
     }
 
+    /**
+     * Returns true if $haystack contains $needle, false otherwise.
+     *
+     * @param   string  $haystack  String being checked
+     * @param   string  $needle    Substring to look for
+     * @param   string  $encoding  The character encoding
+     * @return  bool    Whether or not $haystack contains $needle
+     */
+    public static function contains($haystack, $needle, $encoding) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        if (mb_strpos($haystack, $needle, 0, $encoding) !== false)
+            return true;
+
+        return false;
+    }
+
 }
 
 ?>

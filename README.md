@@ -24,6 +24,8 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [endsWith](#endswith)
     * [toSpaces](#tospaces)
     * [toTabs](#totabs)
+    * [slugify](#slugify)
+    * [contains](#contains)
 * [Tests](#tests)
 * [License](#license)
 
@@ -303,11 +305,21 @@ dashes. The string is also converted to lowercase.
 S::slugify('Using strings like fòô bàř') // 'using-strings-like-foo-bar'
 ```
 
+##### contains
+
+S::contains(string $haystack, string $needle [, string $encoding ])
+
+Returns true if $haystack contains $needle, false otherwise.
+
+```php
+S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8') // true
+```
+
 ## TODO
 
-**contains**
-
 **between**
+
+**surround**
 
 **replace** => substr_replace
 
@@ -336,6 +348,8 @@ S::slugify('Using strings like fòô bàř') // 'using-strings-like-foo-bar'
 **count** => substr_count
 
 **isJson**
+
+**isMultibyte**
 
 ## Tests
 

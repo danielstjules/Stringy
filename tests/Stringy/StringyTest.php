@@ -506,6 +506,32 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForContains
+     */
+    public function testContains($expected, $haystack, $needle, $encoding = null) {
+        $result = S::contains($haystack, $needle, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForContains() {
+        $testData = array(
+            array(true, 'This string contains foo bar', 'foo bar'),
+            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
+            array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'øœ¬', 'UTF-8'),
+            array(false, 'This string contains foo bar', 'Foo bar'),
+            array(false, 'This string contains foo bar', 'foobar'),
+            array(false, 'This string contains foo bar', 'foo bar '),
+            array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', 'UTF-8'),
+            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>
