@@ -612,6 +612,25 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForReverse
+     */
+    public function testReverse($expected, $string, $encoding = null) {
+        $result = S::reverse($string, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForReverse() {
+        $testData = array(
+            array('', ''),
+            array('raboof', 'foobar'),
+            array('řàb ôòf', 'fòô bàř', 'UTF-8'),
+            array('∂∆ ˚åß', 'ßå˚ ∆∂', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

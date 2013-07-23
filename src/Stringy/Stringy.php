@@ -550,6 +550,27 @@ class Stringy {
         return $truncated . $substring;
     }
 
+    /**
+     * Reverses a string. A multibyte version of strrev.
+     *
+     * @param   string  $str        String to reverse
+     * @param   string  $encoding   The character encoding
+     * @return  string  The reversed string
+     */
+    public static function reverse($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $strLength = mb_strlen($str, $encoding);
+        $reversed = '';
+
+        // Loop from last index of string to first
+        for ($i = $strLength - 1; $i >= 0; $i--) {
+            $reversed .= mb_substr($str, $i, 1, $encoding);
+        }
+
+        return $reversed;
+    }
+
 }
 
 ?>

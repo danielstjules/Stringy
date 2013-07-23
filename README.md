@@ -29,6 +29,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [surround](#surround)
     * [insert](#insert)
     * [truncate](#truncate)
+    * [reverse](#reverse)
 * [Tests](#tests)
 * [License](#license)
 
@@ -340,7 +341,7 @@ S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
 
 ##### truncate
 
-S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ] ])
+S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
 
 Truncates the string to a given length, while ensuring that it does not
 chop words. If $substring is provided, and truncating occurs, the string
@@ -351,11 +352,17 @@ exceeding the desired length.
 S::truncate('What are your plans today?', 22, '...'); // 'What are your plans...'
 ```
 
+##### reverse
+
+S::reverse(string $str, [, string $encoding ])
+
+Reverses a string. A multibyte version of strrev.
+
+```php
+S::reverse('', 'UTF-8'); //
+```
+
 ## TODO
-
-**wordWrap** => wordwrap
-
-**reverse** => strrev
 
 **shuffle** => str_shuffle
 
@@ -368,8 +375,6 @@ S::truncate('What are your plans today?', 22, '...'); // 'What are your plans...
 **count** => substr_count
 
 **wordCount** => str_word_count
-
-**isJson**
 
 **isMultibyte**
 
