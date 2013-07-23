@@ -532,6 +532,49 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForSurround
+     */
+    public function testSurround($expected, $string, $substring) {
+        $result = S::surround($string, $substring);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForSurround() {
+        $testData = array(
+            array('__foobar__', 'foobar', '__'),
+            array('test', 'test', ''),
+            array('**', '', '*'),
+            array('¬fòô bàř¬', 'fòô bàř', '¬'),
+            array('ßå∆˚ test ßå∆˚', ' test ', 'ßå∆˚')
+        );
+
+        return $testData;
+    }
+
+    /**
+     * @dataProvider stringsForInsert
+     */
+    public function testInsert($expected, $string, $substring, $index,
+                               $encoding = null) {
+        $result = S::insert($string, $substring, $index, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function stringsForInsert() {
+        $testData = array(
+            array('foo bar', 'oo bar', 'f', 0),
+            array('foo bar', 'f bar', 'oo', 1),
+            array('f bar', 'f bar', 'oo', 20),
+            array('foo bar', 'foo ba', 'r', 6),
+            array('fòô bàř', 'òô bàř', 'f', 0, 'UTF-8'),
+            array('fòô bàř', 'f bàř', 'òô', 1, 'UTF-8'),
+            array('fòô bàř', 'fòô bà', 'ř', 6, 'UTF-8')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

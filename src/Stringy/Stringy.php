@@ -474,13 +474,45 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  bool    Whether or not $haystack contains $needle
      */
-    public static function contains($haystack, $needle, $encoding) {
+    public static function contains($haystack, $needle, $encoding = null) {
         $encoding = $encoding ?: mb_internal_encoding();
 
         if (mb_strpos($haystack, $needle, 0, $encoding) !== false)
             return true;
 
         return false;
+    }
+
+    /**
+     * Surrounds a string with the given substring.
+     *
+     * @param   string  $str        The string to surround
+     * @param   string  $substring  The substring to add to both sides
+     * @return  string  The string with the substring prepended and appended
+     */
+    public static function surround($str, $substring) {
+        return implode('', array($substring, $str, $substring));
+    }
+
+    /**
+     * Inserts $substring into $str at the $index provided.
+     *
+     * @param   string  $str        String to insert into
+     * @param   string  $substring  String to be inserted
+     * @param   int     $index      The index at which to insert the substring
+     * @param   string  $encoding   The character encoding
+     * @return  string  The resulting string after the insertion
+     */
+    public static function insert($str, $substring, $index, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        if ($index > mb_strlen($str))
+            return $str;
+
+        $start = mb_substr($str, 0, $index, $encoding);
+        $end = mb_substr($str, $index, mb_strlen($str), $encoding);
+
+        return $start . $substring . $end;
     }
 
 }

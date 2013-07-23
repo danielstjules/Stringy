@@ -315,15 +315,27 @@ Returns true if $haystack contains $needle, false otherwise.
 S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8') // true
 ```
 
+##### surround
+
+S::surround(string $str, string $substring)
+
+Surrounds a string with the given substring.
+
+```php
+S::surround(' ͜ ', 'ʘ'); // 'ʘ ͜ ʘ'
+```
+
+##### insert
+
+S::insert(string $str, int $index, string $substring [, string $encoding ])
+
+Inserts $substring into $str at the $index provided.
+
+```php
+S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
+```
+
 ## TODO
-
-**between**
-
-**surround**
-
-**replace** => substr_replace
-
-**insert**
 
 **truncate**
 
