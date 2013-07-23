@@ -359,7 +359,7 @@ S::reverse(string $str, [, string $encoding ])
 Reverses a string. A multibyte version of strrev.
 
 ```php
-S::reverse('', 'UTF-8'); //
+S::reverse('fòô bàř', 'UTF-8'); // 'řàb ôòf'
 ```
 
 ## TODO

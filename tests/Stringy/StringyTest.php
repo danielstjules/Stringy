@@ -624,6 +624,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         $testData = array(
             array('', ''),
             array('raboof', 'foobar'),
+            array('řàbôòf', 'fòôbàř', 'UTF-8'),
             array('řàb ôòf', 'fòô bàř', 'UTF-8'),
             array('∂∆ ˚åß', 'ßå˚ ∆∂', 'UTF-8')
         );
