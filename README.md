@@ -26,6 +26,9 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [toTabs](#totabs)
     * [slugify](#slugify)
     * [contains](#contains)
+    * [surround](#surround)
+    * [insert](#insert)
+    * [truncate](#truncate)
 * [Tests](#tests)
 * [License](#license)
 
@@ -335,11 +338,20 @@ Inserts $substring into $str at the $index provided.
 S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
 ```
 
+##### truncate
+
+S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ] ])
+
+Truncates the string to a given length, while ensuring that it does not
+chop words. If $substring is provided, and truncating occurs, the string
+is further truncated so that the substring may be appended without
+exceeding the desired length.
+
+```php
+S::truncate('What are your plans today?', 22, '...'); // 'What are your plans...'
+```
+
 ## TODO
-
-**truncate**
-
-**prune**
 
 **wordWrap** => wordwrap
 
@@ -353,11 +365,9 @@ S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
 
 **longestCommonSubstring**
 
-**countChars** => count_chars
+**count** => substr_count
 
 **wordCount** => str_word_count
-
-**count** => substr_count
 
 **isJson**
 

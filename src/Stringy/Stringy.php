@@ -463,7 +463,7 @@ class Stringy {
         $str = preg_replace('/[^a-zA-Z\d -]/u', '', self::standardize($str));
         $str = self::clean($str);
 
-        return self::dasherize(strtolower($str));
+        return str_replace(' ', '-', strtolower($str));
     }
 
     /**
@@ -506,13 +506,48 @@ class Stringy {
     public static function insert($str, $substring, $index, $encoding = null) {
         $encoding = $encoding ?: mb_internal_encoding();
 
-        if ($index > mb_strlen($str))
+        if ($index > mb_strlen($str, $encoding))
             return $str;
 
         $start = mb_substr($str, 0, $index, $encoding);
-        $end = mb_substr($str, $index, mb_strlen($str), $encoding);
+        $end = mb_substr($str, $index, mb_strlen($str, $encoding), $encoding);
 
         return $start . $substring . $end;
+    }
+
+    /**
+     * Truncates the string to a given length, while ensuring that it does not
+     * chop words. If $substring is provided, and truncating occurs, the string
+     * is further truncated so that the substring may be appended without
+     * exceeding the desired length.
+     *
+     * @param   string  $str          String to truncate
+     * @param   int     $length       Desired length of the truncated string
+     * @param   string  $substring    The substring to append if it can fit
+     * @param   string  $encoding     The character encoding
+     * @return  string  The resulting string after truncating
+     */
+    public static function truncate($str, $length, $substring = '',
+                                    $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        if ($length >= mb_strlen($str, $encoding))
+            return $str;
+
+        // Need to further trim the string so we can append the substring
+        $substringLength = mb_strlen($substring, $encoding);
+        $length = $length - $substringLength;
+
+        $truncated = mb_substr($str, 0, $length, $encoding);
+
+        // If the last word was truncated
+        if (mb_strpos($str, ' ', $length - 1, $encoding) != $length) {
+            // Find pos of the last occurence of a space, and get everything up until
+            $lastPos = mb_strrpos($truncated, ' ', 0, $encoding);
+            $truncated = mb_substr($truncated, 0, $lastPos, $encoding);
+        }
+
+        return $truncated . $substring;
     }
 
 }
