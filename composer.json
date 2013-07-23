@@ -1,6 +1,6 @@
 {
     "name": "danielstjules/stringy",
-    "description": "A PHP library with a variety of string manipulation functions with multibyte support.",
+    "description": "A small string manipulation library with multibyte support",
     "keywords": [
         "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
         "helpers", "utils"
