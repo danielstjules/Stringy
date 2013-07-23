@@ -571,6 +571,28 @@ class Stringy {
         return $reversed;
     }
 
+    /**
+     * A multibyte str_shuffle function. It randomizes the order of characters
+     * in a string.
+     *
+     * @param   string  $str       String to shuffle
+     * @param   string  $encoding  The character encoding
+     * @return  string  The shuffled string
+     */
+    public static function shuffle($str, $encoding = null) {
+        $encoding = $encoding ?: mb_internal_encoding();
+
+        $indexes = range(0, mb_strlen($str, $encoding) - 1);
+        shuffle($indexes);
+
+        $shuffledStr = '';
+        foreach ($indexes as $i) {
+            $shuffledStr .= mb_substr($str, $i, 1, $encoding);
+        }
+
+        return $shuffledStr;
+    }
+
 }
 
 ?>

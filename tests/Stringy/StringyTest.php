@@ -632,6 +632,25 @@ class StringyTestCase extends PHPUnit_Framework_TestCase {
         return $testData;
     }
 
+    /**
+     * @dataProvider stringsForShuffle
+     */
+    public function testShuffle($string, $encoding = null) {
+        // We'll just make sure that the chars are present before/after shuffle
+        $result = S::shuffle($string, $encoding);
+        $this->assertEquals(count_chars($string), count_chars($result));
+    }
+
+    public function stringsForShuffle() {
+        $testData = array(
+            array('foo bar'),
+            array('∂∆ ˚åß', 'UTF-8'),
+            array('å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
 }
 
 ?>

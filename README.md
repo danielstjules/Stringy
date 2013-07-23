@@ -30,6 +30,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [insert](#insert)
     * [truncate](#truncate)
     * [reverse](#reverse)
+    * [shuffle](#shuffle)
 * [Tests](#tests)
 * [License](#license)
 
@@ -362,11 +363,18 @@ Reverses a string. A multibyte version of strrev.
 S::reverse('fòô bàř', 'UTF-8'); // 'řàb ôòf'
 ```
 
+##### shuffle
+
+S::shuffle(string $str [, string $encoding ])
+
+A multibyte str_shuffle function. It randomizes the order of characters
+in a string.
+
+```php
+S::shuffle('fòô bàř', 'UTF-8') // 'àôřb òf'
+```
+
 ## TODO
-
-**shuffle** => str_shuffle
-
-**explode** => explode
 
 **longestCommonPrefix**
 
