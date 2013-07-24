@@ -2,8 +2,8 @@
 
 namespace Stringy;
 
-class Stringy {
-
+class Stringy
+{
     /**
      * Converts the first character of the supplied string to upper case.
      *
@@ -11,7 +11,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being upper case
      */
-    public static function upperCaseFirst($str, $encoding = null) {
+    public static function upperCaseFirst($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $first = mb_substr($str, 0, 1, $encoding);
@@ -27,7 +28,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String with the first character being lower case
      */
-    public static function lowerCaseFirst($str, $encoding = null) {
+    public static function lowerCaseFirst($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $first = mb_substr($str, 0, 1, $encoding);
@@ -45,7 +47,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String in camelCase
      */
-    public static function camelize($str, $encoding = null) {
+    public static function camelize($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $camelCase = preg_replace_callback(
@@ -76,7 +79,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String in UpperCamelCase
      */
-    public static function upperCamelize($str, $encoding = null) {
+    public static function upperCamelize($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
         $camelCase = self::camelize($str, $encoding);
 
@@ -92,7 +96,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  Dasherized string
      */
-    public static function dasherize($str, $encoding = null) {
+    public static function dasherize($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
         mb_regex_encoding($encoding);
 
@@ -112,7 +117,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  Underscored string
      */
-    public static function underscored($str, $encoding = null) {
+    public static function underscored($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
         mb_regex_encoding($encoding);
 
@@ -129,7 +135,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String with each character's case swapped
      */
-    public static function swapCase($str, $encoding = null) {
+    public static function swapCase($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $swapped = preg_replace_callback(
@@ -157,7 +164,8 @@ class Stringy {
      * @param   array   $ignore    An array of words not to capitalize
      * @return  string  Titleized string
      */
-    public static function titleize($str, $ignore = null, $encoding = null) {
+    public static function titleize($str, $ignore = null, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $titleized = preg_replace_callback(
@@ -181,7 +189,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  A humanized string
      */
-    public static function humanize($str, $encoding = null) {
+    public static function humanize($str, $encoding = null)
+    {
         $humanized = str_replace('_id', '', $str);
         $humanized = str_replace('_', ' ', $humanized);
 
@@ -196,7 +205,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  String with those characters removed
      */
-    public static function tidy($str) {
+    public static function tidy($str)
+    {
         $tidied = preg_replace('/\x{2026}/u', '...', $str);
         $tidied = preg_replace('/[\x{201C}\x{201D}]/u', '"', $tidied);
         $tidied = preg_replace('/[\x{2018}\x{2019}]/u', "'", $tidied);
@@ -212,7 +222,8 @@ class Stringy {
      * @param   string  $str  The string to cleanup whitespace
      * @return  string  The trimmed string with condensed whitespace
      */
-    public static function clean($str) {
+    public static function clean($str)
+    {
         return preg_replace('/\s+/u', ' ', trim($str));
     }
 
@@ -222,7 +233,8 @@ class Stringy {
      * @param   string  $str  A string with non-ASCII characters
      * @return  string  The string after the replacements
      */
-    public static function standardize($str) {
+    public static function standardize($str)
+    {
         $charsArray = array(
             'a' => array('à', 'á', 'â', 'ã', 'ă', 'ä', 'å', 'ą'),
             'c' => array('ć', 'č', 'ç'),
@@ -279,7 +291,8 @@ class Stringy {
      *          'left' or 'both'
      */
     public static function pad($str, $length, $padStr = ' ', $padType = 'right',
-                               $encoding = null) {
+                               $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         if (!in_array($padType, array('left', 'right', 'both'))) {
@@ -334,7 +347,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  The padded string
      */
-    public static function padLeft($str, $length, $padStr = ' ', $encoding = null) {
+    public static function padLeft($str, $length, $padStr = ' ', $encoding = null)
+    {
         return self::pad($str, $length, $padStr, 'left', $encoding);
     }
 
@@ -348,7 +362,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  The padded string
      */
-    public static function padRight($str, $length, $padStr = ' ', $encoding = null) {
+    public static function padRight($str, $length, $padStr = ' ', $encoding = null)
+    {
         return self::pad($str, $length, $padStr, 'right', $encoding);
     }
 
@@ -362,7 +377,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  The padded string
      */
-    public static function padBoth($str, $length, $padStr = ' ', $encoding = null) {
+    public static function padBoth($str, $length, $padStr = ' ', $encoding = null)
+    {
         return self::pad($str, $length, $padStr, 'both', $encoding);
     }
 
@@ -378,7 +394,8 @@ class Stringy {
      * @return  bool    Whether or not $str starts with $substring
      */
     public static function startsWith($str, $substring, $caseSensitive = true,
-                                      $encoding = null) {
+                                      $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $substringLength = mb_strlen($substring, $encoding);
@@ -404,7 +421,8 @@ class Stringy {
      * @return  bool    Whether or not $str ends with $substring
      */
     public static function endsWith($str, $substring, $caseSensitive = true,
-                                    $encoding = null) {
+                                    $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $substringLength = mb_strlen($substring, $encoding);
@@ -429,7 +447,8 @@ class Stringy {
      * @param   int     $tabLength  Number of spaces to replace each tab with
      * @return  string  String with tabs switched to spaces
      */
-    public static function toSpaces($str, $tabLength = 4) {
+    public static function toSpaces($str, $tabLength = 4)
+    {
         $spaces = str_repeat(' ', $tabLength);
 
         return str_replace("\t", $spaces, $str);
@@ -444,7 +463,8 @@ class Stringy {
      * @param   int     $tabLength  Number of spaces to replace with a tab
      * @return  string  String with spaces switched to tabs
      */
-    public static function toTabs($str, $tabLength = 4) {
+    public static function toTabs($str, $tabLength = 4)
+    {
         $spaces = str_repeat(' ', $tabLength);
 
         return str_replace($spaces, "\t", $str);
@@ -459,7 +479,8 @@ class Stringy {
      * @param   string  $str  Text to transform into an URL slug
      * @return  string  The corresponding URL slug
      */
-    public static function slugify($str) {
+    public static function slugify($str)
+    {
         $str = preg_replace('/[^a-zA-Z\d -]/u', '', self::standardize($str));
         $str = self::clean($str);
 
@@ -474,7 +495,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  bool    Whether or not $haystack contains $needle
      */
-    public static function contains($haystack, $needle, $encoding = null) {
+    public static function contains($haystack, $needle, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         if (mb_strpos($haystack, $needle, 0, $encoding) !== false)
@@ -490,7 +512,8 @@ class Stringy {
      * @param   string  $substring  The substring to add to both sides
      * @return  string  The string with the substring prepended and appended
      */
-    public static function surround($str, $substring) {
+    public static function surround($str, $substring)
+    {
         return implode('', array($substring, $str, $substring));
     }
 
@@ -503,7 +526,8 @@ class Stringy {
      * @param   string  $encoding   The character encoding
      * @return  string  The resulting string after the insertion
      */
-    public static function insert($str, $substring, $index, $encoding = null) {
+    public static function insert($str, $substring, $index, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         if ($index > mb_strlen($str, $encoding))
@@ -528,7 +552,8 @@ class Stringy {
      * @return  string  The resulting string after truncating
      */
     public static function truncate($str, $length, $substring = '',
-                                    $encoding = null) {
+                                    $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         if ($length >= mb_strlen($str, $encoding))
@@ -557,7 +582,8 @@ class Stringy {
      * @param   string  $encoding   The character encoding
      * @return  string  The reversed string
      */
-    public static function reverse($str, $encoding = null) {
+    public static function reverse($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $strLength = mb_strlen($str, $encoding);
@@ -579,7 +605,8 @@ class Stringy {
      * @param   string  $encoding  The character encoding
      * @return  string  The shuffled string
      */
-    public static function shuffle($str, $encoding = null) {
+    public static function shuffle($str, $encoding = null)
+    {
         $encoding = $encoding ?: mb_internal_encoding();
 
         $indexes = range(0, mb_strlen($str, $encoding) - 1);
@@ -592,7 +619,4 @@ class Stringy {
 
         return $shuffledStr;
     }
-
 }
-
-?>
