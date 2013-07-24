@@ -217,12 +217,12 @@ class Stringy
 
     /**
      * Trims the string and replaces consecutive whitespace characters with a
-     * single space.
+     * single space. This inclues tabs and newline characters.
      *
      * @param   string  $str  The string to cleanup whitespace
      * @return  string  The trimmed string with condensed whitespace
      */
-    public static function clean($str)
+    public static function collapseWhitespace($str)
     {
         return preg_replace('/\s+/u', ' ', trim($str));
     }
@@ -482,7 +482,7 @@ class Stringy
     public static function slugify($str)
     {
         $str = preg_replace('/[^a-zA-Z\d -]/u', '', self::standardize($str));
-        $str = self::clean($str);
+        $str = self::collapseWhitespace($str);
 
         return str_replace(' ', '-', strtolower($str));
     }
@@ -551,7 +551,7 @@ class Stringy
      * @param   string  $encoding     The character encoding
      * @return  string  The resulting string after truncating
      */
-    public static function truncate($str, $length, $substring = '',
+    public static function safeTruncate($str, $length, $substring = '',
                                     $encoding = null)
     {
         $encoding = $encoding ?: mb_internal_encoding();

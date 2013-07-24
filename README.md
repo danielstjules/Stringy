@@ -2,6 +2,8 @@
 
 A PHP library with a variety of string manipulation functions with multibyte support. Inspired by underscore.string.js.
 
+Note: The methods listed below are subject to change until we reach a 1.0.0 release.
+
 * [Requiring/Loading](#requiringloading)
 * [Methods](#methods)
     * [upperCaseFirst](#uppercasefirst)
@@ -14,7 +16,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [titleize](#titleize)
     * [humanize](#humanize)
     * [tidy](#tidy)
-    * [clean](#clean)
+    * [collapseWhitespace](#collapsewhitespace)
     * [standardize](#standardize)
     * [pad](#pad)
     * [padLeft](#padleft)
@@ -28,7 +30,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [contains](#contains)
     * [surround](#surround)
     * [insert](#insert)
-    * [truncate](#truncate)
+    * [safeTruncate](#safetruncate)
     * [reverse](#reverse)
     * [shuffle](#shuffle)
 * [Tests](#tests)
@@ -183,15 +185,15 @@ Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
 S::tidy('“I see…”');  // '"I see..."'
 ```
 
-##### clean
+##### collapseWhitespace
 
-S::clean(string $str)
+S::collapseWhitespace(string $str)
 
 Trims the string and replaces consecutive whitespace characters with a
-single space.
+single space. This inclues tabs and newline characters.
 
 ```php
-S::clean('   Ο     συγγραφέας  '); // 'Ο συγγραφέας'
+S::collapseWhitespace('   Ο     συγγραφέας  '); // 'Ο συγγραφέας'
 ```
 
 ##### standardize
@@ -340,9 +342,9 @@ Inserts $substring into $str at the $index provided.
 S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
 ```
 
-##### truncate
+##### safeTruncate
 
-S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
 
 Truncates the string to a given length, while ensuring that it does not
 chop words. If $substring is provided, and truncating occurs, the string
@@ -350,7 +352,7 @@ is further truncated so that the substring may be appended without
 exceeding the desired length.
 
 ```php
-S::truncate('What are your plans today?', 22, '...'); // 'What are your plans...'
+S::safeTruncate('What are your plans today?', 22, '...'); // 'What are your plans...'
 ```
 
 ##### reverse
@@ -385,6 +387,50 @@ S::shuffle('fòô bàř', 'UTF-8') // 'àôřb òf'
 **wordCount** => str_word_count
 
 **isMultibyte**
+
+**wordWrap**
+
+**chars** $callback
+
+**words** $callback
+
+**paragraphs**
+
+**lines**
+
+**excerpt** ($str, $substring, $radius)
+
+**truncate**
+
+**pluralize** ($count, $singular, $plural = null)
+
+**at** $position
+
+**first**
+
+**last**
+
+**from**
+
+**to**
+
+**toBoolean**
+
+**ensureLeft**
+
+**ensureRight**
+
+**isAlpha**
+
+**isAlphaNumeric**
+
+**isUpper**
+
+**isLower**
+
+**isBlank**
+
+**length**
 
 ## Tests
 

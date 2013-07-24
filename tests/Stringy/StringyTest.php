@@ -263,15 +263,15 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider stringsForClean
+     * @dataProvider stringsForCollapseWhitespace
      */
-    public function testClean($expected, $string)
+    public function testCollapseWhitespace($expected, $string)
     {
-        $result = S::clean($string);
+        $result = S::collapseWhitespace($string);
         $this->assertEquals($expected, $result);
     }
 
-    public function stringsForClean()
+    public function stringsForCollapseWhitespace()
     {
         $testData = array(
             array('foo bar', '  foo   bar  '),
@@ -624,16 +624,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider stringsForTruncate
+     * @dataProvider stringsForSafeTruncate
      */
-    public function testTruncate($expected, $string, $length, $substring = '',
+    public function testSafeTruncate($expected, $string, $length, $substring = '',
                                  $encoding = null)
     {
-        $result = S::truncate($string, $length, $substring, $encoding);
+        $result = S::safeTruncate($string, $length, $substring, $encoding);
         $this->assertEquals($expected, $result);
     }
 
-    public function stringsForTruncate()
+    public function stringsForSafeTruncate()
     {
         $testData = array(
             array('Test foo bar', 'Test foo bar', 12),
