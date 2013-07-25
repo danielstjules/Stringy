@@ -1,11 +1,13 @@
 # Stringy
 
-A PHP library with a variety of string manipulation functions with multibyte support. Inspired by underscore.string.js.
+A PHP library with a variety of string manipulation functions with multibyte support. It contains both an OO and Static wrapper. Inspired by underscore.string.js.
 
 Note: The methods listed below are subject to change until we reach a 1.0.0 release.
 
 * [Requiring/Loading](#requiringloading)
+* [OO & Procedural](#oo-procedural)
 * [Methods](#methods)
+    * [create](#create)
     * [upperCaseFirst](#uppercasefirst)
     * [lowerCaseFirst](#lowercasefirst)
     * [camelize](#camelize)
@@ -54,17 +56,40 @@ Otherwise, you can simply require the file directly:
 
 ```php
 require_once 'path/to/Stringy/src/Stringy/Stringy.php';
+// or
+require_once 'path/to/Stringy/src/Stringy/StaticStringy.php';
 ```
 
 And in either case, I'd suggest using an alias.
 
 ```php
 use Stringy\Stringy as S;
+// or
+use Stringy\StaticStringy as S;
 ```
+
+## OO & Procedural
+
+Documentation coming soon.
 
 ## Methods
 
+In the list below, any static method other than S::create refers to a
+method in Stringy\StaticStringy. For all others, they're found in Stringy\Stringy.
+
 *Note: If $encoding is not given, it defaults to mb_internal_encoding().*
+
+##### create
+
+S->create(string $str, [, $encoding ])
+
+Creates a Stringy object and assigns both str and encoding properties
+the supplied values. If $encoding is not specified, it defaults to
+mb_internal_encoding(). It then returns the instantiated object.
+
+```php
+S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
+```
 
 ##### upperCaseFirst
 
@@ -74,6 +99,7 @@ Converts the first character of the supplied string to upper case, with
 support for multibyte strings.
 
 ```php
+S::create('σ test', 'UTF-8')->upperCaseFirst();
 S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 ```
 
@@ -85,6 +111,7 @@ Converts the first character of the supplied string to lower case, with
 support for multibyte strings.
 
 ```php
+S::create('Σ test', 'UTF-8')->lowerCaseFirst();
 S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
@@ -97,6 +124,7 @@ Trims surrounding spaces, capitalizes letters following digits, spaces,
 dashes and underscores, and removes spaces, dashes, underscores.
 
 ```php
+S::create('Camel-Case')->camelize();
 S::camelize('Camel-Case');  // 'camelCase'
 ```
 
@@ -109,6 +137,7 @@ support. Trims surrounding spaces, capitalizes letters following digits,
 spaces, dashes and underscores, and removes spaces, dashes, underscores.
 
 ```php
+S::create('Upper Camel-Case')->upperCamelize();
 S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 ```
 
@@ -122,6 +151,7 @@ multibyte support. Dashes are inserted before uppercase characters
 of spaces as well as underscores.
 
 ```php
+S::create('TestDCase')->dasherize();
 S::dasherize('TestDCase');  // 'test-d-case'
 ```
 
@@ -135,6 +165,7 @@ multibyte support. Underscores are inserted before uppercase characters
 of spaces as well as dashes.
 
 ```php
+S::create('TestUCase')->underscored();
 S::underscored('TestUCase');  // 'test_u_case'
 ```
 
@@ -145,6 +176,7 @@ S::swapCase(string $str [, string $encoding ])
 Returns a case swapped version of a string.
 
 ```php
+S::create('Ντανιλ', 'UTF-8')->swapCase();
 S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 ```
 
@@ -159,6 +191,7 @@ capitalized.
 
 ```php
 $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
+S::create('i like to watch DVDs at home', 'UTF-8')->titleize($ignore);
 S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 // 'I Like to Watch DVDs at Home'
 ```
@@ -171,6 +204,7 @@ Capitalizes the first word of a string, replaces underscores with spaces,
 and strips '_id'.
 
 ```php
+S::create('author_id')->humanize();
 S::humanize('author_id');  // 'Author'
 ```
 
@@ -182,6 +216,7 @@ Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
 (and commonly used in Word documents) with their ASCII equivalents.
 
 ```php
+S::create('“I see…”')->tidy();
 S::tidy('“I see…”');  // '"I see..."'
 ```
 
@@ -193,7 +228,8 @@ Trims the string and replaces consecutive whitespace characters with a
 single space. This inclues tabs and newline characters.
 
 ```php
-S::collapseWhitespace('   Ο     συγγραφέας  '); // 'Ο συγγραφέας'
+S::create('   Ο     συγγραφέας  ')->collapseWhitespace();
+S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγραφέας'
 ```
 
 ##### standardize
@@ -203,7 +239,8 @@ S::standardize(string $str)
 Converts some non-ASCII characters to their closest ASCII counterparts.
 
 ```php
-S::standardize('fòô bàř'); // 'foo bar'
+S::create('fòô bàř')->standardize();
+S::standardize('fòô bàř');  // 'foo bar'
 ```
 
 ##### pad
@@ -213,10 +250,12 @@ S::pad(string $str , int $length [, string $padStr = ' ' [, string $padType = 'r
 Pads a string to a given length with another string. If length is less
 than or equal to the length of $str, then no padding takes places. The
 default string used for padding is a space, and the default type (one of
-'left', 'right', 'both') is 'right'.
+'left', 'right', 'both') is 'right'. Throws an exception if $padType
+isn't one of those 3 values.
 
 ```php
-S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8'); // '¬ø¬fòô bàř'
+S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left',);
+S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
 ```
 
 ##### padLeft
@@ -227,7 +266,8 @@ Returns a new string of a given length such that the beginning of the
 string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
 
 ```php
-S::padLeft('foo bar', 9, ' '); // '  foo bar'
+S::create($str, $encoding)->padLeft($length, $padStr);
+S::padLeft('foo bar', 9, ' ');  // '  foo bar'
 ```
 
 ##### padRight
@@ -238,7 +278,8 @@ Returns a new string of a given length such that the end of the string is
 padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
 
 ```php
-S::padRight('foo bar', 10, '_*'); // 'foo bar_*_'
+S::create('foo bar')->padRight(10, '_*');
+S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
 ```
 
 ##### padBoth
@@ -249,7 +290,8 @@ Returns a new string of a given length such that both sides of the string
 string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
 
 ```php
-S::padBoth('foo bar', 9, ' '); // ' foo bar '
+S::create('foo bar')->padBoth(9, ' ');
+S::padBoth('foo bar', 9, ' ');  // ' foo bar '
 ```
 
 ##### startsWith
@@ -261,7 +303,8 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'); // true
+S::create('FÒÔ bàřs', 'UTF-8')->startsWith('fòô bàř', false);
+S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8');  // true
 ```
 
 ##### endsWith
@@ -273,7 +316,8 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8'); // true
+S::create('FÒÔ bàřs', 'UTF-8')->endsWith('àřs', true);
+S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8');  // true
 ```
 
 ##### toSpaces
@@ -284,7 +328,8 @@ Converts each tab in a string to some number of spaces, as defined by
 $tabLength. By default, each tab is converted to 4 consecutive spaces.
 
 ```php
-S::toSpaces('	String speech = "Hi"') \\ '    String speech = "Hi"'
+S::create('	String speech = "Hi"')->toSpaces();
+S::toSpaces('	String speech = "Hi"')  // '    String speech = "Hi"'
 ```
 
 ##### toTabs
@@ -296,7 +341,8 @@ by $tabLength, to a tab. By default, each 4 consecutive spaces are
 converted to a tab.
 
 ```php
-S::toTabs("    fòô    bàř") \\ "	fòô	bàř"
+S::create('    fòô    bàř')->toTabs();
+S::toTabs('    fòô    bàř')  // '	fòô	bàř'
 ```
 
 ##### slugify
@@ -309,7 +355,8 @@ non-alphanumeric and non-ASCII characters, and replacing whitespace with
 dashes. The string is also converted to lowercase.
 
 ```php
-S::slugify('Using strings like fòô bàř') // 'using-strings-like-foo-bar'
+S::create('Using strings like fòô bàř')->slugify();
+S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
 ```
 
 ##### contains
@@ -319,7 +366,8 @@ S::contains(string $haystack, string $needle [, string $encoding ])
 Returns true if $haystack contains $needle, false otherwise.
 
 ```php
-S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8') // true
+S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
+S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')  // true
 ```
 
 ##### surround
@@ -329,7 +377,8 @@ S::surround(string $str, string $substring)
 Surrounds a string with the given substring.
 
 ```php
-S::surround(' ͜ ', 'ʘ'); // 'ʘ ͜ ʘ'
+S::create(' ͜ ')->surround('ʘ');
+S::surround(' ͜ ', 'ʘ');  // 'ʘ ͜ ʘ'
 ```
 
 ##### insert
@@ -339,7 +388,8 @@ S::insert(string $str, int $index, string $substring [, string $encoding ])
 Inserts $substring into $str at the $index provided.
 
 ```php
-S::insert('fòô bà', 'ř', 6, 'UTF-8'); // 'fòô bàř'
+S::create('fòô bà', 'UTF-8')->insert('ř', 6);
+S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
 ```
 
 ##### safeTruncate
@@ -352,7 +402,8 @@ is further truncated so that the substring may be appended without
 exceeding the desired length.
 
 ```php
-S::safeTruncate('What are your plans today?', 22, '...'); // 'What are your plans...'
+S::create('What are your plans today?')->safeTruncate(22, '...');
+S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your plans...'
 ```
 
 ##### reverse
@@ -362,7 +413,8 @@ S::reverse(string $str, [, string $encoding ])
 Reverses a string. A multibyte version of strrev.
 
 ```php
-S::reverse('fòô bàř', 'UTF-8'); // 'řàb ôòf'
+S::create('fòô bàř', 'UTF-8')->reverse();
+S::reverse('fòô bàř', 'UTF-8');  // 'řàb ôòf'
 ```
 
 ##### shuffle
@@ -373,7 +425,19 @@ A multibyte str_shuffle function. It randomizes the order of characters
 in a string.
 
 ```php
-S::shuffle('fòô bàř', 'UTF-8') // 'àôřb òf'
+S::create('fòô bàř', 'UTF-8')->shuffle();
+S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
+```
+
+##### trim
+
+S::trim(string $str)
+
+Trims $str. An alias for PHP's trim() function.
+
+```php
+S::create('fòô bàř')->trim();
+S::trim(' fòô bàř ')  // 'fòô bàř'
 ```
 
 ## TODO
