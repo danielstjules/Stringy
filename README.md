@@ -81,7 +81,7 @@ method in Stringy\StaticStringy. For all others, they're found in Stringy\String
 
 ##### create
 
-S->create(string $str, [, $encoding ])
+$stringy = S::create(string $str, [, $encoding ])
 
 Creates a Stringy object and assigns both str and encoding properties
 the supplied values. If $encoding is not specified, it defaults to
@@ -92,6 +92,8 @@ S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
 ```
 
 ##### upperCaseFirst
+
+$stringy->upperCaseFirst();
 
 S::upperCaseFirst(string $str [, string $encoding ])
 
@@ -105,6 +107,8 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 
 ##### lowerCaseFirst
 
+$stringy->lowerCaseFirst();
+
 S::lowerCaseFirst(string $str [, string $encoding ])
 
 Converts the first character of the supplied string to lower case, with
@@ -116,6 +120,8 @@ S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
 ##### camelize
+
+$stringy->camelize();
 
 S::camelize(string $str [, string $encoding ])
 
@@ -130,6 +136,8 @@ S::camelize('Camel-Case');  // 'camelCase'
 
 ##### upperCamelize
 
+$stringy->upperCamelize();
+
 S::upperCamelize(string $str [, string $encoding ])
 
 Returns an UpperCamelCase version of a supplied string, with multibyte
@@ -142,6 +150,8 @@ S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 ```
 
 ##### dasherize
+
+$stringy->dasherize();
 
 S::dasherize(string $str [, string $encoding ])
 
@@ -157,6 +167,8 @@ S::dasherize('TestDCase');  // 'test-d-case'
 
 ##### underscored
 
+$stringy->underscored();
+
 S::underscored(string $str [, string $encoding ])
 
 Returns a lowercase and trimmed string seperated by underscores, with
@@ -171,6 +183,8 @@ S::underscored('TestUCase');  // 'test_u_case'
 
 ##### swapCase
 
+$stringy->swapCase();
+
 S::swapCase(string $str [, string $encoding ])
 
 Returns a case swapped version of a string.
@@ -181,6 +195,8 @@ S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 ```
 
 ##### titleize
+
+$stringy->titleize([ string $encoding ])
 
 S::titleize(string $str [, array $ignore [, string $encoding ]])
 
@@ -198,6 +214,8 @@ S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 
 ##### humanize
 
+$stringy->humanize()
+
 S::humanize(string $str [, string $encoding ])
 
 Capitalizes the first word of a string, replaces underscores with spaces,
@@ -209,6 +227,8 @@ S::humanize('author_id');  // 'Author'
 ```
 
 ##### tidy
+
+$stringy->tidy()
 
 S::tidy(string $str)
 
@@ -222,6 +242,8 @@ S::tidy('“I see…”');  // '"I see..."'
 
 ##### collapseWhitespace
 
+$stringy->collapseWhitespace()
+
 S::collapseWhitespace(string $str)
 
 Trims the string and replaces consecutive whitespace characters with a
@@ -234,6 +256,8 @@ S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγρα�
 
 ##### standardize
 
+$stringy->standardize()
+
 S::standardize(string $str)
 
 Converts some non-ASCII characters to their closest ASCII counterparts.
@@ -244,6 +268,8 @@ S::standardize('fòô bàř');  // 'foo bar'
 ```
 
 ##### pad
+
+$stringy->pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
 
 S::pad(string $str , int $length [, string $padStr = ' ' [, string $padType = 'right' [, string $encoding ]]])
 
@@ -260,6 +286,8 @@ S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
 
 ##### padLeft
 
+$stringy->padLeft(int $length [, string $padStr = ' ' ])
+
 S::padLeft(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
 Returns a new string of a given length such that the beginning of the
@@ -271,6 +299,8 @@ S::padLeft('foo bar', 9, ' ');  // '  foo bar'
 ```
 
 ##### padRight
+
+$stringy->padRight(int $length [, string $padStr = ' ' ])
 
 S::padRight(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
@@ -284,6 +314,8 @@ S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
 
 ##### padBoth
 
+$stringy->padBoth(int $length [, string $padStr = ' ' ])
+
 S::padBoth(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
 Returns a new string of a given length such that both sides of the string
@@ -295,6 +327,8 @@ S::padBoth('foo bar', 9, ' ');  // ' foo bar '
 ```
 
 ##### startsWith
+
+$stringy->startsWith(string $substring [, boolean $caseSensitive = true ])
 
 S::startsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
 
@@ -309,6 +343,8 @@ S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8');  // true
 
 ##### endsWith
 
+$stringy->endsWith(string $substring [, boolean $caseSensitive = true ])
+
 S::endsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
 
 Returns true if the string $str ends with $substring, false otherwise.
@@ -322,6 +358,8 @@ S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8');  // true
 
 ##### toSpaces
 
+$stringy->toSpaces([ tabLength = 4 ])
+
 S::toSpaces(string $str, [, int $tabLength = 4 ])
 
 Converts each tab in a string to some number of spaces, as defined by
@@ -333,6 +371,8 @@ S::toSpaces('	String speech = "Hi"')  // '    String speech = "Hi"'
 ```
 
 ##### toTabs
+
+$stringy->toTabs([ tabLength = 4 ])
 
 S::toTabs(string $str, [, int $tabLength = 4 ])
 
@@ -346,6 +386,8 @@ S::toTabs('    fòô    bàř')  // '	fòô	bàř'
 ```
 
 ##### slugify
+
+$stringy->slugify()
 
 S::slugify(string $str)
 
@@ -361,6 +403,8 @@ S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
 
 ##### contains
 
+$stringy->contains(string $needle)
+
 S::contains(string $haystack, string $needle [, string $encoding ])
 
 Returns true if $haystack contains $needle, false otherwise.
@@ -371,6 +415,8 @@ S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')
 ```
 
 ##### surround
+
+$stringy->surround(string $substring)
 
 S::surround(string $str, string $substring)
 
@@ -383,6 +429,8 @@ S::surround(' ͜ ', 'ʘ');  // 'ʘ ͜ ʘ'
 
 ##### insert
 
+$stringy->insert(int $index, string $substring)
+
 S::insert(string $str, int $index, string $substring [, string $encoding ])
 
 Inserts $substring into $str at the $index provided.
@@ -393,6 +441,8 @@ S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
 ```
 
 ##### safeTruncate
+
+$stringy->safeTruncate(int $length, [, string $substring = '' ])
 
 S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
 
@@ -408,6 +458,8 @@ S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your pla
 
 ##### reverse
 
+$stringy->reverse()
+
 S::reverse(string $str, [, string $encoding ])
 
 Reverses a string. A multibyte version of strrev.
@@ -418,6 +470,8 @@ S::reverse('fòô bàř', 'UTF-8');  // 'řàb ôòf'
 ```
 
 ##### shuffle
+
+$stringy->shuffle()
 
 S::shuffle(string $str [, string $encoding ])
 
@@ -430,6 +484,8 @@ S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
 ```
 
 ##### trim
+
+$stringy->trim()
 
 S::trim(string $str)
 
