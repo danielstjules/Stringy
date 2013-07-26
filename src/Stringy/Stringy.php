@@ -176,7 +176,7 @@ class Stringy
                 else
                     return mb_strtoupper($match[0], $encoding);
             },
-            $this
+            $this->str
         );
 
         return $this;
@@ -204,7 +204,7 @@ class Stringy
                 $that->str = $match[0];
                 return $that->upperCaseFirst();
             },
-            $this->trim()
+            $this->trim()->str
         );
 
         return $this;

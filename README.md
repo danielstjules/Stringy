@@ -1,6 +1,6 @@
 # Stringy
 
-A PHP library with a variety of string manipulation functions with multibyte support. It contains both an OO and Static wrapper. Inspired by underscore.string.js.
+A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Inspired by underscore.string.js.
 
 Note: The methods listed below are subject to change until we reach a 1.0.0 release.
 
@@ -70,7 +70,26 @@ use Stringy\StaticStringy as S;
 
 ## OO & Procedural
 
-Documentation coming soon.
+The library offers both OO method chaining with `Stringy\Stringy`, as well as
+procedural-style static method calls with `Stringy\StaticStringy`. An example
+of the former is the following:
+
+```php
+use Stringy\Stringy as S;
+echo S::create("Fòô     Bàř", 'UTF-8')->collapseWhitespace()->swapCase();  // 'fÒÔ bÀŘ'
+```
+
+`Stringy\Stringy` contains a __toString() method, which returns the current
+string when the object is used in a string context. Its $str property is also
+public, and can be accessed directly if required, ie: `S::create('foo')->str  // 'foo'`
+
+Using the static wrapper, an alternative is the following:
+
+```php
+use Stringy\StaticStringy as S;
+$string = S::collapseWhitespace("Fòô     Bàř", 'UTF-8');
+echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ''
+```
 
 ## Methods
 
