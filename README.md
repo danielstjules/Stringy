@@ -5,7 +5,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
 Note: The methods listed below are subject to change until we reach a 1.0.0 release.
 
 * [Requiring/Loading](#requiringloading)
-* [OO & Procedural](#oo-procedural)
+* [OO and Procedural](#oo-and-procedural)
 * [Methods](#methods)
     * [create](#create)
     * [upperCaseFirst](#uppercasefirst)
@@ -68,7 +68,7 @@ use Stringy\Stringy as S;
 use Stringy\StaticStringy as S;
 ```
 
-## OO & Procedural
+## OO and Procedural
 
 The library offers both OO method chaining with `Stringy\Stringy`, as well as
 procedural-style static method calls with `Stringy\StaticStringy`. An example
