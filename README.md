@@ -41,6 +41,8 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [length](#length)
     * [substr](#substr)
     * [at](#at)
+    * [first](#first)
+    * [last](#last)
 * [Tests](#tests)
 * [License](#license)
 
@@ -602,6 +604,32 @@ S::create('fòô bàř', 'UTF-8')->at(6);
 S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
 ```
 
+##### first
+
+$stringy->first(int $n)
+
+S::first(int $n [, string $encoding ])
+
+Gets the first $n characters of $str.
+
+```php
+S::create('fòô bàř', 'UTF-8')->first(3);
+S::first('fòô bàř', 3, 'UTF-8');  // 'fòô'
+```
+
+##### last
+
+$stringy->last(int $n)
+
+S::last(int $n [, string $encoding ])
+
+Gets the last $n characters of $str.
+
+```php
+S::create('fòô bàř', 'UTF-8')->last(3);
+S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
+```
+
 ## TODO
 
 **count** => substr_count
@@ -625,14 +653,6 @@ S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
 **truncate**
 
 **pluralize** ($count, $singular, $plural = null)
-
-**first**
-
-**last**
-
-**from**
-
-**to**
 
 **toBoolean**
 

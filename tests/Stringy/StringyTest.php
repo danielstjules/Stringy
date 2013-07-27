@@ -318,4 +318,22 @@ class StringyTestCase extends CommonTest
         $result = S::create($str, $encoding)->at($index);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForFirst
+     */
+    public function testFirst($expected, $str, $n, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->first($n);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForLast
+     */
+    public function testLast($expected, $str, $n, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->last($n);
+        $this->assertEquals($expected, $result);
+    }
 }

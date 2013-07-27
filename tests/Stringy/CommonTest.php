@@ -562,6 +562,46 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForFirst()
+    {
+        $testData = array(
+            array('', 'foo bar', -5),
+            array('', 'foo bar', 0),
+            array('f', 'foo bar', 1),
+            array('foo', 'foo bar', 3),
+            array('foo bar', 'foo bar', 7),
+            array('foo bar', 'foo bar', 8),
+            array('', 'fòô bàř', -5, 'UTF-8'),
+            array('', 'fòô bàř', 0, 'UTF-8'),
+            array('f', 'fòô bàř', 1, 'UTF-8'),
+            array('fòô', 'fòô bàř', 3, 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 7, 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 8, 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForLast()
+    {
+        $testData = array(
+            array('', 'foo bar', -5),
+            array('', 'foo bar', 0),
+            array('r', 'foo bar', 1),
+            array('bar', 'foo bar', 3),
+            array('foo bar', 'foo bar', 7),
+            array('foo bar', 'foo bar', 8),
+            array('', 'fòô bàř', -5, 'UTF-8'),
+            array('', 'fòô bàř', 0, 'UTF-8'),
+            array('ř', 'fòô bàř', 1, 'UTF-8'),
+            array('bàř', 'fòô bàř', 3, 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 7, 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 8, 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

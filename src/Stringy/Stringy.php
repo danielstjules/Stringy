@@ -766,4 +766,38 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Gets the first $n characters of $str.
+     *
+     * @param   int  $n  Number of characters to retrieve from the start
+     * @return  Stringy  Object with its $str being the first $n chars
+     */
+    public function first($n)
+    {
+        if ($n < 0) {
+            $this->str = '';
+        } else {
+            $this->substr(0, $n);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets the last $n characters of $str.
+     *
+     * @param   int  $n  Number of characters to retrieve from the end
+     * @return  Stringy  Object with its $str being the last $n chars
+     */
+    public function last($n)
+    {
+        if ($n <= 0) {
+            $this->str = '';
+        } else {
+            $this->substr(-$n);
+        }
+
+        return $this;
+    }
 }

@@ -484,4 +484,28 @@ class StaticStringy
     {
         return Stringy::create($str, $encoding)->at($index)->str;
     }
+
+    /**
+     * Gets the first $n characters of $str.
+     *
+     * @param   int      $n         Number of chars to retrieve from the start
+     * @param   string   $encoding  The character encoding
+     * @return  string   The first $n characters
+     */
+    public static function first($str, $n, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->first($n)->str;
+    }
+
+    /**
+     * Gets the last $n characters of $str.
+     *
+     * @param   int      $n         Number of chars to retrieve from the end
+     * @param   string   $encoding  The character encoding
+     * @return  string   The last $n characters
+     */
+    public static function last($str, $n, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->last($n)->str;
+    }
 }
