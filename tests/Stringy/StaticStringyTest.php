@@ -372,4 +372,22 @@ class StaticStringyTestCase extends CommonTest
         $result = S::ensureRight($str, $substring, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForRemoveLeft
+     */
+    public function testRemoveLeft($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::removeLeft($str, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForRemoveRight
+     */
+    public function testRemoveRight($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::removeRight($str, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

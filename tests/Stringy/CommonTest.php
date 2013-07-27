@@ -669,6 +669,42 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForRemoveLeft()
+    {
+        $testData = array(
+            array('foo bar', 'foo bar', ''),
+            array('oo bar', 'foo bar', 'f'),
+            array('bar', 'foo bar', 'foo '),
+            array('foo bar', 'foo bar', 'oo'),
+            array('foo bar', 'foo bar', 'oo bar'),
+            array('fòô bàř', 'fòô bàř', '', 'UTF-8'),
+            array('òô bàř', 'fòô bàř', 'f', 'UTF-8'),
+            array('bàř', 'fòô bàř', 'fòô ', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'òô', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'òô bàř', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    public function stringsForRemoveRight()
+    {
+        $testData = array(
+            array('foo bar', 'foo bar', ''),
+            array('foo ba', 'foo bar', 'r'),
+            array('foo', 'foo bar', ' bar'),
+            array('foo bar', 'foo bar', 'ba'),
+            array('foo bar', 'foo bar', 'foo ba'),
+            array('fòô bàř', 'fòô bàř', '', 'UTF-8'),
+            array('fòô bà', 'fòô bàř', 'ř', 'UTF-8'),
+            array('fòô', 'fòô bàř', ' bàř', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'bà', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'fòô bà', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

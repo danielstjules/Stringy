@@ -354,4 +354,22 @@ class StringyTestCase extends CommonTest
         $result = S::create($str, $encoding)->ensureRight($substring);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForRemoveLeft
+     */
+    public function testRemoveLeft($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->removeLeft($substring);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForRemoveRight
+     */
+    public function testRemoveRight($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->removeRight($substring);
+        $this->assertEquals($expected, $result);
+    }
 }

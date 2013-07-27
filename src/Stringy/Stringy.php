@@ -852,4 +852,36 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Removes the prefix $substring if present.
+     *
+     * @param   string   $substring  The prefix to remove
+     * @return  Stringy  Object having a $str without the prefix $substring
+     */
+    public function removeLeft($substring)
+    {
+        if ($this->startsWith($substring)) {
+            $substringLength = mb_strlen($substring, $this->encoding);
+            $this->substr($substringLength);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes the suffix $substring if present.
+     *
+     * @param   string   $substring  The suffix to remove
+     * @return  Stringy  Object having a $str without the suffix $substring
+     */
+    public function removeRight($substring)
+    {
+        if ($this->endsWith($substring)) {
+            $substringLength = mb_strlen($substring, $this->encoding);
+            $this->substr(0, $this->length() - $substringLength);
+        }
+
+        return $this;
+    }
 }

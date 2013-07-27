@@ -550,4 +550,30 @@ class StaticStringy
     {
         return Stringy::create($str, $encoding)->ensureRight($substring)->str;
     }
+
+    /**
+     * Removes the prefix $substring if present.
+     *
+     * @param   string   $str        String from which to remove the prefix
+     * @param   string   $substring  The prefix to remove
+     * @param   string   $encoding   The character encoding
+     * @return  string   The string without the prefix $substring
+     */
+    public static function removeLeft($str, $substring, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->removeLeft($substring)->str;
+    }
+
+    /**
+     * Removes the suffix $substring if present.
+     *
+     * @param   string   $str        String from which to remove the suffix
+     * @param   string   $substring  The suffix to remove
+     * @param   string   $encoding   The character encoding
+     * @return  string   The string without the suffix $substring
+     */
+    public static function removeRight($str, $substring, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->removeRight($substring)->str;
+    }
 }

@@ -44,8 +44,12 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [at](#at)
     * [first](#first)
     * [last](#last)
-    * [ensureLeft](#ensureLeft)
-    * [ensureRight](#ensureRight)
+    * [ensureLeft](#ensureleft)
+    * [ensureRight](#ensureright)
+    * [chompLeft](#chompleft)
+    * [chompRight](#chompright)
+    * [removeLeft](#removeleft)
+    * [removeRight](#removeright)
 * [Tests](#tests)
 * [License](#license)
 
@@ -674,6 +678,32 @@ S::create('foobar')->ensureRight('.com');
 S::ensureRight('foobar', '.com');  // 'foobar.com'
 ```
 
+##### removeLeft
+
+$stringy->removeLeft(string $substring)
+
+S::removeLeft(string $str, string $substring [, string $encoding ])
+
+Removes the prefix $substring if present.
+
+```php
+S::create('fòô bàř', 'UTF-8')->removeLeft('fòô ');
+S::removeLeft('fòô bàř', 'fòô ', 'UTF-8');  // 'bàř'
+```
+
+##### removeRight
+
+$stringy->removeRight(string $substring)
+
+S::removeRight(string $str, string $substring [, string $encoding ])
+
+Removes the suffix $substring if present.
+
+```php
+S::create('fòô bàř', 'UTF-8')->removeRight(' bàř');
+S::removeRight('fòô bàř', ' bàř', 'UTF-8');  // 'fòô'
+```
+
 ## TODO
 
 **count** => substr_count
@@ -697,10 +727,6 @@ S::ensureRight('foobar', '.com');  // 'foobar.com'
 **isLower**
 
 **isBlank**
-
-**chompLeft**
-
-**chompRight**
 
 ## Tests
 
