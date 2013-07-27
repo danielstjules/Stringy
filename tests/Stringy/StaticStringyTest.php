@@ -288,4 +288,14 @@ class StaticStringyTestCase extends CommonTest
         $result = S::longestCommonSuffix($str, $otherString, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForLongestCommonSubstring
+     */
+    public function testLongestCommonSubstring($expected, $str, $otherString,
+                                               $encoding = null)
+    {
+        $result = S::longestCommonSubstring($str, $otherString, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

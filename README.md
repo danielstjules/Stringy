@@ -37,6 +37,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [shuffle](#shuffle)
     * [longestCommonPrefix](#longestcommonprefix)
     * [longestCommonSuffix](#longestcommonsuffix)
+    * [longestCommonSubstring](#longestcommonsubstring)
 * [Tests](#tests)
 * [License](#license)
 
@@ -543,9 +544,21 @@ S::create('fòô bàř', 'UTF-8')->longestCommonSuffix('fòr bàř');
 S::longestCommonSuffix('fòô bàř', 'fòr bàř', 'UTF-8');  // ' bàř'
 ```
 
-## TODO
+##### longestCommonSubstring
 
-**longestCommonSubstring**
+$stringy->longestCommonSubstring(string $otherString)
+
+S::longestCommonSubstring(string $str, string $otherString [, $encoding ])
+
+Finds the longest common substring between $str and $otherString. In the
+case of ties, returns that which occurs first.
+
+```php
+S::create('foo bar')->longestCommonSubstring('boo far');
+S::longestCommonSubstring('foo bar', 'boo far');  // 'oo '
+```
+
+## TODO
 
 **count** => substr_count
 

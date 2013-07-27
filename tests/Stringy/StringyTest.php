@@ -281,13 +281,13 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLongestCommonSuffix
+     * @dataProvider stringsForLongestCommonSubstring
      */
-    public function testLongestCommonSuffix($expected, $str, $otherString,
-                                            $encoding = null)
+    public function testLongestCommonSubstring($expected, $str, $otherString,
+                                               $encoding = null)
     {
         $result = S::create($str, $encoding)
-                   ->longestCommonSuffix($otherString);
+                   ->longestCommonSubstring($otherString);
         $this->assertEquals($expected, $result);
     }
 }

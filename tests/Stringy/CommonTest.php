@@ -499,6 +499,24 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForLongestCommonSubstring()
+    {
+        $testData = array(
+            array('foo', 'foobar', 'foo bar'),
+            array('foo bar', 'foo bar', 'foo bar'),
+            array('oo ', 'foo bar', 'boo far'),
+            array('foo ba', 'foo bad', 'foo bar'),
+            array('', 'foo bar', ''),
+            array('fòô', 'fòôbàř', 'fòô bàř', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'fòô bàř', 'UTF-8'),
+            array(' bàř', 'fòô bàř', 'fòr bàř', 'UTF-8'),
+            array(' ', 'toy car', 'fòô bàř', 'UTF-8'),
+            array('', 'fòô bàř', '', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

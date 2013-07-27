@@ -677,4 +677,49 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Finds the longest common substring between $str and $otherString. In the
+     * case of ties, returns that which occurs first.
+     *
+     * @return  Stringy  Object with its $str being the longest common substring
+     */
+    public function longestCommonSubstring($otherString)
+    {
+        // Uses dynamic programming to solve
+        // http://en.wikipedia.org/wiki/Longest_common_substring_problem
+        $strLength = mb_strlen($this->str, $this->encoding);
+        $otherLength = mb_strlen($otherString, $this->encoding);
+
+        // Return if either string is empty
+        if ($strLength == 0 || $otherLength == 0) {
+            $this->str = '';
+            return $this;
+        }
+
+        $len = 0;
+        $end = 0;
+        $table = array_fill(0, $strLength + 1, array_fill(0, $otherLength + 1, 0));
+
+        for ($i = 1; $i <= $strLength; $i++){
+            for ($j = 1; $j <= $otherLength; $j++){
+                $strChar = mb_substr($this->str, $i - 1, 1, $this->encoding);
+                $otherChar = mb_substr($otherString, $j - 1, 1, $this->encoding);
+
+                if ($strChar == $otherChar) {
+                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
+                    if ($table[$i][$j] > $len) {
+                        $len = $table[$i][$j];
+                        $end = $i;
+                    }
+                } else {
+                    $table[$i][$j] = 0;
+                }
+            }
+        }
+
+        $this->str = mb_substr($this->str, $end - $len, $len, $this->encoding);
+
+        return $this;
+    }
 }

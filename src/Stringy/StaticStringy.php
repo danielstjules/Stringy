@@ -405,7 +405,7 @@ class StaticStringy
      *
      * @return  string  The longest common prefix
      */
-    public function longestCommonPrefix($str, $otherString, $encoding = null)
+    public static function longestCommonPrefix($str, $otherString, $encoding = null)
     {
         return Stringy::create($str, $encoding)
                       ->longestCommonPrefix($otherString)->str;
@@ -416,9 +416,22 @@ class StaticStringy
      *
      * @return  string  The longest common suffix
      */
-    public function longestCommonSuffix($str, $otherString, $encoding = null)
+    public static function longestCommonSuffix($str, $otherString, $encoding = null)
     {
         return Stringy::create($str, $encoding)
                       ->longestCommonSuffix($otherString)->str;
+    }
+
+    /**
+     * Finds the longest common substring between $str and $otherString. In the
+     * case of ties, returns that which occurs first.
+     *
+     * @return  string  The longest common substring
+     */
+    public static function longestCommonSubstring($str, $otherString,
+                                                  $encoding = null)
+    {
+        return Stringy::create($str, $encoding)
+                      ->longestCommonSubstring($otherString)->str;
     }
 }
