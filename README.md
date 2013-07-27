@@ -32,6 +32,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [contains](#contains)
     * [surround](#surround)
     * [insert](#insert)
+    * [truncate](#truncate)
     * [safeTruncate](#safetruncate)
     * [reverse](#reverse)
     * [shuffle](#shuffle)
@@ -467,6 +468,21 @@ S::create('fòô bà', 'UTF-8')->insert('ř', 6);
 S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
 ```
 
+##### truncate
+
+$stringy->truncate(int $length, [, string $substring = '' ])
+
+S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+
+Truncates $str to a given length. If $substring is provided, and
+truncating occurs, the string is further truncated so that the substring
+may be appended without exceeding the desired length.
+
+```php
+S::create('What are your plans today?')->safeTruncate(19, '...');
+S::safeTruncate('What are your plans today?', 19, '...');  // 'What are your pl...'
+```
+
 ##### safeTruncate
 
 $stringy->safeTruncate(int $length, [, string $substring = '' ])
@@ -649,8 +665,6 @@ S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
 **lines**
 
 **excerpt** ($str, $substring, $radius)
-
-**truncate**
 
 **pluralize** ($count, $singular, $plural = null)
 

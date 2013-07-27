@@ -540,6 +540,30 @@ class Stringy
     }
 
     /**
+     * Truncates $str to a given length. If $substring is provided, and
+     * truncating occurs, the string is further truncated so that the substring
+     * may be appended without exceeding the desired length.
+     *
+     * @param   int      $length       Desired length of the truncated string
+     * @param   string   $substring    The substring to append if it can fit
+     * @return  Stringy  Object with the resulting $str after truncating
+     */
+    public function truncate($length, $substring = '')
+    {
+        if ($length >= $this->length())
+            return $this;
+
+        // Need to further trim the string so we can append the substring
+        $substringLength = mb_strlen($substring, $this->encoding);
+        $length = $length - $substringLength;
+
+        $truncated = mb_substr($this->str, 0, $length, $this->encoding);
+        $this->str = $truncated . $substring;
+
+        return $this;
+    }
+
+    /**
      * Truncates $str to a given length, while ensuring that it does not chop
      * words. If $substring is provided, and truncating occurs, the string
      * is further truncated so that the substring may be appended without

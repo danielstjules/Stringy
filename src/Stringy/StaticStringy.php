@@ -347,6 +347,24 @@ class StaticStringy
     }
 
     /**
+     * Truncates $str to a given length. If $substring is provided, and
+     * truncating occurs, the string is further truncated so that the substring
+     * may be appended without exceeding the desired length.
+     *
+     * @param   string  $str          String to truncate
+     * @param   int     $length       Desired length of the truncated string
+     * @param   string  $substring    The substring to append if it can fit
+     * @param   string  $encoding     The character encoding
+     * @return  string  The resulting string after truncating
+     */
+    public static function truncate($str, $length, $substring = '',
+                                    $encoding = null)
+    {
+        return Stringy::create($str, $encoding)
+                      ->truncate($length, $substring)->str;
+    }
+
+    /**
      * Truncates the string to a given length, while ensuring that it does not
      * chop words. If $substring is provided, and truncating occurs, the string
      * is further truncated so that the substring may be appended without

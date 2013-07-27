@@ -232,12 +232,12 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSafeTruncate
+     * @dataProvider stringsForTruncate
      */
-    public function testSafeTruncate($expected, $str, $length, $substring = '',
-                                     $encoding = null)
+    public function testTruncate($expected, $str, $length, $substring = '',
+                                 $encoding = null)
     {
-        $result = S::create($str, $encoding)->safeTruncate($length, $substring);
+        $result = S::create($str, $encoding)->truncate($length, $substring);
         $this->assertEquals($expected, $result);
     }
 

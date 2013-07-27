@@ -232,6 +232,16 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider stringsForTruncate
+     */
+    public function testTruncate($expected, $str, $length, $substring = '',
+                                 $encoding = null)
+    {
+        $result = S::truncate($str, $length, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider stringsForSafeTruncate
      */
     public function testSafeTruncate($expected, $str, $length, $substring = '',
