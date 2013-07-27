@@ -447,6 +447,22 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForTrim()
+    {
+        $testData = array(
+            array('foo   bar', '  foo   bar  '),
+            array('foo bar', ' foo bar'),
+            array('foo bar', 'foo bar '),
+            array('foo bar', "\n\t foo bar \n\t"),
+            array('fòô   bàř', '  fòô   bàř  '),
+            array('fòô bàř', ' fòô bàř'),
+            array('fòô bàř', 'fòô bàř '),
+            array('fòô bàř', "\n\t fòô bàř \n\t")
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

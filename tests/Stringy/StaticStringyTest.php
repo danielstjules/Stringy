@@ -259,4 +259,13 @@ class StaticStringyTestCase extends CommonTest
         $result = S::shuffle($str, $encoding);
         $this->assertEquals(count_chars($str), count_chars($result));
     }
+
+    /**
+     * @dataProvider stringsForTrim
+     */
+    public function testTrim($expected, $str)
+    {
+        $result = S::trim($str);
+        $this->assertEquals($expected, $result);
+    }
 }
