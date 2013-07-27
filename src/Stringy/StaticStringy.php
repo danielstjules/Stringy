@@ -526,4 +526,28 @@ class StaticStringy
     {
         return Stringy::create($str, $encoding)->last($n)->str;
     }
+
+    /**
+     * Ensures that $str begins with $substring.
+     *
+     * @param   string   $substring  The substring to add if not present
+     * @param   string   $encoding   The character encoding
+     * @return  string   The string prefixed by the $substring
+     */
+    public static function ensureLeft($str, $substring, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->ensureLeft($substring)->str;
+    }
+
+    /**
+     * Ensures that $str ends with $substring.
+     *
+     * @param   string   $substring  The substring to add if not present
+     * @param   string   $encoding   The character encoding
+     * @return  string   The string suffixed by the $substring
+     */
+    public static function ensureRight($str, $substring, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->ensureRight($substring)->str;
+    }
 }

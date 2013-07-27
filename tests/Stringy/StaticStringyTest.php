@@ -354,4 +354,22 @@ class StaticStringyTestCase extends CommonTest
         $result = S::last($str, $n, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForEnsureLeft
+     */
+    public function testEnsureLeft($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::ensureLeft($str, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForEnsureRight
+     */
+    public function testEnsureRight($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::ensureRight($str, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

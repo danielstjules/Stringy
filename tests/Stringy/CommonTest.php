@@ -633,6 +633,42 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForEnsureLeft()
+    {
+        $testData = array(
+            array('foobar', 'foobar', 'f'),
+            array('foobar', 'foobar', 'foo'),
+            array('foo/foobar', 'foobar', 'foo/'),
+            array('http://foobar', 'foobar', 'http://'),
+            array('http://foobar', 'http://foobar', 'http://'),
+            array('fòôbàř', 'fòôbàř', 'f', 'UTF-8'),
+            array('fòôbàř', 'fòôbàř', 'fòô', 'UTF-8'),
+            array('fòô/fòôbàř', 'fòôbàř', 'fòô/', 'UTF-8'),
+            array('http://fòôbàř', 'fòôbàř', 'http://', 'UTF-8'),
+            array('http://fòôbàř', 'http://fòôbàř', 'http://', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForEnsureRight()
+    {
+        $testData = array(
+            array('foobar', 'foobar', 'r'),
+            array('foobar', 'foobar', 'bar'),
+            array('foobar/bar', 'foobar', '/bar'),
+            array('foobar.com/', 'foobar', '.com/'),
+            array('foobar.com/', 'foobar.com/', '.com/'),
+            array('fòôbàř', 'fòôbàř', 'ř', 'UTF-8'),
+            array('fòôbàř', 'fòôbàř', 'bàř', 'UTF-8'),
+            array('fòôbàř/bàř', 'fòôbàř', '/bàř', 'UTF-8'),
+            array('fòôbàř.com/', 'fòôbàř', '.com/', 'UTF-8'),
+            array('fòôbàř.com/', 'fòôbàř.com/', '.com/', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

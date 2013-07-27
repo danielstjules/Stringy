@@ -824,4 +824,32 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Ensures that $str begins with $substring.
+     *
+     * @param   string   $substring  The substring to add if not present
+     * @return  Stringy  Object with its $str prefixed by the $substring
+     */
+    public function ensureLeft($substring)
+    {
+        if (!$this->startsWith($substring))
+            $this->str = $substring . $this->str;
+
+        return $this;
+    }
+
+    /**
+     * Ensures that $str ends with $substring.
+     *
+     * @param   string   $substring  The substring to add if not present
+     * @return  Stringy  Object with its $str suffixed by the $substring
+     */
+    public function ensureRight($substring)
+    {
+        if (!$this->endsWith($substring))
+            $this->str .= $substring;
+
+        return $this;
+    }
 }

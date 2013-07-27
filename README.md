@@ -44,6 +44,8 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [at](#at)
     * [first](#first)
     * [last](#last)
+    * [ensureLeft](#ensureLeft)
+    * [ensureRight](#ensureRight)
 * [Tests](#tests)
 * [License](#license)
 
@@ -646,33 +648,45 @@ S::create('fòô bàř', 'UTF-8')->last(3);
 S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
 ```
 
+##### ensureLeft
+
+$stringy->ensureLeft(string $substring)
+
+S::ensureLeft(string $substring [, string $encoding ])
+
+Ensures that $str begins with $substring.
+
+```php
+S::create('foobar')->ensureLeft('http://');
+S::ensureLeft('foobar', 'http://');  // 'http://foobar'
+```
+
+##### ensureRight
+
+$stringy->ensureRight(string $substring)
+
+S::ensureRight(string $substring [, string $encoding ])
+
+Ensures that $str ends with $substring.
+
+```php
+S::create('foobar')->ensureRight('.com');
+S::ensureRight('foobar', '.com');  // 'foobar.com'
+```
+
 ## TODO
 
 **count** => substr_count
 
 **wordCount** => str_word_count
 
-**isMultibyte**
-
 **wordWrap**
-
-**chars** $callback
-
-**words** $callback
-
-**paragraphs**
-
-**lines**
 
 **excerpt** ($str, $substring, $radius)
 
 **pluralize** ($count, $singular, $plural = null)
 
 **toBoolean**
-
-**ensureLeft**
-
-**ensureRight**
 
 **isAlpha**
 
@@ -683,6 +697,10 @@ S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
 **isLower**
 
 **isBlank**
+
+**chompLeft**
+
+**chompRight**
 
 ## Tests
 
