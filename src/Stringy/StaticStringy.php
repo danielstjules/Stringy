@@ -450,10 +450,25 @@ class StaticStringy
      *
      * @param   string  $str       The string to get the length of
      * @param   string  $encoding  The character encoding
-     * @return  int  The number of characters in $str given the encoding
+     * @return  int     The number of characters in $str given the encoding
      */
     public static function length($str, $encoding = null)
     {
         return Stringy::create($str, $encoding)->length();
+    }
+
+    /**
+     * Gets the substring of $str beginning at $start with the specified $length.
+     * It differs from the mb_substr() function in that providing a $length of
+     * null will return the rest of the string, rather than an empty string.
+     *
+     * @param   string  $str     The string to get the length of
+     * @param   int     $start   Position of the first character to use from str
+     * @param   int     $length  Maximum number of characters used
+     * @return  string  The substring of $str
+     */
+    public static function substr($str, $start, $length = null, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->substr($start, $length);
     }
 }

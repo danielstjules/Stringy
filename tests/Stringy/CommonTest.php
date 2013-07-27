@@ -529,6 +529,23 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForSubstr()
+    {
+        $testData = array(
+            array('foo bar', 'foo bar', 0),
+            array('bar', 'foo bar', 4),
+            array('bar', 'foo bar', 4, null),
+            array('o b', 'foo bar', 2, 3),
+            array('', 'foo bar', 4, 0),
+            array('fòô bàř', 'fòô bàř', 0, null, 'UTF-8'),
+            array('bàř', 'fòô bàř', 4, null, 'UTF-8'),
+            array('ô b', 'fòô bàř', 2, 3, 'UTF-8'),
+            array('', 'fòô bàř', 4, 0, 'UTF-8')
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

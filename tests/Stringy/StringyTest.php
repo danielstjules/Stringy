@@ -299,4 +299,14 @@ class StringyTestCase extends CommonTest
         $result = S::create($str, $encoding)->length();
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForSubstr
+     */
+    public function testSubstr($expected, $str, $start, $length = null,
+                               $encoding = null)
+    {
+        $result = S::create($str, $encoding)->substr($start, $length);
+        $this->assertEquals($expected, $result);
+    }
 }

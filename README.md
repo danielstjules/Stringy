@@ -39,6 +39,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [longestCommonSuffix](#longestcommonsuffix)
     * [longestCommonSubstring](#longestcommonsubstring)
     * [length](#length)
+    * [substr](#substr)
 * [Tests](#tests)
 * [License](#license)
 
@@ -570,6 +571,21 @@ Returns the length of $str. An alias for PHP's mb_strlen() function.
 ```php
 S::create('fòô bàř', 'UTF-8')->length();
 S::length('fòô bàř', 'UTF-8');  // 7
+```
+
+##### substr
+
+$stringy->substr(int $start [, int $length ])
+
+S::substr(string $str, int $start [, int $length [, string $encoding ]])
+
+Gets the substring of $str beginning at $start with the specified $length.
+It differs from the mb_substr() function in that providing a $length of
+null will return the rest of the string, rather than an empty string.
+
+```php
+S::create('fòô bàř', 'UTF-8')->substr(2, 3);
+S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
 ```
 
 ## TODO

@@ -628,6 +628,7 @@ class Stringy
     /**
      * Finds the longest common prefix between $str and $otherStr.
      *
+     * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common prefix
      */
     public function longestCommonPrefix($otherStr)
@@ -653,6 +654,7 @@ class Stringy
     /**
      * Finds the longest common suffix between $str and $otherStr.
      *
+     * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common suffix
      */
     public function longestCommonSuffix($otherStr)
@@ -679,6 +681,7 @@ class Stringy
      * Finds the longest common substring between $str and $otherStr. In the
      * case of ties, returns that which occurs first.
      *
+     * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common substring
      */
     public function longestCommonSubstring($otherStr)
@@ -728,5 +731,26 @@ class Stringy
     public function length()
     {
         return mb_strlen($this->str, $this->encoding);
+    }
+
+    /**
+     * Gets the substring of $str beginning at $start with the specified $length.
+     * It differs from the mb_substr() function in that providing a $length of
+     * null will return the rest of the string, rather than an empty string.
+     *
+     * @param   int  $start   Position of the first character to use from str
+     * @param   int  $length  Maximum number of characters used
+     * @return  Stringy  Object with its $str being the substring
+     */
+    public function substr($start, $length = null)
+    {
+        if ($length === null) {
+            $this->str = mb_substr($this->str, $start, $this->length() - $start,
+                $this->encoding);
+        } else {
+            $this->str = mb_substr($this->str, $start, $length, $this->encoding);
+        }
+
+        return $this;
     }
 }
