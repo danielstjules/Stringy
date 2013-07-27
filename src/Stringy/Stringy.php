@@ -625,4 +625,56 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Finds the longest common prefix between $str and $otherString.
+     *
+     * @return  Stringy  Object with its $str being the longest common prefix
+     */
+    public function longestCommonPrefix($otherString)
+    {
+        $maxLength = min(mb_strlen($this->str, $this->encoding),
+            mb_strlen($otherString, $this->encoding));
+
+        $longestCommonPrefix = '';
+        for ($i = 0; $i < $maxLength; $i++) {
+            $char = mb_substr($this->str, $i, 1, $this->encoding);
+
+            if ($char == mb_substr($otherString, $i, 1, $this->encoding)) {
+                $longestCommonPrefix .= $char;
+            } else {
+                break;
+            }
+        }
+
+        $this->str = $longestCommonPrefix;
+
+        return $this;
+    }
+
+    /**
+     * Finds the longest common suffix between $str and $otherString.
+     *
+     * @return  Stringy  Object with its $str being the longest common suffix
+     */
+    public function longestCommonSuffix($otherString)
+    {
+        $strLength = mb_strlen($this->str, $this->encoding);
+        $maxLength = min($strLength, mb_strlen($otherString, $this->encoding));
+
+        $longestCommonSuffix = '';
+        for ($i = 1; $i <= $maxLength; $i++) {
+            $char = mb_substr($this->str, -$i, 1, $this->encoding);
+
+            if ($char == mb_substr($otherString, -$i, 1, $this->encoding)) {
+                $longestCommonSuffix = $char . $longestCommonSuffix;
+            } else {
+                break;
+            }
+        }
+
+        $this->str = $longestCommonSuffix;
+
+        return $this;
+    }
 }

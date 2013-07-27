@@ -35,6 +35,8 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [safeTruncate](#safetruncate)
     * [reverse](#reverse)
     * [shuffle](#shuffle)
+    * [longestCommonPrefix](#longestcommonprefix)
+    * [longestCommonSuffix](#longestcommonsuffix)
 * [Tests](#tests)
 * [License](#license)
 
@@ -511,13 +513,37 @@ S::trim(string $str)
 Trims $str. An alias for PHP's trim() function.
 
 ```php
-S::create('fòô bàř')->trim();
+S::create('fòô bàř', 'UTF-8')->trim();
 S::trim(' fòô bàř ')  // 'fòô bàř'
 ```
 
-## TODO
+##### longestCommonPrefix
 
-**longestCommonPrefix**
+$stringy->longestCommonPrefix(string $otherString)
+
+S::longestCommonPrefix(string $str, string $otherString [, $encoding ])
+
+Finds the longest common prefix between $str and $otherString.
+
+```php
+S::create('fòô bar', 'UTF-8')->longestCommonPrefix('fòr bar');
+S::longestCommonPrefix('fòô bar', 'fòr bar', 'UTF-8');  // 'fò'
+```
+
+##### longestCommonSuffix
+
+$stringy->longestCommonSuffix(string $otherString)
+
+S::longestCommonSuffix(string $str, string $otherString [, $encoding ])
+
+Finds the longest common suffix between $str and $otherString.
+
+```php
+S::create('fòô bàř', 'UTF-8')->longestCommonSuffix('fòr bàř');
+S::longestCommonSuffix('fòô bàř', 'fòr bàř', 'UTF-8');  // ' bàř'
+```
+
+## TODO
 
 **longestCommonSubstring**
 

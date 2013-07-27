@@ -399,4 +399,26 @@ class StaticStringy
     {
         return trim($str);
     }
+
+    /**
+     * Finds the longest common prefix between $str and $otherString.
+     *
+     * @return  string  The longest common prefix
+     */
+    public function longestCommonPrefix($str, $otherString, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)
+                      ->longestCommonPrefix($otherString)->str;
+    }
+
+    /**
+     * Finds the longest common suffix between $str and $otherString.
+     *
+     * @return  string  The longest common suffix
+     */
+    public function longestCommonSuffix($str, $otherString, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)
+                      ->longestCommonSuffix($otherString)->str;
+    }
 }

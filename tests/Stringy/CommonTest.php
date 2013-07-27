@@ -463,6 +463,42 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForLongestCommonPrefix()
+    {
+        $testData = array(
+            array('foo', 'foobar', 'foo bar'),
+            array('foo bar', 'foo bar', 'foo bar'),
+            array('f', 'foo bar', 'far boo'),
+            array('', 'toy car', 'foo bar'),
+            array('', 'foo bar', ''),
+            array('fòô', 'fòôbar', 'fòô bar', 'UTF-8'),
+            array('fòô bar', 'fòô bar', 'fòô bar', 'UTF-8'),
+            array('fò', 'fòô bar', 'fòr bar', 'UTF-8'),
+            array('', 'toy car', 'fòô bar', 'UTF-8'),
+            array('', 'fòô bar', '', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForLongestCommonSuffix()
+    {
+        $testData = array(
+            array('bar', 'foobar', 'foo bar'),
+            array('foo bar', 'foo bar', 'foo bar'),
+            array('ar', 'foo bar', 'boo far'),
+            array('', 'foo bad', 'foo bar'),
+            array('', 'foo bar', ''),
+            array('bàř', 'fòôbàř', 'fòô bàř', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', 'fòô bàř', 'UTF-8'),
+            array(' bàř', 'fòô bàř', 'fòr bàř', 'UTF-8'),
+            array('', 'toy car', 'fòô bàř', 'UTF-8'),
+            array('', 'fòô bàř', '', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

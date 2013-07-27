@@ -235,7 +235,7 @@ class StringyTestCase extends CommonTest
      * @dataProvider stringsForSafeTruncate
      */
     public function testSafeTruncate($expected, $str, $length, $substring = '',
-                                 $encoding = null)
+                                     $encoding = null)
     {
         $result = S::create($str, $encoding)->safeTruncate($length, $substring);
         $this->assertEquals($expected, $result);
@@ -266,6 +266,28 @@ class StringyTestCase extends CommonTest
     public function testTrim($expected, $str)
     {
         $result = S::create($str)->trim();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForLongestCommonPrefix
+     */
+    public function testLongestCommonPrefix($expected, $str, $otherString,
+                                            $encoding = null)
+    {
+        $result = S::create($str, $encoding)
+                   ->longestCommonPrefix($otherString);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForLongestCommonSuffix
+     */
+    public function testLongestCommonSuffix($expected, $str, $otherString,
+                                            $encoding = null)
+    {
+        $result = S::create($str, $encoding)
+                   ->longestCommonSuffix($otherString);
         $this->assertEquals($expected, $result);
     }
 }
