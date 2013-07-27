@@ -272,22 +272,31 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForLongestCommonPrefix
      */
-    public function testLongestCommonPrefix($expected, $str, $otherString,
+    public function testLongestCommonPrefix($expected, $str, $otherStr,
                                             $encoding = null)
     {
         $result = S::create($str, $encoding)
-                   ->longestCommonPrefix($otherString);
+                   ->longestCommonPrefix($otherStr);
         $this->assertEquals($expected, $result);
     }
 
     /**
      * @dataProvider stringsForLongestCommonSubstring
      */
-    public function testLongestCommonSubstring($expected, $str, $otherString,
+    public function testLongestCommonSubstring($expected, $str, $otherStr,
                                                $encoding = null)
     {
         $result = S::create($str, $encoding)
-                   ->longestCommonSubstring($otherString);
+                   ->longestCommonSubstring($otherStr);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForLength
+     */
+    public function testLength($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->length();
         $this->assertEquals($expected, $result);
     }
 }

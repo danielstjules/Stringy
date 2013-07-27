@@ -517,6 +517,18 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForLength()
+    {
+        $testData = array(
+            array(11, '  foo bar  '),
+            array(1, 'f'),
+            array(0, ''),
+            array(7, 'fòô bàř', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

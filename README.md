@@ -38,6 +38,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [longestCommonPrefix](#longestcommonprefix)
     * [longestCommonSuffix](#longestcommonsuffix)
     * [longestCommonSubstring](#longestcommonsubstring)
+    * [length](#length)
 * [Tests](#tests)
 * [License](#license)
 
@@ -520,11 +521,11 @@ S::trim(' fòô bàř ')  // 'fòô bàř'
 
 ##### longestCommonPrefix
 
-$stringy->longestCommonPrefix(string $otherString)
+$stringy->longestCommonPrefix(string $otherStr)
 
-S::longestCommonPrefix(string $str, string $otherString [, $encoding ])
+S::longestCommonPrefix(string $str, string $otherStr [, $encoding ])
 
-Finds the longest common prefix between $str and $otherString.
+Finds the longest common prefix between $str and $otherStr.
 
 ```php
 S::create('fòô bar', 'UTF-8')->longestCommonPrefix('fòr bar');
@@ -533,11 +534,11 @@ S::longestCommonPrefix('fòô bar', 'fòr bar', 'UTF-8');  // 'fò'
 
 ##### longestCommonSuffix
 
-$stringy->longestCommonSuffix(string $otherString)
+$stringy->longestCommonSuffix(string $otherStr)
 
-S::longestCommonSuffix(string $str, string $otherString [, $encoding ])
+S::longestCommonSuffix(string $str, string $otherStr [, $encoding ])
 
-Finds the longest common suffix between $str and $otherString.
+Finds the longest common suffix between $str and $otherStr.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->longestCommonSuffix('fòr bàř');
@@ -546,16 +547,29 @@ S::longestCommonSuffix('fòô bàř', 'fòr bàř', 'UTF-8');  // ' bàř'
 
 ##### longestCommonSubstring
 
-$stringy->longestCommonSubstring(string $otherString)
+$stringy->longestCommonSubstring(string $otherStr)
 
-S::longestCommonSubstring(string $str, string $otherString [, $encoding ])
+S::longestCommonSubstring(string $str, string $otherStr [, $encoding ])
 
-Finds the longest common substring between $str and $otherString. In the
+Finds the longest common substring between $str and $otherStr. In the
 case of ties, returns that which occurs first.
 
 ```php
 S::create('foo bar')->longestCommonSubstring('boo far');
 S::longestCommonSubstring('foo bar', 'boo far');  // 'oo '
+```
+
+##### length
+
+$stringy->length()
+
+S::length(string $str [, string $encoding ])
+
+Returns the length of $str. An alias for PHP's mb_strlen() function.
+
+```php
+S::create('fòô bàř', 'UTF-8')->length();
+S::length('fòô bàř', 'UTF-8');  // 7
 ```
 
 ## TODO
@@ -607,8 +621,6 @@ S::longestCommonSubstring('foo bar', 'boo far');  // 'oo '
 **isLower**
 
 **isBlank**
-
-**length**
 
 ## Tests
 

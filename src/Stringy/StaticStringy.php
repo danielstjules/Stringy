@@ -393,6 +393,7 @@ class StaticStringy
     /**
      * Trims $str. An alias for PHP's trim() function.
      *
+     * @param   string  $str  String to trim
      * @return  string  Trimmed $str
      */
     public static function trim($str)
@@ -401,37 +402,58 @@ class StaticStringy
     }
 
     /**
-     * Finds the longest common prefix between $str and $otherString.
+     * Finds the longest common prefix between $str and $otherStr.
      *
+     * @param   string  $str       First string for comparison
+     * @param   string  $otherStr  Second string for comparison
+     * @param   string  $encoding  The character encoding
      * @return  string  The longest common prefix
      */
-    public static function longestCommonPrefix($str, $otherString, $encoding = null)
+    public static function longestCommonPrefix($str, $otherStr, $encoding = null)
     {
         return Stringy::create($str, $encoding)
-                      ->longestCommonPrefix($otherString)->str;
+                      ->longestCommonPrefix($otherStr)->str;
     }
 
     /**
-     * Finds the longest common suffix between $str and $otherString.
+     * Finds the longest common suffix between $str and $otherStr.
      *
+     * @param   string  $str       First string for comparison
+     * @param   string  $otherStr  Second string for comparison
+     * @param   string  $encoding  The character encoding
      * @return  string  The longest common suffix
      */
-    public static function longestCommonSuffix($str, $otherString, $encoding = null)
+    public static function longestCommonSuffix($str, $otherStr, $encoding = null)
     {
         return Stringy::create($str, $encoding)
-                      ->longestCommonSuffix($otherString)->str;
+                      ->longestCommonSuffix($otherStr)->str;
     }
 
     /**
-     * Finds the longest common substring between $str and $otherString. In the
+     * Finds the longest common substring between $str and $otherStr. In the
      * case of ties, returns that which occurs first.
      *
+     * @param   string  $str       First string for comparison
+     * @param   string  $otherStr  Second string for comparison
+     * @param   string  $encoding  The character encoding
      * @return  string  The longest common substring
      */
-    public static function longestCommonSubstring($str, $otherString,
+    public static function longestCommonSubstring($str, $otherStr,
                                                   $encoding = null)
     {
         return Stringy::create($str, $encoding)
-                      ->longestCommonSubstring($otherString)->str;
+                      ->longestCommonSubstring($otherStr)->str;
+    }
+
+    /**
+     * Returns the length of $str. An alias for PHP's mb_strlen() function.
+     *
+     * @param   string  $str       The string to get the length of
+     * @param   string  $encoding  The character encoding
+     * @return  int  The number of characters in $str given the encoding
+     */
+    public static function length($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->length();
     }
 }

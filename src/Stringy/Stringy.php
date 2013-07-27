@@ -46,7 +46,7 @@ class Stringy
     public function upperCaseFirst()
     {
         $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, mb_strlen($this->str, $this->encoding) - 1,
+        $rest = mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
         $this->str = mb_strtoupper($first, $this->encoding) . $rest;
@@ -62,7 +62,7 @@ class Stringy
     public function lowerCaseFirst()
     {
         $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, mb_strlen($this->str, $this->encoding) - 1,
+        $rest = mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
         $this->str = mb_strtolower($first, $this->encoding) . $rest;
@@ -321,7 +321,7 @@ class Stringy
                 "to be one of 'left', 'right' or 'both'");
         }
 
-        $strLength = mb_strlen($this->str, $this->encoding);
+        $strLength = $this->length();
         $padStrLength = mb_strlen($padStr, $this->encoding);
 
         if ($length <= $strLength || $padStrLength <= 0)
@@ -431,7 +431,7 @@ class Stringy
     public function endsWith($substring, $caseSensitive = true)
     {
         $substringLength = mb_strlen($substring, $this->encoding);
-        $strLength = mb_strlen($this->str, $this->encoding);
+        $strLength = $this->length();
 
         $endOfStr = mb_substr($this->str, $strLength - $substringLength,
             $substringLength, $this->encoding);
@@ -528,12 +528,11 @@ class Stringy
      */
     public function insert($substring, $index)
     {
-        if ($index > mb_strlen($this->str, $this->encoding))
+        if ($index > $this->length())
             return $this;
 
         $start = mb_substr($this->str, 0, $index, $this->encoding);
-        $end = mb_substr($this->str, $index, mb_strlen($this->str, $this->encoding),
-            $this->encoding);
+        $end = mb_substr($this->str, $index, $this->length(), $this->encoding);
 
         $this->str = $start . $substring . $end;
 
@@ -552,7 +551,7 @@ class Stringy
      */
     public function safeTruncate($length, $substring = '')
     {
-        if ($length >= mb_strlen($this->str, $this->encoding))
+        if ($length >= $this->length())
             return $this;
 
         // Need to further trim the string so we can append the substring
@@ -580,7 +579,7 @@ class Stringy
      */
     public function reverse()
     {
-        $strLength = mb_strlen($this->str, $this->encoding);
+        $strLength = $this->length();
         $reversed = '';
 
         // Loop from last index of string to first
@@ -601,7 +600,7 @@ class Stringy
      */
     public function shuffle()
     {
-        $indexes = range(0, mb_strlen($this->str, $this->encoding) - 1);
+        $indexes = range(0, $this->length() - 1);
         shuffle($indexes);
 
         $shuffledStr = '';
@@ -627,20 +626,19 @@ class Stringy
     }
 
     /**
-     * Finds the longest common prefix between $str and $otherString.
+     * Finds the longest common prefix between $str and $otherStr.
      *
      * @return  Stringy  Object with its $str being the longest common prefix
      */
-    public function longestCommonPrefix($otherString)
+    public function longestCommonPrefix($otherStr)
     {
-        $maxLength = min(mb_strlen($this->str, $this->encoding),
-            mb_strlen($otherString, $this->encoding));
+        $maxLength = min($this->length(), mb_strlen($otherStr, $this->encoding));
 
         $longestCommonPrefix = '';
         for ($i = 0; $i < $maxLength; $i++) {
             $char = mb_substr($this->str, $i, 1, $this->encoding);
 
-            if ($char == mb_substr($otherString, $i, 1, $this->encoding)) {
+            if ($char == mb_substr($otherStr, $i, 1, $this->encoding)) {
                 $longestCommonPrefix .= $char;
             } else {
                 break;
@@ -653,20 +651,19 @@ class Stringy
     }
 
     /**
-     * Finds the longest common suffix between $str and $otherString.
+     * Finds the longest common suffix between $str and $otherStr.
      *
      * @return  Stringy  Object with its $str being the longest common suffix
      */
-    public function longestCommonSuffix($otherString)
+    public function longestCommonSuffix($otherStr)
     {
-        $strLength = mb_strlen($this->str, $this->encoding);
-        $maxLength = min($strLength, mb_strlen($otherString, $this->encoding));
+        $maxLength = min($this->length(), mb_strlen($otherStr, $this->encoding));
 
         $longestCommonSuffix = '';
         for ($i = 1; $i <= $maxLength; $i++) {
             $char = mb_substr($this->str, -$i, 1, $this->encoding);
 
-            if ($char == mb_substr($otherString, -$i, 1, $this->encoding)) {
+            if ($char == mb_substr($otherStr, -$i, 1, $this->encoding)) {
                 $longestCommonSuffix = $char . $longestCommonSuffix;
             } else {
                 break;
@@ -679,17 +676,17 @@ class Stringy
     }
 
     /**
-     * Finds the longest common substring between $str and $otherString. In the
+     * Finds the longest common substring between $str and $otherStr. In the
      * case of ties, returns that which occurs first.
      *
      * @return  Stringy  Object with its $str being the longest common substring
      */
-    public function longestCommonSubstring($otherString)
+    public function longestCommonSubstring($otherStr)
     {
         // Uses dynamic programming to solve
         // http://en.wikipedia.org/wiki/Longest_common_substring_problem
-        $strLength = mb_strlen($this->str, $this->encoding);
-        $otherLength = mb_strlen($otherString, $this->encoding);
+        $strLength = $this->length();
+        $otherLength = mb_strlen($otherStr, $this->encoding);
 
         // Return if either string is empty
         if ($strLength == 0 || $otherLength == 0) {
@@ -704,7 +701,7 @@ class Stringy
         for ($i = 1; $i <= $strLength; $i++){
             for ($j = 1; $j <= $otherLength; $j++){
                 $strChar = mb_substr($this->str, $i - 1, 1, $this->encoding);
-                $otherChar = mb_substr($otherString, $j - 1, 1, $this->encoding);
+                $otherChar = mb_substr($otherStr, $j - 1, 1, $this->encoding);
 
                 if ($strChar == $otherChar) {
                     $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
@@ -721,5 +718,15 @@ class Stringy
         $this->str = mb_substr($this->str, $end - $len, $len, $this->encoding);
 
         return $this;
+    }
+
+    /**
+     * Returns the length of $str. An alias for PHP's mb_strlen() function.
+     *
+     * @return  int  The number of characters in $str given the encoding
+     */
+    public function length()
+    {
+        return mb_strlen($this->str, $this->encoding);
     }
 }

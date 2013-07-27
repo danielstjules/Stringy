@@ -272,30 +272,39 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForLongestCommonPrefix
      */
-    public function testLongestCommonPrefix($expected, $str, $otherString,
+    public function testLongestCommonPrefix($expected, $str, $otherStr,
                                             $encoding = null)
     {
-        $result = S::longestCommonPrefix($str, $otherString, $encoding);
+        $result = S::longestCommonPrefix($str, $otherStr, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     /**
      * @dataProvider stringsForLongestCommonSuffix
      */
-    public function testLongestCommonSuffix($expected, $str, $otherString,
+    public function testLongestCommonSuffix($expected, $str, $otherStr,
                                             $encoding = null)
     {
-        $result = S::longestCommonSuffix($str, $otherString, $encoding);
+        $result = S::longestCommonSuffix($str, $otherStr, $encoding);
         $this->assertEquals($expected, $result);
     }
 
     /**
      * @dataProvider stringsForLongestCommonSubstring
      */
-    public function testLongestCommonSubstring($expected, $str, $otherString,
+    public function testLongestCommonSubstring($expected, $str, $otherStr,
                                                $encoding = null)
     {
-        $result = S::longestCommonSubstring($str, $otherString, $encoding);
+        $result = S::longestCommonSubstring($str, $otherStr, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForLength
+     */
+    public function testLength($expected, $str, $encoding = null)
+    {
+        $result = S::length($str, $encoding);
         $this->assertEquals($expected, $result);
     }
 }
