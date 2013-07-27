@@ -494,7 +494,8 @@ class StaticStringy
     /**
      * Gets the character of $str at $index, with indexes starting at 0.
      *
-     * @param   int      $index  Position of the character
+     * @param   string   $str       The string from which to get the char
+     * @param   int      $index     Position of the character
      * @param   string   $encoding  The character encoding
      * @return  string   The character at $index
      */
@@ -506,6 +507,7 @@ class StaticStringy
     /**
      * Gets the first $n characters of $str.
      *
+     * @param   string   $str       The string from which to get the substring
      * @param   int      $n         Number of chars to retrieve from the start
      * @param   string   $encoding  The character encoding
      * @return  string   The first $n characters
@@ -518,6 +520,7 @@ class StaticStringy
     /**
      * Gets the last $n characters of $str.
      *
+     * @param   string   $str       The string from which to get the substring
      * @param   int      $n         Number of chars to retrieve from the end
      * @param   string   $encoding  The character encoding
      * @return  string   The last $n characters
@@ -530,6 +533,7 @@ class StaticStringy
     /**
      * Ensures that $str begins with $substring.
      *
+     * @param   string   $str        The string to modify
      * @param   string   $substring  The substring to add if not present
      * @param   string   $encoding   The character encoding
      * @return  string   The string prefixed by the $substring
@@ -542,6 +546,7 @@ class StaticStringy
     /**
      * Ensures that $str ends with $substring.
      *
+     * @param   string   $str        The string to modify
      * @param   string   $substring  The substring to add if not present
      * @param   string   $encoding   The character encoding
      * @return  string   The string suffixed by the $substring

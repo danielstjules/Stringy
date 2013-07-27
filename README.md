@@ -7,49 +7,48 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
 * [Requiring/Loading](#requiringloading)
 * [OO and Procedural](#oo-and-procedural)
 * [Methods](#methods)
-    * [create](#create)
-    * [upperCaseFirst](#uppercasefirst)
-    * [lowerCaseFirst](#lowercasefirst)
+    * [at](#at)
     * [camelize](#camelize)
-    * [upperCamelize](#uppercamelize)
-    * [dasherize](#dasherize)
-    * [underscored](#underscored)
-    * [swapCase](#swapcase)
-    * [titleize](#titleize)
-    * [humanize](#humanize)
-    * [tidy](#tidy)
     * [collapseWhitespace](#collapsewhitespace)
-    * [standardize](#standardize)
-    * [pad](#pad)
-    * [padLeft](#padleft)
-    * [padRight](#padright)
-    * [padBoth](#padboth)
-    * [startsWith](#startswith)
-    * [endsWith](#endswith)
-    * [toSpaces](#tospaces)
-    * [toTabs](#totabs)
-    * [slugify](#slugify)
     * [contains](#contains)
-    * [surround](#surround)
+    * [create](#create)
+    * [dasherize](#dasherize)
+    * [endsWith](#endswith)
+    * [ensureLeft](#ensureleft)
+    * [ensureRight](#ensureright)
+    * [first](#first)
+    * [humanize](#humanize)
     * [insert](#insert)
-    * [truncate](#truncate)
-    * [safeTruncate](#safetruncate)
-    * [reverse](#reverse)
-    * [shuffle](#shuffle)
+    * [last](#last)
+    * [length](#length)
     * [longestCommonPrefix](#longestcommonprefix)
     * [longestCommonSuffix](#longestcommonsuffix)
     * [longestCommonSubstring](#longestcommonsubstring)
-    * [length](#length)
-    * [substr](#substr)
-    * [at](#at)
-    * [first](#first)
-    * [last](#last)
-    * [ensureLeft](#ensureleft)
-    * [ensureRight](#ensureright)
-    * [chompLeft](#chompleft)
-    * [chompRight](#chompright)
+    * [lowerCaseFirst](#lowercasefirst)
+    * [pad](#pad)
+    * [padBoth](#padboth)
+    * [padLeft](#padleft)
+    * [padRight](#padright)
     * [removeLeft](#removeleft)
     * [removeRight](#removeright)
+    * [reverse](#reverse)
+    * [safeTruncate](#safetruncate)
+    * [shuffle](#shuffle)
+    * [slugify](#slugify)
+    * [standardize](#standardize)
+    * [startsWith](#startswith)
+    * [substr](#substr)
+    * [surround](#surround)
+    * [swapCase](#swapcase)
+    * [tidy](#tidy)
+    * [titleize](#titleize)
+    * [toSpaces](#tospaces)
+    * [toTabs](#totabs)
+    * [trim](#trim)
+    * [truncate](#truncate)
+    * [underscored](#underscored)
+    * [upperCamelize](#uppercamelize)
+    * [upperCaseFirst](#uppercasefirst)
 * [Tests](#tests)
 * [License](#license)
 
@@ -113,44 +112,17 @@ method in Stringy\StaticStringy. For all others, they're found in Stringy\String
 
 *Note: If $encoding is not given, it defaults to mb_internal_encoding().*
 
-##### create
+##### at
 
-$stringy = S::create(string $str, [, $encoding ])
+$stringy->at(int $index)
 
-Creates a Stringy object and assigns both str and encoding properties
-the supplied values. If $encoding is not specified, it defaults to
-mb_internal_encoding(). It then returns the instantiated object.
+S::substr(int $index [, string $encoding ])
 
-```php
-S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
-```
-
-##### upperCaseFirst
-
-$stringy->upperCaseFirst();
-
-S::upperCaseFirst(string $str [, string $encoding ])
-
-Converts the first character of the supplied string to upper case, with
-support for multibyte strings.
+Gets the character of $str at $index, with indexes starting at 0.
 
 ```php
-S::create('σ test', 'UTF-8')->upperCaseFirst();
-S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
-```
-
-##### lowerCaseFirst
-
-$stringy->lowerCaseFirst();
-
-S::lowerCaseFirst(string $str [, string $encoding ])
-
-Converts the first character of the supplied string to lower case, with
-support for multibyte strings.
-
-```php
-S::create('Σ test', 'UTF-8')->lowerCaseFirst();
-S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
+S::create('fòô bàř', 'UTF-8')->at(6);
+S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
 ```
 
 ##### camelize
@@ -168,19 +140,43 @@ S::create('Camel-Case')->camelize();
 S::camelize('Camel-Case');  // 'camelCase'
 ```
 
-##### upperCamelize
+##### collapseWhitespace
 
-$stringy->upperCamelize();
+$stringy->collapseWhitespace()
 
-S::upperCamelize(string $str [, string $encoding ])
+S::collapseWhitespace(string $str)
 
-Returns an UpperCamelCase version of a supplied string, with multibyte
-support. Trims surrounding spaces, capitalizes letters following digits,
-spaces, dashes and underscores, and removes spaces, dashes, underscores.
+Trims the string and replaces consecutive whitespace characters with a
+single space. This inclues tabs and newline characters.
 
 ```php
-S::create('Upper Camel-Case')->upperCamelize();
-S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
+S::create('   Ο     συγγραφέας  ')->collapseWhitespace();
+S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγραφέας'
+```
+
+##### contains
+
+$stringy->contains(string $needle)
+
+S::contains(string $haystack, string $needle [, string $encoding ])
+
+Returns true if $haystack contains $needle, false otherwise.
+
+```php
+S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
+S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')  // true
+```
+
+##### create
+
+$stringy = S::create(string $str, [, $encoding ])
+
+Creates a Stringy object and assigns both str and encoding properties
+the supplied values. If $encoding is not specified, it defaults to
+mb_internal_encoding(). It then returns the instantiated object.
+
+```php
+S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
 ```
 
 ##### dasherize
@@ -199,51 +195,58 @@ S::create('TestDCase')->dasherize();
 S::dasherize('TestDCase');  // 'test-d-case'
 ```
 
-##### underscored
+##### endsWith
 
-$stringy->underscored();
+$stringy->endsWith(string $substring [, boolean $caseSensitive = true ])
 
-S::underscored(string $str [, string $encoding ])
+S::endsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
 
-Returns a lowercase and trimmed string seperated by underscores, with
-multibyte support. Underscores are inserted before uppercase characters
-(with the exception of the first character of the string), and in place
-of spaces as well as dashes.
+Returns true if the string $str ends with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
 
 ```php
-S::create('TestUCase')->underscored();
-S::underscored('TestUCase');  // 'test_u_case'
+S::create('FÒÔ bàřs', 'UTF-8')->endsWith('àřs', true);
+S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8');  // true
 ```
 
-##### swapCase
+##### ensureLeft
 
-$stringy->swapCase();
+$stringy->ensureLeft(string $substring)
 
-S::swapCase(string $str [, string $encoding ])
+S::ensureLeft(string $substring [, string $encoding ])
 
-Returns a case swapped version of a string.
+Ensures that $str begins with $substring.
 
 ```php
-S::create('Ντανιλ', 'UTF-8')->swapCase();
-S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
+S::create('foobar')->ensureLeft('http://');
+S::ensureLeft('foobar', 'http://');  // 'http://foobar'
 ```
 
-##### titleize
+##### ensureRight
 
-$stringy->titleize([ string $encoding ])
+$stringy->ensureRight(string $substring)
 
-S::titleize(string $str [, array $ignore [, string $encoding ]])
+S::ensureRight(string $substring [, string $encoding ])
 
-Capitalizes the first letter of each word in a string, after trimming.
-Ignores the case of other letters, allowing for the use of acronyms.
-Also accepts an array, $ignore, allowing you to list words not to be
-capitalized.
+Ensures that $str ends with $substring.
 
 ```php
-$ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
-S::create('i like to watch DVDs at home', 'UTF-8')->titleize($ignore);
-S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
-// 'I Like to Watch DVDs at Home'
+S::create('foobar')->ensureRight('.com');
+S::ensureRight('foobar', '.com');  // 'foobar.com'
+```
+
+##### first
+
+$stringy->first(int $n)
+
+S::first(int $n [, string $encoding ])
+
+Gets the first $n characters of $str.
+
+```php
+S::create('fòô bàř', 'UTF-8')->first(3);
+S::first('fòô bàř', 3, 'UTF-8');  // 'fòô'
 ```
 
 ##### humanize
@@ -260,207 +263,6 @@ S::create('author_id')->humanize();
 S::humanize('author_id');  // 'Author'
 ```
 
-##### tidy
-
-$stringy->tidy()
-
-S::tidy(string $str)
-
-Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
-(and commonly used in Word documents) with their ASCII equivalents.
-
-```php
-S::create('“I see…”')->tidy();
-S::tidy('“I see…”');  // '"I see..."'
-```
-
-##### collapseWhitespace
-
-$stringy->collapseWhitespace()
-
-S::collapseWhitespace(string $str)
-
-Trims the string and replaces consecutive whitespace characters with a
-single space. This inclues tabs and newline characters.
-
-```php
-S::create('   Ο     συγγραφέας  ')->collapseWhitespace();
-S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγραφέας'
-```
-
-##### standardize
-
-$stringy->standardize()
-
-S::standardize(string $str)
-
-Converts some non-ASCII characters to their closest ASCII counterparts.
-
-```php
-S::create('fòô bàř')->standardize();
-S::standardize('fòô bàř');  // 'foo bar'
-```
-
-##### pad
-
-$stringy->pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
-
-S::pad(string $str , int $length [, string $padStr = ' ' [, string $padType = 'right' [, string $encoding ]]])
-
-Pads a string to a given length with another string. If length is less
-than or equal to the length of $str, then no padding takes places. The
-default string used for padding is a space, and the default type (one of
-'left', 'right', 'both') is 'right'. Throws an exception if $padType
-isn't one of those 3 values.
-
-```php
-S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left',);
-S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
-```
-
-##### padLeft
-
-$stringy->padLeft(int $length [, string $padStr = ' ' ])
-
-S::padLeft(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
-
-Returns a new string of a given length such that the beginning of the
-string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
-
-```php
-S::create($str, $encoding)->padLeft($length, $padStr);
-S::padLeft('foo bar', 9, ' ');  // '  foo bar'
-```
-
-##### padRight
-
-$stringy->padRight(int $length [, string $padStr = ' ' ])
-
-S::padRight(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
-
-Returns a new string of a given length such that the end of the string is
-padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
-
-```php
-S::create('foo bar')->padRight(10, '_*');
-S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
-```
-
-##### padBoth
-
-$stringy->padBoth(int $length [, string $padStr = ' ' ])
-
-S::padBoth(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
-
-Returns a new string of a given length such that both sides of the string
-string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
-
-```php
-S::create('foo bar')->padBoth(9, ' ');
-S::padBoth('foo bar', 9, ' ');  // ' foo bar '
-```
-
-##### startsWith
-
-$stringy->startsWith(string $substring [, boolean $caseSensitive = true ])
-
-S::startsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
-
-Returns true if the string $str begins with $substring, false otherwise.
-By default, the comparison is case-sensitive, but can be made insensitive
-by setting $caseSensitive to false.
-
-```php
-S::create('FÒÔ bàřs', 'UTF-8')->startsWith('fòô bàř', false);
-S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8');  // true
-```
-
-##### endsWith
-
-$stringy->endsWith(string $substring [, boolean $caseSensitive = true ])
-
-S::endsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
-
-Returns true if the string $str ends with $substring, false otherwise.
-By default, the comparison is case-sensitive, but can be made insensitive
-by setting $caseSensitive to false.
-
-```php
-S::create('FÒÔ bàřs', 'UTF-8')->endsWith('àřs', true);
-S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8');  // true
-```
-
-##### toSpaces
-
-$stringy->toSpaces([ tabLength = 4 ])
-
-S::toSpaces(string $str, [, int $tabLength = 4 ])
-
-Converts each tab in a string to some number of spaces, as defined by
-$tabLength. By default, each tab is converted to 4 consecutive spaces.
-
-```php
-S::create('	String speech = "Hi"')->toSpaces();
-S::toSpaces('	String speech = "Hi"')  // '    String speech = "Hi"'
-```
-
-##### toTabs
-
-$stringy->toTabs([ tabLength = 4 ])
-
-S::toTabs(string $str, [, int $tabLength = 4 ])
-
-Converts each occurence of some consecutive number of spaces, as defined
-by $tabLength, to a tab. By default, each 4 consecutive spaces are
-converted to a tab.
-
-```php
-S::create('    fòô    bàř')->toTabs();
-S::toTabs('    fòô    bàř')  // '	fòô	bàř'
-```
-
-##### slugify
-
-$stringy->slugify()
-
-S::slugify(string $str)
-
-Converts the supplied text into an URL slug. This includes replacing
-non-ASCII characters with their closest ASCII equivalents, removing
-non-alphanumeric and non-ASCII characters, and replacing whitespace with
-dashes. The string is also converted to lowercase.
-
-```php
-S::create('Using strings like fòô bàř')->slugify();
-S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
-```
-
-##### contains
-
-$stringy->contains(string $needle)
-
-S::contains(string $haystack, string $needle [, string $encoding ])
-
-Returns true if $haystack contains $needle, false otherwise.
-
-```php
-S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
-S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')  // true
-```
-
-##### surround
-
-$stringy->surround(string $substring)
-
-S::surround(string $str, string $substring)
-
-Surrounds a string with the given substring.
-
-```php
-S::create(' ͜ ')->surround('ʘ');
-S::surround(' ͜ ', 'ʘ');  // 'ʘ ͜ ʘ'
-```
-
 ##### insert
 
 $stringy->insert(int $index, string $substring)
@@ -474,75 +276,30 @@ S::create('fòô bà', 'UTF-8')->insert('ř', 6);
 S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
 ```
 
-##### truncate
+##### last
 
-$stringy->truncate(int $length, [, string $substring = '' ])
+$stringy->last(int $n)
 
-S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+S::last(int $n [, string $encoding ])
 
-Truncates $str to a given length. If $substring is provided, and
-truncating occurs, the string is further truncated so that the substring
-may be appended without exceeding the desired length.
+Gets the last $n characters of $str.
 
 ```php
-S::create('What are your plans today?')->safeTruncate(19, '...');
-S::safeTruncate('What are your plans today?', 19, '...');  // 'What are your pl...'
+S::create('fòô bàř', 'UTF-8')->last(3);
+S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
 ```
 
-##### safeTruncate
+##### length
 
-$stringy->safeTruncate(int $length, [, string $substring = '' ])
+$stringy->length()
 
-S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+S::length(string $str [, string $encoding ])
 
-Truncates the string to a given length, while ensuring that it does not
-chop words. If $substring is provided, and truncating occurs, the string
-is further truncated so that the substring may be appended without
-exceeding the desired length.
+Returns the length of $str. An alias for PHP's mb_strlen() function.
 
 ```php
-S::create('What are your plans today?')->safeTruncate(22, '...');
-S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your plans...'
-```
-
-##### reverse
-
-$stringy->reverse()
-
-S::reverse(string $str, [, string $encoding ])
-
-Reverses a string. A multibyte version of strrev.
-
-```php
-S::create('fòô bàř', 'UTF-8')->reverse();
-S::reverse('fòô bàř', 'UTF-8');  // 'řàb ôòf'
-```
-
-##### shuffle
-
-$stringy->shuffle()
-
-S::shuffle(string $str [, string $encoding ])
-
-A multibyte str_shuffle function. It randomizes the order of characters
-in a string.
-
-```php
-S::create('fòô bàř', 'UTF-8')->shuffle();
-S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
-```
-
-##### trim
-
-$stringy->trim()
-
-S::trim(string $str)
-
-Trims $str. An alias for PHP's trim() function.
-
-```php
-S::create('fòô bàř', 'UTF-8')->trim();
-S::trim(' fòô bàř ')  // 'fòô bàř'
+S::create('fòô bàř', 'UTF-8')->length();
+S::length('fòô bàř', 'UTF-8');  // 7
 ```
 
 ##### longestCommonPrefix
@@ -585,97 +342,77 @@ S::create('foo bar')->longestCommonSubstring('boo far');
 S::longestCommonSubstring('foo bar', 'boo far');  // 'oo '
 ```
 
-##### length
+##### lowerCaseFirst
 
-$stringy->length()
+$stringy->lowerCaseFirst();
 
-S::length(string $str [, string $encoding ])
+S::lowerCaseFirst(string $str [, string $encoding ])
 
-Returns the length of $str. An alias for PHP's mb_strlen() function.
+Converts the first character of the supplied string to lower case, with
+support for multibyte strings.
 
 ```php
-S::create('fòô bàř', 'UTF-8')->length();
-S::length('fòô bàř', 'UTF-8');  // 7
+S::create('Σ test', 'UTF-8')->lowerCaseFirst();
+S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
-##### substr
+##### pad
 
-$stringy->substr(int $start [, int $length ])
+$stringy->pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
 
-S::substr(string $str, int $start [, int $length [, string $encoding ]])
+S::pad(string $str , int $length [, string $padStr = ' ' [, string $padType = 'right' [, string $encoding ]]])
 
-Gets the substring of $str beginning at $start with the specified $length.
-It differs from the mb_substr() function in that providing a $length of
-null will return the rest of the string, rather than an empty string.
+Pads a string to a given length with another string. If length is less
+than or equal to the length of $str, then no padding takes places. The
+default string used for padding is a space, and the default type (one of
+'left', 'right', 'both') is 'right'. Throws an exception if $padType
+isn't one of those 3 values.
 
 ```php
-S::create('fòô bàř', 'UTF-8')->substr(2, 3);
-S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
+S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left',);
+S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
 ```
 
-##### at
+##### padBoth
 
-$stringy->at(int $index)
+$stringy->padBoth(int $length [, string $padStr = ' ' ])
 
-S::substr(int $index [, string $encoding ])
+S::padBoth(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
-Gets the character of $str at $index, with indexes starting at 0.
+Returns a new string of a given length such that both sides of the string
+string are padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
 
 ```php
-S::create('fòô bàř', 'UTF-8')->at(6);
-S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
+S::create('foo bar')->padBoth(9, ' ');
+S::padBoth('foo bar', 9, ' ');  // ' foo bar '
 ```
 
-##### first
+##### padLeft
 
-$stringy->first(int $n)
+$stringy->padLeft(int $length [, string $padStr = ' ' ])
 
-S::first(int $n [, string $encoding ])
+S::padLeft(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
-Gets the first $n characters of $str.
+Returns a new string of a given length such that the beginning of the
+string is padded. Alias for pad($str, $length, $padStr, 'left', $encoding)
 
 ```php
-S::create('fòô bàř', 'UTF-8')->first(3);
-S::first('fòô bàř', 3, 'UTF-8');  // 'fòô'
+S::create($str, $encoding)->padLeft($length, $padStr);
+S::padLeft('foo bar', 9, ' ');  // '  foo bar'
 ```
 
-##### last
+##### padRight
 
-$stringy->last(int $n)
+$stringy->padRight(int $length [, string $padStr = ' ' ])
 
-S::last(int $n [, string $encoding ])
+S::padRight(string $str , int $length [, string $padStr = ' ' [, string $encoding ]])
 
-Gets the last $n characters of $str.
-
-```php
-S::create('fòô bàř', 'UTF-8')->last(3);
-S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
-```
-
-##### ensureLeft
-
-$stringy->ensureLeft(string $substring)
-
-S::ensureLeft(string $substring [, string $encoding ])
-
-Ensures that $str begins with $substring.
+Returns a new string of a given length such that the end of the string is
+padded. Alias for pad($str, $length, $padStr, 'right', $encoding)
 
 ```php
-S::create('foobar')->ensureLeft('http://');
-S::ensureLeft('foobar', 'http://');  // 'http://foobar'
-```
-
-##### ensureRight
-
-$stringy->ensureRight(string $substring)
-
-S::ensureRight(string $substring [, string $encoding ])
-
-Ensures that $str ends with $substring.
-
-```php
-S::create('foobar')->ensureRight('.com');
-S::ensureRight('foobar', '.com');  // 'foobar.com'
+S::create('foo bar')->padRight(10, '_*');
+S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
 ```
 
 ##### removeLeft
@@ -702,6 +439,268 @@ Removes the suffix $substring if present.
 ```php
 S::create('fòô bàř', 'UTF-8')->removeRight(' bàř');
 S::removeRight('fòô bàř', ' bàř', 'UTF-8');  // 'fòô'
+```
+
+##### reverse
+
+$stringy->reverse()
+
+S::reverse(string $str, [, string $encoding ])
+
+Reverses a string. A multibyte version of strrev.
+
+```php
+S::create('fòô bàř', 'UTF-8')->reverse();
+S::reverse('fòô bàř', 'UTF-8');  // 'řàb ôòf'
+```
+
+##### safeTruncate
+
+$stringy->safeTruncate(int $length, [, string $substring = '' ])
+
+S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+
+Truncates the string to a given length, while ensuring that it does not
+chop words. If $substring is provided, and truncating occurs, the string
+is further truncated so that the substring may be appended without
+exceeding the desired length.
+
+```php
+S::create('What are your plans today?')->safeTruncate(22, '...');
+S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your plans...'
+```
+
+##### shuffle
+
+$stringy->shuffle()
+
+S::shuffle(string $str [, string $encoding ])
+
+A multibyte str_shuffle function. It randomizes the order of characters
+in a string.
+
+```php
+S::create('fòô bàř', 'UTF-8')->shuffle();
+S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
+```
+
+##### slugify
+
+$stringy->slugify()
+
+S::slugify(string $str)
+
+Converts the supplied text into an URL slug. This includes replacing
+non-ASCII characters with their closest ASCII equivalents, removing
+non-alphanumeric and non-ASCII characters, and replacing whitespace with
+dashes. The string is also converted to lowercase.
+
+```php
+S::create('Using strings like fòô bàř')->slugify();
+S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
+```
+
+##### standardize
+
+$stringy->standardize()
+
+S::standardize(string $str)
+
+Converts some non-ASCII characters to their closest ASCII counterparts.
+
+```php
+S::create('fòô bàř')->standardize();
+S::standardize('fòô bàř');  // 'foo bar'
+```
+
+##### startsWith
+
+$stringy->startsWith(string $substring [, boolean $caseSensitive = true ])
+
+S::startsWith(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
+
+Returns true if the string $str begins with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+S::create('FÒÔ bàřs', 'UTF-8')->startsWith('fòô bàř', false);
+S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8');  // true
+```
+
+##### substr
+
+$stringy->substr(int $start [, int $length ])
+
+S::substr(string $str, int $start [, int $length [, string $encoding ]])
+
+Gets the substring of $str beginning at $start with the specified $length.
+It differs from the mb_substr() function in that providing a $length of
+null will return the rest of the string, rather than an empty string.
+
+```php
+S::create('fòô bàř', 'UTF-8')->substr(2, 3);
+S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
+```
+
+##### surround
+
+$stringy->surround(string $substring)
+
+S::surround(string $str, string $substring)
+
+Surrounds a string with the given substring.
+
+```php
+S::create(' ͜ ')->surround('ʘ');
+S::surround(' ͜ ', 'ʘ');  // 'ʘ ͜ ʘ'
+```
+
+##### swapCase
+
+$stringy->swapCase();
+
+S::swapCase(string $str [, string $encoding ])
+
+Returns a case swapped version of a string.
+
+```php
+S::create('Ντανιλ', 'UTF-8')->swapCase();
+S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
+```
+
+##### tidy
+
+$stringy->tidy()
+
+S::tidy(string $str)
+
+Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
+(and commonly used in Word documents) with their ASCII equivalents.
+
+```php
+S::create('“I see…”')->tidy();
+S::tidy('“I see…”');  // '"I see..."'
+```
+
+##### titleize
+
+$stringy->titleize([ string $encoding ])
+
+S::titleize(string $str [, array $ignore [, string $encoding ]])
+
+Capitalizes the first letter of each word in a string, after trimming.
+Ignores the case of other letters, allowing for the use of acronyms.
+Also accepts an array, $ignore, allowing you to list words not to be
+capitalized.
+
+```php
+$ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
+S::create('i like to watch DVDs at home', 'UTF-8')->titleize($ignore);
+S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
+// 'I Like to Watch DVDs at Home'
+```
+
+##### toSpaces
+
+$stringy->toSpaces([ tabLength = 4 ])
+
+S::toSpaces(string $str, [, int $tabLength = 4 ])
+
+Converts each tab in a string to some number of spaces, as defined by
+$tabLength. By default, each tab is converted to 4 consecutive spaces.
+
+```php
+S::create(' String speech = "Hi"')->toSpaces();
+S::toSpaces('   String speech = "Hi"')  // '    String speech = "Hi"'
+```
+
+##### toTabs
+
+$stringy->toTabs([ tabLength = 4 ])
+
+S::toTabs(string $str, [, int $tabLength = 4 ])
+
+Converts each occurence of some consecutive number of spaces, as defined
+by $tabLength, to a tab. By default, each 4 consecutive spaces are
+converted to a tab.
+
+```php
+S::create('    fòô    bàř')->toTabs();
+S::toTabs('    fòô    bàř')  // '   fòô bàř'
+```
+
+##### trim
+
+$stringy->trim()
+
+S::trim(string $str)
+
+Trims $str. An alias for PHP's trim() function.
+
+```php
+S::create('fòô bàř', 'UTF-8')->trim();
+S::trim(' fòô bàř ')  // 'fòô bàř'
+```
+
+##### truncate
+
+$stringy->truncate(int $length, [, string $substring = '' ])
+
+S::truncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
+
+Truncates $str to a given length. If $substring is provided, and
+truncating occurs, the string is further truncated so that the substring
+may be appended without exceeding the desired length.
+
+```php
+S::create('What are your plans today?')->safeTruncate(19, '...');
+S::safeTruncate('What are your plans today?', 19, '...');  // 'What are your pl...'
+```
+
+##### underscored
+
+$stringy->underscored();
+
+S::underscored(string $str [, string $encoding ])
+
+Returns a lowercase and trimmed string seperated by underscores, with
+multibyte support. Underscores are inserted before uppercase characters
+(with the exception of the first character of the string), and in place
+of spaces as well as dashes.
+
+```php
+S::create('TestUCase')->underscored();
+S::underscored('TestUCase');  // 'test_u_case'
+```
+
+##### upperCamelize
+
+$stringy->upperCamelize();
+
+S::upperCamelize(string $str [, string $encoding ])
+
+Returns an UpperCamelCase version of a supplied string, with multibyte
+support. Trims surrounding spaces, capitalizes letters following digits,
+spaces, dashes and underscores, and removes spaces, dashes, underscores.
+
+```php
+S::create('Upper Camel-Case')->upperCamelize();
+S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
+```
+
+##### upperCaseFirst
+
+$stringy->upperCaseFirst();
+
+S::upperCaseFirst(string $str [, string $encoding ])
+
+Converts the first character of the supplied string to upper case, with
+support for multibyte strings.
+
+```php
+S::create('σ test', 'UTF-8')->upperCaseFirst();
+S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 ```
 
 ## TODO
