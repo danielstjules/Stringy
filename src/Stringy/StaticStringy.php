@@ -395,7 +395,7 @@ class StaticStringy
      *
      * @return  string  Trimmed $str
      */
-    public function trim($str)
+    public static function trim($str)
     {
         return trim($str);
     }
