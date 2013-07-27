@@ -317,4 +317,13 @@ class StaticStringyTestCase extends CommonTest
         $result = S::substr($str, $start, $length, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForAt
+     */
+    public function testAt($expected, $str, $index, $encoding = null)
+    {
+        $result = S::at($str, $index, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

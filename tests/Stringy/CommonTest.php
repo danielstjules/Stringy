@@ -546,6 +546,22 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForAt()
+    {
+        $testData = array(
+            array('f', 'foo bar', 0),
+            array('o', 'foo bar', 1),
+            array('r', 'foo bar', 6),
+            array('', 'foo bar', 7),
+            array('f', 'fòô bàř', 0, 'UTF-8'),
+            array('ò', 'fòô bàř', 1, 'UTF-8'),
+            array('ř', 'fòô bàř', 6, 'UTF-8'),
+            array('', 'fòô bàř', 7, 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

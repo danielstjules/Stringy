@@ -753,4 +753,17 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Gets the character of $str at $index, with indexes starting at 0.
+     *
+     * @param   int  $index  Position of the character
+     * @return  Stringy  Object with its $str being the selected character
+     */
+    public function at($index)
+    {
+        $this->substr($index, 1);
+
+        return $this;
+    }
 }

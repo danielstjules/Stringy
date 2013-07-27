@@ -465,10 +465,23 @@ class StaticStringy
      * @param   string  $str     The string to get the length of
      * @param   int     $start   Position of the first character to use from str
      * @param   int     $length  Maximum number of characters used
+     * @param   string  $encoding  The character encoding
      * @return  string  The substring of $str
      */
     public static function substr($str, $start, $length = null, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->substr($start, $length);
+        return Stringy::create($str, $encoding)->substr($start, $length)->str;
+    }
+
+    /**
+     * Gets the character of $str at $index, with indexes starting at 0.
+     *
+     * @param   int      $index  Position of the character
+     * @param   string   $encoding  The character encoding
+     * @return  string   The character at $index
+     */
+    public static function at($str, $index, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->at($index)->str;
     }
 }

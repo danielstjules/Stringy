@@ -40,6 +40,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [longestCommonSubstring](#longestcommonsubstring)
     * [length](#length)
     * [substr](#substr)
+    * [at](#at)
 * [Tests](#tests)
 * [License](#license)
 
@@ -588,6 +589,19 @@ S::create('fòô bàř', 'UTF-8')->substr(2, 3);
 S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
 ```
 
+##### at
+
+$stringy->at(int $index)
+
+S::substr(int $index [, string $encoding ])
+
+Gets the character of $str at $index, with indexes starting at 0.
+
+```php
+S::create('fòô bàř', 'UTF-8')->at(6);
+S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
+```
+
 ## TODO
 
 **count** => substr_count
@@ -611,8 +625,6 @@ S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
 **truncate**
 
 **pluralize** ($count, $singular, $plural = null)
-
-**at** $position
 
 **first**
 
