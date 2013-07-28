@@ -782,11 +782,9 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 
 **wordWrap**
 
-**excerpt** ($str, $substring, $radius)
-
 **pluralize** ($count, $singular, $plural = null)
 
-**toBoolean**
+**replace**
 
 ## Tests
 
