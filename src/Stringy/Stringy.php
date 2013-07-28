@@ -21,7 +21,7 @@ class Stringy
     {
         $encoding = $encoding ?: mb_internal_encoding();
 
-        $stringyObj = new Stringy();
+        $stringyObj = new self();
         $stringyObj->str = $str;
         $stringyObj->encoding = $encoding;
 
@@ -49,9 +49,9 @@ class Stringy
         $rest = mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
-        $this->str = mb_strtoupper($first, $this->encoding) . $rest;
+        $str = mb_strtoupper($first, $this->encoding) . $rest;
 
-        return $this;
+        return self::create($str, $this->encoding);
     }
 
     /**
@@ -65,9 +65,9 @@ class Stringy
         $rest = mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
-        $this->str = mb_strtolower($first, $this->encoding) . $rest;
+        $str = mb_strtolower($first, $this->encoding) . $rest;
 
-        return $this;
+        return self::create($str, $this->encoding);
     }
 
     /**
@@ -80,16 +80,17 @@ class Stringy
     public function camelize()
     {
         $encoding = $this->encoding;
+        $stringy = self::create($this->str, $this->encoding);
 
         $camelCase = preg_replace_callback(
             '/[-_\s]+(.)?/u',
             function ($match) use (&$encoding) {
                 return $match[1] ? mb_strtoupper($match[1], $encoding) : "";
             },
-            $this->trim()->lowerCaseFirst()
+            $stringy->trim()->lowerCaseFirst()->str
         );
 
-        $this->str = preg_replace_callback(
+        $stringy->str = preg_replace_callback(
             '/[\d]+(.)?/u',
             function ($match) use (&$encoding) {
                 return mb_strtoupper($match[0], $encoding);
@@ -97,7 +98,7 @@ class Stringy
             $camelCase
         );
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -109,9 +110,7 @@ class Stringy
      */
     public function upperCamelize()
     {
-        $this->camelize()->upperCaseFirst();
-
-        return $this;
+        return $this->camelize()->upperCaseFirst();
     }
 
     /**
@@ -127,13 +126,14 @@ class Stringy
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $dasherized = mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
+        $stringy = self::create($this->str, $this->encoding)->trim();
+        $dasherized = mb_ereg_replace('\B([A-Z])', '-\1', $stringy->str);
         $dasherized = mb_ereg_replace('[-_\s]+', '-', $dasherized);
 
         mb_regex_encoding($regexEncoding);
-        $this->str = mb_strtolower($dasherized, $this->encoding);
+        $stringy->str = mb_strtolower($dasherized, $stringy->encoding);
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -150,13 +150,14 @@ class Stringy
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $underscored = mb_ereg_replace('\B([A-Z])', '_\1', $this->trim());
+        $stringy = self::create($this->str, $this->encoding)->trim();
+        $underscored = mb_ereg_replace('\B([A-Z])', '_\1', $stringy->str);
         $underscored = mb_ereg_replace('[-_\s]+', '_', $underscored);
 
         mb_regex_encoding($regexEncoding);
-        $this->str = mb_strtolower($underscored, $this->encoding);
+        $stringy->str = mb_strtolower($underscored, $stringy->encoding);
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -166,9 +167,10 @@ class Stringy
      */
     public function swapCase()
     {
-        $encoding = $this->encoding;
+        $stringy = self::create($this->str, $this->encoding);
+        $encoding = $stringy->encoding;
 
-        $this->str = preg_replace_callback(
+        $stringy->str = preg_replace_callback(
             '/[\S]/u',
             function ($match) use (&$encoding) {
                 if ($match[0] == mb_strtoupper($match[0], $encoding))
@@ -176,10 +178,10 @@ class Stringy
                 else
                     return mb_strtoupper($match[0], $encoding);
             },
-            $this->str
+            $stringy->str
         );
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -193,21 +195,21 @@ class Stringy
      */
     public function titleize($ignore = null)
     {
-        $encoding = $this->encoding;
-        $that = $this;
+        $stringy = self::create($this->str, $this->encoding)->trim();
+        $encoding = $stringy->encoding;
 
-        $this->str = preg_replace_callback(
+        $stringy->str = preg_replace_callback(
             '/([\S]+)/u',
-            function ($match) use (&$encoding, &$ignore, &$that) {
+            function ($match) use (&$encoding, &$ignore, &$stringy) {
                 if ($ignore && in_array($match[0], $ignore))
                     return $match[0];
-                $that->str = $match[0];
-                return $that->upperCaseFirst();
+                $stringy->str = $match[0];
+                return $stringy->upperCaseFirst();
             },
-            $this->trim()->str
+            $stringy->str
         );
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -218,10 +220,12 @@ class Stringy
      */
     public function humanize()
     {
-        $humanized = str_replace('_id', '', $this->str);
-        $this->str = str_replace('_', ' ', $humanized);
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this->trim()->upperCaseFirst();
+        $humanized = str_replace('_id', '', $stringy->str);
+        $stringy->str = str_replace('_', ' ', $humanized);
+
+        return $stringy->trim()->upperCaseFirst();
     }
 
     /**
@@ -232,12 +236,14 @@ class Stringy
      */
     public function tidy()
     {
-        $this->str = preg_replace('/\x{2026}/u', '...', $this->str);
-        $this->str = preg_replace('/[\x{201C}\x{201D}]/u', '"', $this->str);
-        $this->str = preg_replace('/[\x{2018}\x{2019}]/u', "'", $this->str);
-        $this->str = preg_replace('/[\x{2013}\x{2014}]/u', '-', $this->str);
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        $stringy->str = preg_replace('/\x{2026}/u', '...', $stringy->str);
+        $stringy->str = preg_replace('/[\x{201C}\x{201D}]/u', '"', $stringy->str);
+        $stringy->str = preg_replace('/[\x{2018}\x{2019}]/u', "'", $stringy->str);
+        $stringy->str = preg_replace('/[\x{2013}\x{2014}]/u', '-', $stringy->str);
+
+        return $stringy;
     }
 
     /**
@@ -248,9 +254,10 @@ class Stringy
      */
     public function collapseWhitespace()
     {
-        $this->str = preg_replace('/\s+/u', ' ', $this->trim());
+        $stringy = self::create($this->str, $this->encoding);
+        $stringy->str = preg_replace('/\s+/u', ' ', $stringy->trim());
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -260,6 +267,7 @@ class Stringy
      */
     public function standardize()
     {
+        $stringy = self::create($this->str, $this->encoding);
         $charsArray = array(
             'a'  => array('à', 'á', 'â', 'ã', 'ā', 'ą', 'ă', 'å', 'α', 'ά', 'ἀ',
                           'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ', 'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ',
@@ -313,10 +321,10 @@ class Stringy
         );
 
         foreach ($charsArray as $key => $value) {
-            $this->str = str_replace($value, $key, $this->str);
+            $stringy->str = str_replace($value, $key, $stringy->str);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -340,11 +348,12 @@ class Stringy
                 "to be one of 'left', 'right' or 'both'");
         }
 
-        $strLength = $this->length();
-        $padStrLength = mb_strlen($padStr, $this->encoding);
+        $stringy = self::create($this->str, $this->encoding);
+        $strLength = $stringy->length();
+        $padStrLength = mb_strlen($padStr, $stringy->encoding);
 
         if ($length <= $strLength || $padStrLength <= 0)
-            return $this;
+            return $stringy;
 
         // Number of times to repeat the padStr if left or right
         $times = ceil(($length - $strLength) / $padStrLength);
@@ -354,11 +363,11 @@ class Stringy
             // Repeat the pad, cut it, and prepend
             $leftPad = str_repeat($padStr, $times);
             $leftPad = mb_substr($leftPad, 0, $length - $strLength, $this->encoding);
-            $this->str = $leftPad . $this->str;
+            $stringy->str = $leftPad . $stringy->str;
         } elseif ($padType == 'right') {
             // Append the repeated pad and get a substring of the given length
-            $this->str = $this->str . str_repeat($padStr, $times);
-            $this->str = mb_substr($this->str, 0, $length, $this->encoding);
+            $stringy->str = $stringy->str . str_repeat($padStr, $times);
+            $stringy->str = mb_substr($stringy->str, 0, $length, $this->encoding);
         } else {
             // Number of times to repeat the padStr on both sides
             $paddingSize = ($length - $strLength) / 2;
@@ -371,10 +380,10 @@ class Stringy
             $leftPad = str_repeat($padStr, $times);
             $leftPad = mb_substr($leftPad, 0, floor($paddingSize), $this->encoding);
 
-            $this->str = $leftPad . $this->str . $rightPad;
+            $stringy->str = $leftPad . $stringy->str . $rightPad;
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -472,10 +481,12 @@ class Stringy
      */
     public function toSpaces($tabLength = 4)
     {
-        $spaces = str_repeat(' ', $tabLength);
-        $this->str = str_replace("\t", $spaces, $this->str);
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        $spaces = str_repeat(' ', $tabLength);
+        $stringy->str = str_replace("\t", $spaces, $stringy->str);
+
+        return $stringy;
     }
 
     /**
@@ -488,10 +499,12 @@ class Stringy
      */
     public function toTabs($tabLength = 4)
     {
-        $spaces = str_repeat(' ', $tabLength);
-        $this->str = str_replace($spaces, "\t", $this->str);
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        $spaces = str_repeat(' ', $tabLength);
+        $stringy->str = str_replace($spaces, "\t", $stringy->str);
+
+        return $stringy;
     }
 
     /**
@@ -504,11 +517,13 @@ class Stringy
      */
     public function slugify()
     {
-        $this->str = preg_replace('/[^a-zA-Z\d -]/u', '', $this->standardize());
-        $this->collapseWhitespace();
-        $this->str = str_replace(' ', '-', strtolower($this->str));
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        $stringy->str = preg_replace('/[^a-zA-Z\d -]/u', '', $stringy->standardize());
+        $stringy->str = $stringy->collapseWhitespace()->str;
+        $stringy->str = str_replace(' ', '-', strtolower($stringy->str));
+
+        return $stringy;
     }
 
     /**
@@ -533,9 +548,10 @@ class Stringy
      */
     public function surround($substring)
     {
-        $this->str = implode('', array($substring, $this->str, $substring));
+        $stringy = self::create($this->str, $this->encoding);
+        $stringy->str = implode('', array($substring, $stringy->str, $substring));
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -547,15 +563,16 @@ class Stringy
      */
     public function insert($substring, $index)
     {
-        if ($index > $this->length())
-            return $this;
+        $stringy = self::create($this->str, $this->encoding);
+        if ($index > $stringy->length())
+            return $stringy;
 
-        $start = mb_substr($this->str, 0, $index, $this->encoding);
-        $end = mb_substr($this->str, $index, $this->length(), $this->encoding);
+        $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
+        $end = mb_substr($stringy->str, $index, $stringy->length(), $stringy->encoding);
 
-        $this->str = $start . $substring . $end;
+        $stringy->str = $start . $substring . $end;
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -569,17 +586,18 @@ class Stringy
      */
     public function truncate($length, $substring = '')
     {
-        if ($length >= $this->length())
-            return $this;
+        $stringy = self::create($this->str, $this->encoding);
+        if ($length >= $stringy->length())
+            return $stringy;
 
         // Need to further trim the string so we can append the substring
-        $substringLength = mb_strlen($substring, $this->encoding);
+        $substringLength = mb_strlen($substring, $stringy->encoding);
         $length = $length - $substringLength;
 
-        $truncated = mb_substr($this->str, 0, $length, $this->encoding);
-        $this->str = $truncated . $substring;
+        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
+        $stringy->str = $truncated . $substring;
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -594,25 +612,26 @@ class Stringy
      */
     public function safeTruncate($length, $substring = '')
     {
-        if ($length >= $this->length())
-            return $this;
+        $stringy = self::create($this->str, $this->encoding);
+        if ($length >= $stringy->length())
+            return $stringy;
 
         // Need to further trim the string so we can append the substring
-        $substringLength = mb_strlen($substring, $this->encoding);
+        $substringLength = mb_strlen($substring, $stringy->encoding);
         $length = $length - $substringLength;
 
-        $truncated = mb_substr($this->str, 0, $length, $this->encoding);
+        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
 
         // If the last word was truncated
-        if (mb_strpos($this->str, ' ', $length - 1, $this->encoding) != $length) {
+        if (mb_strpos($stringy->str, ' ', $length - 1, $stringy->encoding) != $length) {
             // Find pos of the last occurence of a space, and get everything up until
-            $lastPos = mb_strrpos($truncated, ' ', 0, $this->encoding);
-            $truncated = mb_substr($truncated, 0, $lastPos, $this->encoding);
+            $lastPos = mb_strrpos($truncated, ' ', 0, $stringy->encoding);
+            $truncated = mb_substr($truncated, 0, $lastPos, $stringy->encoding);
         }
 
-        $this->str = $truncated . $substring;
+        $stringy->str = $truncated . $substring;
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -630,9 +649,7 @@ class Stringy
             $reversed .= mb_substr($this->str, $i, 1, $this->encoding);
         }
 
-        $this->str = $reversed;
-
-        return $this;
+        return self::create($reversed, $this->encoding);
     }
 
     /**
@@ -651,9 +668,7 @@ class Stringy
             $shuffledStr .= mb_substr($this->str, $i, 1, $this->encoding);
         }
 
-        $this->str = $shuffledStr;
-
-        return $this;
+        return self::create($shuffledStr, $this->encoding);
     }
 
     /**
@@ -663,9 +678,7 @@ class Stringy
      */
     public function trim()
     {
-        $this->str = trim($this->str);
-
-        return $this;
+        return self::create(trim($this->str), $this->encoding);
     }
 
     /**
@@ -689,9 +702,7 @@ class Stringy
             }
         }
 
-        $this->str = $longestCommonPrefix;
-
-        return $this;
+        return self::create($longestCommonPrefix, $this->encoding);
     }
 
     /**
@@ -715,9 +726,7 @@ class Stringy
             }
         }
 
-        $this->str = $longestCommonSuffix;
-
-        return $this;
+        return self::create($longestCommonSuffix, $this->encoding);
     }
 
     /**
@@ -731,13 +740,14 @@ class Stringy
     {
         // Uses dynamic programming to solve
         // http://en.wikipedia.org/wiki/Longest_common_substring_problem
-        $strLength = $this->length();
-        $otherLength = mb_strlen($otherStr, $this->encoding);
+        $stringy = self::create($this->str, $this->encoding);
+        $strLength = $stringy->length();
+        $otherLength = mb_strlen($otherStr, $stringy->encoding);
 
         // Return if either string is empty
         if ($strLength == 0 || $otherLength == 0) {
-            $this->str = '';
-            return $this;
+            $stringy->str = '';
+            return $stringy;
         }
 
         $len = 0;
@@ -746,8 +756,8 @@ class Stringy
 
         for ($i = 1; $i <= $strLength; $i++){
             for ($j = 1; $j <= $otherLength; $j++){
-                $strChar = mb_substr($this->str, $i - 1, 1, $this->encoding);
-                $otherChar = mb_substr($otherStr, $j - 1, 1, $this->encoding);
+                $strChar = mb_substr($stringy->str, $i - 1, 1, $stringy->encoding);
+                $otherChar = mb_substr($otherStr, $j - 1, 1, $stringy->encoding);
 
                 if ($strChar == $otherChar) {
                     $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
@@ -761,9 +771,9 @@ class Stringy
             }
         }
 
-        $this->str = mb_substr($this->str, $end - $len, $len, $this->encoding);
+        $stringy->str = mb_substr($stringy->str, $end - $len, $len, $stringy->encoding);
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -787,14 +797,17 @@ class Stringy
      */
     public function substr($start, $length = null)
     {
+        $stringy = self::create($this->str, $this->encoding);
+
         if ($length === null) {
-            $this->str = mb_substr($this->str, $start, $this->length() - $start,
-                $this->encoding);
+            $stringy->str = mb_substr($stringy->str, $start,
+                $stringy->length() - $start, $this->encoding);
         } else {
-            $this->str = mb_substr($this->str, $start, $length, $this->encoding);
+            $stringy->str = mb_substr($stringy->str, $start, $length,
+                $stringy->encoding);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -805,9 +818,7 @@ class Stringy
      */
     public function at($index)
     {
-        $this->substr($index, 1);
-
-        return $this;
+        return $this->substr($index, 1);
     }
 
     /**
@@ -818,13 +829,15 @@ class Stringy
      */
     public function first($n)
     {
+        $stringy = self::create($this->str, $this->encoding);
+
         if ($n < 0) {
-            $this->str = '';
+            $stringy->str = '';
         } else {
-            $this->substr(0, $n);
+            return $stringy->substr(0, $n);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -835,13 +848,15 @@ class Stringy
      */
     public function last($n)
     {
+        $stringy = self::create($this->str, $this->encoding);
+
         if ($n <= 0) {
-            $this->str = '';
+            $stringy->str = '';
         } else {
-            $this->substr(-$n);
+            return $stringy->substr(-$n);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -852,10 +867,12 @@ class Stringy
      */
     public function ensureLeft($substring)
     {
-        if (!$this->startsWith($substring))
-            $this->str = $substring . $this->str;
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        if (!$stringy->startsWith($substring))
+            $stringy->str = $substring . $stringy->str;
+
+        return $stringy;
     }
 
     /**
@@ -866,10 +883,12 @@ class Stringy
      */
     public function ensureRight($substring)
     {
-        if (!$this->endsWith($substring))
-            $this->str .= $substring;
+        $stringy = self::create($this->str, $this->encoding);
 
-        return $this;
+        if (!$stringy->endsWith($substring))
+            $stringy->str .= $substring;
+
+        return $stringy;
     }
 
     /**
@@ -880,12 +899,14 @@ class Stringy
      */
     public function removeLeft($substring)
     {
-        if ($this->startsWith($substring)) {
-            $substringLength = mb_strlen($substring, $this->encoding);
-            $this->substr($substringLength);
+        $stringy = self::create($this->str, $this->encoding);
+
+        if ($stringy->startsWith($substring)) {
+            $substringLength = mb_strlen($substring, $stringy->encoding);
+            return $stringy->substr($substringLength);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**
@@ -896,12 +917,14 @@ class Stringy
      */
     public function removeRight($substring)
     {
-        if ($this->endsWith($substring)) {
-            $substringLength = mb_strlen($substring, $this->encoding);
-            $this->substr(0, $this->length() - $substringLength);
+        $stringy = self::create($this->str, $this->encoding);
+
+        if ($stringy->endsWith($substring)) {
+            $substringLength = mb_strlen($substring, $stringy->encoding);
+            return $stringy->substr(0, $stringy->length() - $substringLength);
         }
 
-        return $this;
+        return $stringy;
     }
 
     /**

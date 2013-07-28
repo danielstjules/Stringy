@@ -113,7 +113,7 @@ echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ''
 ## Methods
 
 In the list below, any static method other than S::create refers to a
-method in Stringy\StaticStringy. For all others, they're found in Stringy\Stringy.
+method in Stringy\StaticStringy. For all others, they're found in Stringy\Stringy. Furthermore, all methods that return an object of type Stringy return a new object, and do not modify the original.
 
 *Note: If $encoding is not given, it defaults to mb_internal_encoding().*
 
