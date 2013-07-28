@@ -19,6 +19,11 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [first](#first)
     * [humanize](#humanize)
     * [insert](#insert)
+    * [isAlpha](#isalpha)
+    * [isAlphanumeric](#isalphanumeric)
+    * [isBlank](#isblank)
+    * [isLowerCase](#islowercase)
+    * [isUpperCase](#isuppercase)
     * [last](#last)
     * [length](#length)
     * [longestCommonPrefix](#longestcommonprefix)
@@ -274,6 +279,72 @@ Inserts $substring into $str at the $index provided.
 ```php
 S::create('fòô bà', 'UTF-8')->insert('ř', 6);
 S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
+```
+
+##### isAlpha
+
+$stringy->isAlpha()
+
+S::isAlpha(string $str [, string $encoding ])
+
+Returns true if $str contains only alphabetic chars, false otherwise.
+
+```php
+S::create('丹尼爾', 'UTF-8')->isAlpha();
+S::isAlpha('丹尼爾', 'UTF-8');  // true
+```
+
+##### isAlphanumeric
+
+$stringy->isAlphanumeric()
+
+S::isAlphanumeric(string $str [, string $encoding ])
+
+Returns true if $str contains only alphabetic and numeric chars, false
+otherwise.
+
+```php
+S::create('دانيال1', 'UTF-8')->isAlphanumeric();
+S::isAlphanumeric('دانيال1', 'UTF-8');  // true
+```
+
+##### isBlank
+
+$stringy->isBlank()
+
+S::isBlank(string $str [, string $encoding ])
+
+Returns true if $str contains only whitespace chars, false otherwise.
+
+```php
+S::create("\n\t  \v\f")->isBlank();
+S::isBlank("\n\t  \v\f");  // true
+```
+
+##### isLowerCase
+
+$stringy->isLowerCase()
+
+S::isLowerCase(string $str [, string $encoding ])
+
+Returns true if $str contains only lower case chars, false otherwise.
+
+```php
+S::create('fòô bàř', 'UTF-8')->isLowerCase();
+S::isLowerCase('fòô bàř', 'UTF-8');  // true
+```
+
+##### isUpperCase
+
+$stringy->isUpperCase()
+
+S::isUpperCase(string $str [, string $encoding ])
+
+Returns true if $str contains only upper case chars, false otherwise.
+
+```php
+S::create('FÒÔBÀŘ',, 'UTF-8')->isUpperCase();
+S::isUpperCase('FÒÔBÀŘ',, 'UTF-8');  // true
 ```
 
 ##### last
@@ -716,16 +787,6 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 **pluralize** ($count, $singular, $plural = null)
 
 **toBoolean**
-
-**isAlpha**
-
-**isAlphaNumeric**
-
-**isUpper**
-
-**isLower**
-
-**isBlank**
 
 ## Tests
 

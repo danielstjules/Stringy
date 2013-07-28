@@ -372,4 +372,49 @@ class StringyTestCase extends CommonTest
         $result = S::create($str, $encoding)->removeRight($substring);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForIsAlpha
+     */
+    public function testIsAlpha($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->isAlpha();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsAlphanumeric
+     */
+    public function testIsAlphanumeric($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->isAlphanumeric();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsBlank
+     */
+    public function testIsBlank($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->isBlank();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsLowerCase
+     */
+    public function testIsLowerCase($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->isLowerCase();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsUpperCase
+     */
+    public function testIsUpperCase($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->isUpperCase();
+        $this->assertEquals($expected, $result);
+    }
 }

@@ -705,6 +705,97 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForIsAlpha()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, 'foobar'),
+            array(false, 'foo bar'),
+            array(false, 'foobar2'),
+            array(true, 'fòôbàř', 'UTF-8'),
+            array(false, 'fòô bàř', 'UTF-8'),
+            array(false, 'fòôbàř2', 'UTF-8'),
+            array(true, 'ҠѨњфгШ', 'UTF-8'),
+            array(false, 'ҠѨњ¨ˆфгШ', 'UTF-8'),
+            array(true, '丹尼爾', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    public function stringsForIsAlphanumeric()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, 'foobar1'),
+            array(false, 'foo bar'),
+            array(false, 'foobar2"'),
+            array(false, "\nfoobar\n"),
+            array(true, 'fòôbàř1', 'UTF-8'),
+            array(false, 'fòô bàř', 'UTF-8'),
+            array(false, 'fòôbàř2"', 'UTF-8'),
+            array(true, 'ҠѨњфгШ', 'UTF-8'),
+            array(false, 'ҠѨњ¨ˆфгШ', 'UTF-8'),
+            array(true, '丹尼爾111', 'UTF-8'),
+            array(true, 'دانيال1', 'UTF-8'),
+            array(false, 'دانيال1 ', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    public function stringsForIsBlank()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, ' '),
+            array(true, "\n\t "),
+            array(true, "\n\t  \v\f"),
+            array(false, "\n\t a \v\f"),
+            array(false, "\n\t ' \v\f"),
+            array(false, "\n\t 2 \v\f"),
+            array(true, '', 'UTF-8'),
+            array(true, '   ', 'UTF-8'), // thin space
+            array(true, '　　', 'UTF-8'), // ideographic spaces
+            array(false, '　z', 'UTF-8'),
+            array(false, '　1', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForIsLowerCase()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, 'foobar'),
+            array(false, 'foo bar'),
+            array(false, 'Foobar'),
+            array(true, 'fòôbàř', 'UTF-8'),
+            array(false, 'fòôbàř2', 'UTF-8'),
+            array(false, 'fòô bàř', 'UTF-8'),
+            array(false, 'fòôbÀŘ', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForIsUpperCase()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, 'FOOBAR'),
+            array(false, 'FOO BAR'),
+            array(false, 'fOOBAR'),
+            array(true, 'FÒÔBÀŘ', 'UTF-8'),
+            array(false, 'FÒÔBÀŘ2', 'UTF-8'),
+            array(false, 'FÒÔ BÀŘ', 'UTF-8'),
+            array(false, 'FÒÔBàř', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {

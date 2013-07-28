@@ -390,4 +390,49 @@ class StaticStringyTestCase extends CommonTest
         $result = S::removeRight($str, $substring, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForIsAlpha
+     */
+    public function testIsAlpha($expected, $str, $encoding = null)
+    {
+        $result = S::isAlpha($str, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsAlphanumeric
+     */
+    public function testIsAlphanumeric($expected, $str, $encoding = null)
+    {
+        $result = S::isAlphanumeric($str, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsBlank
+     */
+    public function testIsBlank($expected, $str, $encoding = null)
+    {
+        $result = S::isBlank($str, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsLowerCase
+     */
+    public function testIsLowerCase($expected, $str, $encoding = null)
+    {
+        $result = S::isLowerCase($str, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForIsUpperCase
+     */
+    public function testIsUpperCase($expected, $str, $encoding = null)
+    {
+        $result = S::isUpperCase($str, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

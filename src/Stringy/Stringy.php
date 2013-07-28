@@ -884,4 +884,72 @@ class Stringy
 
         return $this;
     }
+
+    /**
+     * Returns true if $str matches the supplied pattern, false otherwise.
+     *
+     * @param   string  Regex pattern to match against
+     * @return  bool    Whether or not $str matches the pattern
+     */
+    private function matchesPattern($pattern)
+    {
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
+
+        $match = mb_ereg_match($pattern, $this->str);
+        mb_regex_encoding($regexEncoding);
+
+        return $match;
+    }
+
+    /**
+     * Returns true if $str contains only alphabetic chars, false otherwise.
+     *
+     * @return  bool  Whether or not $str contains only alphabetic chars
+     */
+    public function isAlpha()
+    {
+        return $this->matchesPattern('^([[:alpha:]])*$');
+    }
+
+    /**
+     * Returns true if $str contains only alphabetic and numeric chars, false
+     * otherwise.
+     *
+     * @return  bool  Whether or not $str contains only alphanumeric chars
+     */
+    public function isAlphanumeric()
+    {
+        return $this->matchesPattern('^([[:alnum:]])*$');
+    }
+
+    /**
+     * Returns true if $str contains only whitespace chars, false otherwise.
+     *
+     * @return  bool  Whether or not $str contains only whitespace characters
+     */
+    public function isBlank()
+    {
+        return $this->matchesPattern('^([[:space:]])*$');
+    }
+
+    /**
+     * Returns true if $str contains only lower case chars, false otherwise.
+     *
+     * @return  bool  Whether or not $str contains only lower case characters
+     */
+    public function isLowerCase()
+    {
+        return $this->matchesPattern('^([[:lower:]])*$');
+    }
+
+    /**
+     * Returns true if $str contains only lower case chars, false otherwise.
+     *
+     * @return  bool  Whether or not $str contains only lower case characters
+     */
+    public function isUpperCase()
+    {
+        return $this->matchesPattern('^([[:upper:]])*$');
+    }
 }
