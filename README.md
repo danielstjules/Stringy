@@ -1,6 +1,6 @@
 # Stringy
 
-A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Inspired by underscore.string.js.
+A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Compatible with PHP 5.3+. Inspired by underscore.string.js.
 
 [![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
 [![Total Downloads](https://poser.pugx.org/danielstjules/Stringy/downloads.png)](https://packagist.org/packages/danielstjules/stringy)
@@ -15,6 +15,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [camelize](#camelize)
     * [collapseWhitespace](#collapsewhitespace)
     * [contains](#contains)
+    * [count](#count)
     * [create](#create)
     * [dasherize](#dasherize)
     * [endsWith](#endswith)
@@ -40,6 +41,7 @@ Note: The methods listed below are subject to change until we reach a 1.0.0 rele
     * [padRight](#padright)
     * [removeLeft](#removeleft)
     * [removeRight](#removeright)
+    * [replace](#replace)
     * [reverse](#reverse)
     * [safeTruncate](#safetruncate)
     * [shuffle](#shuffle)
@@ -121,7 +123,7 @@ method in Stringy\StaticStringy. For all others, they're found in Stringy\String
 
 *Note: If $encoding is not given, it defaults to mb_internal_encoding().*
 
-##### at
+#### at
 
 $stringy->at(int $index)
 
@@ -134,7 +136,7 @@ S::create('fòô bàř', 'UTF-8')->at(6);
 S::at('fòô bàř', 6, 'UTF-8');  // 'ř'
 ```
 
-##### camelize
+#### camelize
 
 $stringy->camelize();
 
@@ -149,7 +151,7 @@ S::create('Camel-Case')->camelize();
 S::camelize('Camel-Case');  // 'camelCase'
 ```
 
-##### collapseWhitespace
+#### collapseWhitespace
 
 $stringy->collapseWhitespace()
 
@@ -163,7 +165,7 @@ S::create('   Ο     συγγραφέας  ')->collapseWhitespace();
 S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγραφέας'
 ```
 
-##### contains
+#### contains
 
 $stringy->contains(string $needle)
 
@@ -176,7 +178,21 @@ S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφ
 S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')  // true
 ```
 
-##### create
+#### count
+
+$stringy->count(string $substring)
+
+S::count(string $str, string $substring [, string $encoding ])
+
+Returns the number of occurences of $substring in $str. An alias for
+mb_substr_count()
+
+```php
+S::create('Ο συγγραφέας είπε', 'UTF-8')->count('α');
+S::count('Ο συγγραφέας είπε', 'α', 'UTF-8')  // 2
+```
+
+#### create
 
 $stringy = S::create(string $str, [, $encoding ])
 
@@ -188,7 +204,7 @@ mb_internal_encoding(). It then returns the instantiated object.
 S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
 ```
 
-##### dasherize
+#### dasherize
 
 $stringy->dasherize();
 
@@ -204,7 +220,7 @@ S::create('TestDCase')->dasherize();
 S::dasherize('TestDCase');  // 'test-d-case'
 ```
 
-##### endsWith
+#### endsWith
 
 $stringy->endsWith(string $substring [, boolean $caseSensitive = true ])
 
@@ -219,7 +235,7 @@ S::create('FÒÔ bàřs', 'UTF-8')->endsWith('àřs', true);
 S::endsWith('FÒÔ bàřs', 'àřs', true, 'UTF-8');  // true
 ```
 
-##### ensureLeft
+#### ensureLeft
 
 $stringy->ensureLeft(string $substring)
 
@@ -232,7 +248,7 @@ S::create('foobar')->ensureLeft('http://');
 S::ensureLeft('foobar', 'http://');  // 'http://foobar'
 ```
 
-##### ensureRight
+#### ensureRight
 
 $stringy->ensureRight(string $substring)
 
@@ -245,7 +261,7 @@ S::create('foobar')->ensureRight('.com');
 S::ensureRight('foobar', '.com');  // 'foobar.com'
 ```
 
-##### first
+#### first
 
 $stringy->first(int $n)
 
@@ -258,7 +274,7 @@ S::create('fòô bàř', 'UTF-8')->first(3);
 S::first('fòô bàř', 3, 'UTF-8');  // 'fòô'
 ```
 
-##### humanize
+#### humanize
 
 $stringy->humanize()
 
@@ -272,7 +288,7 @@ S::create('author_id')->humanize();
 S::humanize('author_id');  // 'Author'
 ```
 
-##### insert
+#### insert
 
 $stringy->insert(int $index, string $substring)
 
@@ -285,7 +301,7 @@ S::create('fòô bà', 'UTF-8')->insert('ř', 6);
 S::insert('fòô bà', 'ř', 6, 'UTF-8');  // 'fòô bàř'
 ```
 
-##### isAlpha
+#### isAlpha
 
 $stringy->isAlpha()
 
@@ -298,7 +314,7 @@ S::create('丹尼爾', 'UTF-8')->isAlpha();
 S::isAlpha('丹尼爾', 'UTF-8');  // true
 ```
 
-##### isAlphanumeric
+#### isAlphanumeric
 
 $stringy->isAlphanumeric()
 
@@ -312,7 +328,7 @@ S::create('دانيال1', 'UTF-8')->isAlphanumeric();
 S::isAlphanumeric('دانيال1', 'UTF-8');  // true
 ```
 
-##### isBlank
+#### isBlank
 
 $stringy->isBlank()
 
@@ -325,7 +341,7 @@ S::create("\n\t  \v\f")->isBlank();
 S::isBlank("\n\t  \v\f");  // true
 ```
 
-##### isLowerCase
+#### isLowerCase
 
 $stringy->isLowerCase()
 
@@ -338,7 +354,7 @@ S::create('fòô bàř', 'UTF-8')->isLowerCase();
 S::isLowerCase('fòô bàř', 'UTF-8');  // true
 ```
 
-##### isUpperCase
+#### isUpperCase
 
 $stringy->isUpperCase()
 
@@ -351,7 +367,7 @@ S::create('FÒÔBÀŘ',, 'UTF-8')->isUpperCase();
 S::isUpperCase('FÒÔBÀŘ',, 'UTF-8');  // true
 ```
 
-##### last
+#### last
 
 $stringy->last(int $n)
 
@@ -364,7 +380,7 @@ S::create('fòô bàř', 'UTF-8')->last(3);
 S::last('fòô bàř', 3, 'UTF-8');  // 'bàř'
 ```
 
-##### length
+#### length
 
 $stringy->length()
 
@@ -377,7 +393,7 @@ S::create('fòô bàř', 'UTF-8')->length();
 S::length('fòô bàř', 'UTF-8');  // 7
 ```
 
-##### longestCommonPrefix
+#### longestCommonPrefix
 
 $stringy->longestCommonPrefix(string $otherStr)
 
@@ -390,7 +406,7 @@ S::create('fòô bar', 'UTF-8')->longestCommonPrefix('fòr bar');
 S::longestCommonPrefix('fòô bar', 'fòr bar', 'UTF-8');  // 'fò'
 ```
 
-##### longestCommonSuffix
+#### longestCommonSuffix
 
 $stringy->longestCommonSuffix(string $otherStr)
 
@@ -403,7 +419,7 @@ S::create('fòô bàř', 'UTF-8')->longestCommonSuffix('fòr bàř');
 S::longestCommonSuffix('fòô bàř', 'fòr bàř', 'UTF-8');  // ' bàř'
 ```
 
-##### longestCommonSubstring
+#### longestCommonSubstring
 
 $stringy->longestCommonSubstring(string $otherStr)
 
@@ -417,7 +433,7 @@ S::create('foo bar')->longestCommonSubstring('boo far');
 S::longestCommonSubstring('foo bar', 'boo far');  // 'oo '
 ```
 
-##### lowerCaseFirst
+#### lowerCaseFirst
 
 $stringy->lowerCaseFirst();
 
@@ -431,7 +447,7 @@ S::create('Σ test', 'UTF-8')->lowerCaseFirst();
 S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
-##### pad
+#### pad
 
 $stringy->pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
 
@@ -448,7 +464,7 @@ S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left',);
 S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
 ```
 
-##### padBoth
+#### padBoth
 
 $stringy->padBoth(int $length [, string $padStr = ' ' ])
 
@@ -462,7 +478,7 @@ S::create('foo bar')->padBoth(9, ' ');
 S::padBoth('foo bar', 9, ' ');  // ' foo bar '
 ```
 
-##### padLeft
+#### padLeft
 
 $stringy->padLeft(int $length [, string $padStr = ' ' ])
 
@@ -476,7 +492,7 @@ S::create($str, $encoding)->padLeft($length, $padStr);
 S::padLeft('foo bar', 9, ' ');  // '  foo bar'
 ```
 
-##### padRight
+#### padRight
 
 $stringy->padRight(int $length [, string $padStr = ' ' ])
 
@@ -490,7 +506,7 @@ S::create('foo bar')->padRight(10, '_*');
 S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
 ```
 
-##### removeLeft
+#### removeLeft
 
 $stringy->removeLeft(string $substring)
 
@@ -503,7 +519,7 @@ S::create('fòô bàř', 'UTF-8')->removeLeft('fòô ');
 S::removeLeft('fòô bàř', 'fòô ', 'UTF-8');  // 'bàř'
 ```
 
-##### removeRight
+#### removeRight
 
 $stringy->removeRight(string $substring)
 
@@ -516,7 +532,20 @@ S::create('fòô bàř', 'UTF-8')->removeRight(' bàř');
 S::removeRight('fòô bàř', ' bàř', 'UTF-8');  // 'fòô'
 ```
 
-##### reverse
+#### replace
+
+$stringy->replace(string $search, string $replace)
+
+S::replace(string $str, string $search, string $replace [, string $encoding ])
+
+Replaces all occurrences of $search with $replace in $str.
+
+```php
+S::create('fòô bàř fòô bàř', 'UTF-8')->replace('fòô ', '');
+S::replace('fòô bàř fòô bàř', 'fòô ', '', 'UTF-8')  // 'bàř bàř'
+```
+
+#### reverse
 
 $stringy->reverse()
 
@@ -529,7 +558,7 @@ S::create('fòô bàř', 'UTF-8')->reverse();
 S::reverse('fòô bàř', 'UTF-8');  // 'řàb ôòf'
 ```
 
-##### safeTruncate
+#### safeTruncate
 
 $stringy->safeTruncate(int $length, [, string $substring = '' ])
 
@@ -545,7 +574,7 @@ S::create('What are your plans today?')->safeTruncate(22, '...');
 S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your plans...'
 ```
 
-##### shuffle
+#### shuffle
 
 $stringy->shuffle()
 
@@ -559,7 +588,7 @@ S::create('fòô bàř', 'UTF-8')->shuffle();
 S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
 ```
 
-##### slugify
+#### slugify
 
 $stringy->slugify()
 
@@ -575,7 +604,7 @@ S::create('Using strings like fòô bàř')->slugify();
 S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
 ```
 
-##### standardize
+#### standardize
 
 $stringy->standardize()
 
@@ -588,7 +617,7 @@ S::create('fòô bàř')->standardize();
 S::standardize('fòô bàř');  // 'foo bar'
 ```
 
-##### startsWith
+#### startsWith
 
 $stringy->startsWith(string $substring [, boolean $caseSensitive = true ])
 
@@ -603,7 +632,7 @@ S::create('FÒÔ bàřs', 'UTF-8')->startsWith('fòô bàř', false);
 S::startsWith('FÒÔ bàřs', 'fòô bàř', false, 'UTF-8');  // true
 ```
 
-##### substr
+#### substr
 
 $stringy->substr(int $start [, int $length ])
 
@@ -618,7 +647,7 @@ S::create('fòô bàř', 'UTF-8')->substr(2, 3);
 S::substr('fòô bàř', 2, 3, 'UTF-8');  // 'ô b'
 ```
 
-##### surround
+#### surround
 
 $stringy->surround(string $substring)
 
@@ -631,7 +660,7 @@ S::create(' ͜ ')->surround('ʘ');
 S::surround(' ͜ ', 'ʘ');  // 'ʘ ͜ ʘ'
 ```
 
-##### swapCase
+#### swapCase
 
 $stringy->swapCase();
 
@@ -644,7 +673,7 @@ S::create('Ντανιλ', 'UTF-8')->swapCase();
 S::swapCase('Ντανιλ', 'UTF-8');  // 'νΤΑΝΙΛ'
 ```
 
-##### tidy
+#### tidy
 
 $stringy->tidy()
 
@@ -658,7 +687,7 @@ S::create('“I see…”')->tidy();
 S::tidy('“I see…”');  // '"I see..."'
 ```
 
-##### titleize
+#### titleize
 
 $stringy->titleize([ string $encoding ])
 
@@ -676,7 +705,7 @@ S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 // 'I Like to Watch DVDs at Home'
 ```
 
-##### toSpaces
+#### toSpaces
 
 $stringy->toSpaces([ tabLength = 4 ])
 
@@ -690,7 +719,7 @@ S::create(' String speech = "Hi"')->toSpaces();
 S::toSpaces('   String speech = "Hi"')  // '    String speech = "Hi"'
 ```
 
-##### toTabs
+#### toTabs
 
 $stringy->toTabs([ tabLength = 4 ])
 
@@ -705,7 +734,7 @@ S::create('    fòô    bàř')->toTabs();
 S::toTabs('    fòô    bàř')  // '   fòô bàř'
 ```
 
-##### trim
+#### trim
 
 $stringy->trim()
 
@@ -718,7 +747,7 @@ S::create('fòô bàř', 'UTF-8')->trim();
 S::trim(' fòô bàř ')  // 'fòô bàř'
 ```
 
-##### truncate
+#### truncate
 
 $stringy->truncate(int $length, [, string $substring = '' ])
 
@@ -733,7 +762,7 @@ S::create('What are your plans today?')->safeTruncate(19, '...');
 S::safeTruncate('What are your plans today?', 19, '...');  // 'What are your pl...'
 ```
 
-##### underscored
+#### underscored
 
 $stringy->underscored();
 
@@ -749,7 +778,7 @@ S::create('TestUCase')->underscored();
 S::underscored('TestUCase');  // 'test_u_case'
 ```
 
-##### upperCamelize
+#### upperCamelize
 
 $stringy->upperCamelize();
 
@@ -764,7 +793,7 @@ S::create('Upper Camel-Case')->upperCamelize();
 S::upperCamelize('Upper Camel-Case');  // 'UpperCamelCase'
 ```
 
-##### upperCaseFirst
+#### upperCaseFirst
 
 $stringy->upperCaseFirst();
 
@@ -777,18 +806,6 @@ support for multibyte strings.
 S::create('σ test', 'UTF-8')->upperCaseFirst();
 S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 ```
-
-## TODO
-
-**count** => substr_count
-
-**wordCount** => str_word_count
-
-**wordWrap**
-
-**pluralize** ($count, $singular, $plural = null)
-
-**replace**
 
 ## Tests
 

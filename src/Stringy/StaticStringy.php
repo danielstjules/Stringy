@@ -642,4 +642,32 @@ class StaticStringy
     {
         return Stringy::create($str, $encoding)->isUpperCase();
     }
+
+    /**
+     * Returns the number of occurences of $substring in $str. An alias for
+     * mb_substr_count()
+     *
+     * @param   string   $str        The haystack to search through
+     * @param   string   $substring  The substring to search for
+     * @param   string   $encoding   The character encoding
+     * @return  int      The number of $substring occurences
+     */
+    public static function count($str, $substring, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->count($substring);
+    }
+
+    /**
+     * Replaces all occurrences of $search with $replace in $str.
+     *
+     * @param   string   $str       The haystack to search through
+     * @param   string   $search    The needle to search for
+     * @param   string   $replace   The string to replace with
+     * @param   string   $encoding  The character encoding
+     * @return  string   The resulting string after the replacements
+     */
+    public static function replace($str, $search, $replace, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->replace($search, $replace);
+    }
 }

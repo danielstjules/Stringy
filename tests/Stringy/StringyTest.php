@@ -501,4 +501,27 @@ class StringyTestCase extends CommonTest
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
+
+    /**
+     * @dataProvider stringsForCount
+     */
+    public function testCount($expected, $str, $substring, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->count($substring);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider stringsForReplace
+     */
+    public function testReplace($expected, $str, $search, $replace,
+                                $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->replace($search, $replace);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
 }

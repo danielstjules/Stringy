@@ -435,4 +435,23 @@ class StaticStringyTestCase extends CommonTest
         $result = S::isUpperCase($str, $encoding);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForCount
+     */
+    public function testCount($expected, $str, $substring, $encoding = null)
+    {
+        $result = S::count($str, $substring, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForReplace
+     */
+    public function testReplace($expected, $str, $search, $replace,
+                                $encoding = null)
+    {
+        $result = S::replace($str, $search, $replace, $encoding);
+        $this->assertEquals($expected, $result);
+    }
 }

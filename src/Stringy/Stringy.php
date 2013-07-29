@@ -994,4 +994,40 @@ class Stringy
     {
         return $this->matchesPattern('^([[:upper:]])*$');
     }
+
+    /**
+     * Returns the number of occurences of $substring in $str. An alias for
+     * mb_substr_count()
+     *
+     * @param   string   $substring  The substring to search for
+     * @return  int      The number of $substring occurences
+     */
+    public function count($substring)
+    {
+        return mb_substr_count($this->str, $substring, $this->encoding);
+    }
+
+    /**
+     * Replaces all occurrences of $search with $replace in $str.
+     *
+     * @param   string   $search   The needle to search for
+     * @param   string   $replace  The string to replace with
+     * @return  Stringy  Object with the resulting $str after the replacements
+     */
+    public function replace($search, $replace)
+    {
+        $stringy = self::create($this->str, $this->encoding);
+
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($stringy->encoding);
+
+        // Don't want the args accidentally being parsed as regex
+        $quotedSearch = preg_quote($search);
+        $quotedReplace = preg_quote($replace);
+
+        $stringy->str = mb_ereg_replace($search, $replace, $stringy->str);
+        mb_regex_encoding($regexEncoding);
+
+        return $stringy;
+    }
 }

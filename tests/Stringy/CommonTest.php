@@ -796,6 +796,42 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForCount()
+    {
+        $testData = array(
+            array(0, '', 'foo'),
+            array(0, 'foo', 'bar'),
+            array(1, 'foo bar', 'foo'),
+            array(2, 'foo bar', 'o'),
+            array(0, '', 'fòô', 'UTF-8'),
+            array(0, 'fòô', 'bàř', 'UTF-8'),
+            array(1, 'fòô bàř', 'fòô', 'UTF-8'),
+            array(2, 'fôòô bàř', 'ô', 'UTF-8')
+        );
+
+        return $testData;
+    }
+
+    public function stringsForReplace()
+    {
+        $testData = array(
+            array('', '', '', ''),
+            array('foo', '', '', 'foo'),
+            array('foo bar', 'foo bar', '', ''),
+            array('bar', 'foo bar', 'foo ', ''),
+            array('far bar', 'foo bar', 'foo', 'far'),
+            array('bar bar', 'foo bar foo bar', 'foo ', ''),
+            array('', '', '', '', 'UTF-8'),
+            array('fòô', '', '', 'fòô', 'UTF-8'),
+            array('fòô bàř', 'fòô bàř', '', '', 'UTF-8'),
+            array('bàř', 'fòô bàř', 'fòô ', '', 'UTF-8'),
+            array('far bàř', 'fòô bàř', 'fòô', 'far', 'UTF-8'),
+            array('bàř bàř', 'fòô bàř fòô bàř', 'fòô ', '', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     // A test is required so as not to throw an error
     // This is a lot cleaner than using PHPUnit's mocks to spy
     public function test() {
