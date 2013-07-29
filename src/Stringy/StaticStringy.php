@@ -585,8 +585,8 @@ class StaticStringy
     /**
      * Returns true if $str contains only alphabetic chars, false otherwise.
      *
-     * @param   string   $str        String to check
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
      * @return  bool     Whether or not $str contains only alphabetic chars
      */
     public static function isAlpha($str, $encoding = null)
@@ -598,8 +598,8 @@ class StaticStringy
      * Returns true if $str contains only alphabetic and numeric chars, false
      * otherwise.
      *
-     * @param   string   $str        String to check
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
      * @return  bool     Whether or not $str contains only alphanumeric chars
      */
     public static function isAlphanumeric($str, $encoding = null)
@@ -610,8 +610,8 @@ class StaticStringy
     /**
      * Returns true if $str contains only whitespace chars, false otherwise.
      *
-     * @param   string   $str        String to check
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
      * @return  bool     Whether or not $str contains only whitespace characters
      */
     public static function isBlank($str, $encoding = null)
@@ -622,8 +622,8 @@ class StaticStringy
     /**
      * Returns true if $str contains only lower case chars, false otherwise.
      *
-     * @param   string   $str        String to check
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
      * @return  bool     Whether or not $str contains only lower case characters
      */
     public static function isLowerCase($str, $encoding = null)
@@ -634,8 +634,8 @@ class StaticStringy
     /**
      * Returns true if $str contains only upper case chars, false otherwise.
      *
-     * @param   string   $str        String to check
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
      * @return  bool     Whether or not $str contains only upper case characters
      */
     public static function isUpperCase($str, $encoding = null)

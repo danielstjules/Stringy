@@ -190,7 +190,7 @@ class Stringy
      * Also accepts an array, $ignore, allowing you to list words not to be
      * capitalized.
      *
-     * @param   array    $ignore    An array of words not to capitalize
+     * @param   array    $ignore  An array of words not to capitalize
      * @return  Stringy  Object with a titleized $str
      */
     public function titleize($ignore = null)
@@ -390,8 +390,8 @@ class Stringy
      * Pads $str to a given length from the begining of the string.
      * Alias for pad($length, $padStr, 'left')
      *
-     * @param   int      $length    Desired string length after padding
-     * @param   string   $padStr    String used to pad, defaults to space
+     * @param   int      $length  Desired string length after padding
+     * @param   string   $padStr  String used to pad, defaults to space
      * @return  Stringy  Object with a left padded $str
      */
     public function padLeft($length, $padStr = ' ')
@@ -403,8 +403,8 @@ class Stringy
      * Pads $str to a given length from the end of the string.
      * Alias for pad($length, $padStr, 'left')
      *
-     * @param   int     $length    Desired string length after padding
-     * @param   string  $padStr    String used to pad, defaults to space
+     * @param   int     $length  Desired string length after padding
+     * @param   string  $padStr  String used to pad, defaults to space
      * @return  string  Object with a right padded $str
      */
     public function padRight($length, $padStr = ' ')
@@ -416,8 +416,8 @@ class Stringy
      * Pads $str to a given length such that both sides of the string string are
      * padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
      *
-     * @param   int      $length    Desired string length after padding
-     * @param   string   $padStr    String used to pad, defaults to space
+     * @param   int      $length  Desired string length after padding
+     * @param   string   $padStr  String used to pad, defaults to space
      * @return  Stringy  The padded string
      */
     public function padBoth($length, $padStr = ' ')
@@ -529,7 +529,7 @@ class Stringy
     /**
      * Returns true if $str contains $needle, false otherwise.
      *
-     * @param   string  $needle    Substring to look for
+     * @param   string  $needle  Substring to look for
      * @return  bool    Whether or not $str contains $needle
      */
     public function contains($needle)
@@ -580,8 +580,8 @@ class Stringy
      * truncating occurs, the string is further truncated so that the substring
      * may be appended without exceeding the desired length.
      *
-     * @param   int      $length       Desired length of the truncated string
-     * @param   string   $substring    The substring to append if it can fit
+     * @param   int      $length     Desired length of the truncated string
+     * @param   string   $substring  The substring to append if it can fit
      * @return  Stringy  Object with the resulting $str after truncating
      */
     public function truncate($length, $substring = '')
@@ -606,8 +606,8 @@ class Stringy
      * is further truncated so that the substring may be appended without
      * exceeding the desired length.
      *
-     * @param   int      $length       Desired length of the truncated string
-     * @param   string   $substring    The substring to append if it can fit
+     * @param   int      $length     Desired length of the truncated string
+     * @param   string   $substring  The substring to append if it can fit
      * @return  Stringy  Object with the resulting $str after truncating
      */
     public function safeTruncate($length, $substring = '')
@@ -999,8 +999,8 @@ class Stringy
      * Returns the number of occurences of $substring in $str. An alias for
      * mb_substr_count()
      *
-     * @param   string   $substring  The substring to search for
-     * @return  int      The number of $substring occurences
+     * @param   string  $substring  The substring to search for
+     * @return  int     The number of $substring occurences
      */
     public function count($substring)
     {

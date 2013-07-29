@@ -6,8 +6,6 @@ A PHP library with a variety of string manipulation functions with multibyte sup
 [![Total Downloads](https://poser.pugx.org/danielstjules/Stringy/downloads.png)](https://packagist.org/packages/danielstjules/stringy)
 [![Latest Stable Version](https://poser.pugx.org/danielstjules/Stringy/v/stable.png)](https://packagist.org/packages/danielstjules/stringy)
 
-Note: The methods listed below are subject to change until we reach a 1.0.0 release.
-
 * [Requiring/Loading](#requiringloading)
 * [OO and Procedural](#oo-and-procedural)
 * [Methods](#methods)
@@ -175,7 +173,7 @@ Returns true if $haystack contains $needle, false otherwise.
 
 ```php
 S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
-S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')  // true
+S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8');  // true
 ```
 
 #### count
@@ -189,7 +187,7 @@ mb_substr_count()
 
 ```php
 S::create('Ο συγγραφέας είπε', 'UTF-8')->count('α');
-S::count('Ο συγγραφέας είπε', 'α', 'UTF-8')  // 2
+S::count('Ο συγγραφέας είπε', 'α', 'UTF-8');  // 2
 ```
 
 #### create
@@ -542,7 +540,7 @@ Replaces all occurrences of $search with $replace in $str.
 
 ```php
 S::create('fòô bàř fòô bàř', 'UTF-8')->replace('fòô ', '');
-S::replace('fòô bàř fòô bàř', 'fòô ', '', 'UTF-8')  // 'bàř bàř'
+S::replace('fòô bàř fòô bàř', 'fòô ', '', 'UTF-8');  // 'bàř bàř'
 ```
 
 #### reverse
@@ -585,7 +583,7 @@ in a string.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->shuffle();
-S::shuffle('fòô bàř', 'UTF-8')  // 'àôřb òf'
+S::shuffle('fòô bàř', 'UTF-8');  // 'àôřb òf'
 ```
 
 #### slugify
@@ -601,7 +599,7 @@ dashes. The string is also converted to lowercase.
 
 ```php
 S::create('Using strings like fòô bàř')->slugify();
-S::slugify('Using strings like fòô bàř')  // 'using-strings-like-foo-bar'
+S::slugify('Using strings like fòô bàř');  // 'using-strings-like-foo-bar'
 ```
 
 #### standardize
@@ -716,7 +714,7 @@ $tabLength. By default, each tab is converted to 4 consecutive spaces.
 
 ```php
 S::create(' String speech = "Hi"')->toSpaces();
-S::toSpaces('   String speech = "Hi"')  // '    String speech = "Hi"'
+S::toSpaces('   String speech = "Hi"');  // '    String speech = "Hi"'
 ```
 
 #### toTabs
@@ -731,7 +729,7 @@ converted to a tab.
 
 ```php
 S::create('    fòô    bàř')->toTabs();
-S::toTabs('    fòô    bàř')  // '   fòô bàř'
+S::toTabs('    fòô    bàř');  // '   fòô bàř'
 ```
 
 #### trim
@@ -744,7 +742,7 @@ Trims $str. An alias for PHP's trim() function.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->trim();
-S::trim(' fòô bàř ')  // 'fòô bàř'
+S::trim(' fòô bàř ');  // 'fòô bàř'
 ```
 
 #### truncate

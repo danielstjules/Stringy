@@ -1,9 +1,9 @@
 {
     "name": "danielstjules/stringy",
-    "description": "A small string manipulation library with multibyte support",
+    "description": "A string manipulation library with multibyte support",
     "keywords": [
         "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
-        "helpers", "utils"
+        "helpers", "utils", "utf"
     ],
     "license": "MIT",
     "authors": [
