@@ -2,6 +2,10 @@
 
 A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Inspired by underscore.string.js.
 
+[![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
+[![Total Downloads](https://poser.pugx.org/danielstjules/Stringy/downloads.png)](https://packagist.org/packages/danielstjules/stringy)
+[![Latest Stable Version](https://poser.pugx.org/danielstjules/Stringy/v/stable.png)](https://packagist.org/packages/danielstjules/stringy)
+
 Note: The methods listed below are subject to change until we reach a 1.0.0 release.
 
 * [Requiring/Loading](#requiringloading)
@@ -787,8 +791,6 @@ S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 **replace**
 
 ## Tests
-
-[![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
 
 From the project directory, tests can be ran using `phpunit`
 
