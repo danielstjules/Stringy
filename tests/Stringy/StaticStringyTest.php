@@ -13,6 +13,7 @@ class StaticStringyTestCase extends CommonTest
     public function testUpperCaseFirst($expected, $str, $encoding = null)
     {
         $result = S::upperCaseFirst($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -22,6 +23,7 @@ class StaticStringyTestCase extends CommonTest
     public function testLowerCaseFirst($expected, $str, $encoding = null)
     {
         $result = S::lowerCaseFirst($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -31,6 +33,7 @@ class StaticStringyTestCase extends CommonTest
     public function testCamelize($expected, $str, $encoding = null)
     {
         $result = S::camelize($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -40,6 +43,7 @@ class StaticStringyTestCase extends CommonTest
     public function testUpperCamelize($expected, $str, $encoding = null)
     {
         $result = S::upperCamelize($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -49,6 +53,7 @@ class StaticStringyTestCase extends CommonTest
     public function testDasherize($expected, $str, $encoding = null)
     {
         $result = S::dasherize($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -58,6 +63,7 @@ class StaticStringyTestCase extends CommonTest
     public function testUnderscored($expected, $str, $encoding = null)
     {
         $result = S::underscored($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -67,6 +73,7 @@ class StaticStringyTestCase extends CommonTest
     public function testSwapCase($expected, $str, $encoding = null)
     {
         $result = S::swapCase($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -77,6 +84,7 @@ class StaticStringyTestCase extends CommonTest
                                  $encoding = null)
     {
         $result = S::titleize($str, $ignore, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -86,6 +94,7 @@ class StaticStringyTestCase extends CommonTest
     public function testHumanize($expected, $str, $encoding = null)
     {
         $result = S::humanize($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -95,6 +104,7 @@ class StaticStringyTestCase extends CommonTest
     public function testTidy($expected, $str)
     {
         $result = S::tidy($str);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -104,15 +114,17 @@ class StaticStringyTestCase extends CommonTest
     public function testCollapseWhitespace($expected, $str)
     {
         $result = S::collapseWhitespace($str);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * @dataProvider stringsForStandardize
+     * @dataProvider stringsForToAscii
      */
-    public function testStandardize($expected, $str)
+    public function testToAscii($expected, $str)
     {
-        $result = S::standardize($str);
+        $result = S::toAscii($str);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -123,6 +135,7 @@ class StaticStringyTestCase extends CommonTest
                             $padType = 'right', $encoding = null)
     {
         $result = S::pad($str, $length, $padStr, $padType, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -133,6 +146,7 @@ class StaticStringyTestCase extends CommonTest
                                 $encoding = null)
     {
         $result = S::padLeft($str, $length, $padStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -143,6 +157,7 @@ class StaticStringyTestCase extends CommonTest
                                  $encoding = null)
     {
         $result = S::padRight($str, $length, $padStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -153,6 +168,7 @@ class StaticStringyTestCase extends CommonTest
                                 $encoding = null)
     {
         $result = S::padBoth($str, $length, $padStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -163,6 +179,7 @@ class StaticStringyTestCase extends CommonTest
                                 $caseSensitive = true, $encoding = null)
     {
         $result = S::startsWith($str, $substring, $caseSensitive, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -173,6 +190,7 @@ class StaticStringyTestCase extends CommonTest
                                 $caseSensitive = true, $encoding = null)
     {
         $result = S::endsWith($str, $substring, $caseSensitive, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -182,6 +200,7 @@ class StaticStringyTestCase extends CommonTest
     public function testToSpaces($expected, $str, $tabLength = 4)
     {
         $result = S::toSpaces($str, $tabLength);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -191,6 +210,7 @@ class StaticStringyTestCase extends CommonTest
     public function testToTabs($expected, $str, $tabLength = 4)
     {
         $result = S::toTabs($str, $tabLength);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -200,6 +220,7 @@ class StaticStringyTestCase extends CommonTest
     public function testSlugify($expected, $str)
     {
         $result = S::slugify($str);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -209,6 +230,7 @@ class StaticStringyTestCase extends CommonTest
     public function testContains($expected, $haystack, $needle, $encoding = null)
     {
         $result = S::contains($haystack, $needle, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -218,6 +240,7 @@ class StaticStringyTestCase extends CommonTest
     public function testSurround($expected, $str, $substring)
     {
         $result = S::surround($str, $substring);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -228,6 +251,7 @@ class StaticStringyTestCase extends CommonTest
                                $encoding = null)
     {
         $result = S::insert($str, $substring, $index, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -238,6 +262,7 @@ class StaticStringyTestCase extends CommonTest
                                  $encoding = null)
     {
         $result = S::truncate($str, $length, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -248,6 +273,7 @@ class StaticStringyTestCase extends CommonTest
                                      $encoding = null)
     {
         $result = S::safeTruncate($str, $length, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -257,6 +283,7 @@ class StaticStringyTestCase extends CommonTest
     public function testReverse($expected, $str, $encoding = null)
     {
         $result = S::reverse($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -267,6 +294,7 @@ class StaticStringyTestCase extends CommonTest
     {
         // We'll just make sure that the chars are present before/after shuffle
         $result = S::shuffle($str, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals(count_chars($str), count_chars($result));
     }
 
@@ -276,6 +304,7 @@ class StaticStringyTestCase extends CommonTest
     public function testTrim($expected, $str)
     {
         $result = S::trim($str);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -286,6 +315,7 @@ class StaticStringyTestCase extends CommonTest
                                             $encoding = null)
     {
         $result = S::longestCommonPrefix($str, $otherStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -296,6 +326,7 @@ class StaticStringyTestCase extends CommonTest
                                             $encoding = null)
     {
         $result = S::longestCommonSuffix($str, $otherStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -306,6 +337,7 @@ class StaticStringyTestCase extends CommonTest
                                                $encoding = null)
     {
         $result = S::longestCommonSubstring($str, $otherStr, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -316,6 +348,7 @@ class StaticStringyTestCase extends CommonTest
     {
         $result = S::length($str, $encoding);
         $this->assertEquals($expected, $result);
+        $this->assertInternalType('int', $result);
     }
 
     /**
@@ -325,6 +358,7 @@ class StaticStringyTestCase extends CommonTest
                                $encoding = null)
     {
         $result = S::substr($str, $start, $length, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -334,6 +368,7 @@ class StaticStringyTestCase extends CommonTest
     public function testAt($expected, $str, $index, $encoding = null)
     {
         $result = S::at($str, $index, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -343,6 +378,7 @@ class StaticStringyTestCase extends CommonTest
     public function testFirst($expected, $str, $n, $encoding = null)
     {
         $result = S::first($str, $n, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -352,6 +388,7 @@ class StaticStringyTestCase extends CommonTest
     public function testLast($expected, $str, $n, $encoding = null)
     {
         $result = S::last($str, $n, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -361,6 +398,7 @@ class StaticStringyTestCase extends CommonTest
     public function testEnsureLeft($expected, $str, $substring, $encoding = null)
     {
         $result = S::ensureLeft($str, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -370,6 +408,7 @@ class StaticStringyTestCase extends CommonTest
     public function testEnsureRight($expected, $str, $substring, $encoding = null)
     {
         $result = S::ensureRight($str, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -379,6 +418,7 @@ class StaticStringyTestCase extends CommonTest
     public function testRemoveLeft($expected, $str, $substring, $encoding = null)
     {
         $result = S::removeLeft($str, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -388,6 +428,7 @@ class StaticStringyTestCase extends CommonTest
     public function testRemoveRight($expected, $str, $substring, $encoding = null)
     {
         $result = S::removeRight($str, $substring, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -397,6 +438,7 @@ class StaticStringyTestCase extends CommonTest
     public function testIsAlpha($expected, $str, $encoding = null)
     {
         $result = S::isAlpha($str, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -406,6 +448,7 @@ class StaticStringyTestCase extends CommonTest
     public function testIsAlphanumeric($expected, $str, $encoding = null)
     {
         $result = S::isAlphanumeric($str, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -415,6 +458,7 @@ class StaticStringyTestCase extends CommonTest
     public function testIsBlank($expected, $str, $encoding = null)
     {
         $result = S::isBlank($str, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -424,6 +468,7 @@ class StaticStringyTestCase extends CommonTest
     public function testIsLowerCase($expected, $str, $encoding = null)
     {
         $result = S::isLowerCase($str, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -433,6 +478,7 @@ class StaticStringyTestCase extends CommonTest
     public function testIsUpperCase($expected, $str, $encoding = null)
     {
         $result = S::isUpperCase($str, $encoding);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -442,6 +488,7 @@ class StaticStringyTestCase extends CommonTest
     public function testCount($expected, $str, $substring, $encoding = null)
     {
         $result = S::count($str, $substring, $encoding);
+        $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -452,6 +499,7 @@ class StaticStringyTestCase extends CommonTest
                                 $encoding = null)
     {
         $result = S::replace($str, $search, $replace, $encoding);
+        $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
 }

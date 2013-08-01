@@ -180,7 +180,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
-    public function stringsForStandardize()
+    public function stringsForToAscii()
     {
         $testData = array(
             array('foo bar', 'fòô bàř'),

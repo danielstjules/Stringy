@@ -11,7 +11,7 @@ class Stringy
     /**
      * Creates a Stringy object and assigns both str and encoding properties
      * the supplied values. If $encoding is not specified, it defaults to
-     * mb_internal_encoding(). It then returns the instantiated object.
+     * mb_internal_encoding(). It then returns the initialized object.
      *
      * @param   string   $str       String to modify
      * @param   string   $encoding  The character encoding
@@ -39,7 +39,7 @@ class Stringy
     }
 
     /**
-     * Converts the first character of the string to upper case.
+     * Converts the first character of the supplied string to upper case.
      *
      * @return  Stringy  Object with the first character of $str being upper case
      */
@@ -71,9 +71,9 @@ class Stringy
     }
 
     /**
-     * Converts the string to camelCase. Trims surrounding spaces, capitalizes
-     * letters following digits, spaces, dashes and underscores, and removes
-     * spaces, dashes, underscores.
+     * Returns a camelCase version of the supplied string. Trims surrounding
+     * spaces, capitalizes letters following digits, spaces, dashes and
+     * underscores, and removes spaces, dashes, underscores.
      *
      * @return  Stringy  Object with $str in camelCase
      */
@@ -102,9 +102,9 @@ class Stringy
     }
 
     /**
-     * Converts the string to UpperCamelCase. Trims surrounding spaces, capitalizes
-     * letters following digits, spaces, dashes and underscores, and removes
-     * spaces, dashes, underscores.
+     * Returns an UpperCamelCase version of the supplied string. It trims
+     * surrounding spaces, capitalizes letters following digits, spaces, dashes
+     * and underscores, and removes spaces, dashes, underscores.
      *
      * @return  Stringy  Object with $str in UpperCamelCase
      */
@@ -114,8 +114,8 @@ class Stringy
     }
 
     /**
-     * Sets the string to lowercase, trims it, and seperates is by dashes. Dashes
-     * are inserted before uppercase characters (with the exception of the first
+     * Returns a lowercase and trimmed string separated by dashes. Dashes are
+     * inserted before uppercase characters (with the exception of the first
      * character of the string), and in place of spaces as well as underscores.
      *
      * @return  Stringy  Object with a dasherized $str
@@ -137,7 +137,7 @@ class Stringy
     }
 
     /**
-     * Sets $str to a lowercase and trimmed string seperated by underscores.
+     * Returns a lowercase and trimmed string separated by underscores.
      * Underscores are inserted before uppercase characters (with the exception
      * of the first character of the string), and in place of spaces as well as
      * dashes.
@@ -161,7 +161,7 @@ class Stringy
     }
 
     /**
-     * Sets $str to a case swapped version of the string.
+     * Returns a case swapped version of the string.
      *
      * @return  Stringy  Object whose $str has each character's case swapped
      */
@@ -185,7 +185,7 @@ class Stringy
     }
 
     /**
-     * Capitalizes the first letter of each word in $str, after trimming.
+     * Returns a trimmed string with the first letter of each word capitalized.
      * Ignores the case of other letters, allowing for the use of acronyms.
      * Also accepts an array, $ignore, allowing you to list words not to be
      * capitalized.
@@ -213,8 +213,8 @@ class Stringy
     }
 
     /**
-     * Capitalizes the first word of $str, replaces underscores with spaces,
-     * and strips '_id'.
+     * Capitalizes the first word of the string, replaces underscores with
+     * spaces, and strips '_id'.
      *
      * @return  Stringy  Object with a humanized $str
      */
@@ -229,8 +229,9 @@ class Stringy
     }
 
     /**
-     * Replaces smart quotes, ellipsis characters, and dashes from Windows-1252
-     * (and commonly used in Word documents) with their ASCII equivalents.
+     * Returns a string with smart quotes, ellipsis characters, and dashes from
+     * Windows-1252 (commonly used in Word documents) replaced by their ASCII
+     * equivalents.
      *
      * @return  Stringy  Object whose $str has those characters removed
      */
@@ -247,10 +248,10 @@ class Stringy
     }
 
     /**
-     * Trims $str and replaces consecutive whitespace characters with a single
-     * space. This inclues tabs and newline characters.
+     * Trims the string and replaces consecutive whitespace characters with a
+     * single space. This includes tabs and newline characters.
      *
-     * @return  Stringy  Object with a trimmed $str with condensed whitespace
+     * @return  Stringy  Object with a trimmed $str and condensed whitespace
      */
     public function collapseWhitespace()
     {
@@ -261,11 +262,12 @@ class Stringy
     }
 
     /**
-     * Converts some non-ASCII characters to their closest ASCII counterparts.
+     * Returns an ASCII version of the string. A set of non-ASCII characters are
+     * replaced with their closest ASCII counterparts, and the rest are removed.
      *
-     * @return  Stringy  Object whose $str had those characters replaced
+     * @return  Stringy  Object whose $str contains only ASCII characters
      */
-    public function standardize()
+    public function toAscii()
     {
         $stringy = self::create($this->str, $this->encoding);
         $charsArray = array(
@@ -328,11 +330,11 @@ class Stringy
     }
 
     /**
-     * Pads $str to a given length with another string. If length is less than
-     * or equal to the length of $str, then no padding takes places. The default
+     * Pads the string to a given length with $padStr. If length is less than
+     * or equal to the length of the string, no padding takes places. The default
      * string used for padding is a space, and the default type (one of 'left',
-     * 'right', 'both') is 'right'. Throws an exception if $padType isn't one
-     * of those 3 values.
+     * 'right', 'both') is 'right'. Throws an InvalidArgumentException if
+     * $padType isn't one of those 3 values.
      *
      * @param   int      $length    Desired string length after padding
      * @param   string   $padStr    String used to pad, defaults to space
@@ -387,8 +389,8 @@ class Stringy
     }
 
     /**
-     * Pads $str to a given length from the begining of the string.
-     * Alias for pad($length, $padStr, 'left')
+     * Returns a new string of a given length such that the beginning of the
+     * string is padded. Alias for pad() with a $padType of 'left'.
      *
      * @param   int      $length  Desired string length after padding
      * @param   string   $padStr  String used to pad, defaults to space
@@ -400,8 +402,8 @@ class Stringy
     }
 
     /**
-     * Pads $str to a given length from the end of the string.
-     * Alias for pad($length, $padStr, 'left')
+     * Returns a new string of a given length such that the end of the string is
+     * padded. Alias for pad() with a $padType of 'right'.
      *
      * @param   int     $length  Desired string length after padding
      * @param   string  $padStr  String used to pad, defaults to space
@@ -413,8 +415,8 @@ class Stringy
     }
 
     /**
-     * Pads $str to a given length such that both sides of the string string are
-     * padded. Alias for pad($str, $length, $padStr, 'both', $encoding)
+     * Returns a new string of a given length such that both sides of the string
+     * string are padded. Alias for pad() with a $padType of 'both'.
      *
      * @param   int      $length  Desired string length after padding
      * @param   string   $padStr  String used to pad, defaults to space
@@ -426,12 +428,12 @@ class Stringy
     }
 
     /**
-     * Returns true if $str begins with $substring, false otherwise. By default,
-     * the comparison is case-sensitive, but can be made insensitive by setting
-     * $caseSensitive to false.
+     * Returns true if the string begins with $substring, false otherwise.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
      *
      * @param   string  $substring      The substring to look for
-     * @param   bool    $caseSensitive  Whether or not to enfore case-sensitivity
+     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
      * @return  bool    Whether or not $str starts with $substring
      */
     public function startsWith($substring, $caseSensitive = true)
@@ -448,12 +450,12 @@ class Stringy
     }
 
     /**
-     * Returns true if $str ends with $substring, false otherwise. By default,
-     * the comparison is case-sensitive, but can be made insensitive by setting
-     * $caseSensitive to false.
+     * Returns true if the string ends with $substring, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive by
+     * setting $caseSensitive to false.
      *
      * @param   string  $substring      The substring to look for
-     * @param   bool    $caseSensitive  Whether or not to enfore case-sensitivity
+     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
      * @return  bool    Whether or not $str ends with $substring
      */
     public function endsWith($substring, $caseSensitive = true)
@@ -473,7 +475,7 @@ class Stringy
     }
 
     /**
-     * Converts each tab in $str to some number of spaces, as defined by
+     * Converts each tab in the string to some number of spaces, as defined by
      * $tabLength. By default, each tab is converted to 4 consecutive spaces.
      *
      * @param   int      $tabLength  Number of spaces to replace each tab with
@@ -490,7 +492,7 @@ class Stringy
     }
 
     /**
-     * Converts each occurence of some consecutive number of spaces, as defined
+     * Converts each occurrence of some consecutive number of spaces, as defined
      * by $tabLength, to a tab. By default, each 4 consecutive spaces are
      * converted to a tab.
      *
@@ -508,7 +510,7 @@ class Stringy
     }
 
     /**
-     * Converts $str into an URL slug. This includes replacing non-ASCII
+     * Converts the string into an URL slug. This includes replacing non-ASCII
      * characters with their closest ASCII equivalents, removing non-alphanumeric
      * and non-ASCII characters, and replacing whitespace with dashes. The string
      * is also converted to lowercase.
@@ -519,7 +521,7 @@ class Stringy
     {
         $stringy = self::create($this->str, $this->encoding);
 
-        $stringy->str = preg_replace('/[^a-zA-Z\d -]/u', '', $stringy->standardize());
+        $stringy->str = preg_replace('/[^a-zA-Z\d -]/u', '', $stringy->toAscii());
         $stringy->str = $stringy->collapseWhitespace()->str;
         $stringy->str = str_replace(' ', '-', strtolower($stringy->str));
 
@@ -527,7 +529,7 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains $needle, false otherwise.
+     * Returns true if the string contains $needle, false otherwise.
      *
      * @param   string  $needle  Substring to look for
      * @return  bool    Whether or not $str contains $needle
@@ -555,7 +557,7 @@ class Stringy
     }
 
     /**
-     * Inserts $substring into $str at the $index provided.
+     * Inserts $substring into the string at the $index provided.
      *
      * @param   string   $substring  String to be inserted
      * @param   int      $index      The index at which to insert the substring
@@ -576,7 +578,7 @@ class Stringy
     }
 
     /**
-     * Truncates $str to a given length. If $substring is provided, and
+     * Truncates the string to a given length. If $substring is provided, and
      * truncating occurs, the string is further truncated so that the substring
      * may be appended without exceeding the desired length.
      *
@@ -601,8 +603,8 @@ class Stringy
     }
 
     /**
-     * Truncates $str to a given length, while ensuring that it does not chop
-     * words. If $substring is provided, and truncating occurs, the string
+     * Truncates the string to a given length, while ensuring that it does not
+     * chop words. If $substring is provided, and truncating occurs, the string
      * is further truncated so that the substring may be appended without
      * exceeding the desired length.
      *
@@ -635,7 +637,7 @@ class Stringy
     }
 
     /**
-     * Reverses $str. A multibyte version of strrev.
+     * Returns a reversed string. A multibyte version of strrev().
      *
      * @return  Stringy  Object with a reversed $str
      */
@@ -653,8 +655,8 @@ class Stringy
     }
 
     /**
-     * A multibyte str_shuffle function. It randomizes the order of characters
-     * in $str.
+     * A multibyte str_shuffle() function. It returns a string with its
+     * characters in random order.
      *
      * @return  Stringy  Object with a shuffled $str
      */
@@ -672,7 +674,7 @@ class Stringy
     }
 
     /**
-     * Trims $str. An alias for PHP's trim() function.
+     * Returns the trimmed string. An alias for PHP's trim() function.
      *
      * @return  Stringy  Object with a trimmed $str
      */
@@ -682,7 +684,7 @@ class Stringy
     }
 
     /**
-     * Finds the longest common prefix between $str and $otherStr.
+     * Returns the longest common prefix between the string and $otherStr.
      *
      * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common prefix
@@ -706,7 +708,7 @@ class Stringy
     }
 
     /**
-     * Finds the longest common suffix between $str and $otherStr.
+     * Returns the longest common suffix between the string and $otherStr.
      *
      * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common suffix
@@ -730,8 +732,8 @@ class Stringy
     }
 
     /**
-     * Finds the longest common substring between $str and $otherStr. In the
-     * case of ties, returns that which occurs first.
+     * Returns the longest common substring between the string and $otherStr.
+     * In the case of ties, it returns that which occurs first.
      *
      * @param   string   $otherStr  Second string for comparison
      * @return  Stringy  Object with its $str being the longest common substring
@@ -777,7 +779,7 @@ class Stringy
     }
 
     /**
-     * Returns the length of $str. An alias for PHP's mb_strlen() function.
+     * Returns the length of the string. An alias for PHP's mb_strlen() function.
      *
      * @return  int  The number of characters in $str given the encoding
      */
@@ -787,12 +789,12 @@ class Stringy
     }
 
     /**
-     * Gets the substring of $str beginning at $start with the specified $length.
+     * Returns the substring beginning at $start with the specified $length.
      * It differs from the mb_substr() function in that providing a $length of
      * null will return the rest of the string, rather than an empty string.
      *
-     * @param   int  $start   Position of the first character to use from str
-     * @param   int  $length  Maximum number of characters used
+     * @param   int      $start   Position of the first character to use
+     * @param   int      $length  Maximum number of characters used
      * @return  Stringy  Object with its $str being the substring
      */
     public function substr($start, $length = null)
@@ -811,10 +813,10 @@ class Stringy
     }
 
     /**
-     * Gets the character of $str at $index, with indexes starting at 0.
+     * Returns the character of the string at $index, with indexes starting at 0.
      *
-     * @param   int  $index  Position of the character
-     * @return  Stringy  Object with its $str being the selected character
+     * @param   int      $index  Position of the character
+     * @return  Stringy  The character at $index
      */
     public function at($index)
     {
@@ -822,7 +824,7 @@ class Stringy
     }
 
     /**
-     * Gets the first $n characters of $str.
+     * Returns the first $n characters of the string.
      *
      * @param   int  $n  Number of characters to retrieve from the start
      * @return  Stringy  Object with its $str being the first $n chars
@@ -841,7 +843,7 @@ class Stringy
     }
 
     /**
-     * Gets the last $n characters of $str.
+     * Returns the last $n characters of the string.
      *
      * @param   int  $n  Number of characters to retrieve from the end
      * @return  Stringy  Object with its $str being the last $n chars
@@ -860,7 +862,8 @@ class Stringy
     }
 
     /**
-     * Ensures that $str begins with $substring.
+     * Ensures that the string begins with $substring. If it doesn't, it's
+     * prepended.
      *
      * @param   string   $substring  The substring to add if not present
      * @return  Stringy  Object with its $str prefixed by the $substring
@@ -876,7 +879,8 @@ class Stringy
     }
 
     /**
-     * Ensures that $str ends with $substring.
+     * Ensures that the string begins with $substring. If it doesn't, it's
+     * appended.
      *
      * @param   string   $substring  The substring to add if not present
      * @return  Stringy  Object with its $str suffixed by the $substring
@@ -892,7 +896,7 @@ class Stringy
     }
 
     /**
-     * Removes the prefix $substring if present.
+     * Returns a new string with the prefix $substring removed, if it was present.
      *
      * @param   string   $substring  The prefix to remove
      * @return  Stringy  Object having a $str without the prefix $substring
@@ -910,7 +914,7 @@ class Stringy
     }
 
     /**
-     * Removes the suffix $substring if present.
+     * Returns a new string with the suffix $substring removed, if it was present.
      *
      * @param   string   $substring  The suffix to remove
      * @return  Stringy  Object having a $str without the suffix $substring
@@ -945,7 +949,7 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains only alphabetic chars, false otherwise.
+     * Returns true if the string contains only alphabetic chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only alphabetic chars
      */
@@ -955,8 +959,8 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains only alphabetic and numeric chars, false
-     * otherwise.
+     * Returns true if the string contains only alphabetic and numeric chars,
+     * false otherwise.
      *
      * @return  bool  Whether or not $str contains only alphanumeric chars
      */
@@ -966,7 +970,7 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains only whitespace chars, false otherwise.
+     * Returns true if the string contains only whitespace chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only whitespace characters
      */
@@ -976,7 +980,7 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains only lower case chars, false otherwise.
+     * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only lower case characters
      */
@@ -986,7 +990,7 @@ class Stringy
     }
 
     /**
-     * Returns true if $str contains only lower case chars, false otherwise.
+     * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only lower case characters
      */
@@ -996,11 +1000,11 @@ class Stringy
     }
 
     /**
-     * Returns the number of occurences of $substring in $str. An alias for
-     * mb_substr_count()
+     * Returns the number of occurrences of $substring in the given string.
+     * An alias for mb_substr_count()
      *
      * @param   string  $substring  The substring to search for
-     * @return  int     The number of $substring occurences
+     * @return  int     The number of $substring occurrences
      */
     public function count($substring)
     {
@@ -1008,7 +1012,7 @@ class Stringy
     }
 
     /**
-     * Replaces all occurrences of $search with $replace in $str.
+     * Returns a string with all occurrences of $search replaced with $replace.
      *
      * @param   string   $search   The needle to search for
      * @param   string   $replace  The string to replace with

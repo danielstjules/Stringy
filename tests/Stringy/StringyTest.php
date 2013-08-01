@@ -7,12 +7,29 @@ use Stringy\Stringy as S;
 
 class StringyTestCase extends CommonTest
 {
+    public function testCreate()
+    {
+        $stringy = S::create('foo bar', 'UTF-8');
+        $this->assertInstanceOf('Stringy\Stringy', $stringy);
+        $this->assertEquals('foo bar', $stringy->str);
+        $this->assertEquals('UTF-8', $stringy->encoding);
+    }
+
+    public function testChaining()
+    {
+        $stringy = S::create("Fòô     Bàř", 'UTF-8');
+        $this->assertInstanceOf('Stringy\Stringy', $stringy);
+        $result = $stringy->collapseWhitespace()->swapCase()->upperCaseFirst();
+        $this->assertEquals('FÒÔ bÀŘ', $result);
+    }
+
     /**
      * @dataProvider stringsForUpperCaseFirst
      */
     public function testUpperCaseFirst($expected, $str, $encoding = null)
     {
         $result = S::create($str, $encoding)->upperCaseFirst();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
     }
 
@@ -23,6 +40,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->lowerCaseFirst();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -34,6 +52,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->camelize();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -45,6 +64,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->upperCamelize();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -56,6 +76,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->dasherize();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -67,6 +88,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->underscored();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -78,6 +100,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->swapCase();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -90,6 +113,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->titleize($ignore);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -101,6 +125,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->humanize();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -112,6 +137,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->tidy();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -123,17 +149,19 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->collapseWhitespace();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
 
     /**
-     * @dataProvider stringsForStandardize
+     * @dataProvider stringsForToAscii
      */
-    public function testStandardize($expected, $str)
+    public function testToAscii($expected, $str)
     {
         $stringy = S::create($str);
-        $result = $stringy->standardize();
+        $result = $stringy->toAscii();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -146,6 +174,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->pad($length, $padStr, $padType);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -158,6 +187,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->padLeft($length, $padStr);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -170,6 +200,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->padRight($length, $padStr);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -182,6 +213,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->padBoth($length, $padStr);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -194,6 +226,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->startsWith($substring, $caseSensitive);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -206,6 +239,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->endsWith($substring, $caseSensitive);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -217,6 +251,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->toSpaces($tabLength);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -228,6 +263,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->toTabs($tabLength);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -239,6 +275,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->slugify();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -250,6 +287,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($haystack, $encoding);
         $result = $stringy->contains($needle);
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($haystack, $stringy);
     }
@@ -261,6 +299,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->surround($substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -273,6 +312,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->insert($substring, $index);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -285,6 +325,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->truncate($length, $substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -296,6 +337,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->reverse();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -308,6 +350,7 @@ class StringyTestCase extends CommonTest
         // We'll just make sure that the chars are present before/after shuffle
         $stringy = S::create($str, $encoding);
         $result = $stringy->shuffle();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals(count_chars($str), count_chars($result));
         $this->assertEquals($str, $stringy);
     }
@@ -319,6 +362,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str);
         $result = $stringy->trim();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -331,6 +375,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->longestCommonPrefix($otherStr);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -343,6 +388,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->longestCommonSubstring($otherStr);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -354,6 +400,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->length();
+        $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -366,6 +413,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->substr($start, $length);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -377,6 +425,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->at($index);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -388,6 +437,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->first($n);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -399,6 +449,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->last($n);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -410,6 +461,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->ensureLeft($substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -421,6 +473,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->ensureRight($substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -432,6 +485,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->removeLeft($substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -443,6 +497,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->removeRight($substring);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -454,6 +509,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isAlpha();
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -465,6 +521,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isAlphanumeric();
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -476,6 +533,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isBlank();
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -487,6 +545,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isLowerCase();
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -498,6 +557,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isUpperCase();
+        $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -509,6 +569,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->count($substring);
+        $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
@@ -521,6 +582,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->replace($search, $replace);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
