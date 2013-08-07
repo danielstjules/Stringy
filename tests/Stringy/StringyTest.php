@@ -145,9 +145,9 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForCollapseWhitespace
      */
-    public function testCollapseWhitespace($expected, $str)
+    public function testCollapseWhitespace($expected, $str, $encoding = null)
     {
-        $stringy = S::create($str);
+        $stringy = S::create($str, $encoding);
         $result = $stringy->collapseWhitespace();
         $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);

@@ -173,6 +173,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('test string', 'test string'),
             array('Ο συγγραφέας', '   Ο     συγγραφέας  '),
             array('123', ' 123 '),
+            array('1 2 3', '　　1　　2　　3　　', 'UTF-8'), // ideographic spaces
+            array('', '   ', 'UTF-8'), // thin space and space
             array('', ' '),
             array('', ''),
         );

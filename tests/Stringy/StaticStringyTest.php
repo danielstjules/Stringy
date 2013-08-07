@@ -111,9 +111,9 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForCollapseWhitespace
      */
-    public function testCollapseWhitespace($expected, $str)
+    public function testCollapseWhitespace($expected, $str, $encoding = null)
     {
-        $result = S::collapseWhitespace($str);
+        $result = S::collapseWhitespace($str, $encoding);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }

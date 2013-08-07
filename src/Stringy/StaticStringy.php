@@ -142,14 +142,15 @@ class StaticStringy
 
     /**
      * Trims the string and replaces consecutive whitespace characters with a
-     * single space. This includes tabs and newline characters.
+     * single space. This includes tabs and newline characters, as well as
+     * multibyte whitespace such as the thin space and ideographic space.
      *
      * @param   string  $str  The string to cleanup whitespace
      * @return  string  The trimmed string with condensed whitespace
      */
-    public static function collapseWhitespace($str)
+    public static function collapseWhitespace($str, $encoding = null)
     {
-        return $result = Stringy::create($str)->collapseWhitespace()->str;
+        return $result = Stringy::create($str, $encoding)->collapseWhitespace()->str;
     }
 
     /**

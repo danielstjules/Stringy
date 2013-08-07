@@ -97,7 +97,7 @@ of the former is the following:
 
 ```php
 use Stringy\Stringy as S;
-echo S::create("Fòô     Bàř", 'UTF-8')->collapseWhitespace()->swapCase();  // 'fÒÔ bÀŘ'
+echo S::create('Fòô     Bàř', 'UTF-8')->collapseWhitespace()->swapCase();  // 'fÒÔ bÀŘ'
 ```
 
 `Stringy\Stringy` contains a __toString() method, which returns the current
@@ -108,8 +108,8 @@ Using the static wrapper, an alternative is the following:
 
 ```php
 use Stringy\StaticStringy as S;
-$string = S::collapseWhitespace("Fòô     Bàř", 'UTF-8');
-echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ''
+$string = S::collapseWhitespace('Fòô     Bàř', 'UTF-8');
+echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ'
 ```
 
 ## Methods
@@ -151,10 +151,11 @@ S::camelize('Camel-Case');  // 'camelCase'
 
 $stringy->collapseWhitespace()
 
-S::collapseWhitespace(string $str)
+S::collapseWhitespace(string $str [, string $encoding ])
 
 Trims the string and replaces consecutive whitespace characters with a
-single space. This includes tabs and newline characters.
+single space. This includes tabs and newline characters, as well as
+multibyte whitespace such as the thin space and ideographic space.
 
 ```php
 S::create('   Ο     συγγραφέας  ')->collapseWhitespace();

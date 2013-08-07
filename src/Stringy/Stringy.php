@@ -249,16 +249,21 @@ class Stringy
 
     /**
      * Trims the string and replaces consecutive whitespace characters with a
-     * single space. This includes tabs and newline characters.
+     * single space. This includes tabs and newline characters, as well as
+     * multibyte whitespace such as the thin space and ideographic space.
      *
      * @return  Stringy  Object with a trimmed $str and condensed whitespace
      */
     public function collapseWhitespace()
     {
-        $stringy = self::create($this->str, $this->encoding);
-        $stringy->str = preg_replace('/\s+/u', ' ', $stringy->trim());
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
 
-        return $stringy;
+        $stringy = self::create($this->str, $this->encoding);
+        $stringy->str = mb_ereg_replace('[[:space:]]+', ' ', $stringy);
+        mb_regex_encoding($regexEncoding);
+
+        return $stringy->trim();
     }
 
     /**
