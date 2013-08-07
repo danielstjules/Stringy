@@ -1,6 +1,6 @@
 <?php
 
-class CommonTest extends PHPUnit_Framework_TestCase
+abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
     public function stringsForUpperCaseFirst()
     {
@@ -830,11 +830,5 @@ class CommonTest extends PHPUnit_Framework_TestCase
         );
 
         return $testData;
-    }
-
-    // A test is required so as not to throw an error
-    // This is a lot cleaner than using PHPUnit's mocks to spy
-    public function test() {
-        $this->assertTrue(true);
     }
 }
