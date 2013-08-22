@@ -483,6 +483,16 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider stringsForIsHexadecimal
+     */
+    public function testIsHexadecimal($expected, $str, $encoding = null)
+    {
+        $result = S::isHexadecimal($str, $encoding);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider stringsForCount
      */
     public function testCount($expected, $str, $substring, $encoding = null)

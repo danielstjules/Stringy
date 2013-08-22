@@ -975,6 +975,16 @@ class Stringy
     }
 
     /**
+     * Returns true if the string contains only hexadecimal chars, false otherwise.
+     *
+     * @return  bool  Whether or not $str contains only hexadecimal chars
+     */
+    public function isHexadecimal()
+    {
+        return $this->matchesPattern('^([[:xdigit:]])*$');
+    }
+
+    /**
      * Returns true if the string contains only whitespace chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only whitespace characters
