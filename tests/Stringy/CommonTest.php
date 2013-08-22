@@ -798,6 +798,27 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForIsHexadecimal()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, 'abcdef'),
+            array(true, 'ABCDEF'),
+            array(true, '0123456789'),
+            array(true, '0123456789AbCdEf'),
+            array(false, '0123456789x'),
+            array(false, 'ABCDEFx'),
+            array(true, 'abcdef', 'UTF-8'),
+            array(true, 'ABCDEF', 'UTF-8'),
+            array(true, '0123456789', 'UTF-8'),
+            array(true, '0123456789AbCdEf', 'UTF-8'),
+            array(false, '0123456789x', 'UTF-8'),
+            array(false, 'ABCDEFx', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     public function stringsForCount()
     {
         $testData = array(
