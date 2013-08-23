@@ -25,6 +25,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [isBlank](#isblank)
     * [isHexadecimal](#ishexadecimal)
     * [isLowerCase](#islowercase)
+    * [isSerialized](#isserialized)
     * [isUpperCase](#isuppercase)
     * [last](#last)
     * [length](#length)
@@ -362,6 +363,19 @@ Returns true if the string contains only lower case chars, false otherwise.
 ```php
 S::create('fòô bàř', 'UTF-8')->isLowerCase();
 S::isLowerCase('fòô bàř', 'UTF-8');  // true
+```
+
+#### isSerialized
+
+$stringy->isSerialized()
+
+S::isSerialized(string $str [, string $encoding ])
+
+Returns true if the string is serialized, false otherwise.
+
+```php
+S::create('a:1:{s:3:"foo";s:3:"bar";}',, 'UTF-8')->isSerialized();
+S::isSerialized('a:1:{s:3:"foo";s:3:"bar";}',, 'UTF-8');  // true
 ```
 
 #### isUpperCase
