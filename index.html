@@ -69,6 +69,7 @@
 <li><a href="#isalpha">isAlpha</a></li>
 <li><a href="#isalphanumeric">isAlphanumeric</a></li>
 <li><a href="#isblank">isBlank</a></li>
+<li><a href="#ishexadecimal">isHexadecimal</a></li>
 <li><a href="#islowercase">isLowerCase</a></li>
 <li><a href="#isuppercase">isUpperCase</a></li>
 <li><a href="#last">last</a></li>
@@ -143,7 +144,7 @@ procedural-style static method calls with <code>Stringy\StaticStringy</code>. An
 of the former is the following:</p>
 
 <div class="highlight"><pre><span class="k">use</span> <span class="nx">Stringy\Stringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s2">"Fòô     Bàř"</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
+<span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô     Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
 </pre></div>
 
 <p><code>Stringy\Stringy</code> contains a __toString() method, which returns the current
@@ -153,8 +154,8 @@ public, and can be accessed directly if required, ie: <code>S::create('foo')-&gt
 <p>Using the static wrapper, an alternative is the following:</p>
 
 <div class="highlight"><pre><span class="k">use</span> <span class="nx">Stringy\StaticStringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">collapseWhitespace</span><span class="p">(</span><span class="s2">"Fòô     Bàř"</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">swapCase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fÒÔ bÀŘ''</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">collapseWhitespace</span><span class="p">(</span><span class="s1">'Fòô     Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">swapCase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
 </pre></div>
 
 <h2>
@@ -198,10 +199,11 @@ underscores, and removes spaces, dashes, underscores.</p>
 
 <p>$stringy-&gt;collapseWhitespace()</p>
 
-<p>S::collapseWhitespace(string $str)</p>
+<p>S::collapseWhitespace(string $str [, string $encoding ])</p>
 
 <p>Trims the string and replaces consecutive whitespace characters with a
-single space. This includes tabs and newline characters.</p>
+single space. This includes tabs and newline characters, as well as
+multibyte whitespace such as the thin space and ideographic space.</p>
 
 <div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'   Ο     συγγραφέας  '</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">collapseWhitespace</span><span class="p">(</span><span class="s1">'   Ο     συγγραφέας  '</span><span class="p">);</span>  <span class="c1">// 'Ο συγγραφέας'</span>
@@ -380,6 +382,19 @@ otherwise.</p>
 
 <div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">  \v\f"</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isBlank</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isBlank</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">  \v\f"</span><span class="p">);</span>  <span class="c1">// true</span>
+</pre></div>
+
+<h4>
+<a name="ishexadecimal" class="anchor" href="#ishexadecimal"><span class="octicon octicon-link"></span></a>isHexadecimal</h4>
+
+<p>$stringy-&gt;isHexadecimal()</p>
+
+<p>S::isHexadecimal(string $str [, string $encoding ])</p>
+
+<p>Returns true if the string contains only hexadecimal chars, false otherwise.</p>
+
+<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'A102F'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isHexadecimal</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">isHexadecimal</span><span class="p">(</span><span class="s1">'A102F'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
 <h4>
