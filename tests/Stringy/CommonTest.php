@@ -766,6 +766,24 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForIsJson()
+    {
+        $testData = array(
+            array(true, ''),
+            array(true, '123'),
+            array(true, '{"foo": "bar"}'),
+            array(false, '{"foo":"bar",}'),
+            array(false, '{"foo"}'),
+            array(true, '', 'UTF-8'),
+            array(true, '123', 'UTF-8'),
+            array(true, '{"foo":"bar"}', 'UTF-8'),
+            array(false, '{"foo":"bar",}', 'UTF-8'),
+            array(false, '{"foo"}', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     public function stringsForIsLowerCase()
     {
         $testData = array(
