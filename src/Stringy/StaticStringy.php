@@ -649,6 +649,18 @@ class StaticStringy
     }
 
     /**
+     * Returns true if the string contains only hexadecimal chars, false otherwise.
+     *
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
+     * @return  bool     Whether or not $str contains only hexadecimal characters
+     */
+    public static function isHexadecimal($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->isHexadecimal();
+    }
+
+    /**
      * Returns the number of occurrences of $substring in the given string.
      * An alias for mb_substr_count()
      *
