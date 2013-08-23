@@ -23,6 +23,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [isAlpha](#isalpha)
     * [isAlphanumeric](#isalphanumeric)
     * [isBlank](#isblank)
+    * [isHexadecimal](#ishexadecimal)
     * [isLowerCase](#islowercase)
     * [isUpperCase](#isuppercase)
     * [last](#last)
@@ -335,6 +336,19 @@ Returns true if the string contains only whitespace chars, false otherwise.
 ```php
 S::create("\n\t  \v\f")->isBlank();
 S::isBlank("\n\t  \v\f");  // true
+```
+
+#### isHexadecimal
+
+$stringy->isHexadecimal()
+
+S::isHexadecimal(string $str [, string $encoding ])
+
+Returns true if the string contains only hexadecimal chars, false otherwise.
+
+```php
+S::create('0123456789abcdefABCDEF', 'UTF-8')->isHexadecimal();
+S::isHexadecimal('0123456789abcdefABCDEF', 'UTF-8');  // true
 ```
 
 #### isLowerCase
