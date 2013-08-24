@@ -7,6 +7,14 @@ use Stringy\Stringy as S;
 
 class StringyTestCase extends CommonTest
 {
+    public function testConstruct()
+    {
+        $constructed = new S('foo bar', 'UTF-8');
+        $this->assertInstanceOf('Stringy\Stringy', $constructed);
+        $created = S::create('foo bar', 'UTF-8');
+        $this->assertEquals($constructed, $created);
+    }
+
     public function testCreate()
     {
         $stringy = S::create('foo bar', 'UTF-8');
