@@ -1001,6 +1001,8 @@ class Stringy
      */
     public function isJson()
     {
+        if ($this->trim()->startsWith('{') == false && $this->trim()->startsWith('[') == false) return false; 
+
         json_decode($this->str);
 
         return json_last_error() == JSON_ERROR_NONE;

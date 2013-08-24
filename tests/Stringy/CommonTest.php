@@ -769,16 +769,25 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     public function stringsForIsJson()
     {
         $testData = array(
-            array(true, ''),
-            array(true, '123'),
+            array(false, ''),
+            array(false, '123'),
             array(true, '{"foo": "bar"}'),
             array(false, '{"foo":"bar",}'),
             array(false, '{"foo"}'),
-            array(true, '', 'UTF-8'),
-            array(true, '123', 'UTF-8'),
-            array(true, '{"foo":"bar"}', 'UTF-8'),
+            array(false, '["foo": "bar"]'),
+            array(true, '["foo"]'),
+            array(false, '{"foo"}'),
+            array(false, '{"foo": "bar"]'),
+            array(true, ' { "foo" : "bar" } '),
+            array(false, '123', 'UTF-8'),
+            array(true, '{"foo": "bar"}', 'UTF-8'),
             array(false, '{"foo":"bar",}', 'UTF-8'),
             array(false, '{"foo"}', 'UTF-8'),
+            array(false, '["foo": "bar"]', 'UTF-8'),
+            array(true, '["foo"]', 'UTF-8'),
+            array(false, '{"foo"}', 'UTF-8'),
+            array(false, '{"foo": "bar"]', 'UTF-8'),
+            array(true, '  {  "foo"  :  "bar"  }  ', 'UTF-8'),
         );
 
         return $testData;
