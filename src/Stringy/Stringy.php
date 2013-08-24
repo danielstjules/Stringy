@@ -667,15 +667,7 @@ class Stringy
      */
     public function shuffle()
     {
-        $indexes = range(0, $this->length() - 1);
-        shuffle($indexes);
-
-        $shuffledStr = '';
-        foreach ($indexes as $i) {
-            $shuffledStr .= mb_substr($this->str, $i, 1, $this->encoding);
-        }
-
-        return self::create($shuffledStr, $this->encoding);
+        return self::create(str_shuffle($this->str), $this->encoding);
     }
 
     /**
