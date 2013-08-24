@@ -375,7 +375,7 @@ Returns true if the string is serialized, false otherwise.
 
 ```php
 S::create('a:1:{s:3:"foo";s:3:"bar";}',, 'UTF-8')->isSerialized();
-S::isSerialized('a:1:{s:3:"foo";s:3:"bar";}',, 'UTF-8');  // true
+S::isSerialized('a:1:{s:3:"foo";s:3:"bar";}', 'UTF-8');  // true
 ```
 
 #### isUpperCase
