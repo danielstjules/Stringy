@@ -347,12 +347,22 @@ class StringyTestCase extends CommonTest
      */
     public function testShuffle($str, $encoding = null)
     {
-        // We'll just make sure that the chars are present before/after shuffle
         $stringy = S::create($str, $encoding);
+        $encoding = $encoding ?: mb_internal_encoding();
         $result = $stringy->shuffle();
+
         $this->assertInstanceOf('Stringy\Stringy', $result);
-        $this->assertEquals(count_chars($str), count_chars($result));
         $this->assertEquals($str, $stringy);
+        $this->assertEquals(mb_strlen($str, $encoding),
+            mb_strlen($result, $encoding));
+
+        // We'll make sure that the chars are present after shuffle
+        for ($i = 0; $i < mb_strlen($str, $encoding); $i++) {
+            $char = mb_substr($str, $i, 1, $encoding);
+            $countBefore = mb_substr_count($str, $char, $encoding);
+            $countAfter = mb_substr_count($result, $char, $encoding);
+            $this->assertEquals($countBefore, $countAfter);
+        }
     }
 
     /**
