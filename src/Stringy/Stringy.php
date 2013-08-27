@@ -9,6 +9,20 @@ class Stringy
     public $encoding;
 
     /**
+     * Inializes a Stringy object and assigns both str and encoding properties
+     * the supplied values. If $encoding is not specified, it defaults to
+     * mb_internal_encoding().
+     *
+     * @param   string   $str       String to modify
+     * @param   string   $encoding  The character encoding
+     */
+    public function __construct($str, $encoding = null)
+    {
+        $this->str = $str;
+        $this->encoding = $encoding ?: mb_internal_encoding();
+    }
+
+    /**
      * Creates a Stringy object and assigns both str and encoding properties
      * the supplied values. If $encoding is not specified, it defaults to
      * mb_internal_encoding(). It then returns the initialized object.
@@ -19,13 +33,7 @@ class Stringy
      */
     public static function create($str, $encoding = null)
     {
-        $encoding = $encoding ?: mb_internal_encoding();
-
-        $stringyObj = new self();
-        $stringyObj->str = $str;
-        $stringyObj->encoding = $encoding;
-
-        return $stringyObj;
+        return new self($str, $encoding);
     }
 
     /**
