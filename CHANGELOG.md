@@ -1,3 +1,11 @@
+### 1.1.0 (2013-08-31)
+
+  * Fix for collapseWhitespace()
+  * Added isHexadecimal()
+  * Added constructor to Stringy\Stringy
+  * Added isSerialized()
+  * Added isJson()
+
 ### 1.0.0 (2013-08-1)
 
   * 1.0.0 release
