@@ -569,6 +569,18 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider stringsForIsSerialized
+     */
+    public function testIsSerialized($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->isSerialized();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider stringsForIsUpperCase
      */
     public function testIsUpperCase($expected, $str, $encoding = null)

@@ -637,6 +637,18 @@ class StaticStringy
     }
 
     /**
+     * Returns true if the string is serialized, false otherwise.
+     *
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
+     * @return  bool     Whether or not $str is serialized
+     */
+    public static function isSerialized($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->isSerialized();
+    }
+
+    /**
      * Returns true if the string contains only upper case chars, false otherwise.
      *
      * @param   string   $str       String to check
