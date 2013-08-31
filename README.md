@@ -24,6 +24,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [isAlphanumeric](#isalphanumeric)
     * [isBlank](#isblank)
     * [isHexadecimal](#ishexadecimal)
+    * [isJson](#isjson)
     * [isLowerCase](#islowercase)
     * [isSerialized](#isserialized)
     * [isUpperCase](#isuppercase)
@@ -350,6 +351,19 @@ Returns true if the string contains only hexadecimal chars, false otherwise.
 ```php
 S::create('A102F')->isHexadecimal();
 S::isHexadecimal('A102F');  // true
+```
+
+#### isJson
+
+$stringy->isJson()
+
+S::isJson(string $str [, string $encoding ])
+
+Returns true if the string is JSON, false otherwise.
+
+```php
+S::create('{"foo":"bar"}')->isJson();
+S::isJson('{"foo":"bar"}');  // true
 ```
 
 #### isLowerCase

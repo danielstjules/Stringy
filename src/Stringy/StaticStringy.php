@@ -625,6 +625,18 @@ class StaticStringy
     }
 
     /**
+     * Returns true if the string is JSON, false otherwise.
+     *
+     * @param   string   $str       String to check
+     * @param   string   $encoding  The character encoding
+     * @return  bool     Whether or not $str is JSON
+     */
+    public static function isJson($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->isJson();
+    }
+
+    /**
      * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @param   string   $str       String to check

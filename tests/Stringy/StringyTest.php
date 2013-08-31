@@ -557,6 +557,18 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider stringsForIsJson
+     */
+    public function testIsJson($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->isJson();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider stringsForIsLowerCase
      */
     public function testIsLowerCase($expected, $str, $encoding = null)

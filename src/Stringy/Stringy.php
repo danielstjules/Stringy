@@ -1003,6 +1003,21 @@ class Stringy
     }
 
     /**
+     * Returns true if the string is JSON, false otherwise.
+     *
+     * @return  bool  Whether or not $str is JSON
+     */
+    public function isJson()
+    {
+        if (!$this->endsWith('}') && !$this->endsWith(']')) {
+            return false;
+        }
+
+        return !is_null(json_decode($this->str));
+    }
+
+
+    /**
      * Returns true if the string contains only lower case chars, false otherwise.
      *
      * @return  bool  Whether or not $str contains only lower case characters

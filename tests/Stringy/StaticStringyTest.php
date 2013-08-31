@@ -471,6 +471,16 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
+    
+    /**
+     * @dataProvider stringsForIsJson
+     */
+    public function testIsJson($expected, $str, $encoding = null)
+    {
+        $result = S::isJson($str, $encoding);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+    }
 
     /**
      * @dataProvider stringsForIsLowerCase
