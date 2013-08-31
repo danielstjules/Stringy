@@ -70,7 +70,9 @@
 <li><a href="#isalphanumeric">isAlphanumeric</a></li>
 <li><a href="#isblank">isBlank</a></li>
 <li><a href="#ishexadecimal">isHexadecimal</a></li>
+<li><a href="#isjson">isJson</a></li>
 <li><a href="#islowercase">isLowerCase</a></li>
+<li><a href="#isserialized">isSerialized</a></li>
 <li><a href="#isuppercase">isUpperCase</a></li>
 <li><a href="#last">last</a></li>
 <li><a href="#length">length</a></li>
@@ -398,6 +400,19 @@ otherwise.</p>
 </pre></div>
 
 <h4>
+<a name="isjson" class="anchor" href="#isjson"><span class="octicon octicon-link"></span></a>isJson</h4>
+
+<p>$stringy-&gt;isJson()</p>
+
+<p>S::isJson(string $str [, string $encoding ])</p>
+
+<p>Returns true if the string is JSON, false otherwise.</p>
+
+<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'{"foo":"bar"}'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isJson</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">isJson</span><span class="p">(</span><span class="s1">'{"foo":"bar"}'</span><span class="p">);</span>  <span class="c1">// true</span>
+</pre></div>
+
+<h4>
 <a name="islowercase" class="anchor" href="#islowercase"><span class="octicon octicon-link"></span></a>isLowerCase</h4>
 
 <p>$stringy-&gt;isLowerCase()</p>
@@ -411,6 +426,19 @@ otherwise.</p>
 </pre></div>
 
 <h4>
+<a name="isserialized" class="anchor" href="#isserialized"><span class="octicon octicon-link"></span></a>isSerialized</h4>
+
+<p>$stringy-&gt;isSerialized()</p>
+
+<p>S::isSerialized(string $str [, string $encoding ])</p>
+
+<p>Returns true if the string is serialized, false otherwise.</p>
+
+<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'a:1:{s:3:"foo";s:3:"bar";}'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isSerialized</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">isSerialized</span><span class="p">(</span><span class="s1">'a:1:{s:3:"foo";s:3:"bar";}'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
+</pre></div>
+
+<h4>
 <a name="isuppercase" class="anchor" href="#isuppercase"><span class="octicon octicon-link"></span></a>isUpperCase</h4>
 
 <p>$stringy-&gt;isUpperCase()</p>
@@ -419,8 +447,8 @@ otherwise.</p>
 
 <p>Returns true if the string contains only upper case chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isUpperCase</span><span class="p">();</span>
-<span class="nx">S</span><span class="o">::</span><span class="na">isUpperCase</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
+<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isUpperCase</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">isUpperCase</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
 <h4>
