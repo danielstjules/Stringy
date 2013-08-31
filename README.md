@@ -23,6 +23,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [isAlpha](#isalpha)
     * [isAlphanumeric](#isalphanumeric)
     * [isBlank](#isblank)
+    * [isJson](#isjson)
     * [isHexadecimal](#ishexadecimal)
     * [isLowerCase](#islowercase)
     * [isSerialized](#isserialized)
@@ -337,6 +338,19 @@ Returns true if the string contains only whitespace chars, false otherwise.
 ```php
 S::create("\n\t  \v\f")->isBlank();
 S::isBlank("\n\t  \v\f");  // true
+```
+
+#### isJson
+
+$stringy->isJson()
+
+S::isJson(string $str [, string $encoding ])
+
+Returns true if the string is JSON, false otherwise.
+
+```php
+S::create('{"foo":"bar"}')->isJson();
+S::isJson('{"foo":"bar"}');  // true
 ```
 
 #### isHexadecimal
