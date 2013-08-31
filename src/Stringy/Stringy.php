@@ -9,12 +9,12 @@ class Stringy
     public $encoding;
 
     /**
-     * Inializes a Stringy object and assigns both str and encoding properties
+     * Initializes a Stringy object and assigns both str and encoding properties
      * the supplied values. If $encoding is not specified, it defaults to
      * mb_internal_encoding().
      *
-     * @param   string   $str       String to modify
-     * @param   string   $encoding  The character encoding
+     * @param  string  $str       String to modify
+     * @param  string  $encoding  The character encoding
      */
     public function __construct($str, $encoding = null)
     {
@@ -349,9 +349,9 @@ class Stringy
      * 'right', 'both') is 'right'. Throws an InvalidArgumentException if
      * $padType isn't one of those 3 values.
      *
-     * @param   int      $length    Desired string length after padding
-     * @param   string   $padStr    String used to pad, defaults to space
-     * @param   string   $padType   One of 'left', 'right', 'both'
+     * @param   int      $length   Desired string length after padding
+     * @param   string   $padStr   String used to pad, defaults to space
+     * @param   string   $padType  One of 'left', 'right', 'both'
      * @return  Stringy  Object with a padded $str
      * @throws  InvalidArgumentException If $padType isn't one of 'right',
      *          'left' or 'both'
