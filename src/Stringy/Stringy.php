@@ -1023,6 +1023,16 @@ class Stringy
     }
 
     /**
+     * Returns true if the string is serialized, false otherwise.
+     *
+     * @return  bool  Whether or not $str is serialized
+     */
+    public function isSerialized()
+    {
+        return $this->str === 'b:0;' || @unserialize($this->str) !== false;
+    }
+
+    /**
      * Returns the number of occurrences of $substring in the given string.
      * An alias for mb_substr_count()
      *

@@ -782,6 +782,21 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForIsSerialized()
+    {
+        $testData = array(
+            array(false, ''),
+            array(true, 'a:1:{s:3:"foo";s:3:"bar";}'),
+            array(false, 'a:1:{s:3:"foo";s:3:"bar"}'),
+            array(true, serialize(false)),
+            array(true, 'a:1:{s:3:"foo";s:3:"bar";}', 'UTF-8'),
+            array(false, 'a:1:{s:3:"foo";s:3:"bar"}', 'UTF-8'),
+            array(true, serialize(false), 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     public function stringsForIsUpperCase()
     {
         $testData = array(
