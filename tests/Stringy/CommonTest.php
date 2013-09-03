@@ -189,7 +189,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(' TEST ', ' ŤÉŚŢ '),
             array('φ = z = 3', 'φ = ź = 3'),
             array('perevirka', 'перевірка'),
-            array('lysaya gora', 'лысая гора')
+            array('lysaya gora', 'лысая гора'),
+            array('shchuka', 'щука')
         );
 
         return $testData;
