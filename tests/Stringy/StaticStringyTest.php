@@ -140,6 +140,14 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPadException()
+    {
+        $result = S::pad('string', 5, 'foo', 'bar');
+    }
+
+    /**
      * @dataProvider stringsForPadLeft
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ',
