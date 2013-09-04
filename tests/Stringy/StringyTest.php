@@ -188,6 +188,15 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPadException()
+    {
+        $stringy = S::create('foo');
+        $result = $stringy->pad(5, 'foo', 'bar');
+    }
+
+    /**
      * @dataProvider stringsForPadLeft
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ',
