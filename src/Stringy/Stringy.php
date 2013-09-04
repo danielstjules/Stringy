@@ -384,8 +384,8 @@ class Stringy
     public function pad($length, $padStr = ' ', $padType = 'right')
     {
         if (!in_array($padType, array('left', 'right', 'both'))) {
-            throw new InvalidArgumentException('Pad expects $padType ' .
-            "to be one of 'left', 'right' or 'both'");
+            throw new \InvalidArgumentException('Pad expects $padType ' .
+                "to be one of 'left', 'right' or 'both'");
         }
 
         $stringy = self::create($this->str, $this->encoding);
