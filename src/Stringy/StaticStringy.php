@@ -132,7 +132,6 @@ class StaticStringy
      * equivalents.
      *
      * @param   string  $str       String to remove special chars
-     * @param   string  $encoding  The character encoding
      * @return  string  String with those characters removed
      */
     public static function tidy($str)
@@ -146,6 +145,7 @@ class StaticStringy
      * multibyte whitespace such as the thin space and ideographic space.
      *
      * @param   string  $str  The string to cleanup whitespace
+     * @param   string  $encoding  The character encoding
      * @return  string  The trimmed string with condensed whitespace
      */
     public static function collapseWhitespace($str, $encoding = null)
