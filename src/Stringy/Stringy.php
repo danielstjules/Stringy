@@ -444,9 +444,9 @@ class Stringy
      * Returns a new string of a given length such that the end of the string is
      * padded. Alias for pad() with a $padType of 'right'.
      *
-     * @param   int     $length  Desired string length after padding
-     * @param   string  $padStr  String used to pad, defaults to space
-     * @return  string  Object with a right padded $str
+     * @param   int      $length  Desired string length after padding
+     * @param   string   $padStr  String used to pad, defaults to space
+     * @return  Stringy  Object with a right padded $str
      */
     public function padRight($length, $padStr = ' ')
     {
@@ -665,7 +665,7 @@ class Stringy
 
         // If the last word was truncated
         if (mb_strpos($stringy->str, ' ', $length - 1, $stringy->encoding) != $length) {
-            // Find pos of the last occurence of a space, and get everything up until
+            // Find pos of the last occurrence of a space, and get everything up until
             $lastPos = mb_strrpos($truncated, ' ', 0, $stringy->encoding);
             $truncated = mb_substr($truncated, 0, $lastPos, $stringy->encoding);
         }
@@ -973,7 +973,7 @@ class Stringy
     /**
      * Returns true if $str matches the supplied pattern, false otherwise.
      *
-     * @param   string  Regex pattern to match against
+     * @param   string  $pattern  Regex pattern to match against
      * @return  bool    Whether or not $str matches the pattern
      */
     private function matchesPattern($pattern)
