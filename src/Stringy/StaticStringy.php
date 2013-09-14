@@ -304,7 +304,7 @@ class StaticStringy
      * @param   string  $encoding  The character encoding
      * @return  string  The lowercase string
      */
-    public function toLowerCase($str, $encoding = null)
+    public static function toLowerCase($str, $encoding = null)
     {
         return Stringy::create($str, $encoding)->toLowerCase()->str;
     }
@@ -317,7 +317,7 @@ class StaticStringy
      * @param   string  $encoding  The character encoding
      * @return  string  The uppercase string
      */
-    public function toUpperCase($str, $encoding = null)
+    public static function toUpperCase($str, $encoding = null)
     {
         return Stringy::create($str, $encoding)->toUpperCase()->str;
     }
