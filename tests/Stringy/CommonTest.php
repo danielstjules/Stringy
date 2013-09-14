@@ -338,6 +338,32 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
+    public function stringsForToLowerCase()
+    {
+        $testData = array(
+            array('foo bar', 'FOO BAR'),
+            array(' foo_bar ', ' FOO_bar '),
+            array('fòô bàř', 'FÒÔ BÀŘ', 'UTF-8'),
+            array(' fòô_bàř ', ' FÒÔ_bàř ', 'UTF-8'),
+            array('αυτοκίνητο', 'ΑΥΤΟΚΊΝΗΤΟ', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
+    public function stringsForToUpperCase()
+    {
+        $testData = array(
+            array('FOO BAR', 'foo bar'),
+            array(' FOO_BAR ', ' FOO_bar '),
+            array('FÒÔ BÀŘ', 'fòô bàř', 'UTF-8'),
+            array(' FÒÔ_BÀŘ ', ' FÒÔ_bàř ', 'UTF-8'),
+            array('ΑΥΤΟΚΊΝΗΤΟ', 'αυτοκίνητο', 'UTF-8'),
+        );
+
+        return $testData;
+    }
+
     public function stringsForSlugify()
     {
         $testData = array(

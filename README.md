@@ -52,8 +52,10 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [tidy](#tidy)
     * [titleize](#titleize)
     * [toAscii](#toascii)
+    * [toLowerCase](#tolowercase)
     * [toSpaces](#tospaces)
     * [toTabs](#totabs)
+    * [toUpperCase](#touppercase)
     * [trim](#trim)
     * [truncate](#truncate)
     * [underscored](#underscored)
@@ -744,6 +746,20 @@ S::create('fòô bàř')->toAscii();
 S::toAscii('fòô bàř');  // 'foo bar'
 ```
 
+#### toLowerCase
+
+$stringy->toLowerCase()
+
+S::toLowerCase(string $str [, string $encoding ])
+
+Converts all characters in the string to lowercase. An alias for PHP's
+mb_strtolower().
+
+```php
+S::create('FÒÔ BÀŘ', 'UTF-8')->toLowerCase();
+S::toLowerCase('FÒÔ BÀŘ', 'UTF-8');  // 'fòô bàř'
+```
+
 #### toSpaces
 
 $stringy->toSpaces([ tabLength = 4 ])
@@ -771,6 +787,20 @@ converted to a tab.
 ```php
 S::create('    fòô    bàř')->toTabs();
 S::toTabs('    fòô    bàř');  // '   fòô bàř'
+```
+
+#### toUpperCase
+
+$stringy->toUpperCase()
+
+S::toUpperCase(string $str [, string $encoding ])
+
+Converts all characters in the string to uppercase. An alias for PHP's
+mb_strtoupper().
+
+```php
+S::create('fòô bàř', 'UTF-8')->toUpperCase();
+S::toUpperCase('fòô bàř', 'UTF-8');  // 'FÒÔ BÀŘ'
 ```
 
 #### trim

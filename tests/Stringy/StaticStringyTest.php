@@ -223,6 +223,26 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider stringsForToLowerCase
+     */
+    public function testToLowerCase($expected, $str, $encoding = null)
+    {
+        $result = S::toLowerCase($str, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider stringsForToUpperCase
+     */
+    public function testToUpperCase($expected, $str, $encoding = null)
+    {
+        $result = S::toUpperCase($str, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider stringsForSlugify
      */
     public function testSlugify($expected, $str)

@@ -297,6 +297,32 @@ class StaticStringy
     }
 
     /**
+     * Converts all characters in the string to lowercase. An alias for PHP's
+     * mb_strtolower().
+     *
+     * @param   string  $str       String to convert case
+     * @param   string  $encoding  The character encoding
+     * @return  string  The lowercase string
+     */
+    public function toLowerCase($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->toLowerCase()->str;
+    }
+
+    /**
+     * Converts all characters in the string to uppercase. An alias for PHP's
+     * mb_strtoupper().
+     *
+     * @param   string  $str       String to convert case
+     * @param   string  $encoding  The character encoding
+     * @return  string  The uppercase string
+     */
+    public function toUpperCase($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->toUpperCase()->str;
+    }
+
+    /**
      * Converts the string into an URL slug. This includes replacing non-ASCII
      * characters with their closest ASCII equivalents, removing non-alphanumeric
      * and non-ASCII characters, and replacing whitespace with dashes. The string
