@@ -235,9 +235,10 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForContains
      */
-    public function testContains($expected, $haystack, $needle, $encoding = null)
+    public function testContains($expected, $haystack, $needle,
+                                 $caseSensitive = true, $encoding = null)
     {
-        $result = S::contains($haystack, $needle, $encoding);
+        $result = S::contains($haystack, $needle, $caseSensitive, $encoding);
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }

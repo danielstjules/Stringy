@@ -300,10 +300,11 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForContains
      */
-    public function testContains($expected, $haystack, $needle, $encoding = null)
+    public function testContains($expected, $haystack, $needle,
+                                 $caseSensitive = true, $encoding = null)
     {
         $stringy = S::create($haystack, $encoding);
-        $result = $stringy->contains($needle);
+        $result = $stringy->contains($needle, $caseSensitive);
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($haystack, $stringy);

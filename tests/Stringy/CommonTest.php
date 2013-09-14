@@ -360,14 +360,24 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(true, 'This string contains foo bar', 'foo bar'),
             array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
             array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'øœ¬', 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true, 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', true, 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'øœ¬', true, 'UTF-8'),
             array(false, 'This string contains foo bar', 'Foo bar'),
             array(false, 'This string contains foo bar', 'foobar'),
             array(false, 'This string contains foo bar', 'foo bar '),
-            array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', 'UTF-8'),
-            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', 'UTF-8')
+            array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', true, 'UTF-8'),
+            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', true, 'UTF-8'),
+            array(true, 'This string contains foo bar', 'Foo bar', false),
+            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%', false),
+            array(true, 'Ο συγγραφέας είπε', 'ΣΥΓΓΡΑΦΈΑΣ', false, 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å´¥©', false, 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å˚ ∆', false, 'UTF-8'),
+            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'ØŒ¬', false, 'UTF-8'),
+            array(false, 'This string contains foo bar', 'foobar', false),
+            array(false, 'This string contains foo bar', 'foo bar ', false),
+            array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', false, 'UTF-8'),
+            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßÅ˚', false, 'UTF-8')
         );
 
         return $testData;

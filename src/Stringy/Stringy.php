@@ -568,17 +568,20 @@ class Stringy
     }
 
     /**
-     * Returns true if the string contains $needle, false otherwise.
+     * Returns true if the string contains $needle, false otherwise. By default
+     * the comparison is case-sensitive, but can be made insensitive by setting
+     * $caseSensitive to false.
      *
-     * @param   string  $needle  Substring to look for
+     * @param   string  $needle         Substring to look for
+     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
      * @return  bool    Whether or not $str contains $needle
      */
-    public function contains($needle)
+    public function contains($needle, $caseSensitive = true)
     {
-        if (mb_strpos($this->str, $needle, 0, $this->encoding) !== false)
-            return true;
-
-        return false;
+        if ($caseSensitive)
+            return (mb_strpos($this->str, $needle, 0, $this->encoding) !== false);
+        else
+            return (mb_stripos($this->str, $needle, 0, $this->encoding) !== false);
     }
 
     /**

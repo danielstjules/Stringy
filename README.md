@@ -167,11 +167,13 @@ S::collapseWhitespace('   Ο     συγγραφέας  ');  // 'Ο συγγρα�
 
 #### contains
 
-$stringy->contains(string $needle)
+$stringy->contains(string $needle [, boolean $caseSensitive = true ])
 
-S::contains(string $haystack, string $needle [, string $encoding ])
+S::contains(string $haystack, string $needle [, boolean $caseSensitive = true [, string $encoding ]])
 
-Returns true if the string contains $needle, false otherwise.
+Returns true if the string contains $needle, false otherwise. By default,
+the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
 
 ```php
 S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
