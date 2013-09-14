@@ -653,10 +653,11 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForCount
      */
-    public function testCount($expected, $str, $substring, $encoding = null)
+    public function testCount($expected, $str, $substring, $caseSensitive = true,
+                              $encoding = null)
     {
         $stringy = S::create($str, $encoding);
-        $result = $stringy->count($substring);
+        $result = $stringy->count($substring, $caseSensitive);
         $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);

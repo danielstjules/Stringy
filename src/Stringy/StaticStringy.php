@@ -716,16 +716,19 @@ class StaticStringy
 
     /**
      * Returns the number of occurrences of $substring in the given string.
-     * An alias for mb_substr_count()
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
      *
-     * @param   string   $str        The string to search through
-     * @param   string   $substring  The substring to search for
-     * @param   string   $encoding   The character encoding
+     * @param   string   $str            The string to search through
+     * @param   string   $substring      The substring to search for
+     * @param   bool     $caseSensitive  Whether or not to enforce case-sensitivity
+     * @param   string   $encoding       The character encoding
      * @return  int      The number of $substring occurrences
      */
-    public static function count($str, $substring, $encoding = null)
+    public static function count($str, $substring, $caseSensitive = true,
+                                 $encoding = null)
     {
-        return Stringy::create($str, $encoding)->count($substring);
+        return Stringy::create($str, $encoding)->count($substring, $caseSensitive);
     }
 
     /**

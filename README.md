@@ -184,12 +184,13 @@ S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8')
 
 #### count
 
-$stringy->count(string $substring)
+$stringy->count(string $substring [, boolean $caseSensitive = true ])
 
-S::count(string $str, string $substring [, string $encoding ])
+S::count(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
 
-Returns the number of occurrences of $substring in the given string. An alias for
-mb_substr_count()
+Returns the number of occurrences of $substring in the given string.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
 
 ```php
 S::create('Ο συγγραφέας είπε', 'UTF-8')->count('α');

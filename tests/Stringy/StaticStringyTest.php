@@ -554,9 +554,10 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForCount
      */
-    public function testCount($expected, $str, $substring, $encoding = null)
+    public function testCount($expected, $str, $substring, $caseSensitive = true,
+                              $encoding = null)
     {
-        $result = S::count($str, $substring, $encoding);
+        $result = S::count($str, $substring, $caseSensitive, $encoding);
         $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
     }

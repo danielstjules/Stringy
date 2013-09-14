@@ -1104,13 +1104,22 @@ class Stringy
 
     /**
      * Returns the number of occurrences of $substring in the given string.
-     * An alias for mb_substr_count()
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
      *
-     * @param   string  $substring  The substring to search for
+     * @param   string  $substring      The substring to search for
+     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
      * @return  int     The number of $substring occurrences
      */
-    public function count($substring)
+    public function count($substring, $caseSensitive = true)
     {
+        if (!$caseSensitive) {
+            $str = mb_strtoupper($this->str, $this->encoding);
+            $substring = mb_strtoupper($substring, $this->encoding);
+
+            return mb_substr_count($str, $substring, $this->encoding);
+        }
+
         return mb_substr_count($this->str, $substring, $this->encoding);
     }
 

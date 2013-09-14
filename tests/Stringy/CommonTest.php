@@ -907,7 +907,14 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(0, '', 'fòô', 'UTF-8'),
             array(0, 'fòô', 'bàř', 'UTF-8'),
             array(1, 'fòô bàř', 'fòô', 'UTF-8'),
-            array(2, 'fôòô bàř', 'ô', 'UTF-8')
+            array(2, 'fôòô bàř', 'ô', 'UTF-8'),
+            array(0, 'fÔÒÔ bàř', 'ô', 'UTF-8'),
+            array(0, 'foo', 'BAR', false),
+            array(1, 'foo bar', 'FOo', false),
+            array(2, 'foo bar', 'O', false),
+            array(1, 'fòô bàř', 'fÒÔ', false, 'UTF-8'),
+            array(2, 'fôòô bàř', 'Ô', false, 'UTF-8'),
+            array(2, 'συγγραφέας', 'Σ', false, 'UTF-8')
         );
 
         return $testData;
