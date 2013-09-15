@@ -572,4 +572,15 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider stringsForRegexReplace
+     */
+    public function testRegexReplace($expected, $str, $pattern, $replacement,
+                                     $options = 'msr', $encoding = null)
+    {
+        $result = S::regexReplace($str, $pattern, $replacement, $options, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
 }

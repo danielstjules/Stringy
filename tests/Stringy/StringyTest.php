@@ -675,4 +675,17 @@ class StringyTestCase extends CommonTest
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
+
+    /**
+     * @dataProvider stringsForRegexReplace
+     */
+    public function testregexReplace($expected, $str, $pattern, $replacement,
+                                     $options = 'msr', $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->regexReplace($pattern, $replacement, $options);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
 }

@@ -939,4 +939,19 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
 
         return $testData;
     }
+
+    public function stringsForRegexReplace()
+    {
+        $testData = array(
+            array('', '', '', ''),
+            array('bar', 'foo', 'f[o]+', 'bar'),
+            array('bar', 'foo bar', 'f[O]+\s', '', 'i'),
+            array('foo', 'bar', '[[:alpha:]]{3}', 'foo'),
+            array('', '', '', '', 'msr', 'UTF-8'),
+            array('bàř', 'fòô ', 'f[òô]+\s', 'bàř', 'msr', 'UTF-8'),
+            array('fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr', 'UTF-8')
+        );
+
+        return $testData;
+    }
 }

@@ -38,6 +38,7 @@ A PHP library with a variety of string manipulation functions with multibyte sup
     * [padBoth](#padboth)
     * [padLeft](#padleft)
     * [padRight](#padright)
+    * [regexReplace](#regexreplace)
     * [removeLeft](#removeleft)
     * [removeRight](#removeright)
     * [replace](#replace)
@@ -546,6 +547,22 @@ padded. Alias for pad() with a $padType of 'right'.
 ```php
 S::create('foo bar')->padRight(10, '_*');
 S::padRight('foo bar', 10, '_*');  // 'foo bar_*_'
+```
+
+#### regexReplace
+
+$stringy->regexReplace(string $pattern, string $replacement [, string $options = 'msr'])
+
+S::regexReplace(string $str, string $pattern, string $replacement [, string $options = 'msr' [, string $encoding ]])
+
+Replaces all occurrences of $pattern in $str by $replacement. An alias
+for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
+in the bundled version of Oniguruma in PHP 5.3.
+
+```php
+S::create('fòô ', UTF-8')->regexReplace('f[òô]+\s', 'bàř', 'msr');
+S::regexReplace('fòô ', 'f[òô]+\s', 'bàř', 'msr', 'UTF-8');  // 'bàř'
 ```
 
 #### removeLeft

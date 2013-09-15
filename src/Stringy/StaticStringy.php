@@ -744,4 +744,24 @@ class StaticStringy
     {
         return Stringy::create($str, $encoding)->replace($search, $replace)->str;
     }
+
+    /**
+     * Replaces all occurrences of $pattern in $str by $replacement. An alias
+     * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+     * in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
+     * in the bundled version of Oniguruma in PHP 5.3.
+     *
+     * @param   string   $str          The haystack to search through
+     * @param   string   $pattern      The regular expression pattern
+     * @param   string   $replacement  The string to replace with
+     * @param   string   $options      Matching conditions to be used
+     * @param   string   $encoding     The character encoding
+     * @return  string   The resulting string after the replacements
+     */
+    public static function regexReplace($str, $pattern, $replacement,
+                                        $options = 'msr', $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->regexReplace($pattern,
+            $replacement, $options, $encoding)->str;
+    }
 }
