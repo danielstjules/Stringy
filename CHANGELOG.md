@@ -1,3 +1,13 @@
+### 1.2.0 (2013-09-15)
+
+  * Fixed pad's use of InvalidArgumentException
+  * Fixed replace(). It now correctly treats regex special chars as normal chars
+  * Added additional Cyrillic letters to toAscii
+  * Added $caseSensitive to contains() and count()
+  * Added toLowerCase()
+  * Added toUpperCase()
+  * Added regexReplace()
+
 ### 1.1.0 (2013-08-31)
 
   * Fix for collapseWhitespace()
