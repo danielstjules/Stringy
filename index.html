@@ -84,6 +84,7 @@
 <li><a href="#padboth">padBoth</a></li>
 <li><a href="#padleft">padLeft</a></li>
 <li><a href="#padright">padRight</a></li>
+<li><a href="#regexreplace">regexReplace</a></li>
 <li><a href="#removeleft">removeLeft</a></li>
 <li><a href="#removeright">removeRight</a></li>
 <li><a href="#replace">replace</a></li>
@@ -98,8 +99,10 @@
 <li><a href="#tidy">tidy</a></li>
 <li><a href="#titleize">titleize</a></li>
 <li><a href="#toascii">toAscii</a></li>
+<li><a href="#tolowercase">toLowerCase</a></li>
 <li><a href="#tospaces">toSpaces</a></li>
 <li><a href="#totabs">toTabs</a></li>
+<li><a href="#touppercase">toUpperCase</a></li>
 <li><a href="#trim">trim</a></li>
 <li><a href="#truncate">truncate</a></li>
 <li><a href="#underscored">underscored</a></li>
@@ -121,19 +124,19 @@
 
 <p>Then, after running <code>composer update</code> or <code>php composer.phar update</code>, you can load the class using Composer's autoloading:</p>
 
-<div class="highlight"><pre><span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
 </pre></div>
 
 <p>Otherwise, you can simply require the file directly:</p>
 
-<div class="highlight"><pre><span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy/Stringy.php'</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy/Stringy.php'</span><span class="p">;</span>
 <span class="c1">// or</span>
 <span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy/StaticStringy.php'</span><span class="p">;</span>
 </pre></div>
 
 <p>And in either case, I'd suggest using an alias.</p>
 
-<div class="highlight"><pre><span class="k">use</span> <span class="nx">Stringy\Stringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">Stringy\Stringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
 <span class="c1">// or</span>
 <span class="k">use</span> <span class="nx">Stringy\StaticStringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
 </pre></div>
@@ -145,7 +148,7 @@
 procedural-style static method calls with <code>Stringy\StaticStringy</code>. An example
 of the former is the following:</p>
 
-<div class="highlight"><pre><span class="k">use</span> <span class="nx">Stringy\Stringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">Stringy\Stringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô     Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
 </pre></div>
 
@@ -155,7 +158,7 @@ public, and can be accessed directly if required, ie: <code>S::create('foo')-&gt
 
 <p>Using the static wrapper, an alternative is the following:</p>
 
-<div class="highlight"><pre><span class="k">use</span> <span class="nx">Stringy\StaticStringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">Stringy\StaticStringy</span> <span class="k">as</span> <span class="nx">S</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">collapseWhitespace</span><span class="p">(</span><span class="s1">'Fòô     Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">swapCase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
 </pre></div>
@@ -164,9 +167,9 @@ public, and can be accessed directly if required, ie: <code>S::create('foo')-&gt
 <a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h2>
 
 <p>In the list below, any static method other than S::create refers to a
-method in Stringy\StaticStringy. For all others, they're found in Stringy\Stringy. Furthermore, all methods that return a Stringy object or string do not modify the original.</p>
+method in <code>Stringy\StaticStringy</code>. For all others, they're found in <code>Stringy\Stringy</code>. Furthermore, all methods that return a Stringy object or string do not modify the original.</p>
 
-<p><em>Note: If $encoding is not given, it defaults to mb_internal_encoding().</em></p>
+<p><em>Note: If <code>$encoding</code> is not given, it defaults to <code>mb_internal_encoding()</code>.</em></p>
 
 <h4>
 <a name="at" class="anchor" href="#at"><span class="octicon octicon-link"></span></a>at</h4>
@@ -177,7 +180,7 @@ method in Stringy\StaticStringy. For all others, they're found in Stringy\String
 
 <p>Returns the character of the string at $index, with indexes starting at 0.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">at</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'ř'</span>
 </pre></div>
 
@@ -192,7 +195,7 @@ method in Stringy\StaticStringy. For all others, they're found in Stringy\String
 spaces, capitalizes letters following digits, spaces, dashes and
 underscores, and removes spaces, dashes, underscores.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Camel-Case'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">camelize</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Camel-Case'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">camelize</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">camelize</span><span class="p">(</span><span class="s1">'Camel-Case'</span><span class="p">);</span>  <span class="c1">// 'camelCase'</span>
 </pre></div>
 
@@ -207,34 +210,37 @@ underscores, and removes spaces, dashes, underscores.</p>
 single space. This includes tabs and newline characters, as well as
 multibyte whitespace such as the thin space and ideographic space.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'   Ο     συγγραφέας  '</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'   Ο     συγγραφέας  '</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">collapseWhitespace</span><span class="p">(</span><span class="s1">'   Ο     συγγραφέας  '</span><span class="p">);</span>  <span class="c1">// 'Ο συγγραφέας'</span>
 </pre></div>
 
 <h4>
 <a name="contains" class="anchor" href="#contains"><span class="octicon octicon-link"></span></a>contains</h4>
 
-<p>$stringy-&gt;contains(string $needle)</p>
+<p>$stringy-&gt;contains(string $needle [, boolean $caseSensitive = true ])</p>
 
-<p>S::contains(string $haystack, string $needle [, string $encoding ])</p>
+<p>S::contains(string $haystack, string $needle [, boolean $caseSensitive = true [, string $encoding ]])</p>
 
-<p>Returns true if the string contains $needle, false otherwise.</p>
+<p>Returns true if the string contains $needle, false otherwise. By default,
+the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">contains</span><span class="p">(</span><span class="s1">'συγγραφέας'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">contains</span><span class="p">(</span><span class="s1">'συγγραφέας'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">contains</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'συγγραφέας'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
 <h4>
 <a name="count" class="anchor" href="#count"><span class="octicon octicon-link"></span></a>count</h4>
 
-<p>$stringy-&gt;count(string $substring)</p>
+<p>$stringy-&gt;count(string $substring [, boolean $caseSensitive = true ])</p>
 
-<p>S::count(string $str, string $substring [, string $encoding ])</p>
+<p>S::count(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])</p>
 
-<p>Returns the number of occurrences of $substring in the given string. An alias for
-mb_substr_count()</p>
+<p>Returns the number of occurrences of $substring in the given string.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">count</span><span class="p">(</span><span class="s1">'α'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">count</span><span class="p">(</span><span class="s1">'α'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">count</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'α'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 2</span>
 </pre></div>
 
@@ -247,7 +253,7 @@ mb_substr_count()</p>
 the supplied values. If $encoding is not specified, it defaults to
 mb_internal_encoding(). It then returns the initialized object.</p>
 
-<div class="highlight"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
+<div class="highlight highlight-php"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
 </pre></div>
 
 <h4>
@@ -261,7 +267,7 @@ mb_internal_encoding(). It then returns the initialized object.</p>
 inserted before uppercase characters (with the exception of the first
 character of the string), and in place of spaces as well as underscores.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'TestDCase'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">dasherize</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'TestDCase'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">dasherize</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">dasherize</span><span class="p">(</span><span class="s1">'TestDCase'</span><span class="p">);</span>  <span class="c1">// 'test-d-case'</span>
 </pre></div>
 
@@ -276,7 +282,7 @@ character of the string), and in place of spaces as well as underscores.</p>
 default, the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">endsWith</span><span class="p">(</span><span class="s1">'àřs'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">endsWith</span><span class="p">(</span><span class="s1">'àřs'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">endsWith</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'àřs'</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -289,7 +295,7 @@ setting $caseSensitive to false.</p>
 
 <p>Ensures that the string begins with $substring. If it doesn't, it's prepended.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">ensureLeft</span><span class="p">(</span><span class="s1">'http://'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">ensureLeft</span><span class="p">(</span><span class="s1">'http://'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">ensureLeft</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">,</span> <span class="s1">'http://'</span><span class="p">);</span>  <span class="c1">// 'http://foobar'</span>
 </pre></div>
 
@@ -302,7 +308,7 @@ setting $caseSensitive to false.</p>
 
 <p>Ensures that the string begins with $substring. If it doesn't, it's appended.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">ensureRight</span><span class="p">(</span><span class="s1">'.com'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">ensureRight</span><span class="p">(</span><span class="s1">'.com'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">ensureRight</span><span class="p">(</span><span class="s1">'foobar'</span><span class="p">,</span> <span class="s1">'.com'</span><span class="p">);</span>  <span class="c1">// 'foobar.com'</span>
 </pre></div>
 
@@ -315,7 +321,7 @@ setting $caseSensitive to false.</p>
 
 <p>Returns the first $n characters of the string.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">first</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô'</span>
 </pre></div>
 
@@ -329,7 +335,7 @@ setting $caseSensitive to false.</p>
 <p>Capitalizes the first word of the string, replaces underscores with
 spaces, and strips '_id'.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'author_id'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">humanize</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'author_id'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">humanize</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">humanize</span><span class="p">(</span><span class="s1">'author_id'</span><span class="p">);</span>  <span class="c1">// 'Author'</span>
 </pre></div>
 
@@ -342,7 +348,7 @@ spaces, and strips '_id'.</p>
 
 <p>Inserts $substring into the string at the $index provided.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bà'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">'ř'</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bà'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">'ř'</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">insert</span><span class="p">(</span><span class="s1">'fòô bà'</span><span class="p">,</span> <span class="s1">'ř'</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
 </pre></div>
 
@@ -355,7 +361,7 @@ spaces, and strips '_id'.</p>
 
 <p>Returns true if the string contains only alphabetic chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'丹尼爾'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isAlpha</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'丹尼爾'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isAlpha</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isAlpha</span><span class="p">(</span><span class="s1">'丹尼爾'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -369,7 +375,7 @@ spaces, and strips '_id'.</p>
 <p>Returns true if the string contains only alphabetic and numeric chars, false
 otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'دانيال1'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isAlphanumeric</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'دانيال1'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isAlphanumeric</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isAlphanumeric</span><span class="p">(</span><span class="s1">'دانيال1'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -382,7 +388,7 @@ otherwise.</p>
 
 <p>Returns true if the string contains only whitespace chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">  \v\f"</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isBlank</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">  \v\f"</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isBlank</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isBlank</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">  \v\f"</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -395,7 +401,7 @@ otherwise.</p>
 
 <p>Returns true if the string contains only hexadecimal chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'A102F'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isHexadecimal</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'A102F'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isHexadecimal</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isHexadecimal</span><span class="p">(</span><span class="s1">'A102F'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -408,7 +414,7 @@ otherwise.</p>
 
 <p>Returns true if the string is JSON, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'{"foo":"bar"}'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isJson</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'{"foo":"bar"}'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isJson</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isJson</span><span class="p">(</span><span class="s1">'{"foo":"bar"}'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -421,7 +427,7 @@ otherwise.</p>
 
 <p>Returns true if the string contains only lower case chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isLowerCase</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isLowerCase</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isLowerCase</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -434,7 +440,7 @@ otherwise.</p>
 
 <p>Returns true if the string is serialized, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'a:1:{s:3:"foo";s:3:"bar";}'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isSerialized</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'a:1:{s:3:"foo";s:3:"bar";}'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isSerialized</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isSerialized</span><span class="p">(</span><span class="s1">'a:1:{s:3:"foo";s:3:"bar";}'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -447,7 +453,7 @@ otherwise.</p>
 
 <p>Returns true if the string contains only upper case chars, false otherwise.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isUpperCase</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isUpperCase</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">isUpperCase</span><span class="p">(</span><span class="s1">'FÒÔBÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -460,7 +466,7 @@ otherwise.</p>
 
 <p>Returns the last $n characters of the string.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">last</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">last</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">last</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'bàř'</span>
 </pre></div>
 
@@ -473,7 +479,7 @@ otherwise.</p>
 
 <p>Returns the length of the string. An alias for PHP's mb_strlen() function.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">length</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">length</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">length</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 7</span>
 </pre></div>
 
@@ -486,7 +492,7 @@ otherwise.</p>
 
 <p>Returns the longest common prefix between the string and $otherStr.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bar'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonPrefix</span><span class="p">(</span><span class="s1">'fòr bar'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bar'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonPrefix</span><span class="p">(</span><span class="s1">'fòr bar'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">longestCommonPrefix</span><span class="p">(</span><span class="s1">'fòô bar'</span><span class="p">,</span> <span class="s1">'fòr bar'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fò'</span>
 </pre></div>
 
@@ -499,7 +505,7 @@ otherwise.</p>
 
 <p>Returns the longest common suffix between the string and $otherStr.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonSuffix</span><span class="p">(</span><span class="s1">'fòr bàř'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonSuffix</span><span class="p">(</span><span class="s1">'fòr bàř'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">longestCommonSuffix</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'fòr bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// ' bàř'</span>
 </pre></div>
 
@@ -513,7 +519,7 @@ otherwise.</p>
 <p>Returns the longest common substring between the string and $otherStr. In the
 case of ties, it returns that which occurs first.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonSubstring</span><span class="p">(</span><span class="s1">'boo far'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">longestCommonSubstring</span><span class="p">(</span><span class="s1">'boo far'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">longestCommonSubstring</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">,</span> <span class="s1">'boo far'</span><span class="p">);</span>  <span class="c1">// 'oo '</span>
 </pre></div>
 
@@ -526,7 +532,7 @@ case of ties, it returns that which occurs first.</p>
 
 <p>Converts the first character of the supplied string to lower case.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">lowerCaseFirst</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">lowerCaseFirst</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">lowerCaseFirst</span><span class="p">(</span><span class="s1">'Σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'σ test'</span>
 </pre></div>
 
@@ -543,7 +549,7 @@ string used for padding is a space, and the default type (one of 'left',
 'right', 'both') is 'right'. Throws an InvalidArgumentException if
 $padType isn't one of those 3 values.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">pad</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">pad</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">pad</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// '¬ø¬fòô bàř'</span>
 </pre></div>
 
@@ -557,7 +563,7 @@ $padType isn't one of those 3 values.</p>
 <p>Returns a new string of a given length such that both sides of the string
 string are padded. Alias for pad() with a $padType of 'both'.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padBoth</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s1">' '</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padBoth</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s1">' '</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">padBoth</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">' '</span><span class="p">);</span>  <span class="c1">// ' foo bar '</span>
 </pre></div>
 
@@ -571,7 +577,7 @@ string are padded. Alias for pad() with a $padType of 'both'.</p>
 <p>Returns a new string of a given length such that the beginning of the
 string is padded. Alias for pad() with a $padType of 'left'.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$encoding</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padLeft</span><span class="p">(</span><span class="nv">$length</span><span class="p">,</span> <span class="nv">$padStr</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$encoding</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padLeft</span><span class="p">(</span><span class="nv">$length</span><span class="p">,</span> <span class="nv">$padStr</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">padLeft</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">' '</span><span class="p">);</span>  <span class="c1">// '  foo bar'</span>
 </pre></div>
 
@@ -585,8 +591,24 @@ string is padded. Alias for pad() with a $padType of 'left'.</p>
 <p>Returns a new string of a given length such that the end of the string is
 padded. Alias for pad() with a $padType of 'right'.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padRight</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'_*'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">padRight</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'_*'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">padRight</span><span class="p">(</span><span class="s1">'foo bar'</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'_*'</span><span class="p">);</span>  <span class="c1">// 'foo bar_*_'</span>
+</pre></div>
+
+<h4>
+<a name="regexreplace" class="anchor" href="#regexreplace"><span class="octicon octicon-link"></span></a>regexReplace</h4>
+
+<p>$stringy-&gt;regexReplace(string $pattern, string $replacement [, string $options = 'msr'])</p>
+
+<p>S::regexReplace(string $str, string $pattern, string $replacement [, string $options = 'msr' [, string $encoding ]])</p>
+
+<p>Replaces all occurrences of $pattern in $str by $replacement. An alias
+for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
+in the bundled version of Oniguruma in PHP 5.3.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">regexReplace</span><span class="p">(</span><span class="s1">'f[òô]+\s'</span><span class="p">,</span> <span class="s1">'bàř'</span><span class="p">,</span> <span class="s1">'msr'</span><span class="p">);</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">regexReplace</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">'f[òô]+\s'</span><span class="p">,</span> <span class="s1">'bàř'</span><span class="p">,</span> <span class="s1">'msr'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'bàř'</span>
 </pre></div>
 
 <h4>
@@ -598,7 +620,7 @@ padded. Alias for pad() with a $padType of 'right'.</p>
 
 <p>Returns a new string with the prefix $substring removed, if it was present.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeLeft</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeLeft</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">removeLeft</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'bàř'</span>
 </pre></div>
 
@@ -611,20 +633,20 @@ padded. Alias for pad() with a $padType of 'right'.</p>
 
 <p>Returns a new string with the suffix $substring removed, if it was present.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeRight</span><span class="p">(</span><span class="s1">' bàř'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeRight</span><span class="p">(</span><span class="s1">' bàř'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">removeRight</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">' bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô'</span>
 </pre></div>
 
 <h4>
 <a name="replace" class="anchor" href="#replace"><span class="octicon octicon-link"></span></a>replace</h4>
 
-<p>$stringy-&gt;replace(string $search, string $replace)</p>
+<p>$stringy-&gt;replace(string $search, string $replacement)</p>
 
-<p>S::replace(string $str, string $search, string $replace [, string $encoding ])</p>
+<p>S::replace(string $str, string $search, string $replacement [, string $encoding ])</p>
 
-<p>Returns a string with all occurrences of $search replaced with $replace.</p>
+<p>Replaces all occurrences of $search in $str by $replacement.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">''</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">''</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">replace</span><span class="p">(</span><span class="s1">'fòô bàř fòô bàř'</span><span class="p">,</span> <span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'bàř bàř'</span>
 </pre></div>
 
@@ -637,7 +659,7 @@ padded. Alias for pad() with a $padType of 'right'.</p>
 
 <p>Returns a reversed string. A multibyte version of strrev().</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">reverse</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">reverse</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">reverse</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'řàb ôòf'</span>
 </pre></div>
 
@@ -653,7 +675,7 @@ chop words. If $substring is provided, and truncating occurs, the string
 is further truncated so that the substring may be appended without
 exceeding the desired length.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">safeTruncate</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>  <span class="c1">// 'What are your plans...'</span>
 </pre></div>
 
@@ -666,7 +688,7 @@ exceeding the desired length.</p>
 
 <p>A multibyte str_shuffle() function. It returns a string with its characters in random order.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">shuffle</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">shuffle</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">shuffle</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'àôřb òf'</span>
 </pre></div>
 
@@ -682,7 +704,7 @@ characters with their closest ASCII equivalents, removing non-alphanumeric
 and non-ASCII characters, and replacing whitespace with dashes. The string
 is also converted to lowercase.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">slugify</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">slugify</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">slugify</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">);</span>  <span class="c1">// 'using-strings-like-foo-bar'</span>
 </pre></div>
 
@@ -697,7 +719,7 @@ is also converted to lowercase.</p>
 By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">startsWith</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">startsWith</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">startsWith</span><span class="p">(</span><span class="s1">'FÒÔ bàřs'</span><span class="p">,</span> <span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
 </pre></div>
 
@@ -712,7 +734,7 @@ by setting $caseSensitive to false.</p>
 It differs from the mb_substr() function in that providing a $length of
 null will return the rest of the string, rather than an empty string.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">substr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">substr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">substr</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'ô b'</span>
 </pre></div>
 
@@ -725,7 +747,7 @@ null will return the rest of the string, rather than an empty string.</p>
 
 <p>Surrounds a string with the given substring.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">' ͜ '</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">surround</span><span class="p">(</span><span class="s1">'ʘ'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">' ͜ '</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">surround</span><span class="p">(</span><span class="s1">'ʘ'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">surround</span><span class="p">(</span><span class="s1">' ͜ '</span><span class="p">,</span> <span class="s1">'ʘ'</span><span class="p">);</span>  <span class="c1">// 'ʘ ͜ ʘ'</span>
 </pre></div>
 
@@ -738,7 +760,7 @@ null will return the rest of the string, rather than an empty string.</p>
 
 <p>Returns a case swapped version of the string.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ντανιλ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ντανιλ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">swapCase</span><span class="p">(</span><span class="s1">'Ντανιλ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'νΤΑΝΙΛ'</span>
 </pre></div>
 
@@ -752,7 +774,7 @@ null will return the rest of the string, rather than an empty string.</p>
 <p>Returns a string with smart quotes, ellipsis characters, and dashes from
 Windows-1252 (commonly used in Word documents) replaced by their ASCII equivalents.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'“I see…”'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">tidy</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'“I see…”'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">tidy</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">tidy</span><span class="p">(</span><span class="s1">'“I see…”'</span><span class="p">);</span>  <span class="c1">// '"I see..."'</span>
 </pre></div>
 
@@ -768,7 +790,7 @@ Ignores the case of other letters, allowing for the use of acronyms.
 Also accepts an array, $ignore, allowing you to list words not to be
 capitalized.</p>
 
-<div class="highlight"><pre><span class="nv">$ignore</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'at'</span><span class="p">,</span> <span class="s1">'by'</span><span class="p">,</span> <span class="s1">'for'</span><span class="p">,</span> <span class="s1">'in'</span><span class="p">,</span> <span class="s1">'of'</span><span class="p">,</span> <span class="s1">'on'</span><span class="p">,</span> <span class="s1">'out'</span><span class="p">,</span> <span class="s1">'to'</span><span class="p">,</span> <span class="s1">'the'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nv">$ignore</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'at'</span><span class="p">,</span> <span class="s1">'by'</span><span class="p">,</span> <span class="s1">'for'</span><span class="p">,</span> <span class="s1">'in'</span><span class="p">,</span> <span class="s1">'of'</span><span class="p">,</span> <span class="s1">'on'</span><span class="p">,</span> <span class="s1">'out'</span><span class="p">,</span> <span class="s1">'to'</span><span class="p">,</span> <span class="s1">'the'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'i like to watch DVDs at home'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">titleize</span><span class="p">(</span><span class="nv">$ignore</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">titleize</span><span class="p">(</span><span class="s1">'i like to watch DVDs at home'</span><span class="p">,</span> <span class="nv">$ignore</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
 <span class="c1">// 'I Like to Watch DVDs at Home'</span>
@@ -784,8 +806,22 @@ capitalized.</p>
 <p>Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toAscii</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toAscii</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">toAscii</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">);</span>  <span class="c1">// 'foo bar'</span>
+</pre></div>
+
+<h4>
+<a name="tolowercase" class="anchor" href="#tolowercase"><span class="octicon octicon-link"></span></a>toLowerCase</h4>
+
+<p>$stringy-&gt;toLowerCase()</p>
+
+<p>S::toLowerCase(string $str [, string $encoding ])</p>
+
+<p>Converts all characters in the string to lowercase. An alias for PHP's
+mb_strtolower().</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'FÒÔ BÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toLowerCase</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">toLowerCase</span><span class="p">(</span><span class="s1">'FÒÔ BÀŘ'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
 </pre></div>
 
 <h4>
@@ -798,7 +834,7 @@ replaced with their closest ASCII counterparts, and the rest are removed.</p>
 <p>Converts each tab in the string to some number of spaces, as defined by
 $tabLength. By default, each tab is converted to 4 consecutive spaces.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">' String speech = "Hi"'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toSpaces</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">' String speech = "Hi"'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toSpaces</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">toSpaces</span><span class="p">(</span><span class="s1">'   String speech = "Hi"'</span><span class="p">);</span>  <span class="c1">// '    String speech = "Hi"'</span>
 </pre></div>
 
@@ -813,8 +849,22 @@ $tabLength. By default, each tab is converted to 4 consecutive spaces.</p>
 by $tabLength, to a tab. By default, each 4 consecutive spaces are
 converted to a tab.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'    fòô    bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toTabs</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'    fòô    bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toTabs</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">toTabs</span><span class="p">(</span><span class="s1">'    fòô    bàř'</span><span class="p">);</span>  <span class="c1">// '   fòô bàř'</span>
+</pre></div>
+
+<h4>
+<a name="touppercase" class="anchor" href="#touppercase"><span class="octicon octicon-link"></span></a>toUpperCase</h4>
+
+<p>$stringy-&gt;toUpperCase()</p>
+
+<p>S::toUpperCase(string $str [, string $encoding ])</p>
+
+<p>Converts all characters in the string to uppercase. An alias for PHP's
+mb_strtoupper().</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toUpperCase</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">toUpperCase</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'FÒÔ BÀŘ'</span>
 </pre></div>
 
 <h4>
@@ -826,7 +876,7 @@ converted to a tab.</p>
 
 <p>Returns the trimmed string. An alias for PHP's trim() function.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">trim</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">trim</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">trim</span><span class="p">(</span><span class="s1">' fòô bàř '</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
 </pre></div>
 
@@ -841,7 +891,7 @@ converted to a tab.</p>
 truncating occurs, the string is further truncated so that the substring
 may be appended without exceeding the desired length.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">safeTruncate</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>  <span class="c1">// 'What are your pl...'</span>
 </pre></div>
 
@@ -856,7 +906,7 @@ may be appended without exceeding the desired length.</p>
 Underscores are inserted before uppercase characters (with the exception
 of the first character of the string), and in place of spaces as well as dashes.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'TestUCase'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">underscored</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'TestUCase'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">underscored</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">underscored</span><span class="p">(</span><span class="s1">'TestUCase'</span><span class="p">);</span>  <span class="c1">// 'test_u_case'</span>
 </pre></div>
 
@@ -871,7 +921,7 @@ of the first character of the string), and in place of spaces as well as dashes.
 surrounding spaces, capitalizes letters following digits, spaces, dashes
 and underscores, and removes spaces, dashes, underscores.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Upper Camel-Case'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upperCamelize</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Upper Camel-Case'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upperCamelize</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">upperCamelize</span><span class="p">(</span><span class="s1">'Upper Camel-Case'</span><span class="p">);</span>  <span class="c1">// 'UpperCamelCase'</span>
 </pre></div>
 
@@ -884,7 +934,7 @@ and underscores, and removes spaces, dashes, underscores.</p>
 
 <p>Converts the first character of the supplied string to upper case.</p>
 
-<div class="highlight"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upperCaseFirst</span><span class="p">();</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upperCaseFirst</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">upperCaseFirst</span><span class="p">(</span><span class="s1">'σ test'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'Σ test'</span>
 </pre></div>
 
