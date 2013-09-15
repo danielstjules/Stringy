@@ -565,10 +565,10 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForReplace
      */
-    public function testReplace($expected, $str, $search, $replace,
+    public function testReplace($expected, $str, $search, $replacement,
                                 $encoding = null)
     {
-        $result = S::replace($str, $search, $replace, $encoding);
+        $result = S::replace($str, $search, $replacement, $encoding);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }

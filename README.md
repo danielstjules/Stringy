@@ -561,7 +561,7 @@ in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
 in the bundled version of Oniguruma in PHP 5.3.
 
 ```php
-S::create('fòô ', UTF-8')->regexReplace('f[òô]+\s', 'bàř', 'msr');
+S::create('fòô ', 'UTF-8')->regexReplace('f[òô]+\s', 'bàř', 'msr');
 S::regexReplace('fòô ', 'f[òô]+\s', 'bàř', 'msr', 'UTF-8');  // 'bàř'
 ```
 
@@ -593,11 +593,11 @@ S::removeRight('fòô bàř', ' bàř', 'UTF-8');  // 'fòô'
 
 #### replace
 
-$stringy->replace(string $search, string $replace)
+$stringy->replace(string $search, string $replacement)
 
-S::replace(string $str, string $search, string $replace [, string $encoding ])
+S::replace(string $str, string $search, string $replacement [, string $encoding ])
 
-Returns a string with all occurrences of $search replaced with $replace.
+Replaces all occurrences of $search in $str by $replacement.
 
 ```php
 S::create('fòô bàř fòô bàř', 'UTF-8')->replace('fòô ', '');

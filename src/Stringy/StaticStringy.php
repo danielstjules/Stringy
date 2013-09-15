@@ -732,17 +732,17 @@ class StaticStringy
     }
 
     /**
-     * Returns a string with all occurrences of $search replaced with $replace.
+     * Replaces all occurrences of $search in $str by $replacement.
      *
-     * @param   string   $str       The haystack to search through
-     * @param   string   $search    The needle to search for
-     * @param   string   $replace   The string to replace with
-     * @param   string   $encoding  The character encoding
+     * @param   string   $str           The haystack to search through
+     * @param   string   $search        The needle to search for
+     * @param   string   $replacement   The string to replace with
+     * @param   string   $encoding      The character encoding
      * @return  string   The resulting string after the replacements
      */
-    public static function replace($str, $search, $replace, $encoding = null)
+    public static function replace($str, $search, $replacement, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->replace($search, $replace)->str;
+        return Stringy::create($str, $encoding)->replace($search, $replacement)->str;
     }
 
     /**

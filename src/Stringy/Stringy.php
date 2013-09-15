@@ -1124,27 +1124,25 @@ class Stringy
     }
 
     /**
-     * Returns a string with all occurrences of $search replaced with $replace.
+     * Replaces all occurrences of $search in $str by $replacement.
      *
-     * @param   string   $search   The needle to search for
-     * @param   string   $replace  The string to replace with
+     * @param   string   $search       The needle to search for
+     * @param   string   $replacement  The string to replace with
      * @return  Stringy  Object with the resulting $str after the replacements
      */
-    public function replace($search, $replace)
+    public function replace($search, $replacement)
     {
-        $stringy = self::create($this->str, $this->encoding);
-
         $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($stringy->encoding);
+        mb_regex_encoding($this->encoding);
 
-        // Don't want the args accidentally being parsed as regex
-        $quotedSearch = preg_quote($search);
-        $quotedReplace = preg_quote($replace);
+        // Don't want the args being parsed as regex
+        $search = preg_quote($search);
+        $replacement = preg_quote($replacement);
 
-        $stringy->str = mb_ereg_replace($search, $replace, $stringy->str);
+        $str = mb_ereg_replace($search, $replacement, $this->str);
         mb_regex_encoding($regexEncoding);
 
-        return $stringy;
+        return self::create($str, $this->encoding);
     }
 
     /**

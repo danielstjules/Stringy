@@ -666,11 +666,11 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider stringsForReplace
      */
-    public function testReplace($expected, $str, $search, $replace,
+    public function testReplace($expected, $str, $search, $replacement,
                                 $encoding = null)
     {
         $stringy = S::create($str, $encoding);
-        $result = $stringy->replace($search, $replace);
+        $result = $stringy->replace($search, $replacement);
         $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
