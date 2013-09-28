@@ -8,7 +8,7 @@ use Stringy\StaticStringy as S;
 class StaticStringyTestCase extends CommonTest
 {
     /**
-     * @dataProvider stringsForUpperCaseFirst
+     * @dataProvider upperCaseFirstProvider()
      */
     public function testUpperCaseFirst($expected, $str, $encoding = null)
     {
@@ -18,7 +18,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLowerCaseFirst
+     * @dataProvider lowerCaseFirstProvider()
      */
     public function testLowerCaseFirst($expected, $str, $encoding = null)
     {
@@ -28,7 +28,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForCamelize
+     * @dataProvider camelizeProvider()
      */
     public function testCamelize($expected, $str, $encoding = null)
     {
@@ -38,7 +38,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForUpperCamelize
+     * @dataProvider upperCamelizeProvider()
      */
     public function testUpperCamelize($expected, $str, $encoding = null)
     {
@@ -48,7 +48,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForDasherize
+     * @dataProvider dasherizeProvider()
      */
     public function testDasherize($expected, $str, $encoding = null)
     {
@@ -58,7 +58,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForUnderscored
+     * @dataProvider underscoredProvider()
      */
     public function testUnderscored($expected, $str, $encoding = null)
     {
@@ -68,7 +68,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSwapCase
+     * @dataProvider swapCaseProvider()
      */
     public function testSwapCase($expected, $str, $encoding = null)
     {
@@ -78,7 +78,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForTitleize
+     * @dataProvider titleizeProvider()
      */
     public function testTitleize($expected, $str, $ignore = null,
                                  $encoding = null)
@@ -89,7 +89,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForHumanize
+     * @dataProvider humanizeProvider()
      */
     public function testHumanize($expected, $str, $encoding = null)
     {
@@ -99,7 +99,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForTidy
+     * @dataProvider tidyProvider()
      */
     public function testTidy($expected, $str)
     {
@@ -109,7 +109,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForCollapseWhitespace
+     * @dataProvider collapseWhitespaceProvider()
      */
     public function testCollapseWhitespace($expected, $str, $encoding = null)
     {
@@ -119,7 +119,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForToAscii
+     * @dataProvider toAsciiProvider()
      */
     public function testToAscii($expected, $str)
     {
@@ -129,7 +129,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForPad
+     * @dataProvider padProvider()
      */
     public function testPad($expected, $str, $length, $padStr = ' ',
                             $padType = 'right', $encoding = null)
@@ -148,7 +148,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForPadLeft
+     * @dataProvider padLeftProvider()
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ',
                                 $encoding = null)
@@ -159,7 +159,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForPadRight
+     * @dataProvider padRightProvider()
      */
     public function testPadRight($expected, $str, $length, $padStr = ' ',
                                  $encoding = null)
@@ -170,7 +170,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForPadBoth
+     * @dataProvider padBothProvider()
      */
     public function testPadBoth($expected, $str, $length, $padStr = ' ',
                                 $encoding = null)
@@ -181,10 +181,10 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForStartsWith
+     * @dataProvider startsWithProvider()
      */
     public function testStartsWith($expected, $str, $substring,
-                                $caseSensitive = true, $encoding = null)
+                                   $caseSensitive = true, $encoding = null)
     {
         $result = S::startsWith($str, $substring, $caseSensitive, $encoding);
         $this->assertInternalType('boolean', $result);
@@ -192,10 +192,10 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForEndsWith
+     * @dataProvider endsWithProvider()
      */
     public function testEndsWith($expected, $str, $substring,
-                                $caseSensitive = true, $encoding = null)
+                                 $caseSensitive = true, $encoding = null)
     {
         $result = S::endsWith($str, $substring, $caseSensitive, $encoding);
         $this->assertInternalType('boolean', $result);
@@ -203,7 +203,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForToSpaces
+     * @dataProvider toSpacesProvider()
      */
     public function testToSpaces($expected, $str, $tabLength = 4)
     {
@@ -213,7 +213,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForToTabs
+     * @dataProvider toTabsProvider()
      */
     public function testToTabs($expected, $str, $tabLength = 4)
     {
@@ -223,7 +223,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForToLowerCase
+     * @dataProvider toLowerCaseProvider()
      */
     public function testToLowerCase($expected, $str, $encoding = null)
     {
@@ -233,7 +233,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForToUpperCase
+     * @dataProvider toUpperCaseProvider()
      */
     public function testToUpperCase($expected, $str, $encoding = null)
     {
@@ -243,7 +243,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSlugify
+     * @dataProvider slugifyProvider()
      */
     public function testSlugify($expected, $str)
     {
@@ -253,7 +253,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForContains
+     * @dataProvider containsProvider()
      */
     public function testContains($expected, $haystack, $needle,
                                  $caseSensitive = true, $encoding = null)
@@ -264,7 +264,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSurround
+     * @dataProvider surroundProvider()
      */
     public function testSurround($expected, $str, $substring)
     {
@@ -274,7 +274,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForInsert
+     * @dataProvider insertProvider()
      */
     public function testInsert($expected, $str, $substring, $index,
                                $encoding = null)
@@ -285,7 +285,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForTruncate
+     * @dataProvider truncateProvider()
      */
     public function testTruncate($expected, $str, $length, $substring = '',
                                  $encoding = null)
@@ -296,7 +296,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSafeTruncate
+     * @dataProvider safeTruncateProvider()
      */
     public function testSafeTruncate($expected, $str, $length, $substring = '',
                                      $encoding = null)
@@ -307,7 +307,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForReverse
+     * @dataProvider reverseProvider()
      */
     public function testReverse($expected, $str, $encoding = null)
     {
@@ -317,7 +317,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForShuffle
+     * @dataProvider shuffleProvider()
      */
     public function testShuffle($str, $encoding = null)
     {
@@ -338,7 +338,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForTrim
+     * @dataProvider trimProvider()
      */
     public function testTrim($expected, $str)
     {
@@ -348,7 +348,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLongestCommonPrefix
+     * @dataProvider longestCommonPrefixProvider()
      */
     public function testLongestCommonPrefix($expected, $str, $otherStr,
                                             $encoding = null)
@@ -359,7 +359,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLongestCommonSuffix
+     * @dataProvider longestCommonSuffixProvider()
      */
     public function testLongestCommonSuffix($expected, $str, $otherStr,
                                             $encoding = null)
@@ -370,7 +370,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLongestCommonSubstring
+     * @dataProvider longestCommonSubstringProvider()
      */
     public function testLongestCommonSubstring($expected, $str, $otherStr,
                                                $encoding = null)
@@ -381,7 +381,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLength
+     * @dataProvider lengthProvider()
      */
     public function testLength($expected, $str, $encoding = null)
     {
@@ -391,7 +391,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForSubstr
+     * @dataProvider substrProvider()
      */
     public function testSubstr($expected, $str, $start, $length = null,
                                $encoding = null)
@@ -402,7 +402,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForAt
+     * @dataProvider atProvider()
      */
     public function testAt($expected, $str, $index, $encoding = null)
     {
@@ -412,7 +412,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForFirst
+     * @dataProvider firstProvider()
      */
     public function testFirst($expected, $str, $n, $encoding = null)
     {
@@ -422,7 +422,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForLast
+     * @dataProvider lastProvider()
      */
     public function testLast($expected, $str, $n, $encoding = null)
     {
@@ -432,7 +432,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForEnsureLeft
+     * @dataProvider ensureLeftProvider()
      */
     public function testEnsureLeft($expected, $str, $substring, $encoding = null)
     {
@@ -442,7 +442,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForEnsureRight
+     * @dataProvider ensureRightProvider()
      */
     public function testEnsureRight($expected, $str, $substring, $encoding = null)
     {
@@ -452,7 +452,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForRemoveLeft
+     * @dataProvider removeLeftProvider()
      */
     public function testRemoveLeft($expected, $str, $substring, $encoding = null)
     {
@@ -462,7 +462,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForRemoveRight
+     * @dataProvider removeRightProvider()
      */
     public function testRemoveRight($expected, $str, $substring, $encoding = null)
     {
@@ -472,7 +472,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsAlpha
+     * @dataProvider isAlphaProvider()
      */
     public function testIsAlpha($expected, $str, $encoding = null)
     {
@@ -482,7 +482,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsAlphanumeric
+     * @dataProvider isAlphanumericProvider()
      */
     public function testIsAlphanumeric($expected, $str, $encoding = null)
     {
@@ -492,7 +492,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsBlank
+     * @dataProvider isBlankProvider()
      */
     public function testIsBlank($expected, $str, $encoding = null)
     {
@@ -500,9 +500,9 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
     }
-    
+
     /**
-     * @dataProvider stringsForIsJson
+     * @dataProvider isJsonProvider()
      */
     public function testIsJson($expected, $str, $encoding = null)
     {
@@ -512,7 +512,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsLowerCase
+     * @dataProvider isLowerCaseProvider()
      */
     public function testIsLowerCase($expected, $str, $encoding = null)
     {
@@ -522,7 +522,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsSerialized
+     * @dataProvider isSerializedProvider()
      */
     public function testIsSerialized($expected, $str, $encoding = null)
     {
@@ -532,7 +532,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsUpperCase
+     * @dataProvider isUpperCaseProvider()
      */
     public function testIsUpperCase($expected, $str, $encoding = null)
     {
@@ -542,7 +542,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForIsHexadecimal
+     * @dataProvider isHexadecimalProvider()
      */
     public function testIsHexadecimal($expected, $str, $encoding = null)
     {
@@ -552,7 +552,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForCount
+     * @dataProvider countProvider()
      */
     public function testCount($expected, $str, $substring, $caseSensitive = true,
                               $encoding = null)
@@ -563,7 +563,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForReplace
+     * @dataProvider replaceProvider()
      */
     public function testReplace($expected, $str, $search, $replacement,
                                 $encoding = null)
@@ -574,7 +574,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider stringsForRegexReplace
+     * @dataProvider regexReplaceProvider()
      */
     public function testRegexReplace($expected, $str, $pattern, $replacement,
                                      $options = 'msr', $encoding = null)

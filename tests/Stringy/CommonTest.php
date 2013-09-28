@@ -2,35 +2,31 @@
 
 abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
-    public function stringsForUpperCaseFirst()
+    public function upperCaseFirstProvider()
     {
-        $testData = array(
+        return array(
             array('Test', 'Test'),
             array('Test', 'test'),
             array('1a', '1a'),
             array('Σ test', 'σ test', 'UTF-8'),
             array(' σ test', ' σ test', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForLowerCaseFirst()
+    public function lowerCaseFirstProvider()
     {
-        $testData = array(
+        return array(
             array('test', 'Test'),
             array('test', 'test'),
             array('1a', '1a'),
             array('σ test', 'Σ test', 'UTF-8'),
             array(' Σ test', ' Σ test', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForCamelize()
+    public function camelizeProvider()
     {
-        $testData = array(
+        return array(
             array('camelCase', 'CamelCase'),
             array('camelCase', 'Camel-Case'),
             array('camelCase', 'camel case'),
@@ -45,13 +41,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('στανιλCase', 'Στανιλ case', 'UTF-8'),
             array('σamelCase', 'σamel  Case', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForUpperCamelize()
+    public function upperCamelizeProvider()
     {
-        $testData = array(
+        return array(
             array('CamelCase', 'camelCase'),
             array('CamelCase', 'Camel-Case'),
             array('CamelCase', 'camel case'),
@@ -66,13 +60,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('ΣτανιλCase', 'στανιλ case', 'UTF-8'),
             array('ΣamelCase', 'Σamel  Case', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForDasherize()
+    public function dasherizeProvider()
     {
-        $testData = array(
+        return array(
             array('test-case', 'testCase'),
             array('test-case', 'Test-Case'),
             array('test-case', 'test case'),
@@ -89,13 +81,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('στανιλ-case', 'Στανιλ case', 'UTF-8'),
             array('σash-case', 'Σash  Case', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForUnderscored()
+    public function underscoredProvider()
     {
-        $testData = array(
+        return array(
             array('test_case', 'testCase'),
             array('test_case', 'Test-Case'),
             array('test_case', 'test case'),
@@ -112,63 +102,53 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('στανιλ_case', 'Στανιλ case', 'UTF-8'),
             array('σash_case', 'Σash  Case', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForSwapCase()
+    public function swapCaseProvider()
     {
-        $testData = array(
+        return array(
             array('TESTcASE', 'testCase'),
             array('tEST-cASE', 'Test-Case'),
             array(' - σASH  cASE', ' - Σash  Case', 'UTF-8'),
             array('νΤΑΝΙΛ', 'Ντανιλ', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForTitleize()
+    public function titleizeProvider()
     {
         $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
 
-        $testData = array(
+        return array(
             array('Testing The Method', 'testing the method'),
             array('Testing the Method', 'testing the method', $ignore, 'UTF-8'),
             array('I Like to Watch DVDs at Home', 'i like to watch DVDs at home',
                 $ignore, 'UTF-8'),
             array('Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', null, 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForHumanize()
+    public function humanizeProvider()
     {
-        $testData = array(
+        return array(
             array('Author', 'author_id'),
             array('Test user', ' _test_user_'),
             array('Συγγραφέας', ' συγγραφέας_id ', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForTidy()
+    public function tidyProvider()
     {
-        $testData = array(
+        return array(
             array('"I see..."', '“I see…”'),
             array("'This too'", "‘This too’"),
             array('test-dash', 'test—dash'),
             array('Ο συγγραφέας είπε...', 'Ο συγγραφέας είπε…')
         );
-
-        return $testData;
     }
 
-    public function stringsForCollapseWhitespace()
+    public function collapseWhitespaceProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', '  foo   bar  '),
             array('test string', 'test string'),
             array('Ο συγγραφέας', '   Ο     συγγραφέας  '),
@@ -178,13 +158,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('', ' '),
             array('', ''),
         );
-
-        return $testData;
     }
 
-    public function stringsForToAscii()
+    public function toAsciiProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'fòô bàř'),
             array(' TEST ', ' ŤÉŚŢ '),
             array('φ = z = 3', 'φ = ź = 3'),
@@ -192,13 +170,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('lysaya gora', 'лысая гора'),
             array('shchuka', 'щука')
         );
-
-        return $testData;
     }
 
-    public function stringsForPad()
+    public function padProvider()
     {
-        $testData = array(
+        return array(
             // $length <= $str
             array('foo bar', 'foo bar', -1),
             array('foo bar', 'foo bar', 7),
@@ -235,47 +211,39 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('¬øfòô bàř¬ø', 'fòô bàř', 11, '¬øÿ', 'both', 'UTF-8'),
             array('¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'both', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForPadLeft()
+    public function padLeftProvider()
     {
-        $testData = array(
+        return array(
             array('  foo bar', 'foo bar', 9),
             array('_*_foo bar', 'foo bar', 10, '_*'),
             array('¬ø¬øfòô bàř', 'fòô bàř', 11, '¬ø', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForPadRight()
+    public function padRightProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar  ', 'foo bar', 9),
             array('foo bar_*_', 'foo bar', 10, '_*'),
             array('fòô bàř¬ø¬ø', 'fòô bàř', 11, '¬ø', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForPadBoth()
+    public function padBothProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar ', 'foo bar', 8),
             array(' foo bar ', 'foo bar', 9, ' '),
             array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬øÿ', 'UTF-8'),
             array('¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForStartsWith()
+    public function startsWithProvider()
     {
-        $testData = array(
+        return array(
             array(true, 'foo bars', 'foo bar'),
             array(true, 'FOO bars', 'foo bar', false),
             array(true, 'FOO bars', 'foo BAR', false),
@@ -288,13 +256,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'FÒÔ bàřs', 'fòô bàř', true, 'UTF-8'),
             array(false, 'fòô bàřs', 'fòô BÀŘ', true, 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForEndsWith()
+    public function endsWithProvider()
     {
-        $testData = array(
+        return array(
             array(true, 'foo bars', 'o bars'),
             array(true, 'FOO bars', 'o bars', false),
             array(true, 'FOO bars', 'o BARs', false),
@@ -307,13 +273,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'FÒÔ bàřs', 'fòô bàřs', true, 'UTF-8'),
             array(false, 'fòô bàřs', 'fòô BÀŘS', true, 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForToSpaces()
+    public function toSpacesProvider()
     {
-        $testData = array(
+        return array(
             array('    foo    bar    ', '	foo	bar	'),
             array('     foo     bar     ', '	foo	bar	', 5),
             array('    foo  bar  ', '		foo	bar	', 2),
@@ -321,52 +285,44 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array("    foo\n    bar", "	foo\n	bar"),
             array("    fòô\n    bàř", "	fòô\n	bàř")
         );
-
-        return $testData;
     }
 
-    public function stringsForToTabs()
+    public function toTabsProvider()
     {
-        $testData = array(
+        return array(
             array('	foo	bar	', '    foo    bar    '),
             array('	foo	bar	', '     foo     bar     ', 5),
             array('		foo	bar	', '    foo  bar  ', 2),
             array("	foo\n	bar", "    foo\n    bar"),
             array("	fòô\n	bàř", "    fòô\n    bàř")
         );
-
-        return $testData;
     }
 
-    public function stringsForToLowerCase()
+    public function toLowerCaseProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'FOO BAR'),
             array(' foo_bar ', ' FOO_bar '),
             array('fòô bàř', 'FÒÔ BÀŘ', 'UTF-8'),
             array(' fòô_bàř ', ' FÒÔ_bàř ', 'UTF-8'),
             array('αυτοκίνητο', 'ΑΥΤΟΚΊΝΗΤΟ', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForToUpperCase()
+    public function toUpperCaseProvider()
     {
-        $testData = array(
+        return array(
             array('FOO BAR', 'foo bar'),
             array(' FOO_BAR ', ' FOO_bar '),
             array('FÒÔ BÀŘ', 'fòô bàř', 'UTF-8'),
             array(' FÒÔ_BÀŘ ', ' FÒÔ_bàř ', 'UTF-8'),
             array('ΑΥΤΟΚΊΝΗΤΟ', 'αυτοκίνητο', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForSlugify()
+    public function slugifyProvider()
     {
-        $testData = array(
+        return array(
             array('foo-bar', ' foo  bar '),
             array('foo-dbar', " Foo d'Bar "),
             array('a-string-with-dashes', 'A string-with-dashes'),
@@ -376,13 +332,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('perevirka-ryadka', 'перевірка рядка'),
             array('bukvar-s-bukvoy-y', 'букварь с буквой ы')
         );
-
-        return $testData;
     }
 
-    public function stringsForContains()
+    public function containsProvider()
     {
-        $testData = array(
+        return array(
             array(true, 'This string contains foo bar', 'foo bar'),
             array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
             array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
@@ -405,26 +359,22 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', false, 'UTF-8'),
             array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßÅ˚', false, 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForSurround()
+    public function surroundProvider()
     {
-        $testData = array(
+        return array(
             array('__foobar__', 'foobar', '__'),
             array('test', 'test', ''),
             array('**', '', '*'),
             array('¬fòô bàř¬', 'fòô bàř', '¬'),
             array('ßå∆˚ test ßå∆˚', ' test ', 'ßå∆˚')
         );
-
-        return $testData;
     }
 
-    public function stringsForInsert()
+    public function insertProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'oo bar', 'f', 0),
             array('foo bar', 'f bar', 'oo', 1),
             array('f bar', 'f bar', 'oo', 20),
@@ -433,13 +383,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'f bàř', 'òô', 1, 'UTF-8'),
             array('fòô bàř', 'fòô bà', 'ř', 6, 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForTruncate()
+    public function truncateProvider()
     {
-        $testData = array(
+        return array(
             array('Test foo bar', 'Test foo bar', 12),
             array('Test foo ba', 'Test foo bar', 11),
             array('Test foo', 'Test foo bar', 8),
@@ -463,13 +411,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('Teϰϰ', 'Test fòô bàř', 4, 'ϰϰ', 'UTF-8'),
             array('What are your pl...', 'What are your plans today?', 19, '...')
         );
-
-        return $testData;
     }
 
-    public function stringsForSafeTruncate()
+    public function safeTruncateProvider()
     {
-        $testData = array(
+        return array(
             array('Test foo bar', 'Test foo bar', 12),
             array('Test foo', 'Test foo bar', 11),
             array('Test foo', 'Test foo bar', 8),
@@ -493,37 +439,31 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('ϰϰ', 'Test fòô bàř', 4, 'ϰϰ', 'UTF-8'),
             array('What are your plans...', 'What are your plans today?', 22, '...')
         );
-
-        return $testData;
     }
 
-    public function stringsForReverse()
+    public function reverseProvider()
     {
-        $testData = array(
+        return array(
             array('', ''),
             array('raboof', 'foobar'),
             array('řàbôòf', 'fòôbàř', 'UTF-8'),
             array('řàb ôòf', 'fòô bàř', 'UTF-8'),
             array('∂∆ ˚åß', 'ßå˚ ∆∂', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForShuffle()
+    public function shuffleProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar'),
             array('∂∆ ˚åß', 'UTF-8'),
             array('å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForTrim()
+    public function trimProvider()
     {
-        $testData = array(
+        return array(
             array('foo   bar', '  foo   bar  '),
             array('foo bar', ' foo bar'),
             array('foo bar', 'foo bar '),
@@ -533,13 +473,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'fòô bàř '),
             array('fòô bàř', "\n\t fòô bàř \n\t")
         );
-
-        return $testData;
     }
 
-    public function stringsForLongestCommonPrefix()
+    public function longestCommonPrefixProvider()
     {
-        $testData = array(
+        return array(
             array('foo', 'foobar', 'foo bar'),
             array('foo bar', 'foo bar', 'foo bar'),
             array('f', 'foo bar', 'far boo'),
@@ -551,13 +489,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('', 'toy car', 'fòô bar', 'UTF-8'),
             array('', 'fòô bar', '', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForLongestCommonSuffix()
+    public function longestCommonSuffixProvider()
     {
-        $testData = array(
+        return array(
             array('bar', 'foobar', 'foo bar'),
             array('foo bar', 'foo bar', 'foo bar'),
             array('ar', 'foo bar', 'boo far'),
@@ -569,13 +505,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('', 'toy car', 'fòô bàř', 'UTF-8'),
             array('', 'fòô bàř', '', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForLongestCommonSubstring()
+    public function longestCommonSubstringProvider()
     {
-        $testData = array(
+        return array(
             array('foo', 'foobar', 'foo bar'),
             array('foo bar', 'foo bar', 'foo bar'),
             array('oo ', 'foo bar', 'boo far'),
@@ -587,25 +521,21 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(' ', 'toy car', 'fòô bàř', 'UTF-8'),
             array('', 'fòô bàř', '', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForLength()
+    public function lengthProvider()
     {
-        $testData = array(
+        return array(
             array(11, '  foo bar  '),
             array(1, 'f'),
             array(0, ''),
             array(7, 'fòô bàř', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForSubstr()
+    public function substrProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'foo bar', 0),
             array('bar', 'foo bar', 4),
             array('bar', 'foo bar', 4, null),
@@ -616,13 +546,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('ô b', 'fòô bàř', 2, 3, 'UTF-8'),
             array('', 'fòô bàř', 4, 0, 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForAt()
+    public function atProvider()
     {
-        $testData = array(
+        return array(
             array('f', 'foo bar', 0),
             array('o', 'foo bar', 1),
             array('r', 'foo bar', 6),
@@ -632,13 +560,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('ř', 'fòô bàř', 6, 'UTF-8'),
             array('', 'fòô bàř', 7, 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForFirst()
+    public function firstProvider()
     {
-        $testData = array(
+        return array(
             array('', 'foo bar', -5),
             array('', 'foo bar', 0),
             array('f', 'foo bar', 1),
@@ -652,13 +578,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'fòô bàř', 7, 'UTF-8'),
             array('fòô bàř', 'fòô bàř', 8, 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForLast()
+    public function lastProvider()
     {
-        $testData = array(
+        return array(
             array('', 'foo bar', -5),
             array('', 'foo bar', 0),
             array('r', 'foo bar', 1),
@@ -672,13 +596,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'fòô bàř', 7, 'UTF-8'),
             array('fòô bàř', 'fòô bàř', 8, 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForEnsureLeft()
+    public function ensureLeftProvider()
     {
-        $testData = array(
+        return array(
             array('foobar', 'foobar', 'f'),
             array('foobar', 'foobar', 'foo'),
             array('foo/foobar', 'foobar', 'foo/'),
@@ -690,13 +612,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('http://fòôbàř', 'fòôbàř', 'http://', 'UTF-8'),
             array('http://fòôbàř', 'http://fòôbàř', 'http://', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForEnsureRight()
+    public function ensureRightProvider()
     {
-        $testData = array(
+        return array(
             array('foobar', 'foobar', 'r'),
             array('foobar', 'foobar', 'bar'),
             array('foobar/bar', 'foobar', '/bar'),
@@ -708,13 +628,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòôbàř.com/', 'fòôbàř', '.com/', 'UTF-8'),
             array('fòôbàř.com/', 'fòôbàř.com/', '.com/', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForRemoveLeft()
+    public function removeLeftProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'foo bar', ''),
             array('oo bar', 'foo bar', 'f'),
             array('bar', 'foo bar', 'foo '),
@@ -726,13 +644,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'fòô bàř', 'òô', 'UTF-8'),
             array('fòô bàř', 'fòô bàř', 'òô bàř', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForRemoveRight()
+    public function removeRightProvider()
     {
-        $testData = array(
+        return array(
             array('foo bar', 'foo bar', ''),
             array('foo ba', 'foo bar', 'r'),
             array('foo', 'foo bar', ' bar'),
@@ -744,13 +660,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', 'fòô bàř', 'bà', 'UTF-8'),
             array('fòô bàř', 'fòô bàř', 'fòô bà', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForIsAlpha()
+    public function isAlphaProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, 'foobar'),
             array(false, 'foo bar'),
@@ -762,13 +676,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'ҠѨњ¨ˆфгШ', 'UTF-8'),
             array(true, '丹尼爾', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForIsAlphanumeric()
+    public function isAlphanumericProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, 'foobar1'),
             array(false, 'foo bar'),
@@ -783,13 +695,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(true, 'دانيال1', 'UTF-8'),
             array(false, 'دانيال1 ', 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForIsBlank()
+    public function isBlankProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, ' '),
             array(true, "\n\t "),
@@ -803,13 +713,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, '　z', 'UTF-8'),
             array(false, '　1', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForIsJson()
+    public function isJsonProvider()
     {
-        $testData = array(
+        return array(
             array(false, ''),
             array(false, '123'),
             array(true, '{"foo": "bar"}'),
@@ -825,13 +733,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(true, '["fòô"]', 'UTF-8'),
             array(false, '{"fòô": "bàř"]', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForIsLowerCase()
+    public function isLowerCaseProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, 'foobar'),
             array(false, 'foo bar'),
@@ -841,13 +747,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'fòô bàř', 'UTF-8'),
             array(false, 'fòôbÀŘ', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForIsSerialized()
+    public function isSerializedProvider()
     {
-        $testData = array(
+        return array(
             array(false, ''),
             array(true, 'a:1:{s:3:"foo";s:3:"bar";}'),
             array(false, 'a:1:{s:3:"foo";s:3:"bar"}'),
@@ -856,13 +760,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'a:1:{s:5:"fòô";s:5:"bàř"}', 'UTF-8'),
             array(true, serialize(array('fòô' => 'bár')), 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForIsUpperCase()
+    public function isUpperCaseProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, 'FOOBAR'),
             array(false, 'FOO BAR'),
@@ -872,13 +774,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'FÒÔ BÀŘ', 'UTF-8'),
             array(false, 'FÒÔBàř', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForIsHexadecimal()
+    public function isHexadecimalProvider()
     {
-        $testData = array(
+        return array(
             array(true, ''),
             array(true, 'abcdef'),
             array(true, 'ABCDEF'),
@@ -893,13 +793,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, '0123456789x', 'UTF-8'),
             array(false, 'ABCDEFx', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForCount()
+    public function countProvider()
     {
-        $testData = array(
+        return array(
             array(0, '', 'foo'),
             array(0, 'foo', 'bar'),
             array(1, 'foo bar', 'foo'),
@@ -916,13 +814,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(2, 'fôòô bàř', 'Ô', false, 'UTF-8'),
             array(2, 'συγγραφέας', 'Σ', false, 'UTF-8')
         );
-
-        return $testData;
     }
 
-    public function stringsForReplace()
+    public function replaceProvider()
     {
-        $testData = array(
+        return array(
             array('', '', '', ''),
             array('foo', '', '', 'foo'),
             array('foo', '\s', '\s', 'foo'),
@@ -938,13 +834,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('far bàř', 'fòô bàř', 'fòô', 'far', 'UTF-8'),
             array('bàř bàř', 'fòô bàř fòô bàř', 'fòô ', '', 'UTF-8'),
         );
-
-        return $testData;
     }
 
-    public function stringsForRegexReplace()
+    public function regexReplaceProvider()
     {
-        $testData = array(
+        return array(
             array('', '', '', ''),
             array('bar', 'foo', 'f[o]+', 'bar'),
             array('bar', 'foo bar', 'f[O]+\s', '', 'i'),
@@ -953,7 +847,5 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('bàř', 'fòô ', 'f[òô]+\s', 'bàř', 'msr', 'UTF-8'),
             array('fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr', 'UTF-8')
         );
-
-        return $testData;
     }
 }
