@@ -5,6 +5,7 @@
         "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
         "helpers", "utils", "utf"
     ],
+    "homepage": "https://github.com/danielstjules/Stringy",
     "license": "MIT",
     "authors": [
         {
