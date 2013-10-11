@@ -1,3 +1,8 @@
+### 1.2.1 (2013-10-11)
+
+  * Cleaned up tests
+  * Added homepage to composer.json
+
 ### 1.2.0 (2013-09-15)
 
   * Fixed pad's use of InvalidArgumentException
