@@ -33,7 +33,7 @@ class Stringy
      */
     public static function create($str, $encoding = null)
     {
-        return new self($str, $encoding);
+        return new static($str, $encoding);
     }
 
     /**
