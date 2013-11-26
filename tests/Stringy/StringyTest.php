@@ -312,10 +312,10 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider slugifyProvider()
      */
-    public function testSlugify($expected, $str)
+    public function testSlugify($expected, $str, $replacement = '-')
     {
         $stringy = S::create($str);
-        $result = $stringy->slugify();
+        $result = $stringy->slugify($replacement);
         $this->assertInstanceOf('Stringy\Stringy', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);

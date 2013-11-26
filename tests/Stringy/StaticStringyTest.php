@@ -245,9 +245,9 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider slugifyProvider()
      */
-    public function testSlugify($expected, $str)
+    public function testSlugify($expected, $str, $replacement = '-')
     {
-        $result = S::slugify($str);
+        $result = S::slugify($str, $replacement);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
