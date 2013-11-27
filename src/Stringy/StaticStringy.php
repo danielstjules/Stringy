@@ -326,14 +326,16 @@ class StaticStringy
      * Converts the string into an URL slug. This includes replacing non-ASCII
      * characters with their closest ASCII equivalents, removing non-alphanumeric
      * and non-ASCII characters, and replacing whitespace with dashes. The string
-     * is also converted to lowercase.
+     * is also converted to lowercase. If defined, whitespace is replaced with
+     * $replacement instead of dashes.
      *
-     * @param   string  $str  Text to transform into an URL slug
+     * @param   string  $str          Text to transform into an URL slug
+     * @param   string  $replacement  The string to replace whitespace with
      * @return  string  The corresponding URL slug
      */
-    public static function slugify($str)
+    public static function slugify($str, $replacement = '-')
     {
-        return Stringy::create($str)->slugify()->str;
+        return Stringy::create($str)->slugify($replacement)->str;
     }
 
     /**
