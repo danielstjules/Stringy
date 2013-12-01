@@ -1,4 +1,4 @@
-# Stringy
+![Stringy](http://danielstjules.com/stringy/logo.png)
 
 A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Compatible with PHP 5.3+. Inspired by underscore.string.js.
 
