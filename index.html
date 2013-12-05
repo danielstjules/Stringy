@@ -4,43 +4,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Stringy by danielstjules</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-
+    <div class="wrapper">
       <header>
         <h1>Stringy</h1>
         <p>A PHP string manipulation library with multibyte support</p>
+
+        <p class="view"><a href="https://github.com/danielstjules/Stringy">View the Project on GitHub <small>danielstjules/Stringy</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/danielstjules/Stringy/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/danielstjules/Stringy/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/danielstjules/Stringy">View On <strong>GitHub</strong></a></li>
+        </ul>
       </header>
-
-      <div id="banner">
-        <span id="logo"></span>
-
-        <a href="https://github.com/danielstjules/Stringy" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/danielstjules/Stringy/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/danielstjules/Stringy/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
       <section>
-        <h1>
-<a name="stringy" class="anchor" href="#stringy"><span class="octicon octicon-link"></span></a>Stringy</h1>
+        <p><img src="http://danielstjules.com/stringy/logo.png" alt="Stringy"></p>
 
 <p>A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 
@@ -695,14 +683,15 @@ exceeding the desired length.</p>
 <h4>
 <a name="slugify" class="anchor" href="#slugify"><span class="octicon octicon-link"></span></a>slugify</h4>
 
-<p>$stringy-&gt;slugify()</p>
+<p>$stringy-&gt;slugify([ string $replacement = '-' ])</p>
 
-<p>S::slugify(string $str)</p>
+<p>S::slugify(string $str [, string $replacement = '-' ])</p>
 
 <p>Converts the string into an URL slug. This includes replacing non-ASCII
 characters with their closest ASCII equivalents, removing non-alphanumeric
-and non-ASCII characters, and replacing whitespace with dashes. The string
-is also converted to lowercase.</p>
+and non-ASCII characters, and replacing whitespace with $replacement.
+The replacement defaults to a single dash, and the string is also
+converted to lowercase.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">slugify</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">slugify</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">);</span>  <span class="c1">// 'using-strings-like-foo-bar'</span>
@@ -949,11 +938,11 @@ and underscores, and removes spaces, dashes, underscores.</p>
 <p>Released under the MIT License - see <code>LICENSE.txt</code> for details.</p>
       </section>
       <footer>
-        <p>Project maintained by <a href="https://github.com/danielstjules">danielstjules</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+        <p>This project is maintained by <a href="https://github.com/danielstjules">danielstjules</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     
   </body>
 </html>
