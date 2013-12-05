@@ -1,3 +1,8 @@
+### 1.2.2 (2013-12-04)
+
+  * Updated create function to use late static binding
+  * Added optional $replacement param to slugify
+
 ### 1.2.1 (2013-10-11)
 
   * Cleaned up tests
