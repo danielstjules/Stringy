@@ -503,7 +503,7 @@ string used for padding is a space, and the default type (one of 'left',
 $padType isn't one of those 3 values.
 
 ```php
-S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left',);
+S::create('fòô bàř', 'UTF-8')->pad( 10, '¬ø', 'left');
 S::pad('fòô bàř', 10, '¬ø', 'left', 'UTF-8');  // '¬ø¬fòô bàř'
 ```
 
