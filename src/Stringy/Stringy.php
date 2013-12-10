@@ -226,7 +226,8 @@ class Stringy
                 if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
                 } else {
-                    return (string) (new Stringy($match[0], $encoding))->upperCaseFirst();
+                    $stringy = new Stringy($match[0], $encoding);
+                    return (string) $stringy->upperCaseFirst();
                 }
             },
             $buffer
