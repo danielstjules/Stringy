@@ -15,6 +15,35 @@ class StringyTestCase extends CommonTest
         $this->assertEquals('UTF-8', $stringy->encoding);
     }
 
+    public function testToString()
+    {
+        // Correct work for primitives
+        $this->assertSame('', (string) new S(null));
+        $this->assertSame('', (string) new S(false));
+        $this->assertSame('1', (string) new S(true));
+        $this->assertSame('-9', (string) new S(-9));
+        $this->assertSame('1.18', (string) new S(1.18));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testToStringArray()
+    {
+        (string) new S(array());
+        $this->fail('Expecting exception on receiving array as constructor argument');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testToStringResource()
+    {
+        (string) new S(fopen('php://stdout', 'w'));
+        $this->fail('Expecting exception on receiving array as constructor argument');
+    }
+
+
     public function testCreate()
     {
         $stringy = S::create('foo bar', 'UTF-8');
