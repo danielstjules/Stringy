@@ -15,10 +15,21 @@ class Stringy
      *
      * @param  string  $str       String to modify
      * @param  string  $encoding  The character encoding
+     *
+     * @throws \InvalidArgumentException if array or resource passed to constructor instead of string
      */
     public function __construct($str, $encoding = null)
     {
-        $this->str = $str;
+        if (is_array($str)) {
+            throw new \InvalidArgumentException(
+                'Expecting string, array given'
+            );
+        } else if (is_resource($str)) {
+            throw new \InvalidArgumentException(
+                'Expecting string, resource given'
+            );
+        }
+        $this->str = (string) $str;
         $this->encoding = $encoding ?: mb_internal_encoding();
     }
 
