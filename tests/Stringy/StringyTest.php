@@ -23,6 +23,7 @@ class StringyTestCase extends CommonTest
         $this->assertSame('1', (string) new S(true));
         $this->assertSame('-9', (string) new S(-9));
         $this->assertSame('1.18', (string) new S(1.18));
+        $this->assertSame(' string  ', (string) new S(' string  '));
     }
 
     /**
@@ -40,7 +41,7 @@ class StringyTestCase extends CommonTest
     public function testToStringResource()
     {
         (string) new S(fopen('php://stdout', 'w'));
-        $this->fail('Expecting exception on receiving array as constructor argument');
+        $this->fail('Expecting exception on receiving resource as constructor argument');
     }
 
 
