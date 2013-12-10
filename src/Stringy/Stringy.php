@@ -4,7 +4,10 @@ namespace Stringy;
 
 class Stringy
 {
-    public $str;
+    /**
+     * @var string
+     */
+    private $str;
 
     public $encoding;
 
