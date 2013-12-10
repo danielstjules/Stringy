@@ -217,21 +217,22 @@ class Stringy
      */
     public function titleize($ignore = null)
     {
-        $stringy = self::create($this->str, $this->encoding)->trim();
-        $encoding = $stringy->encoding;
+        $buffer = $this->trim();
+        $encoding = $this->encoding;
 
-        $stringy->str = preg_replace_callback(
+        $buffer = preg_replace_callback(
             '/([\S]+)/u',
-            function ($match) use (&$encoding, &$ignore, &$stringy) {
-                if ($ignore && in_array($match[0], $ignore))
+            function ($match) use (&$encoding, &$ignore) {
+                if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
-                $stringy->str = $match[0];
-                return $stringy->upperCaseFirst();
+                } else {
+                    return (string) (new Stringy($match[0], $encoding))->upperCaseFirst();
+                }
             },
-            $stringy->str
+            $buffer
         );
 
-        return $stringy;
+        return new Stringy($buffer, $encoding);
     }
 
     /**
