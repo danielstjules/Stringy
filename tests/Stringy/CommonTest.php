@@ -331,6 +331,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('numbers-1234', 'numbers 1234'),
             array('perevirka-ryadka', 'перевірка рядка'),
             array('bukvar-s-bukvoy-y', 'букварь с буквой ы'),
+            array('barzi-i-yarostni', 'бързи и яростни'),
             array('foo:bar:baz', 'Foo bar baz', ':'),
             array('a_string_with_underscores', 'A_string with_underscores', '_')
         );
