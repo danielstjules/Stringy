@@ -13,7 +13,7 @@ class StaticStringy
      */
     public static function upperCaseFirst($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->upperCaseFirst()->str;
+        return (string) Stringy::create($str, $encoding)->upperCaseFirst();
     }
 
     /**
@@ -25,7 +25,7 @@ class StaticStringy
      */
     public static function lowerCaseFirst($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->lowerCaseFirst()->str;
+        return (string) Stringy::create($str, $encoding)->lowerCaseFirst();
     }
 
     /**
@@ -39,7 +39,7 @@ class StaticStringy
      */
     public static function camelize($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->camelize()->str;
+        return (string) Stringy::create($str, $encoding)->camelize();
     }
 
     /**
@@ -53,7 +53,7 @@ class StaticStringy
      */
     public static function upperCamelize($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->upperCamelize()->str;
+        return (string) Stringy::create($str, $encoding)->upperCamelize();
     }
 
     /**
@@ -67,7 +67,7 @@ class StaticStringy
      */
     public static function dasherize($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->dasherize()->str;
+        return (string) Stringy::create($str, $encoding)->dasherize();
     }
 
     /**
@@ -82,7 +82,7 @@ class StaticStringy
      */
     public static function underscored($str, $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)->underscored()->str;
+        return (string) Stringy::create($str, $encoding)->underscored();
     }
 
     /**
@@ -94,7 +94,7 @@ class StaticStringy
      */
     public static function swapCase($str, $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)->swapCase()->str;
+        return (string) Stringy::create($str, $encoding)->swapCase();
     }
 
     /**
@@ -110,7 +110,7 @@ class StaticStringy
      */
     public static function titleize($str, $ignore = null, $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)->titleize($ignore)->str;
+        return (string) Stringy::create($str, $encoding)->titleize($ignore);
     }
 
     /**
@@ -123,7 +123,7 @@ class StaticStringy
      */
     public static function humanize($str, $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)->humanize()->str;
+        return (string) Stringy::create($str, $encoding)->humanize();
     }
 
     /**
@@ -136,7 +136,7 @@ class StaticStringy
      */
     public static function tidy($str)
     {
-        return $result = Stringy::create($str)->tidy()->str;
+        return (string) Stringy::create($str)->tidy();
     }
 
     /**
@@ -150,7 +150,7 @@ class StaticStringy
      */
     public static function collapseWhitespace($str, $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)->collapseWhitespace()->str;
+        return (string) Stringy::create($str, $encoding)->collapseWhitespace();
     }
 
     /**
@@ -162,7 +162,7 @@ class StaticStringy
      */
     public static function toAscii($str)
     {
-        return $result = Stringy::create($str)->toAscii()->str;
+        return (string) Stringy::create($str)->toAscii();
     }
 
     /**
@@ -178,14 +178,14 @@ class StaticStringy
      * @param   string  $padType   One of 'left', 'right', 'both'
      * @param   string  $encoding  The character encoding
      * @return  string  The padded string
-     * @throws  InvalidArgumentException If $padType isn't one of 'right',
+     * @throws  \InvalidArgumentException If $padType isn't one of 'right',
      *          'left' or 'both'
      */
     public static function pad($str, $length, $padStr = ' ', $padType = 'right',
                                $encoding = null)
     {
-        return $result = Stringy::create($str, $encoding)
-                                ->pad($length, $padStr, $padType)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->pad($length, $padStr, $padType);
     }
 
     /**
@@ -200,7 +200,7 @@ class StaticStringy
      */
     public static function padLeft($str, $length, $padStr = ' ', $encoding = null)
     {
-        return Stringy::create($str, $encoding)->padLeft($length, $padStr)->str;
+        return (string) Stringy::create($str, $encoding)->padLeft($length, $padStr);
     }
 
     /**
@@ -215,7 +215,7 @@ class StaticStringy
      */
     public static function padRight($str, $length, $padStr = ' ', $encoding = null)
     {
-        return Stringy::create($str, $encoding)->padRight($length, $padStr)->str;
+        return (string) Stringy::create($str, $encoding)->padRight($length, $padStr);
     }
 
     /**
@@ -230,7 +230,7 @@ class StaticStringy
      */
     public static function padBoth($str, $length, $padStr = ' ', $encoding = null)
     {
-        return Stringy::create($str, $encoding)->padBoth($length, $padStr)->str;
+        return (string) Stringy::create($str, $encoding)->padBoth($length, $padStr);
     }
 
     /**
@@ -279,7 +279,7 @@ class StaticStringy
      */
     public static function toSpaces($str, $tabLength = 4)
     {
-        return Stringy::create($str)->toSpaces($tabLength)->str;
+        return (string) Stringy::create($str)->toSpaces($tabLength);
     }
 
     /**
@@ -293,7 +293,7 @@ class StaticStringy
      */
     public static function toTabs($str, $tabLength = 4)
     {
-        return Stringy::create($str)->toTabs($tabLength)->str;
+        return (string) Stringy::create($str)->toTabs($tabLength);
     }
 
     /**
@@ -306,7 +306,7 @@ class StaticStringy
      */
     public static function toLowerCase($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->toLowerCase()->str;
+        return (string) Stringy::create($str, $encoding)->toLowerCase();
     }
 
     /**
@@ -319,7 +319,7 @@ class StaticStringy
      */
     public static function toUpperCase($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->toUpperCase()->str;
+        return (string) Stringy::create($str, $encoding)->toUpperCase();
     }
 
     /**
@@ -335,7 +335,7 @@ class StaticStringy
      */
     public static function slugify($str, $replacement = '-')
     {
-        return Stringy::create($str)->slugify($replacement)->str;
+        return (string) Stringy::create($str)->slugify($replacement);
     }
 
     /**
@@ -364,7 +364,7 @@ class StaticStringy
      */
     public static function surround($str, $substring)
     {
-        return Stringy::create($str)->surround($substring)->str;
+        return (string) Stringy::create($str)->surround($substring);
     }
 
     /**
@@ -378,7 +378,7 @@ class StaticStringy
      */
     public static function insert($str, $substring, $index, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->insert($substring, $index)->str;
+        return (string) Stringy::create($str, $encoding)->insert($substring, $index);
     }
 
     /**
@@ -395,8 +395,8 @@ class StaticStringy
     public static function truncate($str, $length, $substring = '',
                                     $encoding = null)
     {
-        return Stringy::create($str, $encoding)
-                      ->truncate($length, $substring)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->truncate($length, $substring);
     }
 
     /**
@@ -414,8 +414,8 @@ class StaticStringy
     public static function safeTruncate($str, $length, $substring = '',
                                     $encoding = null)
     {
-        return Stringy::create($str, $encoding)
-                      ->safeTruncate($length, $substring)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->safeTruncate($length, $substring);
     }
 
     /**
@@ -427,7 +427,7 @@ class StaticStringy
      */
     public static function reverse($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->reverse()->str;
+        return (string) Stringy::create($str, $encoding)->reverse();
     }
 
     /**
@@ -440,7 +440,7 @@ class StaticStringy
      */
     public static function shuffle($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->shuffle()->str;
+        return (string) Stringy::create($str, $encoding)->shuffle();
     }
 
     /**
@@ -464,8 +464,8 @@ class StaticStringy
      */
     public static function longestCommonPrefix($str, $otherStr, $encoding = null)
     {
-        return Stringy::create($str, $encoding)
-                      ->longestCommonPrefix($otherStr)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->longestCommonPrefix($otherStr);
     }
 
     /**
@@ -478,8 +478,8 @@ class StaticStringy
      */
     public static function longestCommonSuffix($str, $otherStr, $encoding = null)
     {
-        return Stringy::create($str, $encoding)
-                      ->longestCommonSuffix($otherStr)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->longestCommonSuffix($otherStr);
     }
 
     /**
@@ -494,8 +494,8 @@ class StaticStringy
     public static function longestCommonSubstring($str, $otherStr,
                                                   $encoding = null)
     {
-        return Stringy::create($str, $encoding)
-                      ->longestCommonSubstring($otherStr)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->longestCommonSubstring($otherStr);
     }
 
     /**
@@ -523,7 +523,7 @@ class StaticStringy
      */
     public static function substr($str, $start, $length = null, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->substr($start, $length)->str;
+        return (string) Stringy::create($str, $encoding)->substr($start, $length);
     }
 
     /**
@@ -536,7 +536,7 @@ class StaticStringy
      */
     public static function at($str, $index, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->at($index)->str;
+        return (string) Stringy::create($str, $encoding)->at($index);
     }
 
     /**
@@ -549,7 +549,7 @@ class StaticStringy
      */
     public static function first($str, $n, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->first($n)->str;
+        return (string) Stringy::create($str, $encoding)->first($n);
     }
 
     /**
@@ -562,7 +562,7 @@ class StaticStringy
      */
     public static function last($str, $n, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->last($n)->str;
+        return (string) Stringy::create($str, $encoding)->last($n);
     }
 
     /**
@@ -576,7 +576,7 @@ class StaticStringy
      */
     public static function ensureLeft($str, $substring, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->ensureLeft($substring)->str;
+        return (string) Stringy::create($str, $encoding)->ensureLeft($substring);
     }
 
     /**
@@ -590,7 +590,7 @@ class StaticStringy
      */
     public static function ensureRight($str, $substring, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->ensureRight($substring)->str;
+        return (string) Stringy::create($str, $encoding)->ensureRight($substring);
     }
 
     /**
@@ -603,7 +603,7 @@ class StaticStringy
      */
     public static function removeLeft($str, $substring, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->removeLeft($substring)->str;
+        return (string) Stringy::create($str, $encoding)->removeLeft($substring);
     }
 
     /**
@@ -616,7 +616,7 @@ class StaticStringy
      */
     public static function removeRight($str, $substring, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->removeRight($substring)->str;
+        return (string) Stringy::create($str, $encoding)->removeRight($substring);
     }
 
     /**
@@ -744,7 +744,7 @@ class StaticStringy
      */
     public static function replace($str, $search, $replacement, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->replace($search, $replacement)->str;
+        return (string) Stringy::create($str, $encoding)->replace($search, $replacement);
     }
 
     /**
@@ -763,7 +763,11 @@ class StaticStringy
     public static function regexReplace($str, $pattern, $replacement,
                                         $options = 'msr', $encoding = null)
     {
-        return Stringy::create($str, $encoding)->regexReplace($pattern,
-            $replacement, $options, $encoding)->str;
+        return (string) Stringy::create($str, $encoding)
+                               ->regexReplace(
+                                    $pattern,
+                                    $replacement,
+                                    $options,
+                                    $encoding);
     }
 }

@@ -4,7 +4,10 @@ namespace Stringy;
 
 class Stringy
 {
-    public $str;
+    /**
+     * @var string
+     */
+    private $str;
 
     public $encoding;
 
@@ -15,10 +18,21 @@ class Stringy
      *
      * @param  string  $str       String to modify
      * @param  string  $encoding  The character encoding
+     *
+     * @throws \InvalidArgumentException if array or resource passed to constructor instead of string
      */
     public function __construct($str, $encoding = null)
     {
-        $this->str = $str;
+        if (is_array($str)) {
+            throw new \InvalidArgumentException(
+                'Expecting string, array given'
+            );
+        } else if (is_resource($str)) {
+            throw new \InvalidArgumentException(
+                'Expecting string, resource given'
+            );
+        }
+        $this->str = (string) $str;
         $this->encoding = $encoding ?: mb_internal_encoding();
     }
 
@@ -203,21 +217,23 @@ class Stringy
      */
     public function titleize($ignore = null)
     {
-        $stringy = self::create($this->str, $this->encoding)->trim();
-        $encoding = $stringy->encoding;
+        $buffer = $this->trim();
+        $encoding = $this->encoding;
 
-        $stringy->str = preg_replace_callback(
+        $buffer = preg_replace_callback(
             '/([\S]+)/u',
-            function ($match) use (&$encoding, &$ignore, &$stringy) {
-                if ($ignore && in_array($match[0], $ignore))
+            function ($match) use (&$encoding, &$ignore) {
+                if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
-                $stringy->str = $match[0];
-                return $stringy->upperCaseFirst();
+                } else {
+                    $stringy = new Stringy($match[0], $encoding);
+                    return (string) $stringy->upperCaseFirst();
+                }
             },
-            $stringy->str
+            $buffer
         );
 
-        return $stringy;
+        return new Stringy($buffer, $encoding);
     }
 
     /**
