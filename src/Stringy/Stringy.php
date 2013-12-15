@@ -4,46 +4,50 @@ namespace Stringy;
 
 class Stringy
 {
-    /**
-     * @var string
-     */
     private $str;
 
     public $encoding;
 
     /**
      * Initializes a Stringy object and assigns both str and encoding properties
-     * the supplied values. If $encoding is not specified, it defaults to
-     * mb_internal_encoding().
+     * the supplied values. $str is cast to a string prior to assignment, and if
+     * $encoding is not specified, it defaults to mb_internal_encoding(). Throws
+     * an InvalidArgumentException if the first argument is an array or object
+     * without a __toString method.
      *
-     * @param  string  $str       String to modify
-     * @param  string  $encoding  The character encoding
-     *
-     * @throws \InvalidArgumentException if array or resource passed to constructor instead of string
+     * @param   mixed   $str       Value to modify, after being cast to string
+     * @param   string  $encoding  The character encoding
+     * @throws  \InvalidArgumentException if an array or object without a
+     *          __toString method is passed as the first argument
      */
     public function __construct($str, $encoding = null)
     {
         if (is_array($str)) {
             throw new \InvalidArgumentException(
-                'Expecting string, array given'
+                'Passed value cannot be an array'
             );
-        } else if (is_resource($str)) {
+        } else if (is_object($str) && !method_exists($str, '__toString')) {
             throw new \InvalidArgumentException(
-                'Expecting string, resource given'
+                'Passed object must have a __toString method'
             );
         }
+
         $this->str = (string) $str;
         $this->encoding = $encoding ?: mb_internal_encoding();
     }
 
     /**
      * Creates a Stringy object and assigns both str and encoding properties
-     * the supplied values. If $encoding is not specified, it defaults to
-     * mb_internal_encoding(). It then returns the initialized object.
+     * the supplied values. $str is cast to a string prior to assignment, and if
+     * $encoding is not specified, it defaults to mb_internal_encoding(). It
+     * then returns the initialized object. Throws an InvalidArgumentException
+     * if the first argument is an array or object without a __toString method.
      *
-     * @param   string   $str       String to modify
+     * @param   mixed    $str       Value to modify, after being cast to string
      * @param   string   $encoding  The character encoding
      * @return  Stringy  A Stringy object
+     * @throws  \InvalidArgumentException if an array or object without a
+     *          __toString method is passed as the first argument
      */
     public static function create($str, $encoding = null)
     {

@@ -15,35 +15,44 @@ class StringyTestCase extends CommonTest
         $this->assertEquals('UTF-8', $stringy->encoding);
     }
 
-    public function testToString()
-    {
-        // Correct work for primitives
-        $this->assertSame('', (string) new S(null));
-        $this->assertSame('', (string) new S(false));
-        $this->assertSame('1', (string) new S(true));
-        $this->assertSame('-9', (string) new S(-9));
-        $this->assertSame('1.18', (string) new S(1.18));
-        $this->assertSame(' string  ', (string) new S(' string  '));
-    }
-
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testToStringArray()
+    public function testConstructWithArray()
     {
         (string) new S(array());
-        $this->fail('Expecting exception on receiving array as constructor argument');
+        $this->fail('Expecting exception when the constructor is passed an array');
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testToStringResource()
+    public function testMissingToString()
     {
-        (string) new S(fopen('php://stdout', 'w'));
-        $this->fail('Expecting exception on receiving resource as constructor argument');
+        (string) new S(new stdClass());
+        $this->fail('Expecting exception when the constructor is passed an ' .
+                    'object without a __toString method');
     }
 
+    /**
+     * @dataProvider toStringProvider()
+     */
+    public function testToString($expected, $str)
+    {
+        $this->assertEquals($expected, (string) new S($str));
+    }
+
+    public function toStringProvider()
+    {
+        return array(
+            array('', null),
+            array('', false),
+            array('1', true),
+            array('-9', -9),
+            array('1.18', 1.18),
+            array(' string  ', ' string  ')
+        );
+    }
 
     public function testCreate()
     {

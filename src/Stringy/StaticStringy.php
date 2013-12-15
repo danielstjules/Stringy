@@ -763,11 +763,7 @@ class StaticStringy
     public static function regexReplace($str, $pattern, $replacement,
                                         $options = 'msr', $encoding = null)
     {
-        return (string) Stringy::create($str, $encoding)
-                               ->regexReplace(
-                                    $pattern,
-                                    $replacement,
-                                    $options,
-                                    $encoding);
+        return (string) Stringy::create($str, $encoding)->regexReplace($pattern,
+            $replacement, $options, $encoding);
     }
 }

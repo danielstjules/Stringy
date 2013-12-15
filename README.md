@@ -67,13 +67,15 @@ A PHP library with a variety of string manipulation functions with multibyte sup
 
 ## Requiring/Loading
 
-If you're using Composer to manage dependencies, you can include the following in your composer.json file:
+If you're using Composer to manage dependencies, you can include the following
+in your composer.json file:
 
     "require": {
         "danielstjules/stringy": "dev-master"
     }
 
-Then, after running `composer update` or `php composer.phar update`, you can load the class using Composer's autoloading:
+Then, after running `composer update` or `php composer.phar update`, you can
+load the class using Composer's autoloading:
 
 ```php
 require 'vendor/autoload.php';
@@ -106,9 +108,9 @@ use Stringy\Stringy as S;
 echo S::create('Fòô     Bàř', 'UTF-8')->collapseWhitespace()->swapCase();  // 'fÒÔ bÀŘ'
 ```
 
-`Stringy\Stringy` contains a __toString() method, which returns the current
-string when the object is used in a string context. Its $str property is also
-public, and can be accessed directly if required, ie: `S::create('foo')->str  // 'foo'`
+`Stringy\Stringy` has a __toString() method, which returns the current string
+when the object is used in a string context, ie:
+`(string) S::create('foo')  // 'foo'`
 
 Using the static wrapper, an alternative is the following:
 
@@ -120,8 +122,10 @@ echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ'
 
 ## Methods
 
-In the list below, any static method other than S::create refers to a
-method in `Stringy\StaticStringy`. For all others, they're found in `Stringy\Stringy`. Furthermore, all methods that return a Stringy object or string do not modify the original.
+In the list below, any static method other than S::create refers to a method in
+`Stringy\StaticStringy`. For all others, they're found in `Stringy\Stringy`.
+Furthermore, all methods that return a Stringy object or string do not modify
+the original.
 
 *Note: If `$encoding` is not given, it defaults to `mb_internal_encoding()`.*
 
@@ -200,11 +204,13 @@ S::count('Ο συγγραφέας είπε', 'α', 'UTF-8');  // 2
 
 #### create
 
-S::create(string $str, [, $encoding ])
+S::create(mixed $str, [, $encoding ])
 
 Creates a Stringy object and assigns both str and encoding properties
-the supplied values. If $encoding is not specified, it defaults to
-mb_internal_encoding(). It then returns the initialized object.
+the supplied values. $str is cast to a string prior to assignment, and if
+$encoding is not specified, it defaults to mb_internal_encoding(). It
+then returns the initialized object. Throws an InvalidArgumentException
+if the first argument is an array or object without a __toString method.
 
 ```php
 $stringy = S::create('fòô bàř', 'UTF-8');  // 'fòô bàř'
@@ -639,7 +645,8 @@ $stringy->shuffle()
 
 S::shuffle(string $str [, string $encoding ])
 
-A multibyte str_shuffle() function. It returns a string with its characters in random order.
+A multibyte str_shuffle() function. It returns a string with its characters in
+random order.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->shuffle();
