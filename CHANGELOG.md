@@ -1,3 +1,12 @@
+### 1.3.0 (2013-12-16)
+
+  * Additional Bulgarian support for toAscii
+  * str property made private
+  * Constructor casts first argument to string
+  * Constructor throws an InvalidArgumentException when given an array
+  * Constructor throws an InvalidArgumentException when given an object without
+    a __toString method
+
 ### 1.2.2 (2013-12-04)
 
   * Updated create function to use late static binding
