@@ -8,6 +8,19 @@ use Stringy\StaticStringy as S;
 class StaticStringyTestCase extends CommonTest
 {
     /**
+     * @dataProvider charsProvider()
+     */
+    public function testChars($expected, $str, $encoding = null)
+    {
+        $result = S::chars($str, $encoding);
+        $this->assertInternalType('array', $result);
+        foreach ($result as $char) {
+            $this->assertInternalType('string', $char);
+        }
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider upperCaseFirstProvider()
      */
     public function testUpperCaseFirst($expected, $str, $encoding = null)

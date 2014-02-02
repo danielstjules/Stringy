@@ -2,7 +2,7 @@
 
 namespace Stringy;
 
-class Stringy
+class Stringy implements \IteratorAggregate
 {
     private $str;
 
@@ -62,6 +62,34 @@ class Stringy
     public function __toString()
     {
         return $this->str;
+    }
+
+    /**
+     * Returns a new ArrayIterator, thus implementing the IteratorAggregate
+     * interface. The ArrayIterator's constructor is passed an array of chars
+     * in the multibyte string. This allows the use of foreach with instances
+     * of Stringy\Stringy.
+     *
+     * @return \ArrayIterator An iterator for the characters in the string
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->chars());
+    }
+
+    /**
+     * Returns an array consisting of the characters in the string.
+     *
+     * @return array An array of string chars
+     */
+    public function chars()
+    {
+        $chars = array();
+        for ($i = 0; $i < $this->length(); $i++) {
+            $chars[] = $this->at($i)->str;
+        }
+
+        return $chars;
     }
 
     /**

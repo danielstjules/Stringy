@@ -1,14 +1,18 @@
 ![Stringy](http://danielstjules.com/stringy/logo.png)
 
-A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Compatible with PHP 5.3+. Inspired by underscore.string.js.
+A PHP library with a variety of string manipulation functions with multibyte
+support. Offers both OO method chaining and a procedural-style static wrapper.
+Compatible with PHP 5.3+. Inspired by underscore.string.js.
 
 [![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
 
 * [Requiring/Loading](#requiringloading)
 * [OO and Procedural](#oo-and-procedural)
+* [Implemented Interfaces](#implemented-interfaces)
 * [Methods](#methods)
     * [at](#at)
     * [camelize](#camelize)
+    * [chars](#chars)
     * [collapseWhitespace](#collapsewhitespace)
     * [contains](#contains)
     * [count](#count)
@@ -120,6 +124,26 @@ $string = S::collapseWhitespace('Fòô     Bàř', 'UTF-8');
 echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ'
 ```
 
+## Implemented Interfaces
+
+`Stringy\Stringy` implements the IteratorAggregate interface. This allows you
+to use `foreach` with an instance of the class:
+
+``` php
+$stringy = S::create('Fòô Bàř', 'UTF-8');
+
+foreach ($stringy as $char) {
+    echo $char;
+}
+// 'Fòô Bàř'
+
+$array = array();
+foreach ($stringy as $pos => $char) {
+    $array[$pos] = $char;
+}
+// array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
+```
+
 ## Methods
 
 In the list below, any static method other than S::create refers to a method in
@@ -155,6 +179,19 @@ underscores, and removes spaces, dashes, underscores.
 ```php
 S::create('Camel-Case')->camelize();
 S::camelize('Camel-Case');  // 'camelCase'
+```
+
+#### chars
+
+$stringy->chars();
+
+S::chars(string $str [, string $encoding ])
+
+Returns an array consisting of the characters in the string.
+
+```php
+S::create('Fòô Bàř', 'UTF-8')->chars();
+S::chars('Fòô Bàř', 'UTF-8');  // array(F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
 ```
 
 #### collapseWhitespace

@@ -2,6 +2,15 @@
 
 abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
+    public function charsProvider()
+    {
+        return array(
+            array(array(), ''),
+            array(array('T', 'e', 's', 't'), 'Test'),
+            array(array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř'), 'Fòô Bàř', 'UTF-8')
+        );
+    }
+
     public function upperCaseFirstProvider()
     {
         return array(

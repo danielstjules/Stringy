@@ -70,6 +70,37 @@ class StringyTestCase extends CommonTest
         $this->assertEquals('FÒÔ bÀŘ', $result);
     }
 
+    public function testGetIterator()
+    {
+        $stringy = S::create('Fòô Bàř', 'UTF-8');
+
+        $valResult = [];
+        foreach ($stringy as $char) {
+            $valResult[] = $char;
+        }
+
+        $keyValResult = [];
+        foreach ($stringy as $pos => $char) {
+            $keyValResult[$pos] = $char;
+        }
+
+        $this->assertEquals(array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř'), $valResult);
+        $this->assertEquals(array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř'), $keyValResult);
+    }
+
+    /**
+     * @dataProvider charsProvider()
+     */
+    public function testChars($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->chars();
+        $this->assertInternalType('array', $result);
+        foreach ($result as $char) {
+            $this->assertInternalType('string', $char);
+        }
+        $this->assertEquals($expected, $result);
+    }
+
     /**
      * @dataProvider upperCaseFirstProvider()
      */

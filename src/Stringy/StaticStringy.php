@@ -5,6 +5,18 @@ namespace Stringy;
 class StaticStringy
 {
     /**
+     * Returns an array consisting of the characters in the string.
+     *
+     * @param   string  $str       String for which to return the chars
+     * @param   string  $encoding  The character encoding
+     * @return  array   An array of string chars
+     */
+    public static function chars($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->chars();
+    }
+
+    /**
      * Converts the first character of the supplied string to upper case.
      *
      * @param   string  $str       String to modify
