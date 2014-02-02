@@ -74,12 +74,12 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create('Fòô Bàř', 'UTF-8');
 
-        $valResult = [];
+        $valResult = array();
         foreach ($stringy as $char) {
             $valResult[] = $char;
         }
 
-        $keyValResult = [];
+        $keyValResult = array();
         foreach ($stringy as $pos => $char) {
             $keyValResult[$pos] = $char;
         }

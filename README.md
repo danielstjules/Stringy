@@ -126,7 +126,7 @@ echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ'
 
 ## Implemented Interfaces
 
-`Stringy\Stringy` implements the IteratorAggregate interface. This allows you
+`Stringy\Stringy` implements the `IteratorAggregate` interface. This allows you
 to use `foreach` with an instance of the class:
 
 ``` php
