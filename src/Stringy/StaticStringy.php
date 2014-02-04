@@ -739,10 +739,11 @@ class StaticStringy
      * @param   string   $encoding       The character encoding
      * @return  int      The number of $substring occurrences
      */
-    public static function count($str, $substring, $caseSensitive = true,
-                                 $encoding = null)
+    public static function countSubstr($str, $substring, $caseSensitive = true,
+                                       $encoding = null)
     {
-        return Stringy::create($str, $encoding)->count($substring, $caseSensitive);
+        return Stringy::create($str, $encoding)
+                      ->countSubstr($substring, $caseSensitive);
     }
 
     /**

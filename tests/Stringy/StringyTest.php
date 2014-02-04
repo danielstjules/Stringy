@@ -70,6 +70,13 @@ class StringyTestCase extends CommonTest
         $this->assertEquals('FÒÔ bÀŘ', $result);
     }
 
+    public function testCount()
+    {
+        $stringy = S::create('Fòô', 'UTF-8');
+        $this->assertEquals(3, $stringy->count());
+        $this->assertEquals(3, count($stringy));
+    }
+
     public function testGetIterator()
     {
         $stringy = S::create('Fòô Bàř', 'UTF-8');
@@ -721,13 +728,13 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider countProvider()
+     * @dataProvider countSubstrProvider()
      */
-    public function testCount($expected, $str, $substring, $caseSensitive = true,
-                              $encoding = null)
+    public function testCountSubstr($expected, $str, $substring,
+                                        $caseSensitive = true, $encoding = null)
     {
         $stringy = S::create($str, $encoding);
-        $result = $stringy->count($substring, $caseSensitive);
+        $result = $stringy->countSubstr($substring, $caseSensitive);
         $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);

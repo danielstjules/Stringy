@@ -807,7 +807,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function countProvider()
+    public function countSubstrProvider()
     {
         return array(
             array(0, '', 'foo'),

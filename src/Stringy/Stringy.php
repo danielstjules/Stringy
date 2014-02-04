@@ -2,7 +2,7 @@
 
 namespace Stringy;
 
-class Stringy implements \IteratorAggregate
+class Stringy implements \Countable, \IteratorAggregate
 {
     private $str;
 
@@ -62,6 +62,16 @@ class Stringy implements \IteratorAggregate
     public function __toString()
     {
         return $this->str;
+    }
+
+    /**
+     * Returns the length of the string, implementing the countable interface.
+     *
+     * @return int The number of characters in the string, given the encoding
+     */
+    public function count()
+    {
+        return $this->length();
     }
 
     /**
@@ -1161,16 +1171,16 @@ class Stringy implements \IteratorAggregate
      * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
      * @return  int     The number of $substring occurrences
      */
-    public function count($substring, $caseSensitive = true)
+    public function countSubstr($substring, $caseSensitive = true)
     {
-        if (!$caseSensitive) {
-            $str = mb_strtoupper($this->str, $this->encoding);
-            $substring = mb_strtoupper($substring, $this->encoding);
-
-            return mb_substr_count($str, $substring, $this->encoding);
+        if ($caseSensitive) {
+            return mb_substr_count($this->str, $substring, $this->encoding);
         }
 
-        return mb_substr_count($this->str, $substring, $this->encoding);
+        $str = mb_strtoupper($this->str, $this->encoding);
+        $substring = mb_strtoupper($substring, $this->encoding);
+
+        return mb_substr_count($str, $substring, $this->encoding);
     }
 
     /**

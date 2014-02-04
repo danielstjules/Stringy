@@ -565,12 +565,12 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider countProvider()
+     * @dataProvider countSubstrProvider()
      */
-    public function testCount($expected, $str, $substring, $caseSensitive = true,
-                              $encoding = null)
+    public function testCountSubstr($expected, $str, $substring,
+                                    $caseSensitive = true, $encoding = null)
     {
-        $result = S::count($str, $substring, $caseSensitive, $encoding);
+        $result = S::countSubstr($str, $substring, $caseSensitive, $encoding);
         $this->assertInternalType('int', $result);
         $this->assertEquals($expected, $result);
     }

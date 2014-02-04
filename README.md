@@ -15,7 +15,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.
     * [chars](#chars)
     * [collapseWhitespace](#collapsewhitespace)
     * [contains](#contains)
-    * [count](#count)
+    * [countSubstr](#countsubstr)
     * [create](#create)
     * [dasherize](#dasherize)
     * [endsWith](#endswith)
@@ -144,6 +144,14 @@ foreach ($stringy as $pos => $char) {
 // array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
 ```
 
+It also implements the `countable` interface, enabling the use of `count()` to
+retrieve the number of characters in the string, given the encoding:
+
+``` php
+$stringy = S::create('Fòô', 'UTF-8');
+count($stringy);  // 3
+```
+
 ## Methods
 
 In the list below, any static method other than S::create refers to a method in
@@ -157,7 +165,7 @@ the original.
 
 $stringy->at(int $index)
 
-S::substr(int $index [, string $encoding ])
+S::at(int $index [, string $encoding ])
 
 Returns the character of the string at $index, with indexes starting at 0.
 
@@ -224,19 +232,19 @@ S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφ
 S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8');  // true
 ```
 
-#### count
+#### countSubstr
 
-$stringy->count(string $substring [, boolean $caseSensitive = true ])
+$stringy->countSubstr(string $substring [, boolean $caseSensitive = true ])
 
-S::count(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
+S::countSubstr(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])
 
 Returns the number of occurrences of $substring in the given string.
 By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::create('Ο συγγραφέας είπε', 'UTF-8')->count('α');
-S::count('Ο συγγραφέας είπε', 'α', 'UTF-8');  // 2
+S::create('Ο συγγραφέας είπε', 'UTF-8')->countSubstr('α');
+S::countSubstr('Ο συγγραφέας είπε', 'α', 'UTF-8');  // 2
 ```
 
 #### create
