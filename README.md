@@ -157,6 +157,9 @@ $stringy = S::create('Bàř', 'UTF-8');
 echo $stringy[2];     // 'ř'
 echo $stringy[-2];    // 'à'
 isset($stringy[-4]);  // false
+
+$stringy[3];          // OutOfBoundsException
+$stringy[2] = 'a';    // Exception
 ```
 
 ## Methods
