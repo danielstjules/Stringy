@@ -2,7 +2,7 @@
 
 namespace Stringy;
 
-class Stringy implements \Countable, \IteratorAggregate
+class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     private $str;
 
@@ -67,7 +67,7 @@ class Stringy implements \Countable, \IteratorAggregate
     /**
      * Returns the length of the string, implementing the countable interface.
      *
-     * @return int The number of characters in the string, given the encoding
+     * @return  int  The number of characters in the string, given the encoding
      */
     public function count()
     {
@@ -80,11 +80,86 @@ class Stringy implements \Countable, \IteratorAggregate
      * in the multibyte string. This allows the use of foreach with instances
      * of Stringy\Stringy.
      *
-     * @return \ArrayIterator An iterator for the characters in the string
+     * @return  \ArrayIterator  An iterator for the characters in the string
      */
     public function getIterator()
     {
         return new \ArrayIterator($this->chars());
+    }
+
+    /**
+     * Returns whether or not a character exists at the given index. Implements
+     * part of the ArrayAccess interface.
+     *
+     * @param   mixed    $offset  The index to check
+     * @return  boolean  Whether or not the index exists
+     */
+    public function offsetExists($offset) {
+        return ($this->length() > (int) $offset);
+    }
+
+    /**
+     * Returns the character at the given index, otherwise null if none exists.
+     * Implements part of the ArrayAccess interface.
+     *
+     * @param   mixed  $offset  The index from which to retrieve the char
+     * @return  mixed  The character if it exists, else null
+     */
+    public function offsetGet($offset) {
+        $offset = (int) $offset;
+        if ($this->length() <= $offset) {
+            return null;
+        }
+
+        return $this->at($offset);
+    }
+
+    /**
+     * Sets the character at the given offset. The value to set is truncated
+     * to a single character. If the offset is null or exceeds the length
+     * of the string, it is appended to the end. Implements part of the
+     * ArrayAccess interface.
+     *
+     * @param  mixed  $offset  The index at which to replace the character
+     * @param  mixed  $value   Value to set
+     */
+    public function offsetSet($offset, $value) {
+        $length = $this->length();
+        if ($offset === null || $length <= (int) $offset) {
+            $this->str .= $value;
+
+            return;
+        }
+
+        $offset = (int) $offset;
+        $value = mb_substr($value, 0, 1, $this->encoding);
+        $start = mb_substr($this->str, 0, $offset, $this->encoding);
+        $end = mb_substr($this->str, $offset + 1, $length, $this->encoding);
+
+        $this->str = $start . $value . $end;
+    }
+
+    /**
+     * Deletes character at the given offset. Implements part of the
+     * ArrayAccess interface.
+     *
+     * @param  mixed  $offset  The index at which to delete the character
+     */
+    public function offsetUnset($offset) {
+        $length = $this->length();
+        if ($offset === null || $length <= (int) $offset) {
+            return;
+        }
+
+        $offset = (int) $offset;
+        if ($offset === $length - 1) {
+            $this->str = $this->substr(0, $length - 1)->str;
+        }
+
+        $start = mb_substr($this->str, 0, $offset, $this->encoding);
+        $end = mb_substr($this->str, $offset + 1, $length, $this->encoding);
+
+        $this->str = $start . $end;
     }
 
     /**

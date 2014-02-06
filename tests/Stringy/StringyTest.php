@@ -95,6 +95,81 @@ class StringyTestCase extends CommonTest
         $this->assertEquals(array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř'), $keyValResult);
     }
 
+    public function testOffsetExists()
+    {
+        $stringy = S::create('fòô', 'UTF-8');
+
+        $this->assertTrue($stringy->offsetExists(0));
+        $this->assertTrue($stringy->offsetExists(2));
+        $this->assertFalse($stringy->offsetExists(3));
+
+        $this->assertTrue(isset($stringy[2]));
+        $this->assertFalse(isset($stringy[3]));
+    }
+
+    public function testOffsetGet()
+    {
+        $stringy = S::create('fòô', 'UTF-8');
+
+        $this->assertEquals('f', $stringy->offsetGet(0));
+        $this->assertEquals('ô', $stringy->offsetGet(2));
+        $this->assertEquals(null, $stringy->offsetGet(3));
+
+        $this->assertEquals('ô', $stringy[2]);
+        $this->assertEquals(null, $stringy[3]);
+    }
+
+    /**
+     * @dataProvider offsetSetProvider()
+     */
+    public function testOffsetSet($expected, $offset, $value)
+    {
+        $stringy = S::create('fòô', 'UTF-8');
+        $stringy->offsetSet($offset, $value);
+        $this->assertEquals($expected, (string) $stringy);
+
+        $stringy = S::create('fòô', 'UTF-8');
+        $stringy[$offset] = $value;
+        $this->assertEquals($expected, (string) $stringy);
+    }
+
+    public function offsetSetProvider()
+    {
+        return array(
+            array('ôòô', 0, 'ô'),
+            array('fòo', 2, 'o'),
+            array('fòôô', 3, 'ô'),
+            array('fòôô', 8, 'ô'),
+            array('fòôô', null, 'ô'),
+            array('fô', 1, ''),
+            array('fbô', 1, 'bar')
+        );
+    }
+
+    /**
+     * @dataProvider offsetUnsetProvider()
+     */
+    public function testOffsetUnset($expected, $offset)
+    {
+        $stringy = S::create('fòô', 'UTF-8');
+        $stringy->offsetUnset($offset);
+        $this->assertEquals($expected, (string) $stringy);
+
+        $stringy = S::create('fòô', 'UTF-8');
+        unset($stringy[$offset]);
+        $this->assertEquals($expected, (string) $stringy);
+    }
+
+    public function offsetUnsetProvider()
+    {
+        return array(
+            array('òô', 0),
+            array('fô', 1),
+            array('fò', 2),
+            array('fòô', 3)
+        );
+    }
+
     /**
      * @dataProvider charsProvider()
      */

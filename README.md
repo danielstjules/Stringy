@@ -144,7 +144,7 @@ foreach ($stringy as $pos => $char) {
 // array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
 ```
 
-It also implements the `countable` interface, enabling the use of `count()` to
+It also implements the `Countable` interface, enabling the use of `count()` to
 retrieve the number of characters in the string, given the encoding:
 
 ``` php
