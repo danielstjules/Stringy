@@ -126,30 +126,37 @@ echo S::swapCase($string, 'UTF-8');  // 'fÒÔ bÀŘ'
 
 ## Implemented Interfaces
 
-`Stringy\Stringy` implements the `IteratorAggregate` interface. This allows you
-to use `foreach` with an instance of the class:
+`Stringy\Stringy` implements the `IteratorAggregate` interface, meaning that
+`foreach` can be used with an instance of the class:
 
 ``` php
 $stringy = S::create('Fòô Bàř', 'UTF-8');
-
 foreach ($stringy as $char) {
     echo $char;
 }
 // 'Fòô Bàř'
-
-$array = array();
-foreach ($stringy as $pos => $char) {
-    $array[$pos] = $char;
-}
-// array('F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
 ```
 
-It also implements the `Countable` interface, enabling the use of `count()` to
-retrieve the number of characters in the string, given the encoding:
+It implements the `Countable` interface, enabling the use of `count()` to
+retrieve the number of characters in the string:
 
 ``` php
 $stringy = S::create('Fòô', 'UTF-8');
 count($stringy);  // 3
+```
+
+Furthermore, the `ArrayAccess` interface has been implemented. As a result,
+`isset()` can be used to check if a character at a specific index exists. And
+since `Stringy\Stringy` is immutable, any call to `offsetSet` or `offsetUnset`
+will throw an exception. `offsetGet` has been implemented, however, and accepts
+both positive and negative indexes. Invalid indexes result in an
+`OutOfBoundsException`.
+
+``` php
+$stringy = S::create('Bàř', 'UTF-8');
+echo $stringy[2];     // 'ř'
+echo $stringy[-2];    // 'à'
+isset($stringy[-4]);  // false
 ```
 
 ## Methods

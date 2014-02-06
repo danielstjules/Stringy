@@ -88,78 +88,69 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns whether or not a character exists at the given index. Implements
+     * Returns whether or not a character exists at an index. Offsets may be
+     * negative to count from the last character in the string. Implements
      * part of the ArrayAccess interface.
      *
      * @param   mixed    $offset  The index to check
      * @return  boolean  Whether or not the index exists
      */
     public function offsetExists($offset) {
-        return ($this->length() > (int) $offset);
+        $length = $this->length();
+        $offset = (int) $offset;
+
+        if ($offset >= 0) {
+            return ($length > $offset);
+        }
+
+        return ($length >= abs($offset));
     }
 
     /**
-     * Returns the character at the given index, otherwise null if none exists.
-     * Implements part of the ArrayAccess interface.
+     * Returns the character at the given index. Offsets may be negative to
+     * count from the last character in the string. Implements part of the
+     * ArrayAccess interface, and throws an OutOfBoundsException if the index
+     * does not exist.
      *
-     * @param   mixed  $offset  The index from which to retrieve the char
-     * @return  mixed  The character if it exists, else null
+     * @param   mixed  $offset        The index from which to retrieve the char
+     * @return  mixed                 The character at the specified index
+     * @throws  \OutOfBoundsException If the positive or negative offset does
+     *                                not exist
      */
     public function offsetGet($offset) {
         $offset = (int) $offset;
-        if ($this->length() <= $offset) {
-            return null;
+        $length = $this->length();
+
+        if (($offset >= 0 && $length <= $offset) || $length < abs($offset)) {
+            throw new \OutOfBoundsException('No character exists at the index');
         }
 
-        return $this->at($offset);
+        return mb_substr($this->str, $offset, 1, $this->encoding);
     }
 
     /**
-     * Sets the character at the given offset. The value to set is truncated
-     * to a single character. If the offset is null or exceeds the length
-     * of the string, it is appended to the end. Implements part of the
-     * ArrayAccess interface.
+     * Implements part of the ArrayAccess interface, but throws an exception
+     * when called. This maintains the immutability of Stringy objects.
      *
-     * @param  mixed  $offset  The index at which to replace the character
-     * @param  mixed  $value   Value to set
+     * @param   mixed      $offset  The index of the character
+     * @param   mixed      $value   Value to set
+     * @throws  \Exception When called
      */
     public function offsetSet($offset, $value) {
-        $length = $this->length();
-        if ($offset === null || $length <= (int) $offset) {
-            $this->str .= $value;
-
-            return;
-        }
-
-        $offset = (int) $offset;
-        $value = mb_substr($value, 0, 1, $this->encoding);
-        $start = mb_substr($this->str, 0, $offset, $this->encoding);
-        $end = mb_substr($this->str, $offset + 1, $length, $this->encoding);
-
-        $this->str = $start . $value . $end;
+        // Stringy is immutable, cannot directly set char
+        throw new \Exception('Stringy object is immutable, cannot modify char');
     }
 
     /**
-     * Deletes character at the given offset. Implements part of the
-     * ArrayAccess interface.
+     * Implements part of the ArrayAccess interface, but throws an exception
+     * when called. This maintains the immutability of Stringy objects.
      *
-     * @param  mixed  $offset  The index at which to delete the character
+     * @param   mixed      $offset  The index of the character
+     * @throws  \Exception When called
      */
     public function offsetUnset($offset) {
-        $length = $this->length();
-        if ($offset === null || $length <= (int) $offset) {
-            return;
-        }
-
-        $offset = (int) $offset;
-        if ($offset === $length - 1) {
-            $this->str = $this->substr(0, $length - 1)->str;
-        }
-
-        $start = mb_substr($this->str, 0, $offset, $this->encoding);
-        $end = mb_substr($this->str, $offset + 1, $length, $this->encoding);
-
-        $this->str = $start . $end;
+        // Don't allow directly modifying the string
+        throw new \Exception('Stringy object is immutable, cannot unset char');
     }
 
     /**
