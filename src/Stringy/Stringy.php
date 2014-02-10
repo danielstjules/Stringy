@@ -15,10 +15,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * an InvalidArgumentException if the first argument is an array or object
      * without a __toString method.
      *
-     * @param   mixed   $str       Value to modify, after being cast to string
-     * @param   string  $encoding  The character encoding
-     * @throws  \InvalidArgumentException if an array or object without a
-     *          __toString method is passed as the first argument
+     * @param  mixed  $str      Value to modify, after being cast to string
+     * @param  string $encoding The character encoding
+     * @throws \InvalidArgumentException if an array or object without a
+     *         __toString method is passed as the first argument
      */
     public function __construct($str, $encoding = null)
     {
@@ -43,11 +43,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * then returns the initialized object. Throws an InvalidArgumentException
      * if the first argument is an array or object without a __toString method.
      *
-     * @param   mixed    $str       Value to modify, after being cast to string
-     * @param   string   $encoding  The character encoding
-     * @return  Stringy  A Stringy object
-     * @throws  \InvalidArgumentException if an array or object without a
-     *          __toString method is passed as the first argument
+     * @param  mixed   $str      Value to modify, after being cast to string
+     * @param  string  $encoding The character encoding
+     * @return Stringy A Stringy object
+     * @throws \InvalidArgumentException if an array or object without a
+     *         __toString method is passed as the first argument
      */
     public static function create($str, $encoding = null)
     {
@@ -57,7 +57,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the value in $str.
      *
-     * @return  string  The current value of the $str property
+     * @return string The current value of the $str property
      */
     public function __toString()
     {
@@ -67,7 +67,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the length of the string, implementing the countable interface.
      *
-     * @return  int  The number of characters in the string, given the encoding
+     * @return int The number of characters in the string, given the encoding
      */
     public function count()
     {
@@ -77,10 +77,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns a new ArrayIterator, thus implementing the IteratorAggregate
      * interface. The ArrayIterator's constructor is passed an array of chars
-     * in the multibyte string. This allows the use of foreach with instances
+     * in the multibyte string. This enables the use of foreach with instances
      * of Stringy\Stringy.
      *
-     * @return  \ArrayIterator  An iterator for the characters in the string
+     * @return \ArrayIterator An iterator for the characters in the string
      */
     public function getIterator()
     {
@@ -92,8 +92,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * negative to count from the last character in the string. Implements
      * part of the ArrayAccess interface.
      *
-     * @param   mixed    $offset  The index to check
-     * @return  boolean  Whether or not the index exists
+     * @param  mixed   $offset The index to check
+     * @return boolean Whether or not the index exists
      */
     public function offsetExists($offset) {
         $length = $this->length();
@@ -112,10 +112,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * ArrayAccess interface, and throws an OutOfBoundsException if the index
      * does not exist.
      *
-     * @param   mixed  $offset        The index from which to retrieve the char
-     * @return  mixed                 The character at the specified index
-     * @throws  \OutOfBoundsException If the positive or negative offset does
-     *                                not exist
+     * @param  mixed $offset         The index from which to retrieve the char
+     * @return mixed                 The character at the specified index
+     * @throws \OutOfBoundsException If the positive or negative offset does
+     *                               not exist
      */
     public function offsetGet($offset) {
         $offset = (int) $offset;
@@ -132,9 +132,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Implements part of the ArrayAccess interface, but throws an exception
      * when called. This maintains the immutability of Stringy objects.
      *
-     * @param   mixed      $offset  The index of the character
-     * @param   mixed      $value   Value to set
-     * @throws  \Exception When called
+     * @param  mixed      $offset The index of the character
+     * @param  mixed      $value  Value to set
+     * @throws \Exception When called
      */
     public function offsetSet($offset, $value) {
         // Stringy is immutable, cannot directly set char
@@ -145,8 +145,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Implements part of the ArrayAccess interface, but throws an exception
      * when called. This maintains the immutability of Stringy objects.
      *
-     * @param   mixed      $offset  The index of the character
-     * @throws  \Exception When called
+     * @param  mixed      $offset The index of the character
+     * @throws \Exception When called
      */
     public function offsetUnset($offset) {
         // Don't allow directly modifying the string
@@ -171,7 +171,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Converts the first character of the supplied string to upper case.
      *
-     * @return  Stringy  Object with the first character of $str being upper case
+     * @return Stringy Object with the first character of $str being upper case
      */
     public function upperCaseFirst()
     {
@@ -187,7 +187,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Converts the first character of the string to lower case.
      *
-     * @return  Stringy  Object with the first character of $str being lower case
+     * @return Stringy Object with the first character of $str being lower case
      */
     public function lowerCaseFirst()
     {
@@ -201,11 +201,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a camelCase version of the supplied string. Trims surrounding
-     * spaces, capitalizes letters following digits, spaces, dashes and
-     * underscores, and removes spaces, dashes, underscores.
+     * Returns a camelCase version of the string. Trims surrounding spaces,
+     * capitalizes letters following digits, spaces, dashes and underscores,
+     * and removes spaces, dashes, as well as underscores.
      *
-     * @return  Stringy  Object with $str in camelCase
+     * @return Stringy Object with $str in camelCase
      */
     public function camelize()
     {
@@ -236,7 +236,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * surrounding spaces, capitalizes letters following digits, spaces, dashes
      * and underscores, and removes spaces, dashes, underscores.
      *
-     * @return  Stringy  Object with $str in UpperCamelCase
+     * @return Stringy Object with $str in UpperCamelCase
      */
     public function upperCamelize()
     {
@@ -248,7 +248,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * inserted before uppercase characters (with the exception of the first
      * character of the string), and in place of spaces as well as underscores.
      *
-     * @return  Stringy  Object with a dasherized $str
+     * @return Stringy Object with a dasherized $str
      */
     public function dasherize()
     {
@@ -272,7 +272,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * of the first character of the string), and in place of spaces as well as
      * dashes.
      *
-     * @return  Stringy  Object with an underscored $str
+     * @return Stringy Object with an underscored $str
      */
     public function underscored()
     {
@@ -293,7 +293,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns a case swapped version of the string.
      *
-     * @return  Stringy  Object whose $str has each character's case swapped
+     * @return Stringy Object whose $str has each character's case swapped
      */
     public function swapCase()
     {
@@ -316,12 +316,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Returns a trimmed string with the first letter of each word capitalized.
-     * Ignores the case of other letters, allowing for the use of acronyms.
-     * Also accepts an array, $ignore, allowing you to list words not to be
-     * capitalized.
+     * Ignores the case of other letters, preserving any acronyms. Also accepts
+     * an array, $ignore, allowing you to list words not to be capitalized.
      *
-     * @param   array    $ignore  An array of words not to capitalize
-     * @return  Stringy  Object with a titleized $str
+     * @param  array   $ignore An array of words not to capitalize
+     * @return Stringy Object with a titleized $str
      */
     public function titleize($ignore = null)
     {
@@ -348,7 +347,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Capitalizes the first word of the string, replaces underscores with
      * spaces, and strips '_id'.
      *
-     * @return  Stringy  Object with a humanized $str
+     * @return Stringy Object with a humanized $str
      */
     public function humanize()
     {
@@ -365,7 +364,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Windows-1252 (commonly used in Word documents) replaced by their ASCII
      * equivalents.
      *
-     * @return  Stringy  Object whose $str has those characters removed
+     * @return Stringy Object whose $str has those characters removed
      */
     public function tidy()
     {
@@ -384,7 +383,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * single space. This includes tabs and newline characters, as well as
      * multibyte whitespace such as the thin space and ideographic space.
      *
-     * @return  Stringy  Object with a trimmed $str and condensed whitespace
+     * @return Stringy Object with a trimmed $str and condensed whitespace
      */
     public function collapseWhitespace()
     {
@@ -402,7 +401,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns an ASCII version of the string. A set of non-ASCII characters are
      * replaced with their closest ASCII counterparts, and the rest are removed.
      *
-     * @return  Stringy  Object whose $str contains only ASCII characters
+     * @return Stringy Object whose $str contains only ASCII characters
      */
     public function toAscii()
     {
@@ -494,17 +493,17 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Pads the string to a given length with $padStr. If length is less than
-     * or equal to the length of the string, no padding takes places. The default
-     * string used for padding is a space, and the default type (one of 'left',
-     * 'right', 'both') is 'right'. Throws an InvalidArgumentException if
-     * $padType isn't one of those 3 values.
+     * or equal to the length of the string, no padding takes places. The
+     * default string used for padding is a space, and the default type (one of
+     * 'left', 'right', 'both') is 'right'. Throws an InvalidArgumentException
+     * if $padType isn't one of those 3 values.
      *
-     * @param   int      $length   Desired string length after padding
-     * @param   string   $padStr   String used to pad, defaults to space
-     * @param   string   $padType  One of 'left', 'right', 'both'
-     * @return  Stringy  Object with a padded $str
-     * @throws  InvalidArgumentException If $padType isn't one of 'right',
-     *          'left' or 'both'
+     * @param  int     $length  Desired string length after padding
+     * @param  string  $padStr  String used to pad, defaults to space
+     * @param  string  $padType One of 'left', 'right', 'both'
+     * @return Stringy Object with a padded $str
+     * @throws InvalidArgumentException If $padType isn't one of 'right',
+     *         'left' or 'both'
      */
     public function pad($length, $padStr = ' ', $padType = 'right')
     {
@@ -555,9 +554,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns a new string of a given length such that the beginning of the
      * string is padded. Alias for pad() with a $padType of 'left'.
      *
-     * @param   int      $length  Desired string length after padding
-     * @param   string   $padStr  String used to pad, defaults to space
-     * @return  Stringy  Object with a left padded $str
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy Object with a left padded $str
      */
     public function padLeft($length, $padStr = ' ')
     {
@@ -565,12 +564,12 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a new string of a given length such that the end of the string is
-     * padded. Alias for pad() with a $padType of 'right'.
+     * Returns a new string of a given length such that the end of the string
+     * is padded. Alias for pad() with a $padType of 'right'.
      *
-     * @param   int      $length  Desired string length after padding
-     * @param   string   $padStr  String used to pad, defaults to space
-     * @return  Stringy  Object with a right padded $str
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy Object with a right padded $str
      */
     public function padRight($length, $padStr = ' ')
     {
@@ -578,12 +577,12 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a new string of a given length such that both sides of the string
+     * Returns a new string of a given length such that both sides of the
      * string are padded. Alias for pad() with a $padType of 'both'.
      *
-     * @param   int      $length  Desired string length after padding
-     * @param   string   $padStr  String used to pad, defaults to space
-     * @return  Stringy  The padded string
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy The padded string
      */
     public function padBoth($length, $padStr = ' ')
     {
@@ -591,13 +590,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string begins with $substring, false otherwise.
-     * By default, the comparison is case-sensitive, but can be made insensitive
+     * Returns true if the string begins with $substring, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param   string  $substring      The substring to look for
-     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
-     * @return  bool    Whether or not $str starts with $substring
+     * @param  string $substring     The substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str starts with $substring
      */
     public function startsWith($substring, $caseSensitive = true)
     {
@@ -614,12 +613,12 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Returns true if the string ends with $substring, false otherwise. By
-     * default, the comparison is case-sensitive, but can be made insensitive by
-     * setting $caseSensitive to false.
+     * default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
      *
-     * @param   string  $substring      The substring to look for
-     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
-     * @return  bool    Whether or not $str ends with $substring
+     * @param  string $substring     The substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str ends with $substring
      */
     public function endsWith($substring, $caseSensitive = true)
     {
@@ -641,8 +640,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Converts each tab in the string to some number of spaces, as defined by
      * $tabLength. By default, each tab is converted to 4 consecutive spaces.
      *
-     * @param   int      $tabLength  Number of spaces to replace each tab with
-     * @return  Stringy  Object whose $str has had tabs switched to spaces
+     * @param  int     $tabLength Number of spaces to replace each tab with
+     * @return Stringy Object whose $str has had tabs switched to spaces
      */
     public function toSpaces($tabLength = 4)
     {
@@ -655,12 +654,12 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Converts each occurrence of some consecutive number of spaces, as defined
-     * by $tabLength, to a tab. By default, each 4 consecutive spaces are
-     * converted to a tab.
+     * Converts each occurrence of some consecutive number of spaces, as
+     * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
+     * are converted to a tab.
      *
-     * @param   int      $tabLength  Number of spaces to replace with a tab
-     * @return  Stringy  Object whose $str has had spaces switched to tabs
+     * @param  int     $tabLength Number of spaces to replace with a tab
+     * @return Stringy Object whose $str has had spaces switched to tabs
      */
     public function toTabs($tabLength = 4)
     {
@@ -676,7 +675,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Converts all characters in the string to lowercase. An alias for PHP's
      * mb_strtolower().
      *
-     * @return  Stringy  Object with all characters of $str being lowercase
+     * @return Stringy Object with all characters of $str being lowercase
      */
     public function toLowerCase()
     {
@@ -689,7 +688,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Converts all characters in the string to uppercase. An alias for PHP's
      * mb_strtoupper().
      *
-     * @return  Stringy  Object with all characters of $str being uppercase
+     * @return Stringy Object with all characters of $str being uppercase
      */
     public function toUpperCase()
     {
@@ -700,13 +699,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Converts the string into an URL slug. This includes replacing non-ASCII
-     * characters with their closest ASCII equivalents, removing non-alphanumeric
-     * and non-ASCII characters, and replacing whitespace with $replacement.
-     * The replacement defaults to a single dash, and the string is also
-     * converted to lowercase.
+     * characters with their closest ASCII equivalents, removing remaining
+     * non-ASCII and non-alphanumeric characters, and replacing whitespace with
+     * $replacement. The replacement defaults to a single dash, and the string
+     * is also converted to lowercase.
      *
-     * @param   string   $replacement  The string used to replace whitespace
-     * @return  Stringy  Object whose $str has been converted to an URL slug
+     * @param  string  $replacement The string used to replace whitespace
+     * @return Stringy Object whose $str has been converted to an URL slug
      */
     public function slugify($replacement = '-')
     {
@@ -724,9 +723,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * the comparison is case-sensitive, but can be made insensitive by setting
      * $caseSensitive to false.
      *
-     * @param   string  $needle         Substring to look for
-     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
-     * @return  bool    Whether or not $str contains $needle
+     * @param  string $needle        Substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str contains $needle
      */
     public function contains($needle, $caseSensitive = true)
     {
@@ -739,8 +738,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Surrounds $str with the given substring.
      *
-     * @param   string   $substring  The substring to add to both sides
-     * @return  Stringy  Object whose $str had the substring prepended and appended
+     * @param  string  $substring The substring to add to both sides
+     * @return Stringy Object whose $str had the substring prepended and appended
      */
     public function surround($substring)
     {
@@ -753,9 +752,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Inserts $substring into the string at the $index provided.
      *
-     * @param   string   $substring  String to be inserted
-     * @param   int      $index      The index at which to insert the substring
-     * @return  Stringy  Object with the resulting $str after the insertion
+     * @param  string  $substring String to be inserted
+     * @param  int     $index     The index at which to insert the substring
+     * @return Stringy Object with the resulting $str after the insertion
      */
     public function insert($substring, $index)
     {
@@ -776,9 +775,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * truncating occurs, the string is further truncated so that the substring
      * may be appended without exceeding the desired length.
      *
-     * @param   int      $length     Desired length of the truncated string
-     * @param   string   $substring  The substring to append if it can fit
-     * @return  Stringy  Object with the resulting $str after truncating
+     * @param  int     $length    Desired length of the truncated string
+     * @param  string  $substring The substring to append if it can fit
+     * @return Stringy Object with the resulting $str after truncating
      */
     public function truncate($length, $substring = '')
     {
@@ -798,13 +797,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Truncates the string to a given length, while ensuring that it does not
-     * chop words. If $substring is provided, and truncating occurs, the string
-     * is further truncated so that the substring may be appended without
+     * split words. If $substring is provided, and truncating occurs, the
+     * string is further truncated so that the substring may be appended without
      * exceeding the desired length.
      *
-     * @param   int      $length     Desired length of the truncated string
-     * @param   string   $substring  The substring to append if it can fit
-     * @return  Stringy  Object with the resulting $str after truncating
+     * @param  int     $length    Desired length of the truncated string
+     * @param  string  $substring The substring to append if it can fit
+     * @return Stringy Object with the resulting $str after truncating
      */
     public function safeTruncate($length, $substring = '')
     {
@@ -833,7 +832,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns a reversed string. A multibyte version of strrev().
      *
-     * @return  Stringy  Object with a reversed $str
+     * @return Stringy Object with a reversed $str
      */
     public function reverse()
     {
@@ -852,7 +851,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * A multibyte str_shuffle() function. It returns a string with its
      * characters in random order.
      *
-     * @return  Stringy  Object with a shuffled $str
+     * @return Stringy Object with a shuffled $str
      */
     public function shuffle()
     {
@@ -870,7 +869,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the trimmed string. An alias for PHP's trim() function.
      *
-     * @return  Stringy  Object with a trimmed $str
+     * @return Stringy Object with a trimmed $str
      */
     public function trim()
     {
@@ -880,8 +879,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the longest common prefix between the string and $otherStr.
      *
-     * @param   string   $otherStr  Second string for comparison
-     * @return  Stringy  Object with its $str being the longest common prefix
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common prefix
      */
     public function longestCommonPrefix($otherStr)
     {
@@ -904,8 +903,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the longest common suffix between the string and $otherStr.
      *
-     * @param   string   $otherStr  Second string for comparison
-     * @return  Stringy  Object with its $str being the longest common suffix
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common suffix
      */
     public function longestCommonSuffix($otherStr)
     {
@@ -929,8 +928,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns the longest common substring between the string and $otherStr.
      * In the case of ties, it returns that which occurs first.
      *
-     * @param   string   $otherStr  Second string for comparison
-     * @return  Stringy  Object with its $str being the longest common substring
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common substring
      */
     public function longestCommonSubstring($otherStr)
     {
@@ -975,7 +974,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the length of the string. An alias for PHP's mb_strlen() function.
      *
-     * @return  int  The number of characters in $str given the encoding
+     * @return int The number of characters in $str given the encoding
      */
     public function length()
     {
@@ -987,9 +986,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * It differs from the mb_substr() function in that providing a $length of
      * null will return the rest of the string, rather than an empty string.
      *
-     * @param   int      $start   Position of the first character to use
-     * @param   int      $length  Maximum number of characters used
-     * @return  Stringy  Object with its $str being the substring
+     * @param  int     $start  Position of the first character to use
+     * @param  int     $length Maximum number of characters used
+     * @return Stringy Object with its $str being the substring
      */
     public function substr($start, $length = null)
     {
@@ -1007,10 +1006,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the character of the string at $index, with indexes starting at 0.
+     * Returns the character at $index, with indexes starting at 0.
      *
-     * @param   int      $index  Position of the character
-     * @return  Stringy  The character at $index
+     * @param  int     $index Position of the character
+     * @return Stringy The character at $index
      */
     public function at($index)
     {
@@ -1020,8 +1019,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the first $n characters of the string.
      *
-     * @param   int  $n  Number of characters to retrieve from the start
-     * @return  Stringy  Object with its $str being the first $n chars
+     * @param  int     $n Number of characters to retrieve from the start
+     * @return Stringy Object with its $str being the first $n chars
      */
     public function first($n)
     {
@@ -1039,8 +1038,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the last $n characters of the string.
      *
-     * @param   int  $n  Number of characters to retrieve from the end
-     * @return  Stringy  Object with its $str being the last $n chars
+     * @param  int     $n Number of characters to retrieve from the end
+     * @return Stringy Object with its $str being the last $n chars
      */
     public function last($n)
     {
@@ -1059,8 +1058,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Ensures that the string begins with $substring. If it doesn't, it's
      * prepended.
      *
-     * @param   string   $substring  The substring to add if not present
-     * @return  Stringy  Object with its $str prefixed by the $substring
+     * @param  string  $substring The substring to add if not present
+     * @return Stringy Object with its $str prefixed by the $substring
      */
     public function ensureLeft($substring)
     {
@@ -1076,8 +1075,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Ensures that the string begins with $substring. If it doesn't, it's
      * appended.
      *
-     * @param   string   $substring  The substring to add if not present
-     * @return  Stringy  Object with its $str suffixed by the $substring
+     * @param  string  $substring The substring to add if not present
+     * @return Stringy Object with its $str suffixed by the $substring
      */
     public function ensureRight($substring)
     {
@@ -1090,10 +1089,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a new string with the prefix $substring removed, if it was present.
+     * Returns a new string with the prefix $substring removed, if present.
      *
-     * @param   string   $substring  The prefix to remove
-     * @return  Stringy  Object having a $str without the prefix $substring
+     * @param  string  $substring The prefix to remove
+     * @return Stringy Object having a $str without the prefix $substring
      */
     public function removeLeft($substring)
     {
@@ -1108,10 +1107,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a new string with the suffix $substring removed, if it was present.
+     * Returns a new string with the suffix $substring removed, if present.
      *
-     * @param   string   $substring  The suffix to remove
-     * @return  Stringy  Object having a $str without the suffix $substring
+     * @param  string  $substring The suffix to remove
+     * @return Stringy Object having a $str without the suffix $substring
      */
     public function removeRight($substring)
     {
@@ -1128,8 +1127,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns true if $str matches the supplied pattern, false otherwise.
      *
-     * @param   string  $pattern  Regex pattern to match against
-     * @return  bool    Whether or not $str matches the pattern
+     * @param  string $pattern Regex pattern to match against
+     * @return bool   Whether or not $str matches the pattern
      */
     private function matchesPattern($pattern)
     {
@@ -1143,9 +1142,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains only alphabetic chars, false otherwise.
+     * Returns true if the string contains only alphabetic chars, false
+     * otherwise.
      *
-     * @return  bool  Whether or not $str contains only alphabetic chars
+     * @return bool Whether or not $str contains only alphabetic chars
      */
     public function isAlpha()
     {
@@ -1156,7 +1156,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns true if the string contains only alphabetic and numeric chars,
      * false otherwise.
      *
-     * @return  bool  Whether or not $str contains only alphanumeric chars
+     * @return bool Whether or not $str contains only alphanumeric chars
      */
     public function isAlphanumeric()
     {
@@ -1164,9 +1164,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains only hexadecimal chars, false otherwise.
+     * Returns true if the string contains only hexadecimal chars, false
+     * otherwise.
      *
-     * @return  bool  Whether or not $str contains only hexadecimal chars
+     * @return bool Whether or not $str contains only hexadecimal chars
      */
     public function isHexadecimal()
     {
@@ -1174,9 +1175,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains only whitespace chars, false otherwise.
+     * Returns true if the string contains only whitespace chars, false
+     * otherwise.
      *
-     * @return  bool  Whether or not $str contains only whitespace characters
+     * @return bool Whether or not $str contains only whitespace characters
      */
     public function isBlank()
     {
@@ -1186,7 +1188,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns true if the string is JSON, false otherwise.
      *
-     * @return  bool  Whether or not $str is JSON
+     * @return bool Whether or not $str is JSON
      */
     public function isJson()
     {
@@ -1199,9 +1201,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
 
     /**
-     * Returns true if the string contains only lower case chars, false otherwise.
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
      *
-     * @return  bool  Whether or not $str contains only lower case characters
+     * @return bool Whether or not $str contains only lower case characters
      */
     public function isLowerCase()
     {
@@ -1209,9 +1212,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains only lower case chars, false otherwise.
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
      *
-     * @return  bool  Whether or not $str contains only lower case characters
+     * @return bool Whether or not $str contains only lower case characters
      */
     public function isUpperCase()
     {
@@ -1221,7 +1225,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns true if the string is serialized, false otherwise.
      *
-     * @return  bool  Whether or not $str is serialized
+     * @return bool Whether or not $str is serialized
      */
     public function isSerialized()
     {
@@ -1233,9 +1237,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * By default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param   string  $substring      The substring to search for
-     * @param   bool    $caseSensitive  Whether or not to enforce case-sensitivity
-     * @return  int     The number of $substring occurrences
+     * @param  string $substring     The substring to search for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return int    The number of $substring occurrences
      */
     public function countSubstr($substring, $caseSensitive = true)
     {
@@ -1252,9 +1256,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Replaces all occurrences of $search in $str by $replacement.
      *
-     * @param   string   $search       The needle to search for
-     * @param   string   $replacement  The string to replace with
-     * @return  Stringy  Object with the resulting $str after the replacements
+     * @param  string  $search      The needle to search for
+     * @param  string  $replacement The string to replace with
+     * @return Stringy Object with the resulting $str after the replacements
      */
     public function replace($search, $replacement)
     {
@@ -1277,10 +1281,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
      * in the bundled version of Oniguruma in PHP 5.3.
      *
-     * @param   string   $pattern      The regular expression pattern
-     * @param   string   $replacement  The string to replace with
-     * @param   string   $options      Matching conditions to be used
-     * @return  Stringy  Object with the resulting $str after the replacements
+     * @param  string  $pattern     The regular expression pattern
+     * @param  string  $replacement The string to replace with
+     * @param  string  $options     Matching conditions to be used
+     * @return Stringy Object with the resulting $str after the replacements
      */
     public function regexReplace($pattern, $replacement, $options = 'msr')
     {

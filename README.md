@@ -167,7 +167,7 @@ $stringy[2] = 'a';    // Exception
 In the list below, any static method other than S::create refers to a method in
 `Stringy\StaticStringy`. For all others, they're found in `Stringy\Stringy`.
 Furthermore, all methods that return a Stringy object or string do not modify
-the original.
+the original. Stringy objects are immutable.
 
 *Note: If `$encoding` is not given, it defaults to `mb_internal_encoding()`.*
 
@@ -177,7 +177,7 @@ $stringy->at(int $index)
 
 S::at(int $index [, string $encoding ])
 
-Returns the character of the string at $index, with indexes starting at 0.
+Returns the character at $index, with indexes starting at 0.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->at(6);
@@ -190,9 +190,9 @@ $stringy->camelize();
 
 S::camelize(string $str [, string $encoding ])
 
-Returns a camelCase version of the supplied string. Trims surrounding
-spaces, capitalizes letters following digits, spaces, dashes and
-underscores, and removes spaces, dashes, underscores.
+Returns a camelCase version of the string. Trims surrounding spaces,
+capitalizes letters following digits, spaces, dashes and underscores,
+and removes spaces, dashes, as well as underscores.
 
 ```php
 S::create('Camel-Case')->camelize();
@@ -632,7 +632,7 @@ $stringy->removeLeft(string $substring)
 
 S::removeLeft(string $str, string $substring [, string $encoding ])
 
-Returns a new string with the prefix $substring removed, if it was present.
+Returns a new string with the prefix $substring removed, if present.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->removeLeft('fòô ');
@@ -645,7 +645,7 @@ $stringy->removeRight(string $substring)
 
 S::removeRight(string $str, string $substring [, string $encoding ])
 
-Returns a new string with the suffix $substring removed, if it was present.
+Returns a new string with the suffix $substring removed, if present.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->removeRight(' bàř');
@@ -685,8 +685,8 @@ $stringy->safeTruncate(int $length, [, string $substring = '' ])
 S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])
 
 Truncates the string to a given length, while ensuring that it does not
-chop words. If $substring is provided, and truncating occurs, the string
-is further truncated so that the substring may be appended without
+split words. If $substring is provided, and truncating occurs, the
+string is further truncated so that the substring may be appended without
 exceeding the desired length.
 
 ```php
@@ -715,10 +715,10 @@ $stringy->slugify([ string $replacement = '-' ])
 S::slugify(string $str [, string $replacement = '-' ])
 
 Converts the string into an URL slug. This includes replacing non-ASCII
-characters with their closest ASCII equivalents, removing non-alphanumeric
-and non-ASCII characters, and replacing whitespace with $replacement.
-The replacement defaults to a single dash, and the string is also
-converted to lowercase.
+characters with their closest ASCII equivalents, removing remaining
+non-ASCII and non-alphanumeric characters, and replacing whitespace with
+$replacement. The replacement defaults to a single dash, and the string
+is also converted to lowercase.
 
 ```php
 S::create('Using strings like fòô bàř')->slugify();
@@ -802,9 +802,8 @@ $stringy->titleize([ string $encoding ])
 S::titleize(string $str [, array $ignore [, string $encoding ]])
 
 Returns a trimmed string with the first letter of each word capitalized.
-Ignores the case of other letters, allowing for the use of acronyms.
-Also accepts an array, $ignore, allowing you to list words not to be
-capitalized.
+Ignores the case of other letters, preserving any acronyms. Also accepts
+an array, $ignore, allowing you to list words not to be capitalized.
 
 ```php
 $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
@@ -908,8 +907,8 @@ truncating occurs, the string is further truncated so that the substring
 may be appended without exceeding the desired length.
 
 ```php
-S::create('What are your plans today?')->safeTruncate(19, '...');
-S::safeTruncate('What are your plans today?', 19, '...');  // 'What are your pl...'
+S::create('What are your plans today?')->truncate(19, '...');
+S::truncate('What are your plans today?', 19, '...');  // 'What are your pl...'
 ```
 
 #### underscored
