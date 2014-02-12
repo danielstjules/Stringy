@@ -17,7 +17,11 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "support": {
+        "issues": "https://github.com/danielstjules/Stringy/issues",
+        "source": "https://github.com/danielstjules/Stringy"
+    },
     "autoload": {
-        "psr-0": { "Stringy": "src/" }
+        "psr-4": { "Stringy\\": "src/" }
     }
 }

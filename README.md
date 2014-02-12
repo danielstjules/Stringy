@@ -88,9 +88,9 @@ require 'vendor/autoload.php';
 Otherwise, you can simply require the file directly:
 
 ```php
-require_once 'path/to/Stringy/src/Stringy/Stringy.php';
+require_once 'path/to/Stringy/src/Stringy.php';
 // or
-require_once 'path/to/Stringy/src/Stringy/StaticStringy.php';
+require_once 'path/to/Stringy/src/StaticStringy.php';
 ```
 
 And in either case, I'd suggest using an alias.

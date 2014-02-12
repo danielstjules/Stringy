@@ -5,7 +5,7 @@
          syntaxCheck="false">
     <testsuites>
         <testsuite name="Stringy">
-            <directory>tests/Stringy</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

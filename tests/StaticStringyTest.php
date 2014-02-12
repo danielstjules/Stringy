@@ -1,7 +1,7 @@
 <?php
 
-$base = realpath(dirname(__FILE__) . '/../..');
-require("$base/src/Stringy/StaticStringy.php");
+$base = realpath(dirname(__FILE__) . '/..');
+require("$base/src/StaticStringy.php");
 
 use Stringy\StaticStringy as S;
 
