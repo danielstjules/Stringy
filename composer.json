@@ -12,16 +12,24 @@
             "name": "Daniel St. Jules",
             "email": "danielst.jules@gmail.com",
             "homepage": "http://www.danielstjules.com"
+        },
+        {
+            "name": "Bilge",
+            "email": "bilge@scriptfusion.com"
         }
     ],
     "require": {
         "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     },
     "support": {
         "issues": "https://github.com/danielstjules/Stringy/issues",
         "source": "https://github.com/danielstjules/Stringy"
     },
     "autoload": {
-        "psr-4": { "Stringy\\": "src/" }
+        "psr-4": { "Stringy\\": "src/" },
+        "classmap": [ "tests" ]
     }
 }
