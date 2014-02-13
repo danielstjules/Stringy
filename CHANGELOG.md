@@ -1,3 +1,11 @@
+### 1.4.0 (2014-02-12)
+
+  * Implemented the IteratorAggregate interface, added chars()
+  * Renamed count() to countSubstr()
+  * Updated count() to implement Countable interface
+  * Implemented the ArrayAccess interface with positive and negative indices
+  * Switched from PSR-0 to PSR-4 autoloading
+
 ### 1.3.0 (2013-12-16)
 
   * Additional Bulgarian support for toAscii
