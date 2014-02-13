@@ -12,10 +12,6 @@
             "name": "Daniel St. Jules",
             "email": "danielst.jules@gmail.com",
             "homepage": "http://www.danielstjules.com"
-        },
-        {
-            "name": "Bilge",
-            "email": "bilge@scriptfusion.com"
         }
     ],
     "require": {
