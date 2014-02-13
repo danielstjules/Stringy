@@ -790,7 +790,7 @@ class StringyTestCase extends CommonTest
      * @dataProvider countSubstrProvider()
      */
     public function testCountSubstr($expected, $str, $substring,
-                                        $caseSensitive = true, $encoding = null)
+                                    $caseSensitive = true, $encoding = null)
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->countSubstr($substring, $caseSensitive);
