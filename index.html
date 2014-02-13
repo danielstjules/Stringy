@@ -30,22 +30,26 @@
       <section>
         <p><img src="http://danielstjules.com/stringy/logo.png" alt="Stringy"></p>
 
-<p>A PHP library with a variety of string manipulation functions with multibyte support. Offers both OO method chaining and a procedural-style static wrapper. Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
+<p>A PHP library with a variety of string manipulation functions with multibyte
+support. Offers both OO method chaining and a procedural-style static wrapper.
+Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 
 <p><a href="https://travis-ci.org/danielstjules/Stringy"><img src="https://travis-ci.org/danielstjules/Stringy.png" alt="Build Status"></a></p>
 
 <ul>
 <li><a href="#requiringloading">Requiring/Loading</a></li>
 <li><a href="#oo-and-procedural">OO and Procedural</a></li>
+<li><a href="#implemented-interfaces">Implemented Interfaces</a></li>
 <li>
 <a href="#methods">Methods</a>
 
 <ul>
 <li><a href="#at">at</a></li>
 <li><a href="#camelize">camelize</a></li>
+<li><a href="#chars">chars</a></li>
 <li><a href="#collapsewhitespace">collapseWhitespace</a></li>
 <li><a href="#contains">contains</a></li>
-<li><a href="#count">count</a></li>
+<li><a href="#countsubstr">countSubstr</a></li>
 <li><a href="#create">create</a></li>
 <li><a href="#dasherize">dasherize</a></li>
 <li><a href="#endswith">endsWith</a></li>
@@ -103,23 +107,25 @@
 </ul><h2>
 <a name="requiringloading" class="anchor" href="#requiringloading"><span class="octicon octicon-link"></span></a>Requiring/Loading</h2>
 
-<p>If you're using Composer to manage dependencies, you can include the following in your composer.json file:</p>
+<p>If you're using Composer to manage dependencies, you can include the following
+in your composer.json file:</p>
 
 <pre><code>"require": {
     "danielstjules/stringy": "dev-master"
 }
 </code></pre>
 
-<p>Then, after running <code>composer update</code> or <code>php composer.phar update</code>, you can load the class using Composer's autoloading:</p>
+<p>Then, after running <code>composer update</code> or <code>php composer.phar update</code>, you can
+load the class using Composer's autoloading:</p>
 
 <div class="highlight highlight-php"><pre><span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
 </pre></div>
 
 <p>Otherwise, you can simply require the file directly:</p>
 
-<div class="highlight highlight-php"><pre><span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy/Stringy.php'</span><span class="p">;</span>
+<div class="highlight highlight-php"><pre><span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy.php'</span><span class="p">;</span>
 <span class="c1">// or</span>
-<span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/Stringy/StaticStringy.php'</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="s1">'path/to/Stringy/src/StaticStringy.php'</span><span class="p">;</span>
 </pre></div>
 
 <p>And in either case, I'd suggest using an alias.</p>
@@ -140,9 +146,9 @@ of the former is the following:</p>
 <span class="k">echo</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô     Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">collapseWhitespace</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">swapCase</span><span class="p">();</span>  <span class="c1">// 'fÒÔ bÀŘ'</span>
 </pre></div>
 
-<p><code>Stringy\Stringy</code> contains a __toString() method, which returns the current
-string when the object is used in a string context. Its $str property is also
-public, and can be accessed directly if required, ie: <code>S::create('foo')-&gt;str  // 'foo'</code></p>
+<p><code>Stringy\Stringy</code> has a __toString() method, which returns the current string
+when the object is used in a string context, ie:
+<code>(string) S::create('foo')  // 'foo'</code></p>
 
 <p>Using the static wrapper, an alternative is the following:</p>
 
@@ -152,10 +158,48 @@ public, and can be accessed directly if required, ie: <code>S::create('foo')-&gt
 </pre></div>
 
 <h2>
+<a name="implemented-interfaces" class="anchor" href="#implemented-interfaces"><span class="octicon octicon-link"></span></a>Implemented Interfaces</h2>
+
+<p><code>Stringy\Stringy</code> implements the <code>IteratorAggregate</code> interface, meaning that
+<code>foreach</code> can be used with an instance of the class:</p>
+
+<div class="highlight highlight-php"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$stringy</span> <span class="k">as</span> <span class="nv">$char</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$char</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// 'Fòô Bàř'</span>
+</pre></div>
+
+<p>It implements the <code>Countable</code> interface, enabling the use of <code>count()</code> to
+retrieve the number of characters in the string:</p>
+
+<div class="highlight highlight-php"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
+<span class="nb">count</span><span class="p">(</span><span class="nv">$stringy</span><span class="p">);</span>  <span class="c1">// 3</span>
+</pre></div>
+
+<p>Furthermore, the <code>ArrayAccess</code> interface has been implemented. As a result,
+<code>isset()</code> can be used to check if a character at a specific index exists. And
+since <code>Stringy\Stringy</code> is immutable, any call to <code>offsetSet</code> or <code>offsetUnset</code>
+will throw an exception. <code>offsetGet</code> has been implemented, however, and accepts
+both positive and negative indexes. Invalid indexes result in an
+<code>OutOfBoundsException</code>.</p>
+
+<div class="highlight highlight-php"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$stringy</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>     <span class="c1">// 'ř'</span>
+<span class="k">echo</span> <span class="nv">$stringy</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">];</span>    <span class="c1">// 'à'</span>
+<span class="nb">isset</span><span class="p">(</span><span class="nv">$stringy</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">]);</span>  <span class="c1">// false</span>
+
+<span class="nv">$stringy</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>          <span class="c1">// OutOfBoundsException</span>
+<span class="nv">$stringy</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'a'</span><span class="p">;</span>    <span class="c1">// Exception</span>
+</pre></div>
+
+<h2>
 <a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h2>
 
-<p>In the list below, any static method other than S::create refers to a
-method in <code>Stringy\StaticStringy</code>. For all others, they're found in <code>Stringy\Stringy</code>. Furthermore, all methods that return a Stringy object or string do not modify the original.</p>
+<p>In the list below, any static method other than S::create refers to a method in
+<code>Stringy\StaticStringy</code>. For all others, they're found in <code>Stringy\Stringy</code>.
+Furthermore, all methods that return a Stringy object or string do not modify
+the original. Stringy objects are immutable.</p>
 
 <p><em>Note: If <code>$encoding</code> is not given, it defaults to <code>mb_internal_encoding()</code>.</em></p>
 
@@ -164,9 +208,9 @@ method in <code>Stringy\StaticStringy</code>. For all others, they're found in <
 
 <p>$stringy-&gt;at(int $index)</p>
 
-<p>S::substr(int $index [, string $encoding ])</p>
+<p>S::at(int $index [, string $encoding ])</p>
 
-<p>Returns the character of the string at $index, with indexes starting at 0.</p>
+<p>Returns the character at $index, with indexes starting at 0.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">at</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'ř'</span>
@@ -179,12 +223,25 @@ method in <code>Stringy\StaticStringy</code>. For all others, they're found in <
 
 <p>S::camelize(string $str [, string $encoding ])</p>
 
-<p>Returns a camelCase version of the supplied string. Trims surrounding
-spaces, capitalizes letters following digits, spaces, dashes and
-underscores, and removes spaces, dashes, underscores.</p>
+<p>Returns a camelCase version of the string. Trims surrounding spaces,
+capitalizes letters following digits, spaces, dashes and underscores,
+and removes spaces, dashes, as well as underscores.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Camel-Case'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">camelize</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">camelize</span><span class="p">(</span><span class="s1">'Camel-Case'</span><span class="p">);</span>  <span class="c1">// 'camelCase'</span>
+</pre></div>
+
+<h4>
+<a name="chars" class="anchor" href="#chars"><span class="octicon octicon-link"></span></a>chars</h4>
+
+<p>$stringy-&gt;chars();</p>
+
+<p>S::chars(string $str [, string $encoding ])</p>
+
+<p>Returns an array consisting of the characters in the string.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Fòô Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">chars</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">chars</span><span class="p">(</span><span class="s1">'Fòô Bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// array(F', 'ò', 'ô', ' ', 'B', 'à', 'ř')</span>
 </pre></div>
 
 <h4>
@@ -218,28 +275,30 @@ by setting $caseSensitive to false.</p>
 </pre></div>
 
 <h4>
-<a name="count" class="anchor" href="#count"><span class="octicon octicon-link"></span></a>count</h4>
+<a name="countsubstr" class="anchor" href="#countsubstr"><span class="octicon octicon-link"></span></a>countSubstr</h4>
 
-<p>$stringy-&gt;count(string $substring [, boolean $caseSensitive = true ])</p>
+<p>$stringy-&gt;countSubstr(string $substring [, boolean $caseSensitive = true ])</p>
 
-<p>S::count(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])</p>
+<p>S::countSubstr(string $str, string $substring [, boolean $caseSensitive = true [, string $encoding ]])</p>
 
 <p>Returns the number of occurrences of $substring in the given string.
 By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.</p>
 
-<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">count</span><span class="p">(</span><span class="s1">'α'</span><span class="p">);</span>
-<span class="nx">S</span><span class="o">::</span><span class="na">count</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'α'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 2</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">countSubstr</span><span class="p">(</span><span class="s1">'α'</span><span class="p">);</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">countSubstr</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'α'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 2</span>
 </pre></div>
 
 <h4>
 <a name="create" class="anchor" href="#create"><span class="octicon octicon-link"></span></a>create</h4>
 
-<p>S::create(string $str, [, $encoding ])</p>
+<p>S::create(mixed $str, [, $encoding ])</p>
 
 <p>Creates a Stringy object and assigns both str and encoding properties
-the supplied values. If $encoding is not specified, it defaults to
-mb_internal_encoding(). It then returns the initialized object.</p>
+the supplied values. $str is cast to a string prior to assignment, and if
+$encoding is not specified, it defaults to mb_internal_encoding(). It
+then returns the initialized object. Throws an InvalidArgumentException
+if the first argument is an array or object without a __toString method.</p>
 
 <div class="highlight highlight-php"><pre><span class="nv">$stringy</span> <span class="o">=</span> <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô bàř'</span>
 </pre></div>
@@ -537,7 +596,7 @@ string used for padding is a space, and the default type (one of 'left',
 'right', 'both') is 'right'. Throws an InvalidArgumentException if
 $padType isn't one of those 3 values.</p>
 
-<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">pad</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,);</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">pad</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">pad</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'¬ø'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// '¬ø¬fòô bàř'</span>
 </pre></div>
 
@@ -606,7 +665,7 @@ in the bundled version of Oniguruma in PHP 5.3.</p>
 
 <p>S::removeLeft(string $str, string $substring [, string $encoding ])</p>
 
-<p>Returns a new string with the prefix $substring removed, if it was present.</p>
+<p>Returns a new string with the prefix $substring removed, if present.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeLeft</span><span class="p">(</span><span class="s1">'fòô '</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">removeLeft</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'fòô '</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'bàř'</span>
@@ -619,7 +678,7 @@ in the bundled version of Oniguruma in PHP 5.3.</p>
 
 <p>S::removeRight(string $str, string $substring [, string $encoding ])</p>
 
-<p>Returns a new string with the suffix $substring removed, if it was present.</p>
+<p>Returns a new string with the suffix $substring removed, if present.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">removeRight</span><span class="p">(</span><span class="s1">' bàř'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">removeRight</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">' bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô'</span>
@@ -659,8 +718,8 @@ in the bundled version of Oniguruma in PHP 5.3.</p>
 <p>S::safeTruncate(string $str, int $length, [, string $substring = '' [, string $encoding ]])</p>
 
 <p>Truncates the string to a given length, while ensuring that it does not
-chop words. If $substring is provided, and truncating occurs, the string
-is further truncated so that the substring may be appended without
+split words. If $substring is provided, and truncating occurs, the
+string is further truncated so that the substring may be appended without
 exceeding the desired length.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
@@ -674,7 +733,8 @@ exceeding the desired length.</p>
 
 <p>S::shuffle(string $str [, string $encoding ])</p>
 
-<p>A multibyte str_shuffle() function. It returns a string with its characters in random order.</p>
+<p>A multibyte str_shuffle() function. It returns a string with its characters in
+random order.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">shuffle</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">shuffle</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'àôřb òf'</span>
@@ -688,10 +748,10 @@ exceeding the desired length.</p>
 <p>S::slugify(string $str [, string $replacement = '-' ])</p>
 
 <p>Converts the string into an URL slug. This includes replacing non-ASCII
-characters with their closest ASCII equivalents, removing non-alphanumeric
-and non-ASCII characters, and replacing whitespace with $replacement.
-The replacement defaults to a single dash, and the string is also
-converted to lowercase.</p>
+characters with their closest ASCII equivalents, removing remaining
+non-ASCII and non-alphanumeric characters, and replacing whitespace with
+$replacement. The replacement defaults to a single dash, and the string
+is also converted to lowercase.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">slugify</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">slugify</span><span class="p">(</span><span class="s1">'Using strings like fòô bàř'</span><span class="p">);</span>  <span class="c1">// 'using-strings-like-foo-bar'</span>
@@ -775,9 +835,8 @@ Windows-1252 (commonly used in Word documents) replaced by their ASCII equivalen
 <p>S::titleize(string $str [, array $ignore [, string $encoding ]])</p>
 
 <p>Returns a trimmed string with the first letter of each word capitalized.
-Ignores the case of other letters, allowing for the use of acronyms.
-Also accepts an array, $ignore, allowing you to list words not to be
-capitalized.</p>
+Ignores the case of other letters, preserving any acronyms. Also accepts
+an array, $ignore, allowing you to list words not to be capitalized.</p>
 
 <div class="highlight highlight-php"><pre><span class="nv">$ignore</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'at'</span><span class="p">,</span> <span class="s1">'by'</span><span class="p">,</span> <span class="s1">'for'</span><span class="p">,</span> <span class="s1">'in'</span><span class="p">,</span> <span class="s1">'of'</span><span class="p">,</span> <span class="s1">'on'</span><span class="p">,</span> <span class="s1">'out'</span><span class="p">,</span> <span class="s1">'to'</span><span class="p">,</span> <span class="s1">'the'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'i like to watch DVDs at home'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">titleize</span><span class="p">(</span><span class="nv">$ignore</span><span class="p">);</span>
@@ -880,8 +939,8 @@ mb_strtoupper().</p>
 truncating occurs, the string is further truncated so that the substring
 may be appended without exceeding the desired length.</p>
 
-<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">safeTruncate</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
-<span class="nx">S</span><span class="o">::</span><span class="na">safeTruncate</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>  <span class="c1">// 'What are your pl...'</span>
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">truncate</span><span class="p">(</span><span class="s1">'What are your plans today?'</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="s1">'...'</span><span class="p">);</span>  <span class="c1">// 'What are your pl...'</span>
 </pre></div>
 
 <h4>
