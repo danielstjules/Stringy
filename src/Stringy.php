@@ -1199,11 +1199,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isJson()
     {
-        if (!$this->endsWith('}') && !$this->endsWith(']')) {
-            return false;
-        }
+        json_decode($this->str);
 
-        return !is_null(json_decode($this->str));
+        return (json_last_error() === JSON_ERROR_NONE);
     }
 
 
