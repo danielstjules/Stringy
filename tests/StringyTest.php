@@ -157,9 +157,9 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider charsProvider()
      */
-    public function testChars($expected, $str, $encoding = null)
+    public function testToArray($expected, $str, $encoding = null)
     {
-        $result = S::create($str, $encoding)->chars();
+        $result = S::create($str, $encoding)->toArray();
         $this->assertInternalType('array', $result);
         foreach ($result as $char) {
             $this->assertInternalType('string', $char);

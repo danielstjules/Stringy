@@ -84,7 +84,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->chars());
+        return new \ArrayIterator($this->toArray());
     }
 
     /**
@@ -158,7 +158,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @return array An array of string chars
      */
-    public function chars()
+    public function toArray()
     {
         $chars = array();
         for ($i = 0; $i < $this->length(); $i++) {
