@@ -383,13 +383,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function collapseWhitespace()
     {
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        $str = mb_ereg_replace('[[:space:]]+', ' ', $this->str);
-        mb_regex_encoding($regexEncoding);
-
-        return self::create($str, $this->encoding)->trim();
+        return $this->regexReplace('[[:space:]]+', ' ')->trim();
     }
 
     /**
@@ -1267,17 +1261,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function replace($search, $replacement)
     {
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        // Don't want the args being parsed as regex
-        $search = preg_quote($search);
-        $replacement = preg_quote($replacement);
-
-        $str = mb_ereg_replace($search, $replacement, $this->str);
-        mb_regex_encoding($regexEncoding);
-
-        return self::create($str, $this->encoding);
+        return $this->regexReplace(preg_quote($search), $replacement);
     }
 
     /**

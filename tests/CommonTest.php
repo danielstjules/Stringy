@@ -835,6 +835,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('foo', '', '', 'foo'),
             array('foo', '\s', '\s', 'foo'),
             array('foo bar', 'foo bar', '', ''),
+            array('foo bar', 'foo bar', 'f(o)o', '\1'),
+            array('\1 bar', 'foo bar', 'foo', '\1'),
             array('bar', 'foo bar', 'foo ', ''),
             array('far bar', 'foo bar', 'foo', 'far'),
             array('bar bar', 'foo bar foo bar', 'foo ', ''),
@@ -853,6 +855,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return array(
             array('', '', '', ''),
             array('bar', 'foo', 'f[o]+', 'bar'),
+            array('o bar', 'foo bar', 'f(o)o', '\1'),
             array('bar', 'foo bar', 'f[O]+\s', '', 'i'),
             array('foo', 'bar', '[[:alpha:]]{3}', 'foo'),
             array('', '', '', '', 'msr', 'UTF-8'),
