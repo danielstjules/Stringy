@@ -10,9 +10,9 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider charsProvider()
      */
-    public function testChars($expected, $str, $encoding = null)
+    public function testToArray($expected, $str, $encoding = null)
     {
-        $result = S::chars($str, $encoding);
+        $result = S::toArray($str, $encoding);
         $this->assertInternalType('array', $result);
         foreach ($result as $char) {
             $this->assertInternalType('string', $char);

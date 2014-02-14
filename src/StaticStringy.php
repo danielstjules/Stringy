@@ -11,9 +11,9 @@ class StaticStringy
      * @param  string $encoding The character encoding
      * @return array  An array of string chars
      */
-    public static function chars($str, $encoding = null)
+    public static function toArray($str, $encoding = null)
     {
-        return Stringy::create($str, $encoding)->chars();
+        return Stringy::create($str, $encoding)->toArray();
     }
 
     /**
