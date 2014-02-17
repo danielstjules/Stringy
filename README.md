@@ -67,6 +67,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.
     * [underscored](#underscored)
     * [upperCamelize](#uppercamelize)
     * [upperCaseFirst](#uppercasefirst)
+* [Links](#links)
 * [Tests](#tests)
 * [License](#license)
 
@@ -964,6 +965,13 @@ Converts the first character of the supplied string to upper case.
 S::create('σ test', 'UTF-8')->upperCaseFirst();
 S::upperCaseFirst('σ test', 'UTF-8');  // 'Σ test'
 ```
+
+## Links
+
+The following is a list of libraries that extend Stringy:
+
+ * [SliceableStringy](https://github.com/danielstjules/SliceableStringy):
+Python-like string slices in PHP
 
 ## Tests
 
