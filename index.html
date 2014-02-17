@@ -56,6 +56,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 <li><a href="#ensureleft">ensureLeft</a></li>
 <li><a href="#ensureright">ensureRight</a></li>
 <li><a href="#first">first</a></li>
+<li><a href="#getencoding">getEncoding</a></li>
 <li><a href="#humanize">humanize</a></li>
 <li><a href="#insert">insert</a></li>
 <li><a href="#isalpha">isAlpha</a></li>
@@ -102,6 +103,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 <li><a href="#uppercasefirst">upperCaseFirst</a></li>
 </ul>
 </li>
+<li><a href="#links">Links</a></li>
 <li><a href="#tests">Tests</a></li>
 <li><a href="#license">License</a></li>
 </ul><h2>
@@ -370,6 +372,16 @@ setting $caseSensitive to false.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">first</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'fòô'</span>
+</pre></div>
+
+<h4>
+<a name="getencoding" class="anchor" href="#getencoding"><span class="octicon octicon-link"></span></a>getEncoding</h4>
+
+<p>$stringy-&gt;getEncoding()</p>
+
+<p>Returns the encoding used by the Stringy object.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getEncoding</span><span class="p">();</span>  <span class="c1">// 'UTF-8'</span>
 </pre></div>
 
 <h4>
@@ -987,6 +999,15 @@ and underscores, and removes spaces, dashes, underscores.</p>
 </pre></div>
 
 <h2>
+<a name="links" class="anchor" href="#links"><span class="octicon octicon-link"></span></a>Links</h2>
+
+<p>The following is a list of libraries that extend Stringy:</p>
+
+<ul>
+<li>
+<a href="https://github.com/danielstjules/SliceableStringy">SliceableStringy</a>:
+Python-like string slices in PHP</li>
+</ul><h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
 <p>From the project directory, tests can be ran using <code>phpunit</code></p>
