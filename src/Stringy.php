@@ -713,6 +713,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             $stringy->toAscii());
         $stringy->str = $stringy->collapseWhitespace()->str;
         $stringy->str = str_replace(' ', $replacement, strtolower($stringy));
+        $stringy->str = preg_replace("/[$replacement]+/u", $replacement, $stringy);
 
         return $stringy;
     }
