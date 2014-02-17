@@ -22,6 +22,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.
     * [ensureLeft](#ensureleft)
     * [ensureRight](#ensureright)
     * [first](#first)
+    * [getEncoding](#getencoding)
     * [humanize](#humanize)
     * [insert](#insert)
     * [isAlpha](#isalpha)
@@ -338,6 +339,16 @@ Returns the first $n characters of the string.
 ```php
 S::create('fòô bàř', 'UTF-8')->first(3);
 S::first('fòô bàř', 3, 'UTF-8');  // 'fòô'
+```
+
+#### getEncoding
+
+$stringy->getEncoding()
+
+Returns the encoding used by the Stringy object.
+
+```php
+S::create('fòô bàř', 'UTF-8')->getEncoding();  // 'UTF-8'
 ```
 
 #### humanize

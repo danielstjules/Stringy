@@ -4,9 +4,9 @@ namespace Stringy;
 
 class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-    private $str;
+    protected $str;
 
-    public $encoding;
+    protected $encoding;
 
     /**
      * Initializes a Stringy object and assigns both str and encoding properties
@@ -62,6 +62,16 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function __toString()
     {
         return $this->str;
+    }
+
+    /**
+     * Returns the encoding used by the Stringy object.
+     *
+     * @return string The current value of the $encoding property
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
     }
 
     /**

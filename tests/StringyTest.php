@@ -12,7 +12,7 @@ class StringyTestCase extends CommonTest
         $stringy = new S('foo bar', 'UTF-8');
         $this->assertInstanceOf('Stringy\Stringy', $stringy);
         $this->assertEquals('foo bar', (string) $stringy);
-        $this->assertEquals('UTF-8', $stringy->encoding);
+        $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
     /**
@@ -59,7 +59,7 @@ class StringyTestCase extends CommonTest
         $stringy = S::create('foo bar', 'UTF-8');
         $this->assertInstanceOf('Stringy\Stringy', $stringy);
         $this->assertEquals('foo bar', (string) $stringy);
-        $this->assertEquals('UTF-8', $stringy->encoding);
+        $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
     public function testChaining()
