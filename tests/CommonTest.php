@@ -340,7 +340,9 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('numbers-1234', 'numbers 1234'),
             array('perevirka-ryadka', 'перевірка рядка'),
             array('bukvar-s-bukvoy-y', 'букварь с буквой ы'),
-            array('barzi-i-yarostni', 'бързи и яростни'),
+            // Conflicts between Russian or Bulgarian
+            //array('barzi-i-yarostni', 'бързи и яростни'),
+            array('podekhal-k-podezdu-moego-doma', 'подъехал к подъезду моего дома'),
             array('foo:bar:baz', 'Foo bar baz', ':'),
             array('a_string_with_underscores', 'A_string with_underscores', '_')
         );
