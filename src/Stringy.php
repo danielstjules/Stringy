@@ -262,17 +262,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function dasherize()
     {
-        // Save current regex encoding so we can reset it after
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        $str = mb_ereg_replace('\B([A-Z])', '-\1', trim($this->str));
-        $str = mb_ereg_replace('[-_\s]+', '-', $str);
-        $str = mb_strtolower($str, $this->encoding);
-
-        mb_regex_encoding($regexEncoding);
-
-        return self::create($str, $this->encoding);
+        return $this->slug('-');
     }
 
     /**
@@ -285,12 +275,23 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function underscored()
     {
+        return $this->slug('_');
+    }
+    
+    /**
+     * Returns a lowercase and trimmed string separated by a suplied
+     * seperator.
+     *
+     * @return Stringy Object with a dasherized $str
+     */
+    protected function slug($seperator)
+    {
         // Save current regex encoding so we can reset it after
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', '_\1', trim($this->str));
-        $str = mb_ereg_replace('[-_\s]+', '_', $str);
+        $str = mb_ereg_replace('\B([A-Z])', $seperator .'\1', trim($this->str));
+        $str = mb_ereg_replace('[-_\s]+', $seperator, $str);
         $str = mb_strtolower($str, $this->encoding);
 
         mb_regex_encoding($regexEncoding);
