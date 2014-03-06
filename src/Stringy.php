@@ -262,7 +262,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function dasherize()
     {
-        return $this->slug('-');
+        return $this->applyDelimeter('-');
     }
 
     /**
@@ -275,23 +275,23 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function underscored()
     {
-        return $this->slug('_');
+        return $this->applyDelimeter('_');
     }
-    
+
     /**
-     * Returns a lowercase and trimmed string separated by a suplied
-     * seperator.
+     * Returns a lowercase and trimmed string separated by the given delimiter.
      *
-     * @return Stringy Object with a dasherized $str
+     * @param  string  $delimiter Sequence used to separate parts of the string
+     * @return Stringy Object with a delimited $str
      */
-    protected function slug($seperator)
+    protected function applyDelimeter($delimiter)
     {
         // Save current regex encoding so we can reset it after
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', $seperator .'\1', trim($this->str));
-        $str = mb_ereg_replace('[-_\s]+', $seperator, $str);
+        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', trim($this->str));
+        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
         $str = mb_strtolower($str, $this->encoding);
 
         mb_regex_encoding($regexEncoding);
