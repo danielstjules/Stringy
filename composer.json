@@ -19,12 +19,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
-    },    
+    },
     "support": {
         "issues": "https://github.com/danielstjules/Stringy/issues",
         "source": "https://github.com/danielstjules/Stringy"
     },
     "autoload": {
-        "psr-4": { "Stringy\\": "src/" }
+        "psr-4": { "Stringy\\": "src/" },
+        "classmap": [ "tests" ]
     }
 }
