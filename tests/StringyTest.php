@@ -1,7 +1,6 @@
 <?php
 
-$base = realpath(dirname(__FILE__) . '/..');
-require("$base/src/Stringy.php");
+require __DIR__ . '/../src/Stringy.php';
 
 use Stringy\Stringy as S;
 
