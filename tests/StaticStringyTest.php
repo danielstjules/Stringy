@@ -141,6 +141,25 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider padProvider()
+     */
+    public function testPad($expected, $str, $length, $padStr = ' ',
+                            $padType = 'right', $encoding = null)
+    {
+        $result = S::pad($str, $length, $padStr, $padType, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPadException()
+    {
+        $result = S::pad('string', 5, 'foo', 'bar');
+    }
+
+    /**
      * @dataProvider padLeftProvider()
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ',

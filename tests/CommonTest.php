@@ -181,6 +181,31 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function padProvider()
+    {
+        return array(
+            // length <= str
+            array('foo bar', 'foo bar', -1),
+            array('foo bar', 'foo bar', 7),
+            array('fòô bàř', 'fòô bàř', 7, ' ', 'right', 'UTF-8'),
+
+            // right
+            array('foo bar  ', 'foo bar', 9),
+            array('foo bar_*', 'foo bar', 9, '_*', 'right'),
+            array('fòô bàř¬ø¬', 'fòô bàř', 10, '¬ø', 'right', 'UTF-8'),
+
+            // left
+            array('  foo bar', 'foo bar', 9, ' ', 'left'),
+            array('_*foo bar', 'foo bar', 9, '_*', 'left'),
+            array('¬ø¬fòô bàř', 'fòô bàř', 10, '¬ø', 'left', 'UTF-8'),
+
+            // both
+            array('foo bar ', 'foo bar', 8, ' ', 'both'),
+            array('¬fòô bàř¬ø', 'fòô bàř', 10, '¬ø', 'both', 'UTF-8'),
+            array('¬øfòô bàř¬øÿ', 'fòô bàř', 12, '¬øÿ', 'both', 'UTF-8')
+        );
+    }
+
     public function padLeftProvider()
     {
         return array(

@@ -310,6 +310,28 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider padProvider()
+     */
+    public function testPad($expected, $str, $length, $padStr = ' ',
+                            $padType = 'right', $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->pad($length, $padStr, $padType);
+        $this->assertInstanceOf('Stringy\Stringy', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPadException()
+    {
+        $stringy = S::create('foo');
+        $result = $stringy->pad(5, 'foo', 'bar');
+    }
+
+    /**
      * @dataProvider padLeftProvider()
      */
     public function testPadLeft($expected, $str, $length, $padStr = ' ',
