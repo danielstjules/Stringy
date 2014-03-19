@@ -492,62 +492,27 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Pads the string to a given length with $padStr. If length is less than
-     * or equal to the length of the string, no padding takes places. The
-     * default string used for padding is a space, and the default type (one of
-     * 'left', 'right', 'both') is 'right'. Throws an InvalidArgumentException
-     * if $padType isn't one of those 3 values.
+     * Adds the specified amount of left and right padding given by the
+     * specified padding string. The default padding string is a space (0x20).
      *
-     * @param  int     $length  Desired string length after padding
-     * @param  string  $padStr  String used to pad, defaults to space
-     * @param  string  $padType One of 'left', 'right', 'both'
-     * @return Stringy Object with a padded $str
-     * @throws InvalidArgumentException If $padType isn't one of 'right',
-     *         'left' or 'both'
+     * @param int     $left Length of left padding.
+     * @param int     $right Length of right padding.
+     * @param  string $pad String used to pad.
+     * @return Stringy String with padding applied.
      */
-    public function pad($length, $padStr = ' ', $padType = 'right')
+    private function pad($left = 0, $right = 0, $pad = ' ')
     {
-        if (!in_array($padType, array('left', 'right', 'both'))) {
-            throw new \InvalidArgumentException('Pad expects $padType ' .
-                "to be one of 'left', 'right' or 'both'");
-        }
-
         $stringy = self::create($this->str, $this->encoding);
-        $encoding = $stringy->encoding;
-        $strLength = $stringy->length();
-        $padStrLength = mb_strlen($padStr, $encoding);
+        $length = mb_strlen($pad, $stringy->encoding);
 
-        if ($length <= $strLength || $padStrLength <= 0) {
-            return $stringy;
-        }
+        //Nothing to do when padding string is empty.
+        if (!$length) return $stringy;
 
-        // Number of times to repeat the padStr if left or right
-        $times = ceil(($length - $strLength) / $padStrLength);
-        $paddedStr = '';
-
-        if ($padType == 'left') {
-            // Repeat the pad, cut it, and prepend
-            $leftPad = str_repeat($padStr, $times);
-            $leftPad = mb_substr($leftPad, 0, $length - $strLength, $encoding);
-            $stringy->str = $leftPad . $stringy->str;
-        } elseif ($padType == 'right') {
-            // Append the repeated pad and get a substring of the given length
-            $stringy->str = $stringy->str . str_repeat($padStr, $times);
-            $stringy->str = mb_substr($stringy->str, 0, $length, $encoding);
-        } else {
-            // Number of times to repeat the padStr on both sides
-            $paddingSize = ($length - $strLength) / 2;
-            $times = ceil($paddingSize / $padStrLength);
-
-            // Favour right padding over left, as with str_pad()
-            $rightPad = str_repeat($padStr, $times);
-            $rightPad = mb_substr($rightPad, 0, ceil($paddingSize), $encoding);
-
-            $leftPad = str_repeat($padStr, $times);
-            $leftPad = mb_substr($leftPad, 0, floor($paddingSize), $encoding);
-
-            $stringy->str = $leftPad . $stringy->str . $rightPad;
-        }
+        $stringy->str =
+            mb_substr(str_repeat($pad, ceil($left / $length)), 0, $left, $stringy->encoding)
+            . $stringy->str
+            . mb_substr(str_repeat($pad, ceil($right / $length)), 0, $right, $stringy->encoding)
+        ;
 
         return $stringy;
     }
@@ -558,11 +523,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param  int     $length Desired string length after padding
      * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy Object with a left padded $str
+     * @return Stringy String with padding applied.
      */
     public function padLeft($length, $padStr = ' ')
     {
-        return $this->pad($length, $padStr, 'left');
+        return $this->pad($length - $this->length(), 0, $padStr);
     }
 
     /**
@@ -571,11 +536,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param  int     $length Desired string length after padding
      * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy Object with a right padded $str
+     * @return Stringy String with padding applied.
      */
     public function padRight($length, $padStr = ' ')
     {
-        return $this->pad($length, $padStr, 'right');
+        return $this->pad(0, $length - $this->length(), $padStr);
     }
 
     /**
@@ -584,11 +549,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param  int     $length Desired string length after padding
      * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy The padded string
+     * @return Stringy String with padding applied.
      */
     public function padBoth($length, $padStr = ' ')
     {
-        return $this->pad($length, $padStr, 'both');
+        $padding = $length - $this->length();
+
+        return $this->pad(floor($padding / 2), ceil($padding / 2), $padStr);
     }
 
     /**
