@@ -1,3 +1,13 @@
+### 1.5.0 (2014-03-19)
+
+  * Made both str and encoding protected, giving property access to subclasses
+  * Added getEncoding()
+  * Fixed isJSON() giving false negatives
+  * Cleaned up and simplified: replace(), collapseWhitespace(), underscored(),
+    dasherize(), pad(), padLeft(), padRight() and padBoth()
+  * Fixed handling consecutive invalid chars in slugify()
+  * Removed conflicting hard sign transliteration in toAscii()
+
 ### 1.4.0 (2014-02-12)
 
   * Implemented the IteratorAggregate interface, added chars()
