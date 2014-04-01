@@ -714,8 +714,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         $stringy = self::create($this->str, $this->encoding);
 
-        $stringy->str = preg_replace("/[^a-zA-Z\d $replacement]/u", '',
+        $stringy->str = preg_replace("/[^a-zA-Z\d\- $replacement]/u", '',
             $stringy->toAscii());
+
+        $stringy->str = preg_replace('/\-/u', ' ', $stringy->str);
         $stringy->str = $stringy->collapseWhitespace()->str;
         $stringy->str = str_replace(' ', $replacement, strtolower($stringy));
         $stringy->str = preg_replace("/[$replacement]+/u", $replacement, $stringy);
