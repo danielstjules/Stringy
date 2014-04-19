@@ -1,3 +1,9 @@
+### 1.5.1 (2014-04-19)
+
+  * Fixed toAscii() failing to remove remaining non-ascii characters
+  * Updated slugify() to treat dash and underscore as delimiters by default
+  * Updated slugify() to remove leading and trailing delimiter, if present
+
 ### 1.5.0 (2014-03-19)
 
   * Made both str and encoding protected, giving property access to subclasses
