@@ -488,6 +488,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             $str = str_replace($value, $key, $str);
         }
 
+        $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
+
         return self::create($str, $this->encoding);
     }
 
