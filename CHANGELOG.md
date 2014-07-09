@@ -1,3 +1,7 @@
+### 1.5.2 (2014-07-09)
+
+ * Announced support for HHVM
+
 ### 1.5.1 (2014-04-19)
 
   * Fixed toAscii() failing to remove remaining non-ascii characters
