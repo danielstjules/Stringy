@@ -59,9 +59,9 @@ Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [titleize](#titleize)
     * [toAscii](#toascii)
     * [toLowerCase](#tolowercase)
-    * [toTitleCase](#toTitleCase)
     * [toSpaces](#tospaces)
     * [toTabs](#totabs)
+    * [toTitleCase](#totitlecase)
     * [toUpperCase](#touppercase)
     * [trim](#trim)
     * [truncate](#truncate)
@@ -853,19 +853,6 @@ S::create('FÒÔ BÀŘ', 'UTF-8')->toLowerCase();
 S::toLowerCase('FÒÔ BÀŘ', 'UTF-8');  // 'fòô bàř'
 ```
 
-#### toTitleCase
-
-$stringy->toTitleCase()
-
-S::toTitleCase(string $str [, string $encoding ])
-
-Converts the first character of each word in the string to uppercase.
-
-```php
-S::create('fòô bàř', 'UTF-8')->toTitleCase();
-S::toTitleCase('fòô bàř', 'UTF-8');  // 'Fòô Bàř'
-```
-
 #### toSpaces
 
 $stringy->toSpaces([ tabLength = 4 ])
@@ -893,6 +880,19 @@ converted to a tab.
 ```php
 S::create('    fòô    bàř')->toTabs();
 S::toTabs('    fòô    bàř');  // '   fòô bàř'
+```
+
+#### toTitleCase
+
+$stringy->toTitleCase()
+
+S::toTitleCase(string $str [, string $encoding ])
+
+Converts the first character of each word in the string to uppercase.
+
+```php
+S::create('fòô bàř', 'UTF-8')->toTitleCase();
+S::toTitleCase('fòô bàř', 'UTF-8');  // 'Fòô Bàř'
 ```
 
 #### toUpperCase
