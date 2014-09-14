@@ -34,7 +34,7 @@
 support. Offers both OO method chaining and a procedural-style static wrapper.
 Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.</p>
 
-<p><a href="https://travis-ci.org/danielstjules/Stringy"><img src="https://travis-ci.org/danielstjules/Stringy.png" alt="Build Status"></a></p>
+<p><a href="https://travis-ci.org/danielstjules/Stringy"><img src="https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master" alt="Build Status"></a></p>
 
 <ul>
 <li><a href="#requiringloading">Requiring/Loading</a></li>
@@ -113,10 +113,12 @@ Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.<
 <p>If you're using Composer to manage dependencies, you can include the following
 in your composer.json file:</p>
 
-<pre><code>"require": {
-    "danielstjules/stringy": "&gt;=1.5.2"
-}
-</code></pre>
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"danielstjules/stringy"</span><span class="p">:</span> <span class="s2">"~1.6"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
 <p>Then, after running <code>composer update</code> or <code>php composer.phar update</code>, you can
 load the class using Composer's autoloading:</p>
