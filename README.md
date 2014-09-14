@@ -77,9 +77,13 @@ Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.
 If you're using Composer to manage dependencies, you can include the following
 in your composer.json file:
 
+```json
+{
     "require": {
-        "danielstjules/stringy": ">=1.6.0"
+        "danielstjules/stringy": "~1.6"
     }
+}
+```
 
 Then, after running `composer update` or `php composer.phar update`, you can
 load the class using Composer's autoloading:
