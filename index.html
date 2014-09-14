@@ -28,11 +28,11 @@
         </ul>
       </header>
       <section>
-        <p><img src="http://danielstjules.com/stringy/logo.png" alt="Stringy"></p>
+        <p><img src="http://danielstjules.com/github/stringy-logo.png" alt="Stringy"></p>
 
 <p>A PHP library with a variety of string manipulation functions with multibyte
 support. Offers both OO method chaining and a procedural-style static wrapper.
-Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
+Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.</p>
 
 <p><a href="https://travis-ci.org/danielstjules/Stringy"><img src="https://travis-ci.org/danielstjules/Stringy.png" alt="Build Status"></a></p>
 
@@ -95,6 +95,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 <li><a href="#tolowercase">toLowerCase</a></li>
 <li><a href="#tospaces">toSpaces</a></li>
 <li><a href="#totabs">toTabs</a></li>
+<li><a href="#totitlecase">toTitleCase</a></li>
 <li><a href="#touppercase">toUpperCase</a></li>
 <li><a href="#trim">trim</a></li>
 <li><a href="#truncate">truncate</a></li>
@@ -113,7 +114,7 @@ Compatible with PHP 5.3+. Inspired by underscore.string.js.</p>
 in your composer.json file:</p>
 
 <pre><code>"require": {
-    "danielstjules/stringy": "&gt;=1.5.1"
+    "danielstjules/stringy": "&gt;=1.5.2"
 }
 </code></pre>
 
@@ -911,6 +912,19 @@ converted to a tab.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'    fòô    bàř'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toTabs</span><span class="p">();</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">toTabs</span><span class="p">(</span><span class="s1">'    fòô    bàř'</span><span class="p">);</span>  <span class="c1">// '   fòô bàř'</span>
+</pre></div>
+
+<h4>
+<a name="totitlecase" class="anchor" href="#totitlecase"><span class="octicon octicon-link"></span></a>toTitleCase</h4>
+
+<p>$stringy-&gt;toTitleCase()</p>
+
+<p>S::toTitleCase(string $str [, string $encoding ])</p>
+
+<p>Converts the first character of each word in the string to uppercase.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toTitleCase</span><span class="p">();</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">toTitleCase</span><span class="p">(</span><span class="s1">'fòô bàř'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// 'Fòô Bàř'</span>
 </pre></div>
 
 <h4>
