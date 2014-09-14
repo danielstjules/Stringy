@@ -1,3 +1,7 @@
+### 1.6.0 (2014-09-14)
+
+ * Added toTitleCase
+
 ### 1.5.2 (2014-07-09)
 
  * Announced support for HHVM

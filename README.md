@@ -78,7 +78,7 @@ If you're using Composer to manage dependencies, you can include the following
 in your composer.json file:
 
     "require": {
-        "danielstjules/stringy": ">=1.5.2"
+        "danielstjules/stringy": ">=1.6.0"
     }
 
 Then, after running `composer update` or `php composer.phar update`, you can
