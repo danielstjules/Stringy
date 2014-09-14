@@ -677,11 +677,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Uppercase the first character of each word in a string.
+     * Converts the first character of each word in the string to uppercase.
      *
      * @return Stringy Object with all characters of $str being title-cased
      */
-    public function toCaseTitle()
+    public function toTitleCase()
     {
         $str = mb_convert_case($this->str, MB_CASE_TITLE, $this->encoding);
 

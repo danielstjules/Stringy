@@ -59,6 +59,7 @@ Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [titleize](#titleize)
     * [toAscii](#toascii)
     * [toLowerCase](#tolowercase)
+    * [toTitleCase](#toTitleCase)
     * [toSpaces](#tospaces)
     * [toTabs](#totabs)
     * [toUpperCase](#touppercase)
@@ -850,6 +851,19 @@ mb_strtolower().
 ```php
 S::create('FÒÔ BÀŘ', 'UTF-8')->toLowerCase();
 S::toLowerCase('FÒÔ BÀŘ', 'UTF-8');  // 'fòô bàř'
+```
+
+#### toTitleCase
+
+$stringy->toTitleCase()
+
+S::toTitleCase(string $str [, string $encoding ])
+
+Converts the first character of each word in the string to uppercase.
+
+```php
+S::create('fòô bàř', 'UTF-8')->toTitleCase();
+S::toTitleCase('fòô bàř', 'UTF-8');  // 'Fòô Bàř'
 ```
 
 #### toSpaces

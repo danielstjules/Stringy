@@ -433,6 +433,18 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider toTitleCaseProvider()
+     */
+    public function testToTitleCase($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->toTitleCase();
+        $this->assertInstanceOf('Stringy\Stringy', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider toUpperCaseProvider()
      */
     public function testToUpperCase($expected, $str, $encoding = null)

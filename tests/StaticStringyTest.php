@@ -245,11 +245,11 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider toCaseTitleProvider()
+     * @dataProvider toTitleCaseProvider()
      */
-    public function testToCaseTitle($expected, $str, $encoding = null)
+    public function testToTitleCase($expected, $str, $encoding = null)
     {
-        $result = S::toCaseTitle($str, $encoding);
+        $result = S::toTitleCase($str, $encoding);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
