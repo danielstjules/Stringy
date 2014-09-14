@@ -677,6 +677,18 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Uppercase the first character of each word in a string.
+     *
+     * @return Stringy Object with all characters of $str being title-cased
+     */
+    public function toCaseTitle()
+    {
+        $str = mb_convert_case($this->str, MB_CASE_TITLE, $this->encoding);
+
+        return self::create($str, $this->encoding);
+    }
+
+    /**
      * Converts all characters in the string to lowercase. An alias for PHP's
      * mb_strtolower().
      *

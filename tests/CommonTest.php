@@ -318,6 +318,17 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function toCaseTitleProvider()
+    {
+        return array(
+            array( 'Foo Bar', 'foo bar'),
+            array(' Foo_Bar ', ' foo_bar '),
+            array('Fòô Bàř', 'fòô bàř', 'UTF-8'),
+            array(' Fòô_Bàř ', ' fòô_bàř ', 'UTF-8'),
+            array('Αυτοκίνητο Αυτοκίνητο', 'αυτοκίνητο αυτοκίνητο', 'UTF-8'),
+        );
+    }
+
     public function toUpperCaseProvider()
     {
         return array(

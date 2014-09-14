@@ -324,6 +324,18 @@ class StaticStringy
     }
 
     /**
+     * Uppercase the first character of each word in a string.
+     *
+     * @param  string $str      String to convert case
+     * @param  string $encoding The character encoding
+     * @return string The title-cased string
+     */
+    public static function toCaseTitle($str, $encoding = null)
+    {
+        return (string) Stringy::create($str, $encoding)->toCaseTitle();
+    }
+
+    /**
      * Converts all characters in the string to uppercase. An alias for PHP's
      * mb_strtoupper().
      *
