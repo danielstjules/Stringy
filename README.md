@@ -4,7 +4,7 @@ A PHP library with a variety of string manipulation functions with multibyte
 support. Offers both OO method chaining and a procedural-style static wrapper.
 Tested and compatible with PHP 5.3+ and HHVM. Inspired by underscore.string.js.
 
-[![Build Status](https://travis-ci.org/danielstjules/Stringy.png)](https://travis-ci.org/danielstjules/Stringy)
+[![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
 
 * [Requiring/Loading](#requiringloading)
 * [OO and Procedural](#oo-and-procedural)
