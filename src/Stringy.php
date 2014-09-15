@@ -1106,7 +1106,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Ensures that the string begins with $substring. If it doesn't, it's
      * prepended.
      *
-     * @param  string  $substring The substring to add if not present
+     * @param  string|array  $substring The substring to add if not present
      * @return Stringy Object with its $str prefixed by the $substring
      */
     public function ensureLeft($substring)
