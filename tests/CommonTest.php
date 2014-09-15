@@ -254,6 +254,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(true, 'foo bars', 'foo bar'),
+            array(true, 'foo bars', ['x', 'foo bar']),
             array(true, 'FOO bars', 'foo bar', false),
             array(true, 'FOO bars', 'foo BAR', false),
             array(true, 'FÒÔ bàřs', 'fòô bàř', false, 'UTF-8'),
@@ -271,6 +272,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(true, 'foo bars', 'o bars'),
+            array(true, 'foo bars', ['x', 'o bars']),
             array(true, 'FOO bars', 'o bars', false),
             array(true, 'FOO bars', 'o BARs', false),
             array(true, 'FÒÔ bàřs', 'ô bàřs', false, 'UTF-8'),
@@ -366,6 +368,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(true, 'This string contains foo bar', 'foo bar'),
+            array(true, 'This string contains foo bar', ['foo bar', 'none']),
             array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
             array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true, 'UTF-8'),
@@ -373,6 +376,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'øœ¬', true, 'UTF-8'),
             array(false, 'This string contains foo bar', 'Foo bar'),
             array(false, 'This string contains foo bar', 'foobar'),
+            array(false, 'This string contains foo bar', ['none']),
+            array(false, 'This string contains foo bar', ['none', 'nan']),
             array(false, 'This string contains foo bar', 'foo bar '),
             array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', true, 'UTF-8'),
             array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', true, 'UTF-8'),

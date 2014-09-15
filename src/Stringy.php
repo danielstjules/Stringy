@@ -608,16 +608,22 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function startsWith($substring, $caseSensitive = true)
     {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $startOfStr = mb_substr($this->str, 0, $substringLength,
-            $this->encoding);
+        $substrings = is_array($substring) ? $substring : (array) $substring;
 
-        if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+        foreach($substrings as $substring) {
+            $substringLength = mb_strlen($substring, $this->encoding);
+            $startOfStr = mb_substr($this->str, 0, $substringLength,
+                $this->encoding);
+
+            if (!$caseSensitive) {
+                $substring = mb_strtolower($substring, $this->encoding);
+                $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+            }
+
+            if($substring === $startOfStr) return true;
         }
 
-        return $substring === $startOfStr;
+        return false;
     }
 
     /**
@@ -625,24 +631,30 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param  string $substring     The substring to look for
+     * @param  string|array $substring     The substring to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool   Whether or not $str ends with $substring
      */
     public function endsWith($substring, $caseSensitive = true)
     {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $strLength = $this->length();
+        $substrings = is_array($substring) ? $substring : (array) $substring;
 
-        $endOfStr = mb_substr($this->str, $strLength - $substringLength,
-            $substringLength, $this->encoding);
+        foreach($substrings as $substring) {
+            $substringLength = mb_strlen($substring, $this->encoding);
+            $strLength = $this->length();
 
-        if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $endOfStr = mb_strtolower($endOfStr, $this->encoding);
+            $endOfStr = mb_substr($this->str, $strLength - $substringLength,
+                $substringLength, $this->encoding);
+
+            if (!$caseSensitive) {
+                $substring = mb_strtolower($substring, $this->encoding);
+                $endOfStr = mb_strtolower($endOfStr, $this->encoding);
+            }
+
+            if($substring === $endOfStr) return true;
         }
 
-        return $substring === $endOfStr;
+        return false;
     }
 
     /**
@@ -749,11 +761,19 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         $encoding = $this->encoding;
 
-        if ($caseSensitive) {
-            return (mb_strpos($this->str, $needle, 0, $encoding) !== false);
-        } else {
-            return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
+        $needles = is_array($needle) ? $needle : (array) $needle;
+
+        foreach($needles as $needle) {
+            if ($caseSensitive) {
+                $contains = (mb_strpos($this->str, $needle, 0, $encoding) !== false);
+            } else {
+                $contains = (mb_stripos($this->str, $needle, 0, $encoding) !== false);
+            }
+
+            if($contains === true) return true;
         }
+
+        return false;
     }
 
     /**
