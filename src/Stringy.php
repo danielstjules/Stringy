@@ -753,7 +753,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * the comparison is case-sensitive, but can be made insensitive by setting
      * $caseSensitive to false.
      *
-     * @param  string $needle        Substring to look for
+     * @param  string|array $needle        Substring to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool   Whether or not $str contains $needle
      */
@@ -1106,7 +1106,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Ensures that the string begins with $substring. If it doesn't, it's
      * prepended.
      *
-     * @param  string|array  $substring The substring to add if not present
+     * @param  string  $substring The substring to add if not present
      * @return Stringy Object with its $str prefixed by the $substring
      */
     public function ensureLeft($substring)
