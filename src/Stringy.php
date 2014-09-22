@@ -773,14 +773,18 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Inserts $substring into the string at the $index provided.
      *
      * @param  string  $substring String to be inserted
-     * @param  int     $index     The index at which to insert the substring
+     * @param  int     $index     The index at which to insert the substring. If null defaults to end of line.
      * @return Stringy Object with the resulting $str after the insertion
      */
-    public function insert($substring, $index)
+    public function insert($substring, $index = null)
     {
         $stringy = self::create($this->str, $this->encoding);
         if ($index > $stringy->length()) {
             return $stringy;
+        }
+
+        if (null == $index) {
+            $index = $stringy->count();
         }
 
         $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
