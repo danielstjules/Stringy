@@ -1122,13 +1122,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns a new string with the prefix $substring removed, if present.
      *
      * @param  string  $substring The prefix to remove
+     * @param  bool    $of
      * @return Stringy Object having a $str without the prefix $substring
      */
-    public function removeLeft($substring)
+    public function removeLeft($substring, $of = false)
     {
         $stringy = self::create($this->str, $this->encoding);
 
-        if ($stringy->startsWith($substring)) {
+        if ($stringy->startsWith($substring) || $of) {
             $substringLength = mb_strlen($substring, $stringy->encoding);
             return $stringy->substr($substringLength);
         }
@@ -1140,13 +1141,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Returns a new string with the suffix $substring removed, if present.
      *
      * @param  string  $substring The suffix to remove
+     * @param  bool    $of
      * @return Stringy Object having a $str without the suffix $substring
      */
-    public function removeRight($substring)
+    public function removeRight($substring, $of = false)
     {
         $stringy = self::create($this->str, $this->encoding);
 
-        if ($stringy->endsWith($substring)) {
+        if ($stringy->endsWith($substring) || $of) {
             $substringLength = mb_strlen($substring, $stringy->encoding);
             return $stringy->substr(0, $stringy->length() - $substringLength);
         }
