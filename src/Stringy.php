@@ -606,22 +606,28 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * default, the comparison is case-sensitive, but can be made insensitive
      * by setting $caseSensitive to false.
      *
-     * @param  string $substring     The substring to look for
+     * @param  array|string $substring     The substring to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @return bool   Whether or not $str starts with $substring
      */
     public function startsWith($substring, $caseSensitive = true)
     {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $startOfStr = mb_substr($this->str, 0, $substringLength,
-            $this->encoding);
+        $substrings = is_array($substring) ? $substring : (array) $substring;
 
-        if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+        foreach($substrings as $substring) {
+            $substringLength = mb_strlen($substring, $this->encoding);
+            $startOfStr = mb_substr($this->str, 0, $substringLength,
+                $this->encoding);
+
+            if (!$caseSensitive) {
+                $substring = mb_strtolower($substring, $this->encoding);
+                $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+            }
+
+            if($substring === $startOfStr) return true;
         }
 
-        return $substring === $startOfStr;
+        return false;
     }
 
     /**
