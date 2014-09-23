@@ -482,6 +482,19 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider containsAllProvider()
+     */
+    public function testContainsAll($expected, $haystack, $needles,
+                                 $caseSensitive = true, $encoding = null)
+    {
+        $stringy = S::create($haystack, $encoding);
+        $result = $stringy->containsAll($needles, $caseSensitive);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($haystack, $stringy);
+    }
+
+    /**
      * @dataProvider surroundProvider()
      */
     public function testSurround($expected, $str, $substring)
