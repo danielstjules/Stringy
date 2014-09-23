@@ -253,7 +253,7 @@ class StaticStringy
      * by setting $caseSensitive to false.
      *
      * @param  string $str           String to check the start of
-     * @param  string $substring     The substring to look for
+     * @param  string array|$substring     The substring to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @param  string $encoding      The character encoding
      * @return bool   Whether or not $str starts with $substring
