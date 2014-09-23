@@ -2,6 +2,17 @@
 
 abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Asserts that a variable is of a Stringy instance.
+     *
+     * @param mixed $actual
+     */
+    public function assertStringy($actual)
+    {
+        $this->assertInstanceOf('Stringy\Stringy', $actual);
+    }
+
     public function charsProvider()
     {
         return array(
