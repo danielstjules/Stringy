@@ -383,6 +383,24 @@ class StaticStringy
     }
 
     /**
+     * Returns true if the string contains any $needles, false otherwise. By default,
+     * the comparison is case-sensitive, but can be made insensitive by setting
+     * $caseSensitive to false.
+     *
+     * @param  string $haystack      String being checked
+     * @param  array  $needles       Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  string $encoding      The character encoding
+     * @return bool   Whether or not $haystack contains $needle
+     */
+    public static function containsAny($haystack, $needles, $caseSensitive = true,
+                                    $encoding = null)
+    {
+        return Stringy::create($haystack, $encoding)
+            ->containsAny($needles, $caseSensitive);
+    }
+
+    /**
      * Surrounds a string with the given substring.
      *
      * @param  string $str       The string to surround
