@@ -26,7 +26,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             throw new \InvalidArgumentException(
                 'Passed value cannot be an array'
             );
-        } else if (is_object($str) && !method_exists($str, '__toString')) {
+        } elseif (is_object($str) && !method_exists($str, '__toString')) {
             throw new \InvalidArgumentException(
                 'Passed object must have a __toString method'
             );
@@ -105,7 +105,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  mixed   $offset The index to check
      * @return boolean Whether or not the index exists
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         $length = $this->length();
         $offset = (int) $offset;
 
@@ -127,7 +128,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @throws \OutOfBoundsException If the positive or negative offset does
      *                               not exist
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         $offset = (int) $offset;
         $length = $this->length();
 
@@ -146,7 +148,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  mixed      $value  Value to set
      * @throws \Exception When called
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         // Stringy is immutable, cannot directly set char
         throw new \Exception('Stringy object is immutable, cannot modify char');
     }
@@ -158,7 +161,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  mixed      $offset The index of the character
      * @throws \Exception When called
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         // Don't allow directly modifying the string
         throw new \Exception('Stringy object is immutable, cannot unset char');
     }
@@ -224,7 +228,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $camelCase = preg_replace_callback(
             '/[-_\s]+(.)?/u',
-            function($match) use ($encoding) {
+            function ($match) use ($encoding) {
                 return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
             },
             $stringy->trim()->lowerCaseFirst()->str
@@ -232,7 +236,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $stringy->str = preg_replace_callback(
             '/[\d]+(.)?/u',
-            function($match) use ($encoding) {
+            function ($match) use ($encoding) {
                 return mb_strtoupper($match[0], $encoding);
             },
             $camelCase
