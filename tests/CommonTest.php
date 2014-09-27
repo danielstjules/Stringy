@@ -402,7 +402,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     public function containsAnyProvider()
     {
         // One needle
-        $singleNeedle = array_map(function($array) {
+        $singleNeedle = array_map(function ($array) {
             $array[2] = array($array[2]);
             return $array;
         }, $this->containsProvider());
@@ -440,7 +440,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
     public function containsAllProvider()
     {
         // One needle
-        $singleNeedle = array_map(function($array) {
+        $singleNeedle = array_map(function ($array) {
             $array[2] = array($array[2]);
             return $array;
         }, $this->containsProvider());

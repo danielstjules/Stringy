@@ -777,7 +777,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $encoding = $this->encoding;
 
-        foreach($needles as $needle) {
+        foreach ($needles as $needle) {
             if ($this->contains($needle, $caseSensitive)) {
                 return true;
             }
@@ -803,7 +803,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $encoding = $this->encoding;
 
-        foreach($needles as $needle) {
+        foreach ($needles as $needle) {
             if (!$this->contains($needle, $caseSensitive)) {
                 return false;
             }
@@ -1033,8 +1033,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $end = 0;
         $table = array_fill(0, $strLength + 1, array_fill(0, $otherLength + 1, 0));
 
-        for ($i = 1; $i <= $strLength; $i++){
-            for ($j = 1; $j <= $otherLength; $j++){
+        for ($i = 1; $i <= $strLength; $i++) {
+            for ($j = 1; $j <= $otherLength; $j++) {
                 $strChar = mb_substr($stringy->str, $i - 1, 1, $encoding);
                 $otherChar = mb_substr($otherStr, $j - 1, 1, $encoding);
 
@@ -1282,7 +1282,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         return (json_last_error() === JSON_ERROR_NONE);
     }
-
 
     /**
      * Returns true if the string contains only lower case chars, false
