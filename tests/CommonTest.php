@@ -2,7 +2,6 @@
 
 abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * Asserts that a variable is of a Stringy instance.
      *
@@ -402,32 +401,16 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
 
     public function containsAnyProvider()
     {
-        return array(
-            // no needle
+        // One needle
+        $singleNeedle = array_map(function($array) {
+            $array[2] = array($array[2]);
+            return $array;
+        }, $this->containsProvider());
+
+        $provider = array(
+            // No needles
             array(false, 'This string contains foo bar', array()),
-            // one needle
-            array(true, 'This string contains foo bar', array('foo bar')),
-            array(true, '12398!@(*%!@# @!%#*&^%', array(' @!%#*&^%')),
-            array(true, 'Ο συγγραφέας είπε', array('συγγραφέας'), 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('å´¥©'), true, 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('å˚ ∆'), true, 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('øœ¬'), true, 'UTF-8'),
-            array(false, 'This string contains foo bar', array('Foo bar')),
-            array(false, 'This string contains foo bar', array('foobar')),
-            array(false, 'This string contains foo bar', array('foo bar ')),
-            array(false, 'Ο συγγραφέας είπε', array('  συγγραφέας '), true, 'UTF-8'),
-            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array(' ßå˚'), true, 'UTF-8'),
-            array(true, 'This string contains foo bar', array('Foo bar'), false),
-            array(true, '12398!@(*%!@# @!%#*&^%', array(' @!%#*&^%'), false),
-            array(true, 'Ο συγγραφέας είπε', array('ΣΥΓΓΡΑΦΈΑΣ'), false, 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('Å´¥©'), false, 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('Å˚ ∆'), false, 'UTF-8'),
-            array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array('ØŒ¬'), false, 'UTF-8'),
-            array(false, 'This string contains foo bar', array('foobar'), false),
-            array(false, 'This string contains foo bar', array('foo bar '), false),
-            array(false, 'Ο συγγραφέας είπε', array('  συγγραφέας '), false, 'UTF-8'),
-            array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array(' ßÅ˚'), false, 'UTF-8'),
-            // many needles
+            // Multiple needles
             array(true, 'This string contains foo bar', array('foo', 'bar')),
             array(true, '12398!@(*%!@# @!%#*&^%', array(' @!%#*', '&^%')),
             array(true, 'Ο συγγραφέας είπε', array('συγγρ', 'αφέας'), 'UTF-8'),
@@ -450,6 +433,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'Ο συγγραφέας είπε', array('  συγγραφέας ', ' ραφέ '), false, 'UTF-8'),
             array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', array(' ßÅ˚', ' Å˚ '), false, 'UTF-8'),
         );
+
+        return array_merge($singleNeedle, $provider);
     }
 
 

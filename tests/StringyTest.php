@@ -485,7 +485,7 @@ class StringyTestCase extends CommonTest
      * @dataProvider containsAnyProvider()
      */
     public function testcontainsAny($expected, $haystack, $needles,
-                                 $caseSensitive = true, $encoding = null)
+                                    $caseSensitive = true, $encoding = null)
     {
         $stringy = S::create($haystack, $encoding);
         $result = $stringy->containsAny($needles, $caseSensitive);

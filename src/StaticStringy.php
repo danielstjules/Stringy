@@ -383,9 +383,9 @@ class StaticStringy
     }
 
     /**
-     * Returns true if the string contains any $needles, false otherwise. By default,
-     * the comparison is case-sensitive, but can be made insensitive by setting
-     * $caseSensitive to false.
+     * Returns true if the string contains any $needles, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
      *
      * @param  string $haystack      String being checked
      * @param  array  $needles       Substrings to look for
@@ -393,8 +393,8 @@ class StaticStringy
      * @param  string $encoding      The character encoding
      * @return bool   Whether or not $haystack contains $needle
      */
-    public static function containsAny($haystack, $needles, $caseSensitive = true,
-                                    $encoding = null)
+    public static function containsAny($haystack, $needles,
+                                       $caseSensitive = true, $encoding = null)
     {
         return Stringy::create($haystack, $encoding)
             ->containsAny($needles, $caseSensitive);
@@ -458,7 +458,7 @@ class StaticStringy
      * @return string The resulting string after truncating
      */
     public static function safeTruncate($str, $length, $substring = '',
-                                    $encoding = null)
+                                        $encoding = null)
     {
         return (string) Stringy::create($str, $encoding)
             ->safeTruncate($length, $substring);
