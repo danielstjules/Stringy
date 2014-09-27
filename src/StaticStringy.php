@@ -391,13 +391,31 @@ class StaticStringy
      * @param  array  $needles       Substrings to look for
      * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
      * @param  string $encoding      The character encoding
-     * @return bool   Whether or not $haystack contains $needle
+     * @return bool   Whether or not $haystack contains any $needles
      */
     public static function containsAny($haystack, $needles,
                                        $caseSensitive = true, $encoding = null)
     {
         return Stringy::create($haystack, $encoding)
             ->containsAny($needles, $caseSensitive);
+    }
+
+    /**
+     * Returns true if the string contains all $needles, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $haystack      String being checked
+     * @param  array  $needles       Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  string $encoding      The character encoding
+     * @return bool   Whether or not $haystack contains all $needles
+     */
+    public static function containsAll($haystack, $needles,
+                                       $caseSensitive = true, $encoding = null)
+    {
+        return Stringy::create($haystack, $encoding)
+            ->containsAll($needles, $caseSensitive);
     }
 
     /**

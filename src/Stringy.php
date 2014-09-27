@@ -787,6 +787,32 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns true if the string contains all $needles, false otherwise. By
+     * default the comparison is case-sensitive, but can be made insensitive by
+     * setting $caseSensitive to false.
+     *
+     * @param  array  $needles       Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str contains $needle
+     */
+    public function containsAll($needles, $caseSensitive = true)
+    {
+        if (empty($needles)) {
+            return false;
+        }
+
+        $encoding = $this->encoding;
+
+        foreach($needles as $needle) {
+            if (!$this->contains($needle, $caseSensitive)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Surrounds $str with the given substring.
      *
      * @param  string  $substring The substring to add to both sides
