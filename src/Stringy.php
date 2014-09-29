@@ -365,8 +365,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function humanize()
     {
-        $str = str_replace('_id', '', $this->str);
-        $str = str_replace('_', ' ', $str);
+        $str = str_replace(array('_id', '_'), array('', ' '), $this->str);
 
         return self::create($str, $this->encoding)->trim()->upperCaseFirst();
     }
