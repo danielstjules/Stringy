@@ -835,15 +835,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function insert($substring, $index)
     {
         $stringy = self::create($this->str, $this->encoding);
-        if ($index > $stringy->length()) {
-            return $stringy;
+
+        if ($index <= $stringy->length()) {
+            $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
+            $end = mb_substr($stringy->str, $index, $stringy->length(),
+                $stringy->encoding);
+
+            $stringy->str = $start . $substring . $end;
         }
-
-        $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
-        $end = mb_substr($stringy->str, $index, $stringy->length(),
-            $stringy->encoding);
-
-        $stringy->str = $start . $substring . $end;
 
         return $stringy;
     }
