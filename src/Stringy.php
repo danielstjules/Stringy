@@ -174,12 +174,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function chars()
     {
-        $chars = array();
-        for ($i = 0; $i < $this->length(); $i++) {
-            $chars[] = $this->at($i)->str;
-        }
-
-        return $chars;
+        return preg_split('//u', $this->str, - 1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
