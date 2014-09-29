@@ -379,11 +379,17 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function tidy()
     {
-        $str = $this->str;
-        $str = preg_replace('/\x{2026}/u', '...', $str);
-        $str = preg_replace('/[\x{201C}\x{201D}]/u', '"', $str);
-        $str = preg_replace('/[\x{2018}\x{2019}]/u', "'", $str);
-        $str = preg_replace('/[\x{2013}\x{2014}]/u', '-', $str);
+        $str = preg_replace(array(
+            '/\x{2026}/u',
+            '/[\x{201C}\x{201D}]/u',
+            '/[\x{2018}\x{2019}]/u',
+            '/[\x{2013}\x{2014}]/u',
+        ), array(
+            '...',
+            '"',
+            "'",
+            '-',
+        ), $this->str);
 
         return self::create($str, $this->encoding);
     }
