@@ -4,8 +4,18 @@ namespace Stringy;
 
 class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
+    /**
+     * The string.
+     *
+     * @var string
+     */
     protected $str;
 
+    /**
+     * The encoding.
+     *
+     * @var string
+     */
     protected $encoding;
 
     /**
