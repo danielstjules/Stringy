@@ -860,16 +860,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function truncate($length, $substring = '')
     {
         $stringy = self::create($this->str, $this->encoding);
-        if ($length >= $stringy->length()) {
-            return $stringy;
+        if ($length < $stringy->length()) {
+            // Need to further trim the string so we can append the substring
+            $substringLength = mb_strlen($substring, $stringy->encoding);
+            $length = $length - $substringLength;
+
+            $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
+            $stringy->str = $truncated . $substring;
         }
-
-        // Need to further trim the string so we can append the substring
-        $substringLength = mb_strlen($substring, $stringy->encoding);
-        $length = $length - $substringLength;
-
-        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
-        $stringy->str = $truncated . $substring;
 
         return $stringy;
     }
