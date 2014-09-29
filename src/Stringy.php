@@ -775,8 +775,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             return false;
         }
 
-        $encoding = $this->encoding;
-
         foreach ($needles as $needle) {
             if ($this->contains($needle, $caseSensitive)) {
                 return true;
@@ -800,8 +798,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         if (empty($needles)) {
             return false;
         }
-
-        $encoding = $this->encoding;
 
         foreach ($needles as $needle) {
             if (!$this->contains($needle, $caseSensitive)) {
