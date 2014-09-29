@@ -1077,14 +1077,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function substr($start, $length = null)
     {
         $stringy = self::create($this->str, $this->encoding);
+        $length = $length === null ? $this->length() : $length;
 
-        if ($length === null) {
-            $stringy->str = mb_substr($stringy->str, $start,
-                $stringy->length() - $start, $this->encoding);
-        } else {
-            $stringy->str = mb_substr($stringy->str, $start, $length,
-                $stringy->encoding);
-        }
+        $stringy->str = mb_substr($stringy->str, $start, $length, $stringy->encoding);
 
         return $stringy;
     }
