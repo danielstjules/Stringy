@@ -663,10 +663,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function toSpaces($tabLength = 4)
     {
-        $spaces = str_repeat(' ', $tabLength);
-        $str = str_replace("\t", $spaces, $this->str);
-
-        return self::create($str, $this->encoding);
+        return $this->replace("\t", str_repeat(' ', $tabLength));
     }
 
     /**
@@ -679,10 +676,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function toTabs($tabLength = 4)
     {
-        $spaces = str_repeat(' ', $tabLength);
-        $str = str_replace($spaces, "\t", $this->str);
-
-        return self::create($str, $this->encoding);
+        return $this->replace(str_repeat(' ', $tabLength), "\t");
     }
 
     /**
