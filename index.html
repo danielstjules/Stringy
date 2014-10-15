@@ -49,6 +49,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.</p>
 <li><a href="#chars">chars</a></li>
 <li><a href="#collapsewhitespace">collapseWhitespace</a></li>
 <li><a href="#contains">contains</a></li>
+<li><a href="#containsall">containsAll</a></li>
+<li><a href="#containsany">containsAny</a></li>
 <li><a href="#countsubstr">countSubstr</a></li>
 <li><a href="#create">create</a></li>
 <li><a href="#dasherize">dasherize</a></li>
@@ -107,7 +109,9 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.</p>
 <li><a href="#links">Links</a></li>
 <li><a href="#tests">Tests</a></li>
 <li><a href="#license">License</a></li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="requiringloading" class="anchor" href="#requiringloading"><span class="octicon octicon-link"></span></a>Requiring/Loading</h2>
 
 <p>If you're using Composer to manage dependencies, you can include the following
@@ -115,7 +119,7 @@ in your composer.json file:</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
     <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"danielstjules/stringy"</span><span class="p">:</span> <span class="s2">"~1.6"</span>
+        <span class="nt">"danielstjules/stringy"</span><span class="p">:</span> <span class="s2">"~1.7"</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -277,6 +281,36 @@ by setting $caseSensitive to false.</p>
 
 <div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">contains</span><span class="p">(</span><span class="s1">'συγγραφέας'</span><span class="p">);</span>
 <span class="nx">S</span><span class="o">::</span><span class="na">contains</span><span class="p">(</span><span class="s1">'Ο συγγραφέας είπε'</span><span class="p">,</span> <span class="s1">'συγγραφέας'</span><span class="p">,</span> <span class="s1">'UTF-8'</span><span class="p">);</span>  <span class="c1">// true</span>
+</pre></div>
+
+<h4>
+<a name="containsall" class="anchor" href="#containsall"><span class="octicon octicon-link"></span></a>containsAll</h4>
+
+<p>$stringy-&gt;containsAll(array $needles [, boolean $caseSensitive = true ])</p>
+
+<p>S::containsAll(string $haystack, array $needles [, boolean $caseSensitive = true [, string $encoding ]])</p>
+
+<p>Returns true if the string contains all $needles, false otherwise. By
+default the comparison is case-sensitive, but can be made insensitive by
+setting $caseSensitive to false.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Str contains foo and bar'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">containsAll</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">));</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">containsAll</span><span class="p">(</span><span class="s1">'Str contains foo and bar'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">));</span>  <span class="c1">// true</span>
+</pre></div>
+
+<h4>
+<a name="containsany" class="anchor" href="#containsany"><span class="octicon octicon-link"></span></a>containsAny</h4>
+
+<p>$stringy-&gt;containsAny(array $needles [, boolean $caseSensitive = true ])</p>
+
+<p>S::containsAny(string $haystack, array $needles [, boolean $caseSensitive = true [, string $encoding ]])</p>
+
+<p>Returns true if the string contains any $needles, false otherwise. By
+default the comparison is case-sensitive, but can be made insensitive by
+setting $caseSensitive to false.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">S</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">'Str contains foo'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">containsAny</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">));</span>
+<span class="nx">S</span><span class="o">::</span><span class="na">containsAny</span><span class="p">(</span><span class="s1">'Str contains foo'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">));</span>  <span class="c1">// true</span>
 </pre></div>
 
 <h4>
@@ -1023,7 +1057,9 @@ and underscores, and removes spaces, dashes, underscores.</p>
 <li>
 <a href="https://github.com/danielstjules/SliceableStringy">SliceableStringy</a>:
 Python-like string slices in PHP</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
 <p>From the project directory, tests can be ran using <code>phpunit</code></p>
