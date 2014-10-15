@@ -15,6 +15,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [chars](#chars)
     * [collapseWhitespace](#collapsewhitespace)
     * [contains](#contains)
+    * [containsAll](#containsall)
+    * [containsAny](#containsany)
     * [countSubstr](#countsubstr)
     * [create](#create)
     * [dasherize](#dasherize)
@@ -247,6 +249,36 @@ by setting $caseSensitive to false.
 ```php
 S::create('Ο συγγραφέας είπε', 'UTF-8')->contains('συγγραφέας');
 S::contains('Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8');  // true
+```
+
+#### containsAll
+
+$stringy->containsAll(array $needles [, boolean $caseSensitive = true ])
+
+S::containsAll(string $haystack, array $needles [, boolean $caseSensitive = true [, string $encoding ]])
+
+Returns true if the string contains all $needles, false otherwise. By
+default the comparison is case-sensitive, but can be made insensitive by
+setting $caseSensitive to false.
+
+```php
+S::create('Str contains foo and bar')->containsAll(array('foo', 'bar'));
+S::containsAll('Str contains foo and bar', array('foo', 'bar'));  // true
+```
+
+#### containsAny
+
+$stringy->containsAny(array $needles [, boolean $caseSensitive = true ])
+
+S::containsAny(string $haystack, array $needles [, boolean $caseSensitive = true [, string $encoding ]])
+
+Returns true if the string contains any $needles, false otherwise. By
+default the comparison is case-sensitive, but can be made insensitive by
+setting $caseSensitive to false.
+
+```php
+S::create('Str contains foo')->containsAny(array('foo', 'bar'));
+S::containsAny('Str contains foo', array('foo', 'bar'));  // true
 ```
 
 #### countSubstr
