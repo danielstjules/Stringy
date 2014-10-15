@@ -1,3 +1,8 @@
+### 1.7.0 (2014-10-14)
+
+ * Added containsAll and containsAny
+ * Light cleanup
+
 ### 1.6.0 (2014-09-14)
 
  * Added toTitleCase
