@@ -4,8 +4,19 @@ namespace Stringy;
 
 class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
+    /**
+     * An instance's string.
+     *
+     * @var string
+     */
     protected $str;
 
+    /**
+     * The string's encoding, which should be one of the mbstring module's
+     * supported encodings.
+     *
+     * @var string
+     */
     protected $encoding;
 
     /**
