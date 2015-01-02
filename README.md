@@ -9,6 +9,7 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
 * [Requiring/Loading](#requiringloading)
 * [OO and Procedural](#oo-and-procedural)
 * [Implemented Interfaces](#implemented-interfaces)
+* [PHP 5.6 Creation](#php-56-creation)
 * [Methods](#methods)
     * [at](#at)
     * [camelize](#camelize)
@@ -169,6 +170,21 @@ isset($stringy[-4]);  // false
 
 $stringy[3];          // OutOfBoundsException
 $stringy[2] = 'a';    // Exception
+```
+
+## PHP 5.6 Creation
+
+As of PHP 5.6, [`use function`](https://wiki.php.net/rfc/use_function) is
+available for importing functions. Stringy exposes a namespaced function,
+`Stringy\create`, which emits the same behaviour as `Stringy\Stringy::create()`.
+If running PHP 5.6, or another runtime that supports the `use function` syntax,
+you can take advantage of an even simpler API as seen below:
+
+``` php
+use function Stringy\create as s;
+
+// Instead of: S::create('Fòô     Bàř', 'UTF-8')
+s('Fòô     Bàř', 'UTF-8')->collapseWhitespace()->swapCase();
 ```
 
 ## Methods

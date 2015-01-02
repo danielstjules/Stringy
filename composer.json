@@ -25,9 +25,12 @@
         "source": "https://github.com/danielstjules/Stringy"
     },
     "autoload": {
-        "psr-4": { "Stringy\\": "src/" }
+        "psr-4": { "Stringy\\": "src/" },
+        "files": ["src/Create.php"]
     },
     "autoload-dev": {
+        "psr-4": { "Stringy\\": "src/" },
+        "files": ["src/Create.php"],
         "classmap": [ "tests" ]
     }
 }
