@@ -637,7 +637,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             $startOfStr = mb_strtolower($startOfStr, $this->encoding);
         }
 
-        return $substring === $startOfStr;
+        return (string) $substring === $startOfStr;
     }
 
     /**
@@ -662,7 +662,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             $endOfStr = mb_strtolower($endOfStr, $this->encoding);
         }
 
-        return $substring === $endOfStr;
+        return (string) $substring === $endOfStr;
     }
 
     /**

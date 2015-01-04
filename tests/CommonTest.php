@@ -1,5 +1,7 @@
 <?php
 
+use Stringy\Stringy;
+
 abstract class CommonTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -752,6 +754,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('bar', 'foo bar', 'foo '),
             array('foo bar', 'foo bar', 'oo'),
             array('foo bar', 'foo bar', 'oo bar'),
+            array('oo bar', 'foo bar', Stringy::create('foo bar')->first(1), 'UTF-8'),
+            array('oo bar', 'foo bar', Stringy::create('foo bar')->at(0), 'UTF-8'),
             array('fòô bàř', 'fòô bàř', '', 'UTF-8'),
             array('òô bàř', 'fòô bàř', 'f', 'UTF-8'),
             array('bàř', 'fòô bàř', 'fòô ', 'UTF-8'),
@@ -768,6 +772,8 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('foo', 'foo bar', ' bar'),
             array('foo bar', 'foo bar', 'ba'),
             array('foo bar', 'foo bar', 'foo ba'),
+            array('foo ba', 'foo bar', Stringy::create('foo bar')->last(1), 'UTF-8'),
+            array('foo ba', 'foo bar', Stringy::create('foo bar')->at(6), 'UTF-8'),
             array('fòô bàř', 'fòô bàř', '', 'UTF-8'),
             array('fòô bà', 'fòô bàř', 'ř', 'UTF-8'),
             array('fòô', 'fòô bàř', ' bàř', 'UTF-8'),
