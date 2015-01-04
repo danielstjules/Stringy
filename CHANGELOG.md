@@ -1,3 +1,8 @@
+### 1.8.0 (2015-01-03)
+
+ * Listed ext-mbstring in composer.json
+ * Added Stringy\create function for PHP 5.6
+
 ### 1.7.0 (2014-10-14)
 
  * Added containsAll and containsAny
