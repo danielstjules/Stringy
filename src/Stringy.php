@@ -186,7 +186,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function chars()
     {
         $chars = array();
-        for ($i = 0; $i < $this->length(); $i++) {
+        for ($i = 0, $l = $this->length(); $i < $l; $i++) {
             $chars[] = $this->at($i)->str;
         }
 
