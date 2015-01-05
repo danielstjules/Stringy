@@ -546,6 +546,19 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider safeTruncateProvider()
+     */
+    public function testSafeTruncate($expected, $str, $length, $substring = '',
+                                     $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->safeTruncate($length, $substring);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider reverseProvider()
      */
     public function testReverse($expected, $str, $encoding = null)
@@ -600,6 +613,19 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->longestCommonPrefix($otherStr);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider longestCommonSuffixProvider()
+     */
+    public function testLongestCommonSuffix($expected, $str, $otherStr,
+                                            $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->longestCommonSuffix($otherStr);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
