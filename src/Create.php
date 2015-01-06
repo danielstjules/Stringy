@@ -3,7 +3,7 @@
 namespace Stringy;
 
 /**
- * Invokes Stringy::create and returns the generated Stringy object on success.
+ * Creates a Stringy object and returns it on success.
  *
  * @param  mixed   $str      Value to modify, after being cast to string
  * @param  string  $encoding The character encoding
