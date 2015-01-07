@@ -172,6 +172,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('test string', 'test string'),
             array('Ο συγγραφέας', '   Ο     συγγραφέας  '),
             array('123', ' 123 '),
+            array('', ' ', 'UTF-8'), // no-break space
             array('1 2 3', '　　1　　2　　3　　', 'UTF-8'), // ideographic spaces
             array('', '   ', 'UTF-8'), // thin space and space
             array('', ' '),
@@ -188,7 +189,10 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('perevirka', 'перевірка'),
             array('lysaya gora', 'лысая гора'),
             array('shchuka', 'щука'),
-            array('', '漢字')
+            array('', '漢字'),
+            array(' ', ' '), // no-break space
+            array('  1  2  3  ', '　　1　　2　　3　　'), // ideographic spaces
+            array('   ', '   '), // thin space and space
         );
     }
 
@@ -822,6 +826,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, "\n\t ' \v\f"),
             array(false, "\n\t 2 \v\f"),
             array(true, '', 'UTF-8'),
+            array(true, ' ', 'UTF-8'), // no-break space
             array(true, '   ', 'UTF-8'), // thin space
             array(true, '　　', 'UTF-8'), // ideographic spaces
             array(false, '　z', 'UTF-8'),
