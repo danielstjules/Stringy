@@ -1249,7 +1249,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isAlpha()
     {
-        return $this->matchesPattern('^([[:alpha:]])*$');
+        return $this->matchesPattern('^[[:alpha:]]*$');
     }
 
     /**
@@ -1260,7 +1260,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isAlphanumeric()
     {
-        return $this->matchesPattern('^([[:alnum:]])*$');
+        return $this->matchesPattern('^[[:alnum:]]*$');
     }
 
     /**
@@ -1271,7 +1271,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isHexadecimal()
     {
-        return $this->matchesPattern('^([[:xdigit:]])*$');
+        return $this->matchesPattern('^[[:xdigit:]]*$');
     }
 
     /**
@@ -1282,7 +1282,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isBlank()
     {
-        return $this->matchesPattern('^([[:space:]])*$');
+        return $this->matchesPattern('^[[:space:]]*$');
     }
 
     /**
@@ -1305,7 +1305,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isLowerCase()
     {
-        return $this->matchesPattern('^([[:lower:]])*$');
+        return $this->matchesPattern('^[[:lower:]]*$');
     }
 
     /**
@@ -1316,7 +1316,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isUpperCase()
     {
-        return $this->matchesPattern('^([[:upper:]])*$');
+        return $this->matchesPattern('^[[:upper:]]*$');
     }
 
     /**
