@@ -508,7 +508,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             'TS'   => array('Ц'),
             'YA'   => array('Я'),
             'YU'   => array('Ю'),
-            'ZH'   => array('Ж')
+            'ZH'   => array('Ж'),
+            ' '    => array("\xC2\xA0", "\xE2\x80\x89", "\xE2\x80\xAF",
+                            "\xE3\x80\x80"),
         );
 
         foreach ($charsArray as $key => $value) {
