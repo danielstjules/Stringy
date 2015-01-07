@@ -426,7 +426,24 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function toAscii()
     {
         $str = $this->str;
-        $charsArray = array(
+
+        foreach ($this->charsArray() as $key => $value) {
+            $str = str_replace($value, $key, $str);
+        }
+
+        $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Returns the replacements for the toAscii() method.
+     *
+     * @return array An array of replacements.
+     */
+    protected function charsArray()
+    {
+        return array(
             'a'    => array('à', 'á', 'â', 'ä', 'ã', 'ā', 'ą', 'ă', 'å', 'α',
                             'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ', 'ᾀ',
                             'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά', 'ᾰ',
@@ -515,14 +532,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
                             "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
                             "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80"),
         );
-
-        foreach ($charsArray as $key => $value) {
-            $str = str_replace($value, $key, $str);
-        }
-
-        $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
-
-        return static::create($str, $this->encoding);
     }
 
     /**
