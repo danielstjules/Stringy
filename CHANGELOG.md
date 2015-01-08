@@ -1,3 +1,12 @@
+### 1.8.1 (2015-01-08)
+
+ * Optimized chars()
+ * Added "ä Ä Ö Ü"" in toAscii()
+ * Added support for Unicode spaces in toAscii()
+ * Replaced instances of self::create() with static::create()
+ * Added missing test cases for safeTruncate() and longestCommonSuffix()
+ * Updated Stringy\create() to avoid collision when it already exists
+
 ### 1.8.0 (2015-01-03)
 
  * Listed ext-mbstring in composer.json
