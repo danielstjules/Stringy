@@ -174,9 +174,12 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('test string', 'test string'),
             array('Ο συγγραφέας', '   Ο     συγγραφέας  '),
             array('123', ' 123 '),
-            array('', ' ', 'UTF-8'), // no-break space
-            array('1 2 3', '　　1　　2　　3　　', 'UTF-8'), // ideographic spaces
-            array('', '   ', 'UTF-8'), // thin space and space
+            array('', ' ', 'UTF-8'), // no-break space (U+00A0)
+            array('', '           ', 'UTF-8'), // spaces U+2000 to U+200A
+            array('', ' ', 'UTF-8'), // narrow no-break space (U+202F)
+            array('', ' ', 'UTF-8'), // medium mathematical space (U+205F)
+            array('', '　', 'UTF-8'), // ideographic space (U+3000)
+            array('1 2 3', '  1  2  3　　', 'UTF-8'),
             array('', ' '),
             array('', ''),
         );
@@ -192,9 +195,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('lysaya gora', 'лысая гора'),
             array('shchuka', 'щука'),
             array('', '漢字'),
-            array(' ', ' '), // no-break space
-            array('  1  2  3  ', '　　1　　2　　3　　'), // ideographic spaces
-            array('   ', '   '), // thin space and space
+            array(' ', ' '), // no-break space (U+00A0)
+            array('           ', '           '), // spaces U+2000 to U+200A
+            array(' ', ' '), // narrow no-break space (U+202F)
+            array(' ', ' '), // medium mathematical space (U+205F)
+            array(' ', '　'), // ideographic space (U+3000)
         );
     }
 
@@ -832,9 +837,11 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, "\n\t ' \v\f"),
             array(false, "\n\t 2 \v\f"),
             array(true, '', 'UTF-8'),
-            array(true, ' ', 'UTF-8'), // no-break space
-            array(true, '   ', 'UTF-8'), // thin space
-            array(true, '　　', 'UTF-8'), // ideographic spaces
+            array(true, ' ', 'UTF-8'), // no-break space (U+00A0)
+            array(true, '           ', 'UTF-8'), // spaces U+2000 to U+200A
+            array(true, ' ', 'UTF-8'), // narrow no-break space (U+202F)
+            array(true, ' ', 'UTF-8'), // medium mathematical space (U+205F)
+            array(true, '　', 'UTF-8'), // ideographic space (U+3000)
             array(false, '　z', 'UTF-8'),
             array(false, '　1', 'UTF-8'),
         );
