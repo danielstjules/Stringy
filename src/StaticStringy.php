@@ -815,7 +815,7 @@ class StaticStringy
     public static function replace($str, $search, $replacement, $encoding = null)
     {
         return (string) Stringy::create($str, $encoding)
-            ->replace($search,$replacement);
+            ->replace($search, $replacement);
     }
 
     /**
