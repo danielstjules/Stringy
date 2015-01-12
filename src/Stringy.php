@@ -443,7 +443,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     protected function charsArray()
     {
-        return array(
+        static $charsArray;
+        if (isset($charsArray)) return $charsArray;
+
+        return $charsArray = array(
             'a'    => array('à', 'á', 'â', 'ä', 'ã', 'ā', 'ą', 'ă', 'å', 'α',
                             'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ', 'ᾀ',
                             'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά', 'ᾰ',
