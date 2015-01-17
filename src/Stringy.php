@@ -305,7 +305,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', trim($this->str));
+        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', $this->trim());
         $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
         $str = mb_strtolower($str, $this->encoding);
 
