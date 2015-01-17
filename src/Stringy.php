@@ -354,7 +354,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $buffer = preg_replace_callback(
             '/([\S]+)/u',
-            function ($match) use (&$encoding, &$ignore) {
+            function ($match) use ($encoding, $ignore) {
                 if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
                 } else {
