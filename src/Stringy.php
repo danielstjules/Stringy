@@ -277,7 +277,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function dasherize()
     {
-        return $this->applyDelimeter('-');
+        return $this->applyDelimiter('-');
     }
 
     /**
@@ -290,7 +290,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function underscored()
     {
-        return $this->applyDelimeter('_');
+        return $this->applyDelimiter('_');
     }
 
     /**
@@ -299,7 +299,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  string  $delimiter Sequence used to separate parts of the string
      * @return Stringy Object with a delimited $str
      */
-    protected function applyDelimeter($delimiter)
+    protected function applyDelimiter($delimiter)
     {
         // Save current regex encoding so we can reset it after
         $regexEncoding = mb_regex_encoding();
@@ -776,7 +776,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy->toAscii());
 
-        return $stringy->toLowerCase()->applyDelimeter($replacement)
+        return $stringy->toLowerCase()->applyDelimiter($replacement)
                        ->removeLeft($replacement)->removeRight($replacement);
     }
 
