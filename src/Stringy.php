@@ -277,7 +277,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function dasherize()
     {
-        return $this->applyDelimeter('-');
+        return $this->applyDelimiter('-');
     }
 
     /**
@@ -290,7 +290,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function underscored()
     {
-        return $this->applyDelimeter('_');
+        return $this->applyDelimiter('_');
     }
 
     /**
@@ -299,13 +299,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  string  $delimiter Sequence used to separate parts of the string
      * @return Stringy Object with a delimited $str
      */
-    protected function applyDelimeter($delimiter)
+    protected function applyDelimiter($delimiter)
     {
         // Save current regex encoding so we can reset it after
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', trim($this->str));
+        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', $this->trim());
         $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
         $str = mb_strtolower($str, $this->encoding);
 
@@ -354,7 +354,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $buffer = preg_replace_callback(
             '/([\S]+)/u',
-            function ($match) use (&$encoding, &$ignore) {
+            function ($match) use ($encoding, $ignore) {
                 if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
                 } else {
@@ -776,7 +776,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy->toAscii());
 
-        return $stringy->toLowerCase()->applyDelimeter($replacement)
+        return $stringy->toLowerCase()->applyDelimiter($replacement)
                        ->removeLeft($replacement)->removeRight($replacement);
     }
 
