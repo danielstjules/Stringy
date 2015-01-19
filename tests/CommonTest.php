@@ -195,6 +195,9 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('lysaya gora', 'лысая гора'),
             array('shchuka', 'щука'),
             array('', '漢字'),
+            array('xin chao the gioi', 'xin chào thế giới'),
+            array('XIN CHAO THE GIOI', 'XIN CHÀO THẾ GIỚI'),
+            array('dam phat chet luon', 'đấm phát chết luôn'),
             array(' ', ' '), // no-break space (U+00A0)
             array('           ', '           '), // spaces U+2000 to U+200A
             array(' ', ' '), // narrow no-break space (U+202F)
