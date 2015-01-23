@@ -814,6 +814,18 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider hasLowerCaseProvider()
+     */
+    public function testHasLowerCase($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->hasLowerCase();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider isSerializedProvider()
      */
     public function testIsSerialized($expected, $str, $encoding = null)
@@ -832,6 +844,18 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->isUpperCase();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider hasUpperCaseProvider()
+     */
+    public function testHasUpperCase($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->hasUpperCase();
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
