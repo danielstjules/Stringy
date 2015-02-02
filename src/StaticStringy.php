@@ -748,6 +748,18 @@ class StaticStringy
     }
 
     /**
+     * Returns whether the given string has any lower case characters in it.
+     *
+     * @param  string $str      String to check
+     * @param  string $encoding The character encoding
+     * @return bool   Whether or not $str contains a lower case character.
+     */
+    public static function hasLowerCase($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->hasLowerCase();
+    }
+
+    /**
      * Returns true if the string is serialized, false otherwise.
      *
      * @param  string $str      String to check
@@ -770,6 +782,18 @@ class StaticStringy
     public static function isUpperCase($str, $encoding = null)
     {
         return Stringy::create($str, $encoding)->isUpperCase();
+    }
+
+    /**
+     * Returns whether the given string has any upper case characters in it.
+     *
+     * @param  string $str      String to check
+     * @param  string $encoding The character encoding
+     * @return bool   Whether or not $str contains an upper case character.
+     */
+    public static function hasUpperCase($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->hasUpperCase();
     }
 
     /**

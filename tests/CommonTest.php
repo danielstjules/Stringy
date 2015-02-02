@@ -884,6 +884,24 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function hasLowerCaseProvider()
+    {
+        return array(
+            array(false, ''),
+            array(true, 'foobar'),
+            array(false, 'FOO BAR'),
+            array(true, 'fOO BAR'),
+            array(true, 'foO BAR'),
+            array(true, 'FOO BAr'),
+            array(true, 'Foobar'),
+            array(false, 'FÒÔBÀŘ', 'UTF-8'),
+            array(true, 'fòôbàř', 'UTF-8'),
+            array(true, 'fòôbàř2', 'UTF-8'),
+            array(true, 'Fòô bàř', 'UTF-8'),
+            array(true, 'fòôbÀŘ', 'UTF-8'),
+        );
+    }
+
     public function isSerializedProvider()
     {
         return array(
@@ -908,6 +926,24 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array(false, 'FÒÔBÀŘ2', 'UTF-8'),
             array(false, 'FÒÔ BÀŘ', 'UTF-8'),
             array(false, 'FÒÔBàř', 'UTF-8'),
+        );
+    }
+
+    public function hasUpperCaseProvider()
+    {
+        return array(
+            array(false, ''),
+            array(true, 'FOOBAR'),
+            array(false, 'foo bar'),
+            array(true, 'Foo bar'),
+            array(true, 'FOo bar'),
+            array(true, 'foo baR'),
+            array(true, 'fOOBAR'),
+            array(false, 'fòôbàř', 'UTF-8'),
+            array(true, 'FÒÔBÀŘ', 'UTF-8'),
+            array(true, 'FÒÔBÀŘ2', 'UTF-8'),
+            array(true, 'fÒÔ BÀŘ', 'UTF-8'),
+            array(true, 'FÒÔBàř', 'UTF-8'),
         );
     }
 
