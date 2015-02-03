@@ -166,14 +166,16 @@ class StaticStringy
 
     /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
-     * replaced with their closest ASCII counterparts, and the rest are removed.
+     * replaced with their closest ASCII counterparts, and the rest are removed
+     * unless instructed otherwise.
      *
      * @param  string $str A string with non-ASCII characters
+     * @param  bool   $removeUnsupported Whether to remove or not the unsupported characters
      * @return string A string containing only ASCII characters
      */
-    public static function toAscii($str)
+    public static function toAscii($str, $removeUnsupported = true)
     {
-        return (string) Stringy::create($str)->toAscii();
+        return (string) Stringy::create($str)->toAscii($removeUnsupported);
     }
 
     /**

@@ -881,10 +881,11 @@ S::titleize('i like to watch DVDs at home', $ignore, 'UTF-8');
 
 $stringy->toAscii()
 
-S::toAscii(string $str)
+S::toAscii(string $str [, boolean $removeUnsupported = true])
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
-replaced with their closest ASCII counterparts, and the rest are removed.
+replaced with their closest ASCII counterparts, and the rest are removed
+unless instructed otherwise.
 
 ```php
 S::create('fòô bàř')->toAscii();
