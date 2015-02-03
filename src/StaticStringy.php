@@ -169,8 +169,8 @@ class StaticStringy
      * replaced with their closest ASCII counterparts, and the rest are removed
      * unless instructed otherwise.
      *
-     * @param  string $str A string with non-ASCII characters
-     * @param  bool   $removeUnsupported Whether to remove or not the unsupported characters
+     * @param  string $str               A string with non-ASCII characters
+     * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
      * @return string A string containing only ASCII characters
      */
     public static function toAscii($str, $removeUnsupported = true)

@@ -422,7 +422,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * replaced with their closest ASCII counterparts, and the rest are removed
      * unless instructed otherwise.
      *
-     * @param  bool    $removeUnsupported Whether to remove or not the unsupported characters
+     * @param  bool    $removeUnsupported Whether or not to remove the unsupported characters
      * @return Stringy Object whose $str contains only ASCII characters
      */
     public function toAscii($removeUnsupported = true)
