@@ -235,14 +235,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function camelize()
     {
         $encoding = $this->encoding;
-        $stringy = static::create($this->str, $this->encoding);
+        $stringy = $this->trim()->lowerCaseFirst();
 
         $camelCase = preg_replace_callback(
             '/[-_\s]+(.)?/u',
             function ($match) use ($encoding) {
                 return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
             },
-            $stringy->trim()->lowerCaseFirst()->str
+            $stringy->str
         );
 
         $stringy->str = preg_replace_callback(
@@ -784,11 +784,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function slugify($replacement = '-')
     {
-        $stringy = static::create($this->str, $this->encoding);
+        $stringy = $this->toAscii();
 
         $quotedReplacement = preg_quote($replacement);
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
-        $stringy->str = preg_replace($pattern, '', $stringy->toAscii());
+        $stringy->str = preg_replace($pattern, '', $stringy);
 
         return $stringy->toLowerCase()->applyDelimiter($replacement)
                        ->removeLeft($replacement)->removeRight($replacement);
