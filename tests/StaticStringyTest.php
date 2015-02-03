@@ -133,9 +133,9 @@ class StaticStringyTestCase extends CommonTest
     /**
      * @dataProvider toAsciiProvider()
      */
-    public function testToAscii($expected, $str)
+    public function testToAscii($expected, $str, $removeUnsupported = true)
     {
-        $result = S::toAscii($str);
+        $result = S::toAscii($str, $removeUnsupported);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }

@@ -300,10 +300,10 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider toAsciiProvider()
      */
-    public function testToAscii($expected, $str)
+    public function testToAscii($expected, $str, $removeUnsupported = true)
     {
         $stringy = S::create($str);
-        $result = $stringy->toAscii();
+        $result = $stringy->toAscii($removeUnsupported);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);

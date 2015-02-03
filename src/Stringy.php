@@ -419,11 +419,13 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
-     * replaced with their closest ASCII counterparts, and the rest are removed.
+     * replaced with their closest ASCII counterparts, and the rest are removed
+     * unless instructed otherwise.
      *
+     * @param  bool    $removeUnsupported Whether to remove or not the unsupported characters
      * @return Stringy Object whose $str contains only ASCII characters
      */
-    public function toAscii()
+    public function toAscii($removeUnsupported = true)
     {
         $str = $this->str;
 
@@ -431,7 +433,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             $str = str_replace($value, $key, $str);
         }
 
-        $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
+        if ($removeUnsupported) {
+            $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
+        }
 
         return static::create($str, $this->encoding);
     }
