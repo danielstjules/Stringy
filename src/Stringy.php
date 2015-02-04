@@ -60,6 +60,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $this->str = (string) $str;
         $this->encoding = $encoding ?: mb_internal_encoding();
+        return $this;
     }
 
     /**

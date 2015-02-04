@@ -916,8 +916,10 @@ class StringyTestCase extends CommonTest
 
     public function testSet()
     {
-        $stringy = S::create('lorem');
-        $stringy->set('ipsum');
-        $this->assertSame('ipsum', (string) $stringy);
+        $stringy1 = S::create('lorem');
+        $stringy2 = $stringy1->set('ipsum');
+        $this->assertSame('ipsum', (string) $stringy1);
+        $this->assertSame($stringy1, $stringy2);
+        $this->assertSame($stringy1->count(), $stringy1->set('ipsum')->count());
     }
 }
