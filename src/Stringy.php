@@ -20,11 +20,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     protected $encoding;
 
     /**
-     * Initializes a Stringy object and assigns both str and encoding properties
-     * the supplied values. $str is cast to a string prior to assignment, and if
-     * $encoding is not specified, it defaults to mb_internal_encoding(). Throws
-     * an InvalidArgumentException if the first argument is an array or object
-     * without a __toString method.
+     * Initializes a Stringy object.
      *
      * @param  mixed  $str      Value to modify, after being cast to string
      * @param  string $encoding The character encoding
@@ -32,6 +28,25 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *         __toString method is passed as the first argument
      */
     public function __construct($str, $encoding = null)
+    {
+        $this->set($str, $encoding);
+    }
+
+
+    /**
+     * Initializes a Stringy object and assigns both str and encoding properties
+     * the supplied values. This method also makes it possible to change the
+     * internal string without creating a new object. $str is cast to a string
+     * prior to assignment, and if $encoding is not specified, it defaults to
+     * mb_internal_encoding(). Throws an InvalidArgumentException if the first
+     * argument is an array or object without a __toString method.
+     *
+     * @param  mixed  $str      Value to modify, after being cast to string
+     * @param  string $encoding The character encoding
+     * @throws \InvalidArgumentException if an array or object without a
+     *         __toString method is passed as the first argument
+     */
+    public function set($str, $encoding = null)
     {
         if (is_array($str)) {
             throw new \InvalidArgumentException(
