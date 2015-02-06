@@ -1434,4 +1434,18 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         return static::create($str, $this->encoding);
     }
+    
+    /**
+     * Replaces all occurences of $what from the begining of string with $with
+     * 
+     * @param string $what
+     * @param string $with
+     * @return self
+     */
+    public function beginingReplace($what, $with)
+    {
+        $str = preg_replace('/^' . preg_quote($what, '/') . '/', $with, $this->str);
+        
+        return static::create($str, $this->encoding);
+    }
 }
