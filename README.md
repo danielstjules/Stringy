@@ -26,6 +26,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [ensureRight](#ensureright)
     * [first](#first)
     * [getEncoding](#getencoding)
+    * [hasLowerCase](#haslowercase)
+    * [hasUpperCase](#hasuppercase)
     * [humanize](#humanize)
     * [insert](#insert)
     * [isAlpha](#isalpha)
@@ -403,6 +405,32 @@ Returns the encoding used by the Stringy object.
 
 ```php
 S::create('fòô bàř', 'UTF-8')->getEncoding();  // 'UTF-8'
+```
+
+#### hasLowerCase
+
+$stringy->hasLowerCase()
+
+S::hasLowerCase(string $str [, string $encoding ])
+
+Returns true if the string contains a lower case char, false otherwise.
+
+```php
+S::create('fòô bàř', 'UTF-8')->hasLowerCase();
+S::hasLowerCase('fòô bàř', 'UTF-8');  // true
+```
+
+#### hasUpperCase
+
+$stringy->hasUpperCase()
+
+S::hasUpperCase(string $str [, string $encoding ])
+
+Returns true if the string contains an upper case char, false otherwise.
+
+```php
+S::create('fòô bàř', 'UTF-8')->hasUpperCase();
+S::hasUpperCase('fòô bàř', 'UTF-8');  // false
 ```
 
 #### humanize

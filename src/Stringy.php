@@ -1298,6 +1298,28 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns true if the string contains a lower case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains a lower case character.
+     */
+    public function hasLowerCase()
+    {
+        return $this->matchesPattern('.*[[:lower:]]');
+    }
+
+    /**
+     * Returns true if the string contains an upper case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains an upper case character.
+     */
+    public function hasUpperCase()
+    {
+        return $this->matchesPattern('.*[[:upper:]]');
+    }
+
+    /**
      * Returns true if the string contains only alphabetic chars, false
      * otherwise.
      *
@@ -1365,17 +1387,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains a lower case char, false
-     * otherwise.
-     *
-     * @return bool Whether or not the string contains a lower case character.
-     */
-    public function hasLowerCase()
-    {
-        return $this->matchesPattern('.*[[:lower:]]');
-    }
-
-    /**
      * Returns true if the string contains only lower case chars, false
      * otherwise.
      *
@@ -1384,17 +1395,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function isUpperCase()
     {
         return $this->matchesPattern('^[[:upper:]]*$');
-    }
-
-    /**
-     * Returns true if the string contains an upper case char, false
-     * otherwise.
-     *
-     * @return bool Whether or not the string contains an upper case character.
-     */
-    public function hasUpperCase()
-    {
-        return $this->matchesPattern('.*[[:upper:]]');
     }
 
     /**
