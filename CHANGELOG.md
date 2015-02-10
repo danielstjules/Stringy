@@ -1,3 +1,13 @@
+### 1.9.0 (2015-02-09)
+
+ * Added hasUpperCase and hasLowerCase
+ * Added $removeUnsupported parameter to toAscii()
+ * Improved toAscii support with additional Unicode spaces, Vietnamese chars,
+   and numerous other characters
+ * Separated the charsArray from toAscii as a protected method that may be
+   extended by inheriting classes
+ * Chars array is cached for better performance
+
 ### 1.8.1 (2015-01-08)
 
  * Optimized chars()
