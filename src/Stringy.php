@@ -422,7 +422,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * replaced with their closest ASCII counterparts, and the rest are removed
      * unless instructed otherwise.
      *
-     * @param  bool    $removeUnsupported Whether or not to remove the unsupported characters
+     * @param  bool    $removeUnsupported Whether or not to remove the
+     *                                    unsupported characters
      * @return Stringy Object whose $str contains only ASCII characters
      */
     public function toAscii($removeUnsupported = true)
@@ -671,8 +672,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $leftPadding = mb_substr(str_repeat($padStr, ceil($left / $length)), 0,
             $left, $stringy->encoding);
-        $rightPadding = mb_substr(str_repeat($padStr, ceil($right / $length)), 0,
-            $right, $stringy->encoding);
+        $rightPadding = mb_substr(str_repeat($padStr, ceil($right / $length)),
+            0, $right, $stringy->encoding);
 
         $stringy->str = $leftPadding . $stringy->str . $rightPadding;
 
@@ -890,7 +891,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * Surrounds $str with the given substring.
      *
      * @param  string  $substring The substring to add to both sides
-     * @return Stringy Object whose $str had the substring prepended and appended
+     * @return Stringy Object whose $str had the substring both prepended and
+     *                 appended
      */
     public function surround($substring)
     {
@@ -1105,7 +1107,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         $len = 0;
         $end = 0;
-        $table = array_fill(0, $strLength + 1, array_fill(0, $otherLength + 1, 0));
+        $table = array_fill(0, $strLength + 1,
+            array_fill(0, $otherLength + 1, 0));
 
         for ($i = 1; $i <= $strLength; $i++) {
             for ($j = 1; $j <= $otherLength; $j++) {

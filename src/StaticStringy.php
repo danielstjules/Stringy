@@ -170,7 +170,8 @@ class StaticStringy
      * unless instructed otherwise.
      *
      * @param  string $str               A string with non-ASCII characters
-     * @param  bool   $removeUnsupported Whether or not to remove the unsupported characters
+     * @param  bool   $removeUnsupported Whether or not to remove the
+     *                                   unsupported characters
      * @return string A string containing only ASCII characters
      */
     public static function toAscii($str, $removeUnsupported = true)
