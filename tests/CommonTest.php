@@ -190,7 +190,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return array(
             array('foo bar', 'fòô bàř'),
             array(' TEST ', ' ŤÉŚŢ '),
-            array(' = z = 3', 'φ = ź = 3'),
+            array('f = z = 3', 'φ = ź = 3'),
             array('perevirka', 'перевірка'),
             array('lysaya gora', 'лысая гора'),
             array('shchuka', 'щука'),
@@ -375,7 +375,6 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('foo-dbar', " Foo d'Bar "),
             array('a-string-with-dashes', 'A string-with-dashes'),
             array('using-strings-like-foo-bar', 'Using strings like fòô bàř'),
-            array('unrecognized-chars-like', 'unrecognized chars like συγγρ'),
             array('numbers-1234', 'numbers 1234'),
             array('perevirka-ryadka', 'перевірка рядка'),
             array('bukvar-s-bukvoy-y', 'букварь с буквой ы'),
