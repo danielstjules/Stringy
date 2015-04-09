@@ -1539,7 +1539,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         if (($offset = $this->offsetOfSubstr($separator)) === false)
             return false;
-        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), null, $this->encoding); 
+        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), mb_strlen($this->str, $this->encoding), $this->encoding); 
     }
 
     /**
@@ -1553,7 +1553,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         if (($offset = $this->offsetOfLastSubstr($separator)) === false)
             return false;
-        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), null, $this->encoding); 
+        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), mb_strlen($this->str, $this->encoding), $this->encoding); 
     }
 
     /**
