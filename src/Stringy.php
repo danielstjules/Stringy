@@ -179,7 +179,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the offset/index of the first occurance of $substr in the string.
+     * Returns the offset/index of the first occurrence of $substr in the string.
      * In case $substr is not a substring of the string, returns false.
      * 
      * @param string $substr substring
@@ -192,7 +192,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
    /**
-     * Returns the offset/index of the last occurance of $substr in the string.
+     * Returns the offset/index of the last occurrence of $substr in the string.
      * In case $substr is not a substring of the string, returns false.
      *
      * @param string $substr substring

@@ -18,6 +18,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [contains](#contains)
     * [containsAll](#containsall)
     * [containsAny](#containsany)
+    * [containsInt](#containsint)
+    * [constainsFloat](#constainsfloat)
     * [countSubstr](#countsubstr)
     * [create](#create)
     * [dasherize](#dasherize)
@@ -33,6 +35,7 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [isAlpha](#isalpha)
     * [isAlphanumeric](#isalphanumeric)
     * [isBlank](#isblank)
+    * [isEmpty](#isempty)
     * [isHexadecimal](#ishexadecimal)
     * [isJson](#isjson)
     * [isLowerCase](#islowercase)
@@ -44,6 +47,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [longestCommonSuffix](#longestcommonsuffix)
     * [longestCommonSubstring](#longestcommonsubstring)
     * [lowerCaseFirst](#lowercasefirst)
+    * [offsetOfSubstr](#offsetofsubstr)
+    * [offsetOfLastSubstr](#offsetoflastsubstr)
     * [pad](#pad)
     * [padBoth](#padboth)
     * [padLeft](#padleft)
@@ -54,6 +59,10 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [replace](#replace)
     * [reverse](#reverse)
     * [safeTruncate](#safetruncate)
+    * [substringAfterFirst](#substringafterfirst)
+    * [substringAfterLast](#substringafterlast)
+    * [substringBeforeFirst](#substringbeforefirst)
+    * [substringBeforeLast](#substringbeforelast)
     * [shuffle](#shuffle)
     * [slugify](#slugify)
     * [startsWith](#startswith)
@@ -299,6 +308,33 @@ S::create('Str contains foo')->containsAny(array('foo', 'bar'));
 S::containsAny('Str contains foo', array('foo', 'bar'));  // true
 ```
 
+#### containsInt
+
+$stringy->containsInt()
+
+S::containsInt(string $str [, string $encoding ]])
+
+Returns true if the string contains an integer value, false otherwise.
+
+```php
+S::create('12')->containsInt();
+S::containsInt('12', 'UTF-8');  // true
+```
+
+#### constainsFloat
+
+$stringy->constainsFloat()
+
+S::constainsFloat(string $str [, string $encoding ]])
+
+Returns true if the string contains an float value, false otherwise.
+This function accepts float numbers with dots (.) or commas (,) and also takes care of the thousand separators.
+
+```php
+S::create('12.4')->constainsFloat();
+S::constainsFloat('12.4', 'UTF-8');  // true
+```
+
 #### countSubstr
 
 $stringy->countSubstr(string $substring [, boolean $caseSensitive = true ])
@@ -500,6 +536,19 @@ S::create("\n\t  \v\f")->isBlank();
 S::isBlank("\n\t  \v\f");  // true
 ```
 
+#### isEmpty
+
+$stringy->isEmpty()
+
+S::isEmpty(string $str [, string $encoding ])
+
+Returns true if the string is empty (doesn't contain any char), false otherwise.
+
+```php
+S::create("")->isEmpty();
+S::isEmpty("");  // true
+```
+
 #### isHexadecimal
 
 $stringy->isHexadecimal()
@@ -644,6 +693,32 @@ S::create('Σ test', 'UTF-8')->lowerCaseFirst();
 S::lowerCaseFirst('Σ test', 'UTF-8');  // 'σ test'
 ```
 
+#### offsetOfSubstr
+
+$stringy->offsetOfSubstr(string $substr [, $offset = 0 ]);
+
+S::offsetOfSubstr(string $str , string $substr [, $offset = 0 [, $encoding = null ]])
+
+Returns the offset/index of the first occurrence of $substr in the string. In case $substr is not a substring of the string, returns false.
+
+```php
+S::create('string', 'UTF-8')->offsetOfSubstr('ing');
+S::offsetOfSubstr('string', 'ing', 0, 'UTF-8');  // 3
+```
+
+#### offsetOfLastSubstr
+
+$stringy->offsetOfLastSubstr(string $substr [, $offset = 0 ]);
+
+S::offsetOfLastSubstr(string $str , string $substr [, $offset = 0 [, $encoding = null ]])
+
+Returns the offset/index of the last occurrence of $substr in the string. In case $substr is not a substring of the string, returns false.
+
+```php
+S::create('string', 'UTF-8')->offsetOfLastSubstr('ing');
+S::offsetOfLastSubstr('string string', 'ing', 0, 'UTF-8');  // 10
+```
+
 #### pad
 
 $stringy->pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
@@ -785,6 +860,58 @@ exceeding the desired length.
 ```php
 S::create('What are your plans today?')->safeTruncate(22, '...');
 S::safeTruncate('What are your plans today?', 22, '...');  // 'What are your plans...'
+```
+
+#### substringAfterFirst
+
+$stringy->substringAfterFirst(string $separator)
+
+S::substringAfterFirst(string $str, string $separator [, string $encoding ])
+
+Gets the substring after the first occurrence of a separator. If no match is found returns false.
+
+```php
+S::create('What are your plans today?')->substringAfterFirst('plans ');
+S::substringAfterFirst('What are your plans today?', 'plans ');  // 'today?'
+```
+
+#### substringAfterLast
+
+$stringy->substringAfterLast(string $separator)
+
+S::substringAfterLast(string $str, string $separator [, string $encoding ])
+
+Gets the substring after the last occurrence of a separator. If no match is found returns false.
+
+```php
+S::create('This is a String. How cool can a String be after all?')->substringAfterLast('String ');
+S::substringAfterLast('This is a String. How cool can a String be after all?', 'String ');  // 'be after all?'
+```
+
+#### substringBeforeFirst
+
+$stringy->substringBeforeFirst(string $separator)
+
+S::substringBeforeFirst(string $str, string $separator [, string $encoding ])
+
+Gets the substring before the first occurrence of a separator. If no match is found returns false.
+
+```php
+S::create('What are your plans today?')->substringBeforeFirst(' plans');
+S::substringBeforeFirst('What are your plans today?', ' plans');  // 'What are your'
+```
+
+#### substringBeforeLast
+
+$stringy->substringBeforeLast(string $separator)
+
+S::substringBeforeLast(string $str, string $separator [, string $encoding ])
+
+Gets the substring before the last occurrence of a separator. If no match is found returns false.
+
+```php
+S::create('What are your plans today? Any plans for tomorrow?')->substringBeforeLast(' plans');
+S::substringBeforeLast('What are your plans today? Any plans for tomorrow?', ' plans');  // What are your plans today? Any'
 ```
 
 #### shuffle
