@@ -4,6 +4,34 @@ namespace Stringy;
 
 class StaticStringy
 {
+	 /**
+     * Returns the offset/index of the first occurance of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public static function offsetOfSubstr($str, $substr, $offset = 0, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->offsetOfSubstr($substr, $offset);
+    }
+
+   /**
+     * Returns the offset/index of the last occurance of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $str         The haystack to search through
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public static function offsetOfLastSubstr($str, $substr, $offset = 0, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->offsetOfLastSubstr($substr, $offset);
+    }
+
     /**
      * Returns an array consisting of the characters in the string.
      *
@@ -421,6 +449,32 @@ class StaticStringy
             ->containsAll($needles, $caseSensitive);
     }
 
+     /**
+     * Returns true if the string contains an integer value, false
+     * otherwise.
+     *
+     * @param  string $str      String to check
+     * @param  string $encoding The character encoding
+     * @return bool Whether or not $str contains an integer value
+     */
+    public static function containsInt($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->containsInt();
+    }
+
+    /**
+     * Returns true if the string contains an float value, false
+     * otherwise.
+     *
+     * @param  string $str      String to check
+     * @param  string $encoding The character encoding
+     * @return bool Whether or not $str contains an float value
+     */
+    public static function constainsFloat($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->constainsFloat();
+    }
+
     /**
      * Surrounds a string with the given substring.
      *
@@ -752,6 +806,19 @@ class StaticStringy
     }
 
     /**
+     * Returns true if the string is empty (doesn't contain any char),
+     * false otherwise.
+     *
+     * @param  string $str      String to check
+     * @param  string $encoding The character encoding
+     * @return bool Whether or not $str is empty (no chars)
+     */
+    public static function isEmpty($str, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->isEmpty();
+    }
+
+    /**
      * Returns true if the string is JSON, false otherwise.
      *
      * @param  string $str      String to check
@@ -866,4 +933,61 @@ class StaticStringy
         return (string) Stringy::create($str, $encoding)
             ->regexReplace($pattern, $replacement, $options, $encoding);
     }
+
+    /**
+     * Gets the substring after the first occurrence of a separator.
+     * If no match is found returns null.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $separator   The separator to find
+     * @param string $encoding    The character encoding
+     * @return string
+     */
+    public static function substringAfterFirst($str, $separator, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->substringAfterFirst($separator);
+    }
+
+    /**
+     * Gets the substring after the last occurrence of a separator.
+     * If no match is found returns null.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $separator   The separator to find
+     * @param string $encoding    The character encoding
+     * @return string
+     */
+    public static function substringAfterLast($str, $separator, $encoding = null)
+    {
+         return Stringy::create($str, $encoding)->substringAfterLast($separator);
+    }
+
+    /**
+     * Gets the substring before the first occurrence of a separator.
+     * If no match is found returns null.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $separator   The separator to find
+     * @param string $encoding    The character encoding
+     * @return string
+     */
+    public static function substringBeforeFirst($str, $separator, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->substringBeforeFirst($separator);
+    }
+
+    /**
+     * Gets the substring before the last occurrence of a separator.
+     * If no match is found returns null.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $separator   The separator to find
+     * @param string $encoding    The character encoding
+     * @return string
+     */
+    public static function substringBeforeLast($str, $separator, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->substringBeforeLast($separator);
+    }
+
 }

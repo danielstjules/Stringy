@@ -6,6 +6,24 @@ use Stringy\StaticStringy as S;
 
 class StaticStringyTestCase extends CommonTest
 {
+	/**
+     * @dataProvider offsetOfSubstrProvider()
+     */
+    public function testOffsetOfSubstr($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::offsetOfSubstr($str, $subStr, $offset, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider offsetOfLastSubstrProvider()
+     */
+    public function testOffsetOfLastSubstr($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::offsetOfLastSubstr($str, $subStr, $offset, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
     /**
      * @dataProvider charsProvider()
      */
@@ -308,6 +326,26 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider containsIntProvider()
+     */
+    public function testContainsInt($expected, $str, $encoding = null)
+    {
+        $result = S::containsInt($str, $encoding);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider constainsFloatProvider()
+     */
+    public function testConstainsFloat($expected, $str, $encoding = null)
+    {
+        $result = S::constainsFloat($str, $encoding);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider surroundProvider()
      */
     public function testSurround($expected, $str, $substring)
@@ -546,6 +584,16 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider isEmptyProvider()
+     */
+    public function testIsEmpty($expected, $str, $encoding = null)
+    {
+        $result = S::isEmpty($str, $encoding);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider isJsonProvider()
      */
     public function testIsJson($expected, $str, $encoding = null)
@@ -647,4 +695,45 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
+
+     /**
+     * @dataProvider substringAfterFirstProvider()
+     */
+    public function testSubstringAfterFirst($expected, $str, $separator, $encoding = null)
+    {
+        $result = S::substringAfterFirst($str, $separator, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider substringAfterLastProvider()
+     */
+    public function testSubstringAfterLast($expected, $str, $separator, $encoding = null)
+    {
+        $result = S::substringAfterLast($str, $separator, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider substringBeforeFirstProvider()
+     */
+    public function testSubstringBeforeFirst($expected, $str, $separator, $encoding = null)
+    {
+        $result = S::substringBeforeFirst($str, $separator, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider substringBeforeLastProvider()
+     */
+    public function testSubstringBeforeLast($expected, $str, $separator, $encoding = null)
+    {
+        $result = S::substringBeforeLast($str, $separator, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
 }
