@@ -520,7 +520,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
                             'Ἇ', 'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ',
                             'Ᾱ', 'Ὰ', 'Ά', 'ᾼ', 'А'),
             'B'    => array('Б', 'Β'),
-            'C'    => array('Ć', 'Č', 'Ĉ', 'Ċ'),
+            'C'    => array('Ç','Ć', 'Č', 'Ĉ', 'Ċ'),
             'D'    => array('Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ'),
             'E'    => array('É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ',
                             'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',
@@ -885,6 +885,32 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         }
 
         return true;
+    }
+
+    /**
+     * Returns the offset/index of the first occurrence of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public function indexOf($substr, $offset = 0)
+    {
+        return mb_strpos($this->str, (string)$substr, (int)$offset, $this->encoding);
+    }
+
+    /**
+     * Returns the offset/index of the last occurrence of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public function indexOfLast($substr, $offset = 0)
+    {
+        return mb_strrpos($this->str, (string)$substr, (int)$offset, $this->encoding);
     }
 
     /**
