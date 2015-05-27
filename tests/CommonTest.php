@@ -590,7 +590,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function trimProvider()
+    public function trimProviderWithoutParams()
     {
         return array(
             array('foo   bar', '  foo   bar  '),
@@ -601,6 +601,23 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô bàř', ' fòô bàř'),
             array('fòô bàř', 'fòô bàř '),
             array('fòô bàř', "\n\t fòô bàř \n\t")
+        );
+    }
+
+    public function trimProviderWithParams()
+    {
+        return array(
+            array('foo   bar', '  foo   bar  ', " \t\n\r\0\x0B", 'trim'),
+            array('foo bar', ' foo bar', " \t\n\r\0\x0B", 'trim'),
+            array('foo bar', 'foo bar ', " \t\n\r\0\x0B", 'trim'),
+            array('foo bar', "\n\t foo bar \n\t", " \t\n\r\0\x0B", 'trim'),
+            array('fòô   bàř', '  fòô   bàř  ', " \t\n\r\0\x0B", 'trim'),
+            array('fòô bàř', ' fòô bàř', " \t\n\r\0\x0B", 'trim'),
+            array('fòô bàř', 'fòô bàř ', " \t\n\r\0\x0B", 'trim'),
+            array('fòô bàř', "\n\t fòô bàř \n\t", " \t\n\r\0\x0B", 'trim'),
+            array('  foo   bar', '  foo   bar  ', " \t\n\r\0\x0B", 'rtrim'),
+            array('foo   bar  ', '  foo   bar  ', " \t\n\r\0\x0B", 'ltrim'),
+            array('  foo   bar  ', '  foo   bar  ', "\t\n\r\0\x0B", 'ltrim')
         );
     }
 

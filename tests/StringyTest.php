@@ -594,15 +594,49 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider trimProvider()
+     * @dataProvider trimProviderWithoutParams()
      */
-    public function testTrim($expected, $str)
+    public function testTrimWithoutParams($expected, $str)
     {
         $stringy = S::create($str);
         $result = $stringy->trim();
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider trimProviderWithParams()
+     */
+    public function testTrimWithParams($expected, $str, $charList, $type)
+    {
+        $stringy = S::create($str);
+        $result = $stringy->trim($charList, $type);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testTrimWithInvalidCharset()
+    {
+        $stringy = S::create('test');
+        $stringy->trim(array('test1', 'test2'), 'trim');
+        $this->fail('Expecting exception when the first argument passed is not a string');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testTrimWithInvalidType()
+    {
+        $stringy = S::create('test');
+        $stringy->trim(' test ', 'aa');
+        $stringy->trim('btest ', 'Trim');
+        $stringy->trim(' btest', 'RTrim');
+        $this->fail('Expecting exception when the first argument passed is not a string');
     }
 
     /**
