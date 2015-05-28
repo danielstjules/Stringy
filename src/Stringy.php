@@ -186,7 +186,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param int $offset
      * @return int|bool
      */
-    public function offsetOfSubstr($substr, $offset = 0)
+    public function indexOf($substr, $offset = 0)
     {
         return mb_strpos($this->str, (string)$substr, (int)$offset, $this->encoding);
     }
@@ -199,7 +199,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param int $offset
      * @return int|bool
      */
-    public function offsetOfLastSubstr($substr, $offset = 0)
+    public function indexOfLast($substr, $offset = 0)
     {
         return mb_strrpos($this->str, (string)$substr, (int)$offset, $this->encoding);
     }
@@ -914,35 +914,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string contains an integer value, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains an integer value
-     */
-    public function containsInt()
-    {
-        return ((string)(int)$this->str == $this->str);
-    }
-
-    /**
-     * Returns true if the string contains an float value, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains an float value
-     */
-    public function constainsFloat()
-    {
-        $dotPos = mb_strrpos($this->str, '.', 0, $this->encoding);
-        $commaPos = mb_strrpos($this->str, ',', 0, $this->encoding);
-        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos : ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
-       
-        if (!$sep)
-            return false;
-
-        return true;
-    }
-
-    /**
      * Surrounds $str with the given substring.
      *
      * @param  string  $substring The substring to add to both sides
@@ -1419,17 +1390,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string is empty (doesn't contain any char),
-     * false otherwise.
-     *
-     * @return bool Whether or not $str is empty (no chars)
-     */
-    public function isEmpty()
-    {
-        return ($this->str === '');
-    }
-
-    /**
      * Returns true if the string is JSON, false otherwise.
      *
      * @return bool Whether or not $str is JSON
@@ -1526,62 +1486,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         mb_regex_encoding($regexEncoding);
 
         return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Gets the substring after the first occurrence of a separator.
-     * If no match is found returns false.
-     * 
-     * @param string $separator
-     * @return string|bool
-     */
-    public function substringAfterFirst($separator)
-    {
-        if (($offset = $this->offsetOfSubstr($separator)) === false)
-            return false;
-        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), mb_strlen($this->str, $this->encoding), $this->encoding); 
-    }
-
-    /**
-     * Gets the substring after the last occurrence of a separator.
-     * If no match is found returns false.
-     * 
-     * @param string $separator
-     * @return string|bool
-     */
-    public function substringAfterLast($separator)
-    {
-        if (($offset = $this->offsetOfLastSubstr($separator)) === false)
-            return false;
-        return mb_substr($this->str, $offset + mb_strlen($separator, $this->encoding), mb_strlen($this->str, $this->encoding), $this->encoding); 
-    }
-
-    /**
-     * Gets the substring before the first occurrence of a separator.
-     * If no match is found returns false.
-     * 
-     * @param string $separator
-     * @return string|bool
-     */
-    public function substringBeforeFirst($separator)
-    {
-        if (($offset = $this->offsetOfSubstr($separator)) === false)
-            return false;
-        return mb_substr($this->str, 0, $offset, $this->encoding); 
-    }
-
-    /**
-     * Gets the substring before the last occurrence of a separator.
-     * If no match is found returns false.
-     * 
-     * @param string $separator
-     * @return string|bool
-     */
-    public function substringBeforeLast($separator)
-    {
-        if (($offset = $this->offsetOfLastSubstr($separator)) === false)
-            return false;
-        return mb_substr($this->str, 0, $offset, $this->encoding); 
     }
 
 }

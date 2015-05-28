@@ -14,7 +14,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Stringy\Stringy', $actual);
     }
 
-    public function offsetOfSubstrProvider()
+    public function indexOfProvider()
     {
         return array(
             array(2, 'This is the string', 'is'),
@@ -24,7 +24,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function offsetOfLastSubstrProvider()
+    public function indexOfLastProvider()
     {
         return array(
             array(5, 'This is the string', 'is'),
@@ -510,38 +510,6 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         return array_merge($singleNeedle, $provider);
     }
 
-    public function containsIntProvider()
-    {
-        return array(
-            array(false, ''),
-            array(false, 'FOOBAR'),
-            array(false, 'FOO BAR'),
-            array(false, 'fOOBAR'),
-            array(false, 'FÒÔBÀŘ', 'UTF-8'),
-            array(true, '12', 'UTF-8'),
-            array(false, '12.4', 'UTF-8'),
-            array(false, '12,4', 'UTF-8'),
-            array(true, 12, 'UTF-8'),
-            array(false, 12.4, 'UTF-8'),
-        );
-    }
-
-    public function constainsFloatProvider()
-    {
-        return array(
-            array(false, ''),
-            array(false, 'FOOBAR'),
-            array(false, 'FOO BAR'),
-            array(false, 'fOOBAR'),
-            array(false, 'FÒÔBÀŘ', 'UTF-8'),
-            array(false, '12', 'UTF-8'),
-            array(true, '12.4', 'UTF-8'),
-            array(true, '12,4', 'UTF-8'),
-            array(false, 12, 'UTF-8'),
-            array(true, 12.4, 'UTF-8'),
-        );
-    }
-
     public function surroundProvider()
     {
         return array(
@@ -903,27 +871,6 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function isEmptyProvider()
-    {
-        return array(
-            array(true, ''),
-            array(false, ' '),
-            array(false, "\n\t "),
-            array(false, "\n\t  \v\f"),
-            array(false, "\n\t a \v\f"),
-            array(false, "\n\t ' \v\f"),
-            array(false, "\n\t 2 \v\f"),
-            array(true, '', 'UTF-8'),
-            array(false, ' ', 'UTF-8'), // no-break space (U+00A0)
-            array(false, '           ', 'UTF-8'), // spaces U+2000 to U+200A
-            array(false, ' ', 'UTF-8'), // narrow no-break space (U+202F)
-            array(false, ' ', 'UTF-8'), // medium mathematical space (U+205F)
-            array(false, '　', 'UTF-8'), // ideographic space (U+3000)
-            array(false, '　z', 'UTF-8'),
-            array(false, '　1', 'UTF-8'),
-        );
-    }
-
     public function isJsonProvider()
     {
         return array(
@@ -1096,39 +1043,5 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr', 'UTF-8')
         );
     }
-
-
-    public function substringAfterFirstProvider()
-    {
-        return array(
-            array(' now', 'find me now', 'me', 'UTF-8'),
-            array(' now, me is also here', 'find me now, me is also here', 'me', 'UTF-8'),
-        );
-    }
-    
-    public function substringAfterLastProvider()
-    {
-        return array(
-            array(' now', 'find me now', 'me', 'UTF-8'),
-            array(' is also here', 'find me now, me is also here', 'me', 'UTF-8'),
-        );
-    }
-
-    public function substringBeforeFirstProvider()
-    {
-        return array(
-            array('find ', 'find me now', 'me', 'UTF-8'),
-            array('find ', 'find me now, me is also here', 'me', 'UTF-8'),
-        );
-    }
-
-    public function substringBeforeLastProvider()
-    {
-        return array(
-            array('find ', 'find me now', 'me', 'UTF-8'),
-            array('find me now, ', 'find me now, me is also here', 'me', 'UTF-8'),
-        );
-    }
-
 
 }

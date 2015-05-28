@@ -154,20 +154,20 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider offsetOfSubstrProvider()
+     * @dataProvider indexOfProvider()
      */
-    public function testOffsetOfSubstr($expected, $str, $subStr, $offset = 0, $encoding = null)
+    public function testIndexOf($expected, $str, $subStr, $offset = 0, $encoding = null)
     {
-        $result = S::create($str, $encoding)->offsetOfSubstr($subStr, $offset);
+        $result = S::create($str, $encoding)->indexOf($subStr, $offset);
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * @dataProvider offsetOfLastSubstrProvider()
+     * @dataProvider indexOfLastProvider()
      */
-    public function testOffsetOfLastSubstr($expected, $str, $subStr, $offset = 0, $encoding = null)
+    public function testIndexOfLast($expected, $str, $subStr, $offset = 0, $encoding = null)
     {
-        $result = S::create($str, $encoding)->offsetOfLastSubstr($subStr, $offset);
+        $result = S::create($str, $encoding)->indexOfLast($subStr, $offset);
         $this->assertEquals($expected, $result);
     }
 
@@ -526,28 +526,6 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider containsIntProvider()
-     */
-    public function testContainsInt($expected, $str, $encoding = null)
-    {
-        $stringy = S::create($str, $encoding);
-        $result = $stringy->containsInt();
-        $this->assertInternalType('boolean', $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @dataProvider constainsFloatProvider()
-     */
-    public function testConstainsFloat($expected, $str, $encoding = null)
-    {
-        $stringy = S::create($str, $encoding);
-        $result = $stringy->constainsFloat();
-        $this->assertInternalType('boolean', $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
      * @dataProvider surroundProvider()
      */
     public function testSurround($expected, $str, $substring)
@@ -830,18 +808,6 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider isEmptyProvider()
-     */
-    public function testIsEmpty($expected, $str, $encoding = null)
-    {
-        $stringy = S::create($str, $encoding);
-        $result = $stringy->isEmpty();
-        $this->assertInternalType('boolean', $result);
-        $this->assertEquals($expected, $result);
-        $this->assertEquals($str, $stringy);
-    }
-
-    /**
      * @dataProvider isJsonProvider()
      */
     public function testIsJson($expected, $str, $encoding = null)
@@ -962,46 +928,6 @@ class StringyTestCase extends CommonTest
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
-    }
-
-    /**
-     * @dataProvider substringAfterFirstProvider()
-     */
-    public function testSubstringAfterFirst($expected, $str, $separator, $encoding = null)
-    {
-        $result = S::create($str, $encoding)->substringAfterFirst($separator);
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @dataProvider substringAfterLastProvider()
-     */
-    public function testSubstringAfterLast($expected, $str, $separator, $encoding = null)
-    {
-        $result = S::create($str, $encoding)->substringAfterLast($separator);
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @dataProvider substringBeforeFirstProvider()
-     */
-    public function testSubstringBeforeFirst($expected, $str, $separator, $encoding = null)
-    {
-        $result = S::create($str, $encoding)->substringBeforeFirst($separator);
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @dataProvider substringBeforeLastProvider()
-     */
-    public function testSubstringBeforeLast($expected, $str, $separator, $encoding = null)
-    {
-        $result = S::create($str, $encoding)->substringBeforeLast($separator);
-        $this->assertInternalType('string', $result);
-        $this->assertEquals($expected, $result);
     }
 
 }
