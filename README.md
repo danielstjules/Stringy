@@ -1067,6 +1067,8 @@ The following is a list of libraries that extend Stringy:
 
  * [SliceableStringy](https://github.com/danielstjules/SliceableStringy):
 Python-like string slices in PHP
+ * [SubStringy](https://github.com/TCB13/SubStringy):
+Advanced substring methods
 
 ## Tests
 
