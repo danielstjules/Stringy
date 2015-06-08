@@ -4,6 +4,34 @@ namespace Stringy;
 
 class StaticStringy
 {
+	 /**
+     * Returns the offset/index of the first occurance of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     * 
+     * @param string $str         The haystack to search through
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public static function indexOf($str, $substr, $offset = 0, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->indexOf($substr, $offset);
+    }
+
+   /**
+     * Returns the offset/index of the last occurance of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $str         The haystack to search through
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public static function indexOfLast($str, $substr, $offset = 0, $encoding = null)
+    {
+        return Stringy::create($str, $encoding)->indexOfLast($substr, $offset);
+    }
+
     /**
      * Returns an array consisting of the characters in the string.
      *
@@ -866,4 +894,5 @@ class StaticStringy
         return (string) Stringy::create($str, $encoding)
             ->regexReplace($pattern, $replacement, $options, $encoding);
     }
+
 }

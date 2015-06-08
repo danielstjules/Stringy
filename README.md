@@ -29,6 +29,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [hasLowerCase](#haslowercase)
     * [hasUpperCase](#hasuppercase)
     * [humanize](#humanize)
+    * [indexOf](#indexof)
+    * [indexOfLast](#indexoflast)
     * [insert](#insert)
     * [isAlpha](#isalpha)
     * [isAlphanumeric](#isalphanumeric)
@@ -447,6 +449,32 @@ S::create('author_id')->humanize();
 S::humanize('author_id');  // 'Author'
 ```
 
+#### indexOf
+
+$stringy->indexOf(string $substr [, $offset = 0 ]);
+
+S::indexOf(string $str , string $substr [, $offset = 0 [, $encoding = null ]])
+
+Returns the offset/index of the first occurrence of $substr in the string. In case $substr is not a substring of the string, returns false.
+
+```php
+S::create('string', 'UTF-8')->indexOf('ing');
+S::indexOf('string', 'ing', 0, 'UTF-8');  // 3
+```
+
+#### indexOfLast
+
+$stringy->indexOfLast(string $substr [, $offset = 0 ]);
+
+S::indexOfLast(string $str , string $substr [, $offset = 0 [, $encoding = null ]])
+
+Returns the offset/index of the last occurrence of $substr in the string. In case $substr is not a substring of the string, returns false.
+
+```php
+S::create('string', 'UTF-8')->indexOfLast('ing');
+S::indexOfLast('string string', 'ing', 0, 'UTF-8');  // 10
+```
+
 #### insert
 
 $stringy->insert(int $index, string $substring)
@@ -498,6 +526,19 @@ Returns true if the string contains only whitespace chars, false otherwise.
 ```php
 S::create("\n\t  \v\f")->isBlank();
 S::isBlank("\n\t  \v\f");  // true
+```
+
+#### isEmpty
+
+$stringy->isEmpty()
+
+S::isEmpty(string $str [, string $encoding ])
+
+Returns true if the string is empty (doesn't contain any char), false otherwise.
+
+```php
+S::create("")->isEmpty();
+S::isEmpty("");  // true
 ```
 
 #### isHexadecimal

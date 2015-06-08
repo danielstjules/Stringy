@@ -6,6 +6,24 @@ use Stringy\StaticStringy as S;
 
 class StaticStringyTestCase extends CommonTest
 {
+	/**
+     * @dataProvider indexOfProvider()
+     */
+    public function testIndexOf($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::indexOf($str, $subStr, $offset, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider indexOfLastProvider()
+     */
+    public function testIndexOfLast($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::indexOfLast($str, $subStr, $offset, $encoding);
+        $this->assertEquals($expected, $result);
+    }
+
     /**
      * @dataProvider charsProvider()
      */
@@ -647,4 +665,5 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
+
 }
