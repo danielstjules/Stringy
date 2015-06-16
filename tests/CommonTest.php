@@ -1023,4 +1023,26 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr', 'UTF-8')
         );
     }
+
+    public function htmlEncodeProvider()
+    {
+        return array(
+            array('&amp;', '&'),
+            array('&quot;', '"'),
+            array('&#039;', "'", ENT_QUOTES),
+            array('&lt;', '<'),
+            array('&gt;', '>'),
+        );
+    }
+
+    public function htmlDecodeProvider()
+    {
+        return array(
+            array('&', '&amp;'),
+            array('"', '&quot;'),
+            array("'", '&#039;', ENT_QUOTES),
+            array('<', '&lt;'),
+            array('>', '&gt;'),
+        );
+    }
 }

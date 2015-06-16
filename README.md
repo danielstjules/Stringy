@@ -28,6 +28,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [getEncoding](#getencoding)
     * [hasLowerCase](#haslowercase)
     * [hasUpperCase](#hasuppercase)
+    * [htmlDecode](#htmldecode)
+    * [htmlEncode](#htmlencode)
     * [humanize](#humanize)
     * [insert](#insert)
     * [isAlpha](#isalpha)
@@ -431,6 +433,32 @@ Returns true if the string contains an upper case char, false otherwise.
 ```php
 S::create('fòô bàř', 'UTF-8')->hasUpperCase();
 S::hasUpperCase('fòô bàř', 'UTF-8');  // false
+```
+
+#### htmlDecode
+
+$stringy->htmlDecode()
+
+S::htmlDecode(string $str [, int $flags, string $encoding ])
+
+Convert all HTML entities to their applicable characters.
+
+```php
+S::create('&amp;')->htmlDecode();
+S::htmlDecode('&amp;');  // '&'
+```
+
+#### htmlEncode
+
+$stringy->htmlEncode()
+
+S::htmlEncode(string $str [, int $flags, string $encoding ])
+
+Convert all applicable characters to HTML entities.
+
+```php
+S::create('&')->htmlEncode();
+S::htmlEncode('&');  // '&amp;'
 ```
 
 #### humanize

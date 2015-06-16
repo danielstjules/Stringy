@@ -911,4 +911,28 @@ class StringyTestCase extends CommonTest
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
+
+    /**
+     * @dataProvider htmlEncodeProvider()
+     */
+    public function testHtmlEncode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->htmlEncode($flags);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider htmlDecodeProvider()
+     */
+    public function testHtmlDecode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->htmlDecode($flags);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
 }

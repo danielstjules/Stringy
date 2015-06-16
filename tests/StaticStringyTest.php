@@ -647,4 +647,24 @@ class StaticStringyTestCase extends CommonTest
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @dataProvider htmlEncodeProvider()
+     */
+    public function testHtmlEncode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $result = S::htmlEncode($str, $flags, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider htmlDecodeProvider()
+     */
+    public function testHtmlDecode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $result = S::htmlDecode($str, $flags, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
 }
