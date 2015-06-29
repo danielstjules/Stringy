@@ -422,31 +422,37 @@ class StaticStringy
     }
 
     /**
-     * Returns the offset/index of the first occurance of $substr in the string.
-     * In case $substr is not a substring of the string, returns false.
+     * Returns the index of the first occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
      *
-     * @param string $str         The haystack to search through
-     * @param string $substr substring
-     * @param int $offset
-     * @return int|bool
+     * @param  string   $haystack String to search
+     * @param  string   $needle   Substring to look for
+     * @param  int      $offset   Offset from which to search
+     * @return int|bool The occurrence's index if found, otherwise false
      */
-    public static function indexOf($str, $substr, $offset = 0, $encoding = null)
+    public static function indexOf($haystack, $needle, $offset = 0,
+                                   $encoding = null)
     {
-        return Stringy::create($str, $encoding)->indexOf($substr, $offset);
+        return Stringy::create($haystack, $encoding)
+            ->indexOf($needle, $offset);
     }
 
     /**
-     * Returns the offset/index of the last occurance of $substr in the string.
-     * In case $substr is not a substring of the string, returns false.
+     * Returns the index of the last occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
      *
-     * @param string $str         The haystack to search through
-     * @param string $substr substring
-     * @param int $offset
-     * @return int|bool
+     * @param  string   $haystack String to search
+     * @param  string   $needle   Substring to look for
+     * @param  int      $offset   Offset from which to search
+     * @return int|bool The last occurrence's index if found, otherwise false
      */
-    public static function indexOfLast($str, $substr, $offset = 0, $encoding = null)
+    public static function indexOfLast($haystack, $needle, $offset = 0,
+                                       $encoding = null)
     {
-        return Stringy::create($str, $encoding)->indexOfLast($substr, $offset);
+        return Stringy::create($haystack, $encoding)
+            ->indexOfLast($needle, $offset);
     }
 
     /**

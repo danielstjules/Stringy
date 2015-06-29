@@ -895,29 +895,33 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the offset/index of the first occurrence of $substr in the string.
-     * In case $substr is not a substring of the string, returns false.
+     * Returns the index of the first occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
      *
-     * @param string $substr substring
-     * @param int $offset
-     * @return int|bool
+     * @param  string   $needle Substring to look for
+     * @param  int      $offset Offset from which to search
+     * @return int|bool The occurrence's index if found, otherwise false
      */
-    public function indexOf($substr, $offset = 0)
+    public function indexOf($needle, $offset = 0)
     {
-        return mb_strpos($this->str, (string)$substr, (int)$offset, $this->encoding);
+        return mb_strpos($this->str, (string) $needle,
+            (int) $offset, $this->encoding);
     }
 
     /**
-     * Returns the offset/index of the last occurrence of $substr in the string.
-     * In case $substr is not a substring of the string, returns false.
+     * Returns the index of the last occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
      *
-     * @param string $substr substring
-     * @param int $offset
-     * @return int|bool
+     * @param  string   $needle Substring to look for
+     * @param  int      $offset Offset from which to search
+     * @return int|bool The last occurrence's index if found, otherwise false
      */
-    public function indexOfLast($substr, $offset = 0)
+    public function indexOfLast($needle, $offset = 0)
     {
-        return mb_strrpos($this->str, (string)$substr, (int)$offset, $this->encoding);
+        return mb_strrpos($this->str, (string) $needle,
+            (int) $offset, $this->encoding);
     }
 
     /**
@@ -1057,10 +1061,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the trimmed string. An alias for PHP's trim() function.
+     * Returns the trimmed string.
      *
-     * @param string $charList list with characters to be removed
-     * @param int $type which function will be used to trim the string, trim, ltrim or rtrim
+     * @param  string  $charList Characters to be removed
+     * @param  int     $type     One of TRIM_BOTH, TRIM_LEFT or TRIM_RIGHT
      * @return Stringy Object with a trimmed $str
      * @throws \InvalidArgumentException
      */
@@ -1072,14 +1076,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             );
         }
 
-        if (!in_array($type, array(
-            self::TRIM_BOTH,
-            self::TRIM_LEFT,
-            self::TRIM_RIGHT,
-        ))) {
-            throw new \InvalidArgumentException(
-                'Type of trim function must be trim (default), rtrim or ltrim, just as native php.'
-            );
+        $validTypes = array(self::TRIM_BOTH, self::TRIM_LEFT, self::TRIM_RIGHT);
+        if (!in_array($type, $validTypes)) {
+            throw new \InvalidArgumentException('Type of trim function must ' .
+                'be trim (default), rtrim or ltrim, just as native php.');
         }
 
         return static::create($type($this->str, $charList), $this->encoding);
