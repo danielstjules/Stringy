@@ -1461,4 +1461,30 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         return static::create($str, $this->encoding);
     }
+
+    /**
+     * Convert all applicable characters to HTML entities.
+     *
+     * @param  int|null $flags See http://php.net/manual/en/function.htmlentities.php
+     * @return Stringy  Object with the resulting $str after being html encoded.
+     */
+    public function htmlEncode($flags = ENT_COMPAT)
+    {
+        $str = htmlentities($this->str, $flags, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Convert all HTML entities to their applicable characters.
+     *
+     * @param  int|null $flags See http://php.net/manual/en/function.html-entity-decode.php
+     * @return Stringy  Object with the resulting $str after being html decoded.
+     */
+    public function htmlDecode($flags = ENT_COMPAT)
+    {
+        $str = html_entity_decode($this->str, $flags, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
 }
