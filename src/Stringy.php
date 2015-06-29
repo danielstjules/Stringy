@@ -4,6 +4,13 @@ namespace Stringy;
 
 class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
+
+    const TRIM_BOTH = 'trim';
+
+    const TRIM_LEFT = 'ltrim';
+
+    const TRIM_RIGHT = 'rtrim';
+
     /**
      * An instance's string.
      *
@@ -1026,11 +1033,30 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the trimmed string. An alias for PHP's trim() function.
      *
+     * @param string $charList list with characters to be removed
+     * @param int $type which function will be used to trim the string, trim, ltrim or rtrim
      * @return Stringy Object with a trimmed $str
+     * @throws \InvalidArgumentException
      */
-    public function trim()
+    public function trim($charList = " \t\n\r\0\x0B", $type = self::TRIM_BOTH)
     {
-        return static::create(trim($this->str), $this->encoding);
+        if (!is_string($charList)) {
+            throw new \InvalidArgumentException(
+                'Charset list must be a string'
+            );
+        }
+
+        if (!in_array($type, array(
+            self::TRIM_BOTH,
+            self::TRIM_LEFT,
+            self::TRIM_RIGHT,
+        ))) {
+            throw new \InvalidArgumentException(
+                'Type of trim function must be trim (default), rtrim or ltrim, just as native php.'
+            );
+        }
+
+        return static::create($type($this->str, $charList), $this->encoding);
     }
 
     /**

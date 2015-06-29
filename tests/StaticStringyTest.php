@@ -382,7 +382,7 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider trimProvider()
+     * @dataProvider trimProviderWithoutParams()
      */
     public function testTrim($expected, $str)
     {
