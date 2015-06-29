@@ -14,6 +14,26 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Stringy\Stringy', $actual);
     }
 
+    public function indexOfProvider()
+    {
+        return array(
+            array(2, 'This is the string', 'is'),
+            array(2, 'This is the string', 'is', 0, 'UTF-8'),
+            array(false, 'This is the string', 'not-found', 0, 'UTF-8'),
+            array(32, 'This is the string... and there is another thing', 'is', 10, 'UTF-8'),
+        );
+    }
+
+    public function indexOfLastProvider()
+    {
+        return array(
+            array(5, 'This is the string', 'is'),
+            array(5, 'This is the string', 'is', 0, 'UTF-8'),
+            array(false, 'This is the string', 'not-found', 0, 'UTF-8'),
+            array(32, 'This is the string... and there is another thing', 'is', 0, 'UTF-8'),
+        );
+    }
+
     public function charsProvider()
     {
         return array(

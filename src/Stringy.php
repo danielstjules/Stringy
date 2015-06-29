@@ -895,6 +895,32 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns the offset/index of the first occurrence of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public function indexOf($substr, $offset = 0)
+    {
+        return mb_strpos($this->str, (string)$substr, (int)$offset, $this->encoding);
+    }
+
+    /**
+     * Returns the offset/index of the last occurrence of $substr in the string.
+     * In case $substr is not a substring of the string, returns false.
+     *
+     * @param string $substr substring
+     * @param int $offset
+     * @return int|bool
+     */
+    public function indexOfLast($substr, $offset = 0)
+    {
+        return mb_strrpos($this->str, (string)$substr, (int)$offset, $this->encoding);
+    }
+
+    /**
      * Surrounds $str with the given substring.
      *
      * @param  string  $substring The substring to add to both sides

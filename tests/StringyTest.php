@@ -154,6 +154,24 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider indexOfProvider()
+     */
+    public function testIndexOf($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->indexOf($subStr, $offset);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider indexOfLastProvider()
+     */
+    public function testIndexOfLast($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->indexOfLast($subStr, $offset);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider charsProvider()
      */
     public function testChars($expected, $str, $encoding = null)
