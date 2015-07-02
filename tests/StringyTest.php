@@ -255,6 +255,18 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider delimitProvider()
+     */
+    public function testDelimit($expected, $str, $delimiter, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->delimit($delimiter);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
      * @dataProvider swapCaseProvider()
      */
     public function testSwapCase($expected, $str, $encoding = null)

@@ -98,6 +98,22 @@ class StaticStringy
     }
 
     /**
+     * Returns a lowercase and trimmed string separated by the given delimiter.
+     * Delimiters are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces, dashes,
+     * and underscores. Alpha delimiters are not converted to lowercase.
+     *
+     * @param  string  $str       String to convert
+     * @param  string  $delimiter Sequence used to separate parts of the string
+     * @param  string  $encoding  The character encoding
+     * @return string  String with delimiter
+     */
+    public static function delimit($str, $delimiter, $encoding = null)
+    {
+        return (string) Stringy::create($str, $encoding)->delimit($delimiter);
+    }
+
+    /**
      * Returns a case swapped version of the string.
      *
      * @param  string $str      String to swap case

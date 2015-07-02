@@ -21,6 +21,7 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [countSubstr](#countsubstr)
     * [create](#create)
     * [dasherize](#dasherize)
+    * [delimit](#delimit)
     * [endsWith](#endswith)
     * [ensureLeft](#ensureleft)
     * [ensureRight](#ensureright)
@@ -345,6 +346,22 @@ character of the string), and in place of spaces as well as underscores.
 ```php
 S::create('TestDCase')->dasherize();
 S::dasherize('TestDCase');  // 'test-d-case'
+```
+
+#### delimit
+
+$stringy->delimit($delimiter);
+
+S::delimit(string $str [, string $delimiter, string $encoding ])
+
+Returns a lowercase and trimmed string separated by the given delimiter.
+Delimiters are inserted before uppercase characters (with the exception
+of the first character of the string), and in place of spaces, dashes,
+and underscores. Alpha delimiters are not converted to lowercase.
+
+```php
+S::create('TestDCase')->delimit('>>');
+S::delimit('TestCase', '>>');  // 'test>>case'
 ```
 
 #### endsWith

@@ -145,6 +145,26 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function delimitProvider()
+    {
+        return array(
+            array('test*case', 'testCase', '*'),
+            array('test&case', 'Test-Case', '&'),
+            array('test#case', 'test case', '#'),
+            array('test**case', 'test -case', '**'),
+            array('~!~test~!~case', '-test - case', '~!~'),
+            array('test*case', 'test_case', '*'),
+            array('test%c%test', '  test c test', '%'),
+            array('test+u+case', 'TestUCase', '+'),
+            array('test=c=c=test', 'TestCCTest', '='),
+            array('string#>with1number', 'string_with1number', '#>'),
+            array('1test2case', '1test2case', '*'),
+            array('test ύα σase', 'test Σase', ' ύα ', 'UTF-8',),
+            array('στανιλαcase', 'Στανιλ case', 'α', 'UTF-8',),
+            array('σashΘcase', 'Σash  Case', 'Θ', 'UTF-8')
+        );
+    }
+
     public function swapCaseProvider()
     {
         return array(

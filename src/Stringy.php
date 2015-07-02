@@ -284,7 +284,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function dasherize()
     {
-        return $this->applyDelimiter('-');
+        return $this->delimit('-');
     }
 
     /**
@@ -297,24 +297,27 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function underscored()
     {
-        return $this->applyDelimiter('_');
+        return $this->delimit('_');
     }
 
     /**
      * Returns a lowercase and trimmed string separated by the given delimiter.
+     * Delimiters are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces, dashes,
+     * and underscores. Alpha delimiters are not converted to lowercase.
      *
      * @param  string  $delimiter Sequence used to separate parts of the string
      * @return Stringy Object with a delimited $str
      */
-    protected function applyDelimiter($delimiter)
+    public function delimit($delimiter)
     {
         // Save current regex encoding so we can reset it after
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', $delimiter .'\1', $this->trim());
-        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
+        $str = mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
         $str = mb_strtolower($str, $this->encoding);
+        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
 
         mb_regex_encoding($regexEncoding);
 
@@ -822,7 +825,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy);
 
-        return $stringy->toLowerCase()->applyDelimiter($replacement)
+        return $stringy->toLowerCase()->delimit($replacement)
                        ->removeLeft($replacement)->removeRight($replacement);
     }
 
