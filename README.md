@@ -74,6 +74,8 @@ PHP 5.3+ and HHVM. Inspired by underscore.string.js.
     * [toTitleCase](#totitlecase)
     * [toUpperCase](#touppercase)
     * [trim](#trim)
+    * [trimLeft](#trimLeft)
+    * [trimRight](#trimRight)
     * [truncate](#truncate)
     * [underscored](#underscored)
     * [upperCamelize](#uppercamelize)
@@ -1069,15 +1071,47 @@ S::toUpperCase('fòô bàř', 'UTF-8');  // 'FÒÔ BÀŘ'
 
 #### trim
 
-$stringy->trim()
+$stringy->trim([, string $chars])
 
-S::trim(string $str)
+S::trim(string $str [, string $chars [, string $encoding ]])
 
-Returns the trimmed string.
+Returns a string with whitespace removed from the start and end of the
+string. Supports the removal of unicode whitespace. Accepts an optional
+string of characters to strip instead of the defaults.
 
 ```php
-S::create('fòô bàř', 'UTF-8')->trim();
-S::trim(' fòô bàř ');  // 'fòô bàř'
+S::create('  fòô bàř  ', 'UTF-8')->trim();
+S::trim('  fòô bàř  ');  // 'fòô bàř'
+```
+
+#### trimLeft
+
+$stringy->trimLeft([, string $chars])
+
+S::trimLeft(string $str [, string $chars [, string $encoding ]])
+
+Returns a string with whitespace removed from the start of the string.
+Supports the removal of unicode whitespace. Accepts an optional
+string of characters to strip instead of the defaults.
+
+```php
+S::create('  fòô bàř  ', 'UTF-8')->trimLeft();
+S::trimLeft('  fòô bàř  ');  // 'fòô bàř  '
+```
+
+#### trimRight
+
+$stringy->trimRight([, string $chars])
+
+S::trimRight(string $str [, string $chars [, string $encoding ]])
+
+Returns a string with whitespace removed from the end of the string.
+Supports the removal of unicode whitespace. Accepts an optional
+string of characters to strip instead of the defaults.
+
+```php
+S::create('  fòô bàř  ', 'UTF-8')->trimRight();
+S::trimRight('  fòô bàř  ');  // '  fòô bàř'
 ```
 
 #### truncate

@@ -630,7 +630,7 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function trimProviderWithoutParams()
+    public function trimProvider()
     {
         return array(
             array('foo   bar', '  foo   bar  '),
@@ -640,24 +640,49 @@ abstract class CommonTest extends PHPUnit_Framework_TestCase
             array('fòô   bàř', '  fòô   bàř  '),
             array('fòô bàř', ' fòô bàř'),
             array('fòô bàř', 'fòô bàř '),
-            array('fòô bàř', "\n\t fòô bàř \n\t")
+            array(' foo bar ', "\n\t foo bar \n\t", "\n\t"),
+            array('fòô bàř', "\n\t fòô bàř \n\t", null, 'UTF-8'),
+            array('fòô', ' fòô ', null, 'UTF-8'), // narrow no-break space (U+202F)
+            array('fòô', '  fòô  ', null, 'UTF-8'), // medium mathematical space (U+205F)
+            array('fòô', '           fòô', null, 'UTF-8') // spaces U+2000 to U+200A
         );
     }
 
-    public function trimProviderWithParams()
+    public function trimLeftProvider()
     {
         return array(
-            array('foo   bar', '  foo   bar  ', " \t\n\r\0\x0B", 'trim'),
-            array('foo bar', ' foo bar', " \t\n\r\0\x0B", 'trim'),
-            array('foo bar', 'foo bar ', " \t\n\r\0\x0B", 'trim'),
-            array('foo bar', "\n\t foo bar \n\t", " \t\n\r\0\x0B", 'trim'),
-            array('fòô   bàř', '  fòô   bàř  ', " \t\n\r\0\x0B", 'trim'),
-            array('fòô bàř', ' fòô bàř', " \t\n\r\0\x0B", 'trim'),
-            array('fòô bàř', 'fòô bàř ', " \t\n\r\0\x0B", 'trim'),
-            array('fòô bàř', "\n\t fòô bàř \n\t", " \t\n\r\0\x0B", 'trim'),
-            array('  foo   bar', '  foo   bar  ', " \t\n\r\0\x0B", 'rtrim'),
-            array('foo   bar  ', '  foo   bar  ', " \t\n\r\0\x0B", 'ltrim'),
-            array('  foo   bar  ', '  foo   bar  ', "\t\n\r\0\x0B", 'ltrim')
+            array('foo   bar  ', '  foo   bar  '),
+            array('foo bar', ' foo bar'),
+            array('foo bar ', 'foo bar '),
+            array("foo bar \n\t", "\n\t foo bar \n\t"),
+            array('fòô   bàř  ', '  fòô   bàř  '),
+            array('fòô bàř', ' fòô bàř'),
+            array('fòô bàř ', 'fòô bàř '),
+            array('foo bar', '--foo bar', '-'),
+            array('fòô bàř', 'òòfòô bàř', 'ò', 'UTF-8'),
+            array("fòô bàř \n\t", "\n\t fòô bàř \n\t", null, 'UTF-8'),
+            array('fòô ', ' fòô ', null, 'UTF-8'), // narrow no-break space (U+202F)
+            array('fòô  ', '  fòô  ', null, 'UTF-8'), // medium mathematical space (U+205F)
+            array('fòô', '           fòô', null, 'UTF-8') // spaces U+2000 to U+200A
+        );
+    }
+
+    public function trimRightProvider()
+    {
+        return array(
+            array('  foo   bar', '  foo   bar  '),
+            array('foo bar', 'foo bar '),
+            array(' foo bar', ' foo bar'),
+            array("\n\t foo bar", "\n\t foo bar \n\t"),
+            array('  fòô   bàř', '  fòô   bàř  '),
+            array('fòô bàř', 'fòô bàř '),
+            array(' fòô bàř', ' fòô bàř'),
+            array('foo bar', 'foo bar--', '-'),
+            array('fòô bàř', 'fòô bàřòò', 'ò', 'UTF-8'),
+            array("\n\t fòô bàř", "\n\t fòô bàř \n\t", null, 'UTF-8'),
+            array(' fòô', ' fòô ', null, 'UTF-8'), // narrow no-break space (U+202F)
+            array('  fòô', '  fòô  ', null, 'UTF-8'), // medium mathematical space (U+205F)
+            array('fòô', 'fòô           ', null, 'UTF-8') // spaces U+2000 to U+200A
         );
     }
 

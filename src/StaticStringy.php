@@ -561,14 +561,48 @@ class StaticStringy
     }
 
     /**
-     * Returns the trimmed string. An alias for PHP's trim() function.
+     * Returns a string with whitespace removed from the start and end of the
+     * string. Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
      *
-     * @param  string $str String to trim
+     * @param  string $str      String to trim
+     * @param  string $chars    Optional string of characters to strip
+     * @param  string $encoding The character encoding
      * @return string Trimmed $str
      */
-    public static function trim($str)
+    public static function trim($str, $chars = null, $encoding = null)
     {
-        return trim($str);
+        return (string) Stringy::create($str, $encoding)->trim($chars);
+    }
+
+    /**
+     * Returns a string with whitespace removed from the start of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string $str      String to trim
+     * @param  string $chars    Optional string of characters to strip
+     * @param  string $encoding The character encoding
+     * @return string Trimmed $str
+     */
+    public static function trimLeft($str, $chars = null, $encoding = null)
+    {
+        return (string) Stringy::create($str, $encoding)->trimLeft($chars);
+    }
+
+    /**
+     * Returns a string with whitespace removed from the end of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string $str      String to trim
+     * @param  string $chars    Optional string of characters to strip
+     * @param  string $encoding The character encoding
+     * @return string Trimmed $str
+     */
+    public static function trimRight($str, $chars = null, $encoding = null)
+    {
+        return (string) Stringy::create($str, $encoding)->trimRight($chars);
     }
 
     /**

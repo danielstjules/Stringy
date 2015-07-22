@@ -400,11 +400,33 @@ class StaticStringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider trimProviderWithoutParams()
+     * @dataProvider trimProvider()
      */
-    public function testTrim($expected, $str)
+    public function testTrim($expected, $str, $chars = null, $encoding = null)
     {
-        $result = S::trim($str);
+        $result = S::trim($str, $chars, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider trimLeftProvider()
+     */
+    public function testTrimLeft($expected, $str, $chars = null,
+                                 $encoding = null)
+    {
+        $result = S::trimLeft($str, $chars, $encoding);
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider trimRightProvider()
+     */
+    public function testTrimRight($expected, $str, $chars = null,
+                                  $encoding = null)
+    {
+        $result = S::trimRight($str, $chars, $encoding);
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }

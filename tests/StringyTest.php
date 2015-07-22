@@ -624,49 +624,41 @@ class StringyTestCase extends CommonTest
     }
 
     /**
-     * @dataProvider trimProviderWithoutParams()
+     * @dataProvider trimProvider()
      */
-    public function testTrimWithoutParams($expected, $str)
+    public function testTrim($expected, $str, $chars = null, $encoding = null)
     {
-        $stringy = S::create($str);
-        $result = $stringy->trim();
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trim($chars);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
 
     /**
-     * @dataProvider trimProviderWithParams()
+     * @dataProvider trimLeftProvider()
      */
-    public function testTrimWithParams($expected, $str, $charList, $type)
+    public function testTrimLeft($expected, $str, $chars = null,
+                                 $encoding = null)
     {
-        $stringy = S::create($str);
-        $result = $stringy->trim($charList, $type);
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trimLeft($chars);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @dataProvider trimRightProvider()
      */
-    public function testTrimWithInvalidCharset()
+    public function testTrimRight($expected, $str, $chars = null,
+                                  $encoding = null)
     {
-        $stringy = S::create('test');
-        $stringy->trim(array('test1', 'test2'), 'trim');
-        $this->fail('Expecting exception when the first argument passed is not a string');
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testTrimWithInvalidType()
-    {
-        $stringy = S::create('test');
-        $stringy->trim(' test ', 'aa');
-        $stringy->trim('btest ', 'Trim');
-        $stringy->trim(' btest', 'RTrim');
-        $this->fail('Expecting exception when the first argument passed is not a string');
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trimRight($chars);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
     }
 
     /**

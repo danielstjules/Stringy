@@ -4,13 +4,6 @@ namespace Stringy;
 
 class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-
-    const TRIM_BOTH = 'trim';
-
-    const TRIM_LEFT = 'ltrim';
-
-    const TRIM_RIGHT = 'rtrim';
-
     /**
      * An instance's string.
      *
@@ -1064,28 +1057,48 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the trimmed string.
+     * Returns a string with whitespace removed from the start and end of the
+     * string. Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
      *
-     * @param  string  $charList Characters to be removed
-     * @param  int     $type     One of TRIM_BOTH, TRIM_LEFT or TRIM_RIGHT
+     * @param  string  $chars Optional string of characters to strip
      * @return Stringy Object with a trimmed $str
-     * @throws \InvalidArgumentException
      */
-    public function trim($charList = " \t\n\r\0\x0B", $type = self::TRIM_BOTH)
+    public function trim($chars = null)
     {
-        if (!is_string($charList)) {
-            throw new \InvalidArgumentException(
-                'Charset list must be a string'
-            );
-        }
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
 
-        $validTypes = array(self::TRIM_BOTH, self::TRIM_LEFT, self::TRIM_RIGHT);
-        if (!in_array($type, $validTypes)) {
-            throw new \InvalidArgumentException('Type of trim function must ' .
-                'be trim (default), rtrim or ltrim, just as native php.');
-        }
+        return $this->regexReplace("^[$chars]+|[$chars]+\$", '');
+    }
 
-        return static::create($type($this->str, $charList), $this->encoding);
+    /**
+     * Returns a string with whitespace removed from the start of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string  $chars Optional string of characters to strip
+     * @return Stringy Object with a trimmed $str
+     */
+    public function trimLeft($chars = null)
+    {
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
+
+        return $this->regexReplace("^[$chars]+", '');
+    }
+
+    /**
+     * Returns a string with whitespace removed from the end of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string  $chars Optional string of characters to strip
+     * @return Stringy Object with a trimmed $str
+     */
+    public function trimRight($chars = null)
+    {
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
+
+        return $this->regexReplace("[$chars]+\$", '');
     }
 
     /**
