@@ -202,6 +202,42 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider appendProvider()
+     */
+    public function testAppend($expected, $str, $string, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->append($string);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function appendProvider()
+    {
+        return array(
+            array('foobar', 'foo', 'bar'),
+            array('fòôbàř', 'fòô', 'bàř', 'UTF-8')
+        );
+    }
+
+    /**
+     * @dataProvider prependProvider()
+     */
+    public function testPrepend($expected, $str, $string, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->prepend($string);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function prependProvider()
+    {
+        return array(
+            array('foobar', 'bar', 'foo'),
+            array('fòôbàř', 'bàř', 'fòô', 'UTF-8')
+        );
+    }
+
+    /**
      * @dataProvider charsProvider()
      */
     public function testChars($expected, $str, $encoding = null)

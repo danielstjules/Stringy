@@ -16,6 +16,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Class methods](#class-methods)
     * [create](#createmixed-str--encoding-)
 * [Instance methods](#instance-methods)
+    * [append](#appendstring-string)
     * [at](#atint-index)
     * [camelize](#camelize)
     * [chars](#chars)
@@ -57,6 +58,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [padBoth](#padbothint-length--string-padstr----)
     * [padLeft](#padleftint-length--string-padstr----)
     * [padRight](#padrightint-length--string-padstr----)
+    * [prepend](#prependstring-string)
     * [regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)
     * [removeLeft](#removeleftstring-substring)
     * [removeRight](#removerightstring-substring)
@@ -203,6 +205,14 @@ $stringy = S::create('fòô bàř', 'UTF-8'); // 'fòô bàř'
 ## Instance Methods
 
 Stringy objects are immutable. Methods return new instances.
+
+##### append(string $string)
+
+Returns a new string with $string appended.
+
+```php
+S::create('fòô')->append('bàř'); // 'fòôbàř'
+```
 
 ##### at(int $index)
 
@@ -564,6 +574,14 @@ padded. Alias for pad() with a $padType of 'right'.
 
 ```php
 S::create('foo bar')->padRight(10, '_*'); // 'foo bar_*_'
+```
+
+##### prepend(string $string)
+
+Returns a new string starting with $string.
+
+```php
+S::create('bàř')->prepend('fòô'); // 'fòôbàř'
 ```
 
 ##### regexReplace(string $pattern, string $replacement [, string $options = 'msr'])

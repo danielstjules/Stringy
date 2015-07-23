@@ -179,6 +179,28 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns a new string with $string appended.
+     *
+     * @param  string  $string The string to append
+     * @return Stringy Object with appended $string
+     */
+    public function append($string)
+    {
+        return static::create($this->str . $string, $this->encoding);
+    }
+
+    /**
+     * Returns a new string starting with $string.
+     *
+     * @param  string  $string The string to append
+     * @return Stringy Object with appended $string
+     */
+    public function prepend($string)
+    {
+        return static::create($string . $this->str, $this->encoding);
+    }
+
+    /**
      * Returns an array consisting of the characters in the string.
      *
      * @return array An array of string chars
