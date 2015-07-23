@@ -1,3 +1,12 @@
+### 1.10.0 (2015-07-22)
+
+ * Added trimLeft, trimRight
+ * Added support for unicode whitespace to trim
+ * Added delimit
+ * Added indexOf and indexOfLast
+ * Added htmlEncode and htmlDecode
+ * Added "Ç" in toAscii()
+
 ### 1.9.0 (2015-02-09)
 
  * Added hasUpperCase and hasLowerCase
