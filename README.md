@@ -9,7 +9,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
 
-* [Requiring/Loading](#requiringloading)
+* [Installation](#installation)
 * [OO and Chaining](#oo-and-chaining)
 * [Implemented Interfaces](#implemented-interfaces)
 * [PHP 5.6 Creation](#php-56-creation)
@@ -90,16 +90,14 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Tests](#tests)
 * [License](#license)
 
-## Requiring/Loading
+## Installation
 
 If you're using Composer to manage dependencies, you can include the following
 in your composer.json file:
 
 ```json
-{
-    "require": {
-        "danielstjules/stringy": "~1.10"
-    }
+"require": {
+    "danielstjules/stringy": "~2.0"
 }
 ```
 
@@ -121,6 +119,13 @@ And in either case, I'd suggest using an alias.
 ```php
 use Stringy\Stringy as S;
 ```
+
+Please note that Stringy relies on the `mbstring` PHP module for its underlying
+multibyte support. This is a non-default, but very common module. For example,
+with debian and ubuntu, it's included in libapache2-mod-php5, php5-cli, and
+php5-fpm. For OSX users, it's a default for any version of PHP installed with
+homebrew. If compiling PHP from scratch, it can be included with the
+`--enable-mbstring` flag.
 
 ## OO and Chaining
 
