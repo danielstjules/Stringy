@@ -18,6 +18,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Instance methods](#instance-methods)
     * [append](#appendstring-string)
     * [at](#atint-index)
+    * [between](#betweenstring-start-string-end--int-offset)
     * [camelize](#camelize)
     * [chars](#chars)
     * [collapseWhitespace](#collapsewhitespace)
@@ -227,6 +228,16 @@ Returns the character at $index, with indexes starting at 0.
 
 ```php
 S::create('fòô bàř')->at(6); // 'ř'
+```
+
+##### between(string $start, string $end [, int $offset])
+
+Returns the substring between $start and $end, if found, or an empty
+string. An optional offset may be supplied from which to begin the
+search for the start string.
+
+```php
+S::create('{foo} and {bar}')->between('{', '}'); // 'foo'
 ```
 
 ##### camelize()

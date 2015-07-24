@@ -1003,6 +1003,41 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider betweenProvider()
+     */
+    public function testBetween($expected, $str, $start, $end, $offset = null,
+                                $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->between($start, $end, $offset);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function betweenProvider()
+    {
+        return array(
+            array('', 'foo', '{', '}'),
+            array('', '{foo', '{', '}'),
+            array('foo', '{foo}', '{', '}'),
+            array('{foo', '{{foo}', '{', '}'),
+            array('', '{}foo}', '{', '}'),
+            array('foo', '}{foo}', '{', '}'),
+            array('foo', 'A description of {foo} goes here', '{', '}'),
+            array('bar', '{foo} and {bar}', '{', '}', 1),
+            array('', 'fòô', '{', '}', 0, 'UTF-8'),
+            array('', '{fòô', '{', '}', 0, 'UTF-8'),
+            array('fòô', '{fòô}', '{', '}', 0, 'UTF-8'),
+            array('{fòô', '{{fòô}', '{', '}', 0, 'UTF-8'),
+            array('', '{}fòô}', '{', '}', 0, 'UTF-8'),
+            array('fòô', '}{fòô}', '{', '}', 0, 'UTF-8'),
+            array('fòô', 'A description of {fòô} goes here', '{', '}', 0, 'UTF-8'),
+            array('bàř', '{fòô} and {bàř}', '{', '}', 1, 'UTF-8')
+        );
+    }
+
+    /**
      * @dataProvider containsProvider()
      */
     public function testContains($expected, $haystack, $needle,

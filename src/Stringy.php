@@ -879,6 +879,32 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns the substring between $start and $end, if found, or an empty
+     * string. An optional offset may be supplied from which to begin the
+     * search for the start string.
+     *
+     * @param  string $start  Delimiter marking the start of the substring
+     * @param  string $end    Delimiter marketing the end of the substring
+     * @param  string $offset Index from which to begin the search
+     * @return Stringy Object whose $str has been converted to an URL slug
+     */
+    public function between($start, $end, $offset = 0)
+    {
+        $startIndex = $this->indexOf($start, $offset);
+        if ($startIndex === false) {
+            return static::create('', $this->encoding);
+        }
+
+        $substrIndex = $startIndex + mb_strlen($start, $this->encoding);
+        $endIndex = $this->indexOf($end, $substrIndex);
+        if ($endIndex === false) {
+            return static::create('', $this->encoding);
+        }
+
+        return $this->substr($substrIndex, $endIndex - $substrIndex);
+    }
+
+    /**
      * Returns true if the string contains $needle, false otherwise. By default
      * the comparison is case-sensitive, but can be made insensitive by setting
      * $caseSensitive to false.
