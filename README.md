@@ -4,7 +4,7 @@ A PHP string manipulation library with multibyte support. Compatible with PHP
 5.3+ and HHVM.
 
 ``` php
-S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
+s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ```
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
