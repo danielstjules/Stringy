@@ -74,6 +74,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [tidy](#tidy)
     * [titleize](#titleize-array-ignore)
     * [toAscii](#toascii)
+    * [toBoolean](#toboolean)
     * [toLowerCase](#tolowercase)
     * [toSpaces](#tospaces-tablength--4-)
     * [toTabs](#totabs-tablength--4-)
@@ -731,6 +732,20 @@ unless instructed otherwise.
 
 ```php
 S::create('fòô bàř')->toAscii(); // 'foo bar'
+```
+
+##### toBoolean()
+
+Returns a boolean representation of the given logical string value.
+For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
+'off', and 'no' will return false. In all instances, case is ignored.
+For other numeric strings, their sign will determine the return value.
+In addition, blank strings consisting of only whitespace will return
+false. For all other strings, the return value is a result of a
+boolean cast.
+
+```php
+S::create('OFF')->toBoolean(); // false
 ```
 
 ##### toLowerCase()

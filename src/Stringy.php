@@ -754,6 +754,40 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns a boolean representation of the given logical string value.
+     * For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
+     * 'off', and 'no' will return false. In all instances, case is ignored.
+     * For other numeric strings, their sign will determine the return value.
+     * In addition, blank strings consisting of only whitespace will return
+     * false. For all other strings, the return value is a result of a
+     * boolean cast.
+     *
+     * @return bool A boolean value for the string
+     */
+    public function toBoolean()
+    {
+        $key = $this->toLowerCase()->str;
+        $map = array(
+            'true'  => true,
+            '1'     => true,
+            'on'    => true,
+            'yes'   => true,
+            'false' => false,
+            '0'     => false,
+            'off'   => false,
+            'no'    => false
+        );
+
+        if (array_key_exists($key, $map)) {
+            return $map[$key];
+        } elseif (is_numeric($this->str)) {
+           return (intval($this->str) > 0);
+        } else {
+            return (bool) $this->regexReplace('[[:space:]]', '')->str;
+        }
+    }
+
+    /**
      * Converts each tab in the string to some number of spaces, as defined by
      * $tabLength. By default, each tab is converted to 4 consecutive spaces.
      *

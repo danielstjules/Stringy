@@ -821,6 +821,39 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider toBooleanProvider()
+     */
+    public function testToBoolean($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->toBoolean();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function toBooleanProvider()
+    {
+        return array(
+            array(true, 'true'),
+            array(true, '1'),
+            array(true, 'on'),
+            array(true, 'ON'),
+            array(true, 'yes'),
+            array(true, '999'),
+            array(false, 'false'),
+            array(false, '0'),
+            array(false, 'off'),
+            array(false, 'OFF'),
+            array(false, 'no'),
+            array(false, '-999'),
+            array(false, ''),
+            array(false, ' '),
+            array(false, '  ', 'UTF-8') // narrow no-break space (U+202F)
+        );
+    }
+
+    /**
      * @dataProvider toSpacesProvider()
      */
     public function testToSpaces($expected, $str, $tabLength = 4)
