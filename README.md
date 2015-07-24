@@ -26,7 +26,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [containsAny](#containsanyarray-needles--boolean-casesensitive--true-)
     * [countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)
     * [dasherize](#dasherize)
-    * [delimit](#delimitdelimiter)
+    * [delimit](#delimitint-delimiter)
     * [endsWith](#endswithstring-substring--boolean-casesensitive--true-)
     * [ensureLeft](#ensureleftstring-substring)
     * [ensureRight](#ensurerightstring-substring)
@@ -62,6 +62,7 @@ S::create('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)
     * [removeLeft](#removeleftstring-substring)
     * [removeRight](#removerightstring-substring)
+    * [repeat](#repeatmultiplier)
     * [replace](#replacestring-search-string-replacement)
     * [reverse](#reverse)
     * [safeTruncate](#safetruncateint-length--string-substring---)
@@ -307,7 +308,7 @@ character of the string), and in place of spaces as well as underscores.
 S::create('TestDCase')->dasherize(); // 'test-d-case'
 ```
 
-##### delimit($delimiter)
+##### delimit(int $delimiter)
 
 Returns a lowercase and trimmed string separated by the given delimiter.
 Delimiters are inserted before uppercase characters (with the exception
@@ -615,6 +616,14 @@ Returns a new string with the suffix $substring removed, if present.
 
 ```php
 S::create('fòô bàř')->removeRight(' bàř'); // 'fòô'
+```
+
+##### repeat(int $multiplier)
+
+Returns a repeated string given a multiplier. An alias for str_repeat.
+
+```php
+S::create('à')->repeat(3); // 'ààà'
 ```
 
 ##### replace(string $search, string $replacement)

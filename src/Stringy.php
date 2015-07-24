@@ -1094,6 +1094,19 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns a repeated string given a multiplier. An alias for str_repeat.
+     *
+     * @param  int     $multiplier The number of times to repeat the string
+     * @return Stringy Object with a repeated str
+     */
+    public function repeat($multiplier)
+    {
+        $repeated = str_repeat($this->str, $multiplier);
+
+        return static::create($repeated, $this->encoding);
+    }
+
+    /*
      * A multibyte str_shuffle() function. It returns a string with its
      * characters in random order.
      *

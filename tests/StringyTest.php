@@ -1299,6 +1299,31 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider repeatProvider()
+     */
+    public function testRepeat($expected, $str, $multiplier, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->repeat($multiplier);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function repeatProvider()
+    {
+        return array(
+            array('', 'foo', 0),
+            array('foo', 'foo', 1),
+            array('foofoo', 'foo', 2),
+            array('foofoofoo', 'foo', 3),
+            array('fòô', 'fòô', 1, 'UTF-8'),
+            array('fòôfòô', 'fòô', 2, 'UTF-8'),
+            array('fòôfòôfòô', 'fòô', 3, 'UTF-8')
+        );
+    }
+
+    /**
      * @dataProvider shuffleProvider()
      */
     public function testShuffle($str, $encoding = null)
