@@ -1306,6 +1306,33 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns the substring beginning at $start, and up to, but not including
+     * the index specified by $end. If $end is omitted, the function extracts
+     * the remaining string. If $end is negative, it is computed from the end
+     * of the string.
+     *
+     * @param  int     $start Initial index from which to begin extraction
+     * @param  int     $end   Optional index at which to end extraction
+     * @return Stringy Object with its $str being the extracted substring
+     */
+    public function slice($start, $end = null)
+    {
+        if ($end === null) {
+            $length = $this->length();
+        } elseif ($end >= 0 && $end <= $start) {
+            return static::create('', $this->encoding);
+        } elseif ($end < 0) {
+            $length = $this->length() + $end - $start;
+        } else {
+            $length = $end - $start;
+        }
+
+        $str = mb_substr($this->str, $start, $length, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
      * Returns the substring beginning at $start with the specified $length.
      * It differs from the mb_substr() function in that providing a $length of
      * null will return the rest of the string, rather than an empty string.

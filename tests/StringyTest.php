@@ -1594,6 +1594,41 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider sliceProvider()
+     */
+    public function testSlice($expected, $str, $start, $end = null,
+                              $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->slice($start, $end);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function sliceProvider()
+    {
+        return array(
+            array('foobar', 'foobar', 0),
+            array('foobar', 'foobar', 0, null),
+            array('foobar', 'foobar', 0, 6),
+            array('fooba', 'foobar', 0, 5),
+            array('', 'foobar', 3, 0),
+            array('', 'foobar', 3, 2),
+            array('ba', 'foobar', 3, 5),
+            array('ba', 'foobar', 3, -1),
+            array('fòôbàř', 'fòôbàř', 0, null, 'UTF-8'),
+            array('fòôbàř', 'fòôbàř', 0, null),
+            array('fòôbàř', 'fòôbàř', 0, 6, 'UTF-8'),
+            array('fòôbà', 'fòôbàř', 0, 5, 'UTF-8'),
+            array('', 'fòôbàř', 3, 0, 'UTF-8'),
+            array('', 'fòôbàř', 3, 2, 'UTF-8'),
+            array('bà', 'fòôbàř', 3, 5, 'UTF-8'),
+            array('bà', 'fòôbàř', 3, -1, 'UTF-8')
+        );
+    }
+
+    /**
      * @dataProvider substrProvider()
      */
     public function testSubstr($expected, $str, $start, $length = null,

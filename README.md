@@ -70,6 +70,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [shuffle](#shuffle)
     * [slugify](#slugify-string-replacement----)
     * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
+    * [slice](#sliceint-start--int-end-)
     * [substr](#substrint-start--int-length-)
     * [surround](#surroundstring-substring)
     * [swapCase](#swapcase)
@@ -695,6 +696,17 @@ by setting $caseSensitive to false.
 
 ```php
 S::create('FÒÔ bàřs')->startsWith('fòô bàř', false); // true
+```
+
+##### slice(int $start [, int $end ])
+
+Returns the substring beginning at $start, and up to, but not including
+the index specified by $end. If $end is omitted, the function extracts
+the remaining string. If $end is negative, it is computed from the end
+of the string.
+
+```php
+S::create('fòôbàř')->slice(3, -1); // 'bà'
 ```
 
 ##### substr(int $start [, int $length ])
