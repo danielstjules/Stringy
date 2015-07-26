@@ -214,7 +214,8 @@ $stringy = S::create('fòô bàř', 'UTF-8'); // 'fòô bàř'
 
 ## Instance Methods
 
-Stringy objects are immutable. Methods return new instances.
+Stringy objects are immutable. All examples below make use of PHP 5.6
+function importing, and PHP 5.4 short array syntax.
 
 ##### append(string $string)
 
