@@ -221,7 +221,7 @@ Stringy objects are immutable. Methods return new instances.
 Returns a new string with $string appended.
 
 ```php
-S::create('fòô')->append('bàř'); // 'fòôbàř'
+s('fòô')->append('bàř'); // 'fòôbàř'
 ```
 
 ##### at(int $index)
@@ -229,7 +229,7 @@ S::create('fòô')->append('bàř'); // 'fòôbàř'
 Returns the character at $index, with indexes starting at 0.
 
 ```php
-S::create('fòô bàř')->at(6); // 'ř'
+s('fòô bàř')->at(6); // 'ř'
 ```
 
 ##### between(string $start, string $end [, int $offset])
@@ -239,7 +239,7 @@ string. An optional offset may be supplied from which to begin the
 search for the start string.
 
 ```php
-S::create('{foo} and {bar}')->between('{', '}'); // 'foo'
+s('{foo} and {bar}')->between('{', '}'); // 'foo'
 ```
 
 ##### camelize()
@@ -249,7 +249,7 @@ capitalizes letters following digits, spaces, dashes and underscores,
 and removes spaces, dashes, as well as underscores.
 
 ```php
-S::create('Camel-Case')->camelize(); // 'camelCase'
+s('Camel-Case')->camelize(); // 'camelCase'
 ```
 
 ##### chars()
@@ -257,7 +257,7 @@ S::create('Camel-Case')->camelize(); // 'camelCase'
 Returns an array consisting of the characters in the string.
 
 ```php
-S::create('Fòô Bàř')->chars();
+s('Fòô Bàř')->chars();
 // [F', 'ò', 'ô', ' ', 'B', 'à', 'ř']
 ```
 
@@ -268,7 +268,7 @@ single space. This includes tabs and newline characters, as well as
 multibyte whitespace such as the thin space and ideographic space.
 
 ```php
-S::create('   Ο     συγγραφέας  ')->collapseWhitespace(); // 'Ο συγγραφέας'
+s('   Ο     συγγραφέας  ')->collapseWhitespace(); // 'Ο συγγραφέας'
 ```
 
 ##### contains(string $needle [, boolean $caseSensitive = true ])
@@ -278,7 +278,7 @@ the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::create('Ο συγγραφέας είπε')->contains('συγγραφέας'); // true
+s('Ο συγγραφέας είπε')->contains('συγγραφέας'); // true
 ```
 
 ##### containsAll(array $needles [, boolean $caseSensitive = true ])
@@ -288,7 +288,7 @@ default the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-S::create('Str contains foo and bar')->containsAll(['foo', 'bar']); // true
+s('Str contains foo and bar')->containsAll(['foo', 'bar']); // true
 ```
 
 ##### containsAny(array $needles [, boolean $caseSensitive = true ])
@@ -298,7 +298,7 @@ default the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-S::create('Str contains foo')->containsAny(['foo', 'bar']); // true
+s('Str contains foo')->containsAny(['foo', 'bar']); // true
 ```
 
 ##### countSubstr(string $substring [, boolean $caseSensitive = true ])
@@ -308,7 +308,7 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::create('Ο συγγραφέας είπε')->countSubstr('α'); // 2
+s('Ο συγγραφέας είπε')->countSubstr('α'); // 2
 ```
 
 ##### dasherize()
@@ -318,7 +318,7 @@ inserted before uppercase characters (with the exception of the first
 character of the string), and in place of spaces as well as underscores.
 
 ```php
-S::create('TestDCase')->dasherize(); // 'test-d-case'
+s('TestDCase')->dasherize(); // 'test-d-case'
 ```
 
 ##### delimit(int $delimiter)
@@ -329,7 +329,7 @@ of the first character of the string), and in place of spaces, dashes,
 and underscores. Alpha delimiters are not converted to lowercase.
 
 ```php
-S::create('TestDCase')->delimit('>>'); // 'test>>case'
+s('TestDCase')->delimit('>>'); // 'test>>case'
 ```
 
 ##### endsWith(string $substring [, boolean $caseSensitive = true ])
@@ -339,7 +339,7 @@ default, the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-S::create('FÒÔ bàřs')->endsWith('àřs', true); // true
+s('FÒÔ bàřs')->endsWith('àřs', true); // true
 ```
 
 ##### ensureLeft(string $substring)
@@ -347,7 +347,7 @@ S::create('FÒÔ bàřs')->endsWith('àřs', true); // true
 Ensures that the string begins with $substring. If it doesn't, it's prepended.
 
 ```php
-S::create('foobar')->ensureLeft('http://'); // 'http://foobar'
+s('foobar')->ensureLeft('http://'); // 'http://foobar'
 ```
 
 ##### ensureRight(string $substring)
@@ -355,7 +355,7 @@ S::create('foobar')->ensureLeft('http://'); // 'http://foobar'
 Ensures that the string begins with $substring. If it doesn't, it's appended.
 
 ```php
-S::create('foobar')->ensureRight('.com'); // 'foobar.com'
+s('foobar')->ensureRight('.com'); // 'foobar.com'
 ```
 
 ##### first(int $n)
@@ -363,7 +363,7 @@ S::create('foobar')->ensureRight('.com'); // 'foobar.com'
 Returns the first $n characters of the string.
 
 ```php
-S::create('fòô bàř')->first(3); // 'fòô'
+s('fòô bàř')->first(3); // 'fòô'
 ```
 
 ##### getEncoding()
@@ -371,7 +371,7 @@ S::create('fòô bàř')->first(3); // 'fòô'
 Returns the encoding used by the Stringy object.
 
 ```php
-S::create('fòô bàř', 'UTF-8')->getEncoding(); // 'UTF-8'
+s('fòô bàř', 'UTF-8')->getEncoding(); // 'UTF-8'
 ```
 
 ##### hasLowerCase()
@@ -379,7 +379,7 @@ S::create('fòô bàř', 'UTF-8')->getEncoding(); // 'UTF-8'
 Returns true if the string contains a lower case char, false otherwise.
 
 ```php
-S::create('fòô bàř')->hasLowerCase(); // true
+s('fòô bàř')->hasLowerCase(); // true
 ```
 
 ##### hasUpperCase()
@@ -387,7 +387,7 @@ S::create('fòô bàř')->hasLowerCase(); // true
 Returns true if the string contains an upper case char, false otherwise.
 
 ```php
-S::create('fòô bàř')->hasUpperCase(); // false
+s('fòô bàř')->hasUpperCase(); // false
 ```
 
 ##### htmlDecode()
@@ -395,7 +395,7 @@ S::create('fòô bàř')->hasUpperCase(); // false
 Convert all HTML entities to their applicable characters.
 
 ```php
-S::create('&amp;')->htmlDecode(); // '&'
+s('&amp;')->htmlDecode(); // '&'
 ```
 
 ##### htmlEncode()
@@ -403,7 +403,7 @@ S::create('&amp;')->htmlDecode(); // '&'
 Convert all applicable characters to HTML entities.
 
 ```php
-S::create('&')->htmlEncode(); // '&amp;'
+s('&')->htmlEncode(); // '&amp;'
 ```
 
 ##### humanize()
@@ -412,7 +412,7 @@ Capitalizes the first word of the string, replaces underscores with
 spaces, and strips '_id'.
 
 ```php
-S::create('author_id')->humanize(); // 'Author'
+s('author_id')->humanize(); // 'Author'
 ```
 
 ##### indexOf(string $needle [, $offset = 0 ]);
@@ -422,7 +422,7 @@ and false if not found. Accepts an optional offset from which to begin
 the search.
 
 ```php
-S::create('string')->indexOf('ing'); // 3
+s('string')->indexOf('ing'); // 3
 ```
 
 ##### indexOfLast(string $needle [, $offset = 0 ]);
@@ -432,7 +432,7 @@ and false if not found. Accepts an optional offset from which to begin
 the search.
 
 ```php
-S::create('string')->indexOfLast('ing'); // 10
+s('string')->indexOfLast('ing'); // 10
 ```
 
 ##### insert(int $index, string $substring)
@@ -440,7 +440,7 @@ S::create('string')->indexOfLast('ing'); // 10
 Inserts $substring into the string at the $index provided.
 
 ```php
-S::create('fòô bà')->insert('ř', 6); // 'fòô bàř'
+s('fòô bà')->insert('ř', 6); // 'fòô bàř'
 ```
 
 ##### isAlpha()
@@ -448,7 +448,7 @@ S::create('fòô bà')->insert('ř', 6); // 'fòô bàř'
 Returns true if the string contains only alphabetic chars, false otherwise.
 
 ```php
-S::create('丹尼爾')->isAlpha(); // true
+s('丹尼爾')->isAlpha(); // true
 ```
 
 ##### isAlphanumeric()
@@ -457,7 +457,7 @@ Returns true if the string contains only alphabetic and numeric chars, false
 otherwise.
 
 ```php
-S::create('دانيال1')->isAlphanumeric(); // true
+s('دانيال1')->isAlphanumeric(); // true
 ```
 
 ##### isBlank()
@@ -465,7 +465,7 @@ S::create('دانيال1')->isAlphanumeric(); // true
 Returns true if the string contains only whitespace chars, false otherwise.
 
 ```php
-S::create("\n\t  \v\f")->isBlank(); // true
+s("\n\t  \v\f")->isBlank(); // true
 ```
 
 ##### isHexadecimal()
@@ -473,7 +473,7 @@ S::create("\n\t  \v\f")->isBlank(); // true
 Returns true if the string contains only hexadecimal chars, false otherwise.
 
 ```php
-S::create('A102F')->isHexadecimal(); // true
+s('A102F')->isHexadecimal(); // true
 ```
 
 ##### isJson()
@@ -481,7 +481,7 @@ S::create('A102F')->isHexadecimal(); // true
 Returns true if the string is JSON, false otherwise.
 
 ```php
-S::create('{"foo":"bar"}')->isJson(); // true
+s('{"foo":"bar"}')->isJson(); // true
 ```
 
 ##### isLowerCase()
@@ -489,7 +489,7 @@ S::create('{"foo":"bar"}')->isJson(); // true
 Returns true if the string contains only lower case chars, false otherwise.
 
 ```php
-S::create('fòô bàř')->isLowerCase(); // true
+s('fòô bàř')->isLowerCase(); // true
 ```
 
 ##### isSerialized()
@@ -497,7 +497,7 @@ S::create('fòô bàř')->isLowerCase(); // true
 Returns true if the string is serialized, false otherwise.
 
 ```php
-S::create('a:1:{s:3:"foo";s:3:"bar";}')->isSerialized(); // true
+s('a:1:{s:3:"foo";s:3:"bar";}')->isSerialized(); // true
 ```
 
 ##### isUpperCase()
@@ -505,7 +505,7 @@ S::create('a:1:{s:3:"foo";s:3:"bar";}')->isSerialized(); // true
 Returns true if the string contains only upper case chars, false otherwise.
 
 ```php
-S::create('FÒÔBÀŘ')->isUpperCase(); // true
+s('FÒÔBÀŘ')->isUpperCase(); // true
 ```
 
 ##### last(int $n)
@@ -513,7 +513,7 @@ S::create('FÒÔBÀŘ')->isUpperCase(); // true
 Returns the last $n characters of the string.
 
 ```php
-S::create('fòô bàř')->last(3); // 'bàř'
+s('fòô bàř')->last(3); // 'bàř'
 ```
 
 ##### length()
@@ -521,7 +521,7 @@ S::create('fòô bàř')->last(3); // 'bàř'
 Returns the length of the string. An alias for PHP's mb_strlen() function.
 
 ```php
-S::create('fòô bàř')->length(); // 7
+s('fòô bàř')->length(); // 7
 ```
 
 ##### longestCommonPrefix(string $otherStr)
@@ -529,7 +529,7 @@ S::create('fòô bàř')->length(); // 7
 Returns the longest common prefix between the string and $otherStr.
 
 ```php
-S::create('fòô bar')->longestCommonPrefix('fòr bar'); // 'fò'
+s('fòô bar')->longestCommonPrefix('fòr bar'); // 'fò'
 ```
 
 ##### longestCommonSuffix(string $otherStr)
@@ -537,7 +537,7 @@ S::create('fòô bar')->longestCommonPrefix('fòr bar'); // 'fò'
 Returns the longest common suffix between the string and $otherStr.
 
 ```php
-S::create('fòô bàř')->longestCommonSuffix('fòr bàř'); // ' bàř'
+s('fòô bàř')->longestCommonSuffix('fòr bàř'); // ' bàř'
 ```
 
 ##### longestCommonSubstring(string $otherStr)
@@ -546,7 +546,7 @@ Returns the longest common substring between the string and $otherStr. In the
 case of ties, it returns that which occurs first.
 
 ```php
-S::create('foo bar')->longestCommonSubstring('boo far'); // 'oo '
+s('foo bar')->longestCommonSubstring('boo far'); // 'oo '
 ```
 
 ##### lowerCaseFirst()
@@ -554,7 +554,7 @@ S::create('foo bar')->longestCommonSubstring('boo far'); // 'oo '
 Converts the first character of the supplied string to lower case.
 
 ```php
-S::create('Σ test')->lowerCaseFirst(); // 'σ test'
+s('Σ test')->lowerCaseFirst(); // 'σ test'
 ```
 
 ##### pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
@@ -566,7 +566,7 @@ string used for padding is a space, and the default type (one of 'left',
 $padType isn't one of those 3 values.
 
 ```php
-S::create('fòô bàř')->pad( 10, '¬ø', 'left'); // '¬ø¬fòô bàř'
+s('fòô bàř')->pad( 10, '¬ø', 'left'); // '¬ø¬fòô bàř'
 ```
 
 ##### padBoth(int $length [, string $padStr = ' ' ])
@@ -575,7 +575,7 @@ Returns a new string of a given length such that both sides of the string
 string are padded. Alias for pad() with a $padType of 'both'.
 
 ```php
-S::create('foo bar')->padBoth(9, ' '); // ' foo bar '
+s('foo bar')->padBoth(9, ' '); // ' foo bar '
 ```
 
 ##### padLeft(int $length [, string $padStr = ' ' ])
@@ -584,7 +584,7 @@ Returns a new string of a given length such that the beginning of the
 string is padded. Alias for pad() with a $padType of 'left'.
 
 ```php
-S::create('foo bar')->padLeft($length, $padStr); // '  foo bar'
+s('foo bar')->padLeft($length, $padStr); // '  foo bar'
 ```
 
 ##### padRight(int $length [, string $padStr = ' ' ])
@@ -593,7 +593,7 @@ Returns a new string of a given length such that the end of the string is
 padded. Alias for pad() with a $padType of 'right'.
 
 ```php
-S::create('foo bar')->padRight(10, '_*'); // 'foo bar_*_'
+s('foo bar')->padRight(10, '_*'); // 'foo bar_*_'
 ```
 
 ##### prepend(string $string)
@@ -601,7 +601,7 @@ S::create('foo bar')->padRight(10, '_*'); // 'foo bar_*_'
 Returns a new string starting with $string.
 
 ```php
-S::create('bàř')->prepend('fòô'); // 'fòôbàř'
+s('bàř')->prepend('fòô'); // 'fòôbàř'
 ```
 
 ##### regexReplace(string $pattern, string $replacement [, string $options = 'msr'])
@@ -612,7 +612,7 @@ in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
 in the bundled version of Oniguruma in PHP 5.3.
 
 ```php
-S::create('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'
+s('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'
 ```
 
 ##### removeLeft(string $substring)
@@ -620,7 +620,7 @@ S::create('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'
 Returns a new string with the prefix $substring removed, if present.
 
 ```php
-S::create('fòô bàř')->removeLeft('fòô '); // 'bàř'
+s('fòô bàř')->removeLeft('fòô '); // 'bàř'
 ```
 
 ##### removeRight(string $substring)
@@ -628,7 +628,7 @@ S::create('fòô bàř')->removeLeft('fòô '); // 'bàř'
 Returns a new string with the suffix $substring removed, if present.
 
 ```php
-S::create('fòô bàř')->removeRight(' bàř'); // 'fòô'
+s('fòô bàř')->removeRight(' bàř'); // 'fòô'
 ```
 
 ##### repeat(int $multiplier)
@@ -636,7 +636,7 @@ S::create('fòô bàř')->removeRight(' bàř'); // 'fòô'
 Returns a repeated string given a multiplier. An alias for str_repeat.
 
 ```php
-S::create('à')->repeat(3); // 'ààà'
+s('à')->repeat(3); // 'ààà'
 ```
 
 ##### replace(string $search, string $replacement)
@@ -644,7 +644,7 @@ S::create('à')->repeat(3); // 'ààà'
 Replaces all occurrences of $search in $str by $replacement.
 
 ```php
-S::create('fòô bàř fòô bàř')->replace('fòô ', ''); // 'bàř bàř'
+s('fòô bàř fòô bàř')->replace('fòô ', ''); // 'bàř bàř'
 ```
 
 ##### reverse()
@@ -652,7 +652,7 @@ S::create('fòô bàř fòô bàř')->replace('fòô ', ''); // 'bàř bàř'
 Returns a reversed string. A multibyte version of strrev().
 
 ```php
-S::create('fòô bàř')->reverse(); // 'řàb ôòf'
+s('fòô bàř')->reverse(); // 'řàb ôòf'
 ```
 
 ##### safeTruncate(int $length [, string $substring = '' ])
@@ -663,7 +663,7 @@ string is further truncated so that the substring may be appended without
 exceeding the desired length.
 
 ```php
-S::create('What are your plans today?')->safeTruncate(22, '...');
+s('What are your plans today?')->safeTruncate(22, '...');
 // 'What are your plans...'
 ```
 
@@ -673,7 +673,7 @@ A multibyte str_shuffle() function. It returns a string with its characters in
 random order.
 
 ```php
-S::create('fòô bàř')->shuffle(); // 'àôřb òf'
+s('fòô bàř')->shuffle(); // 'àôřb òf'
 ```
 
 ##### slugify([, string $replacement = '-' ])
@@ -685,8 +685,7 @@ $replacement. The replacement defaults to a single dash, and the string
 is also converted to lowercase.
 
 ```php
-S::create('Using strings like fòô bàř')->slugify();
-// 'using-strings-like-foo-bar'
+s('Using strings like fòô bàř')->slugify(); // 'using-strings-like-foo-bar'
 ```
 
 ##### startsWith(string $substring [, boolean $caseSensitive = true ])
@@ -696,7 +695,7 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-S::create('FÒÔ bàřs')->startsWith('fòô bàř', false); // true
+s('FÒÔ bàřs')->startsWith('fòô bàř', false); // true
 ```
 
 ##### slice(int $start [, int $end ])
@@ -707,7 +706,7 @@ the remaining string. If $end is negative, it is computed from the end
 of the string.
 
 ```php
-S::create('fòôbàř')->slice(3, -1); // 'bà'
+s('fòôbàř')->slice(3, -1); // 'bà'
 ```
 
 ##### split(string $pattern [, int $limit ])
@@ -717,7 +716,7 @@ array of Stringy objects. An optional integer $limit will truncate the
 numbers of results returned.
 
 ```php
-S::create('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
 ```
 
 ##### substr(int $start [, int $length ])
@@ -727,7 +726,7 @@ It differs from the mb_substr() function in that providing a $length of
 null will return the rest of the string, rather than an empty string.
 
 ```php
-S::create('fòô bàř')->substr(2, 3); // 'ô b'
+s('fòô bàř')->substr(2, 3); // 'ô b'
 ```
 
 ##### surround(string $substring)
@@ -735,7 +734,7 @@ S::create('fòô bàř')->substr(2, 3); // 'ô b'
 Surrounds a string with the given substring.
 
 ```php
-S::create(' ͜ ')->surround('ʘ'); // 'ʘ ͜ ʘ'
+s(' ͜ ')->surround('ʘ'); // 'ʘ ͜ ʘ'
 ```
 
 ##### swapCase()
@@ -743,7 +742,7 @@ S::create(' ͜ ')->surround('ʘ'); // 'ʘ ͜ ʘ'
 Returns a case swapped version of the string.
 
 ```php
-S::create('Ντανιλ')->swapCase(); // 'νΤΑΝΙΛ'
+s('Ντανιλ')->swapCase(); // 'νΤΑΝΙΛ'
 ```
 
 ##### tidy()
@@ -752,7 +751,7 @@ Returns a string with smart quotes, ellipsis characters, and dashes from
 Windows-1252 (commonly used in Word documents) replaced by their ASCII equivalents.
 
 ```php
-S::create('“I see…”')->tidy(); // '"I see..."'
+s('“I see…”')->tidy(); // '"I see..."'
 ```
 
 ##### titleize([, array $ignore])
@@ -763,7 +762,7 @@ an array, $ignore, allowing you to list words not to be capitalized.
 
 ```php
 $ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
-S::create('i like to watch DVDs at home')->titleize($ignore);
+s('i like to watch DVDs at home')->titleize($ignore);
 // 'I Like to Watch DVDs at Home'
 ```
 
@@ -774,7 +773,7 @@ replaced with their closest ASCII counterparts, and the rest are removed
 unless instructed otherwise.
 
 ```php
-S::create('fòô bàř')->toAscii(); // 'foo bar'
+s('fòô bàř')->toAscii(); // 'foo bar'
 ```
 
 ##### toBoolean()
@@ -788,7 +787,7 @@ false. For all other strings, the return value is a result of a
 boolean cast.
 
 ```php
-S::create('OFF')->toBoolean(); // false
+s('OFF')->toBoolean(); // false
 ```
 
 ##### toLowerCase()
@@ -797,7 +796,7 @@ Converts all characters in the string to lowercase. An alias for PHP's
 mb_strtolower().
 
 ```php
-S::create('FÒÔ BÀŘ')->toLowerCase(); // 'fòô bàř'
+s('FÒÔ BÀŘ')->toLowerCase(); // 'fòô bàř'
 ```
 
 ##### toSpaces([, tabLength = 4 ])
@@ -806,8 +805,7 @@ Converts each tab in the string to some number of spaces, as defined by
 $tabLength. By default, each tab is converted to 4 consecutive spaces.
 
 ```php
-S::create(' String speech = "Hi"')->toSpaces();
-// '    String speech = "Hi"'
+s(' String speech = "Hi"')->toSpaces(); // '    String speech = "Hi"'
 ```
 
 ##### toTabs([, tabLength = 4 ])
@@ -817,7 +815,7 @@ by $tabLength, to a tab. By default, each 4 consecutive spaces are
 converted to a tab.
 
 ```php
-S::create('    fòô    bàř')->toTabs();
+s('    fòô    bàř')->toTabs();
 // '   fòô bàř'
 ```
 
@@ -826,7 +824,7 @@ S::create('    fòô    bàř')->toTabs();
 Converts the first character of each word in the string to uppercase.
 
 ```php
-S::create('fòô bàř')->toTitleCase(); // 'Fòô Bàř'
+s('fòô bàř')->toTitleCase(); // 'Fòô Bàř'
 ```
 
 ##### toUpperCase()
@@ -835,7 +833,7 @@ Converts all characters in the string to uppercase. An alias for PHP's
 mb_strtoupper().
 
 ```php
-S::create('fòô bàř')->toUpperCase(); // 'FÒÔ BÀŘ'
+s('fòô bàř')->toUpperCase(); // 'FÒÔ BÀŘ'
 ```
 
 ##### trim([, string $chars])
@@ -845,7 +843,7 @@ string. Supports the removal of unicode whitespace. Accepts an optional
 string of characters to strip instead of the defaults.
 
 ```php
-S::create('  fòô bàř  ')->trim(); // 'fòô bàř'
+s('  fòô bàř  ')->trim(); // 'fòô bàř'
 ```
 
 ##### trimLeft([, string $chars])
@@ -855,7 +853,7 @@ Supports the removal of unicode whitespace. Accepts an optional
 string of characters to strip instead of the defaults.
 
 ```php
-S::create('  fòô bàř  ')->trimLeft(); // 'fòô bàř  '
+s('  fòô bàř  ')->trimLeft(); // 'fòô bàř  '
 ```
 
 ##### trimRight([, string $chars])
@@ -865,7 +863,7 @@ Supports the removal of unicode whitespace. Accepts an optional
 string of characters to strip instead of the defaults.
 
 ```php
-S::create('  fòô bàř  ')->trimRight(); // '  fòô bàř'
+s('  fòô bàř  ')->trimRight(); // '  fòô bàř'
 ```
 
 ##### truncate(int $length [, string $substring = '' ])
@@ -875,8 +873,7 @@ truncating occurs, the string is further truncated so that the substring
 may be appended without exceeding the desired length.
 
 ```php
-S::create('What are your plans today?')->truncate(19, '...');
-// 'What are your pl...'
+s('What are your plans today?')->truncate(19, '...'); // 'What are your pl...'
 ```
 
 ##### underscored()
@@ -886,7 +883,7 @@ Underscores are inserted before uppercase characters (with the exception
 of the first character of the string), and in place of spaces as well as dashes.
 
 ```php
-S::create('TestUCase')->underscored(); // 'test_u_case'
+s('TestUCase')->underscored(); // 'test_u_case'
 ```
 
 ##### upperCamelize()
@@ -896,7 +893,7 @@ surrounding spaces, capitalizes letters following digits, spaces, dashes
 and underscores, and removes spaces, dashes, underscores.
 
 ```php
-S::create('Upper Camel-Case')->upperCamelize(); // 'UpperCamelCase'
+s('Upper Camel-Case')->upperCamelize(); // 'UpperCamelCase'
 ```
 
 ##### upperCaseFirst()
@@ -904,7 +901,7 @@ S::create('Upper Camel-Case')->upperCamelize(); // 'UpperCamelCase'
 Converts the first character of the supplied string to upper case.
 
 ```php
-S::create('σ test')->upperCaseFirst(); // 'Σ test'
+s('σ test')->upperCaseFirst(); // 'Σ test'
 ```
 
 ## Extensions
