@@ -713,7 +713,7 @@ s('fòôbàř')->slice(3, -1); // 'bà'
 
 Splits the string with the provided regular expression, returning an
 array of Stringy objects. An optional integer $limit will truncate the
-numbers of results returned.
+results.
 
 ```php
 s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']

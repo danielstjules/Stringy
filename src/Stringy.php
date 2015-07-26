@@ -1335,7 +1335,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Splits the string with the provided regular expression, returning an
      * array of Stringy objects. An optional integer $limit will truncate the
-     * numbers of results returned.
+     * results.
      *
      * @param  string    $pattern The regex with which to split the string
      * @param  int       $limit   Optional maximum number of results to return
