@@ -260,6 +260,43 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider linesProvider()
+     */
+    public function testLines($expected, $str, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->lines();
+
+        $this->assertInternalType('array', $result);
+        foreach ($result as $line) {
+            $this->assertStringy($line);
+        }
+
+        for ($i = 0; $i < count($expected); $i++) {
+            $this->assertEquals($expected[$i], $result[$i]);
+        }
+    }
+
+    public function linesProvider()
+    {
+        return array(
+            array(array(), ""),
+            array(array(''), "\r\n"),
+            array(array('foo', 'bar'), "foo\nbar"),
+            array(array('foo', 'bar'), "foo\rbar"),
+            array(array('foo', 'bar'), "foo\r\nbar"),
+            array(array('foo', '', 'bar'), "foo\r\n\r\nbar"),
+            array(array('foo', 'bar', ''), "foo\r\nbar\r\n"),
+            array(array('', 'foo', 'bar'), "\r\nfoo\r\nbar"),
+            array(array('fòô', 'bàř'), "fòô\nbàř", 'UTF-8'),
+            array(array('fòô', 'bàř'), "fòô\rbàř", 'UTF-8'),
+            array(array('fòô', 'bàř'), "fòô\n\rbàř", 'UTF-8'),
+            array(array('fòô', 'bàř'), "fòô\r\nbàř", 'UTF-8'),
+            array(array('fòô', '', 'bàř'), "fòô\r\n\r\nbàř", 'UTF-8'),
+            array(array('fòô', 'bàř', ''), "fòô\r\nbàř\r\n", 'UTF-8'),
+            array(array('', 'fòô', 'bàř'), "\r\nfòô\r\nbàř", 'UTF-8'),
+        );
+    }
+    /**
      * @dataProvider upperCaseFirstProvider()
      */
     public function testUpperCaseFirst($expected, $str, $encoding = null)

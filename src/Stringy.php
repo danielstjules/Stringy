@@ -216,6 +216,22 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Splits on newlines and carriage returns, returning an array of Stringy
+     * objects corresponding to the lines in the string.
+     *
+     * @return Stringy[] An array of Stringy objects
+     */
+    public function lines()
+    {
+        $array = mb_split('[\r\n]{1,2}', $this->str);
+        for ($i = 0; $i < count($array); $i++) {
+            $array[$i] = static::create($array[$i], $this->encoding);
+        }
+
+        return $array;
+    }
+
+    /**
      * Converts the first character of the supplied string to upper case.
      *
      * @return Stringy Object with the first character of $str being upper case

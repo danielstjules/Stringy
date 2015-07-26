@@ -51,6 +51,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [isUpperCase](#isuppercase)
     * [last](#last)
     * [length](#length)
+    * [lines](#lines)
     * [longestCommonPrefix](#longestcommonprefixstring-otherstr)
     * [longestCommonSuffix](#longestcommonsuffixstring-otherstr)
     * [longestCommonSubstring](#longestcommonsubstringstring-otherstr)
@@ -523,6 +524,15 @@ Returns the length of the string. An alias for PHP's mb_strlen() function.
 
 ```php
 s('fòô bàř')->length(); // 7
+```
+
+##### lines()
+
+Splits on newlines and carriage returns, returning an array of Stringy
+objects corresponding to the lines in the string.
+
+```php
+s("fòô\r\nbàř\n")->lines(); // ['fòô', 'bàř', '']
 ```
 
 ##### longestCommonPrefix(string $otherStr)
