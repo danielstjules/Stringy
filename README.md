@@ -393,7 +393,9 @@ s('fòô bàř')->hasUpperCase(); // false
 
 ##### htmlDecode()
 
-Convert all HTML entities to their applicable characters.
+Convert all HTML entities to their applicable characters. An alias of
+html_entity_decode. For a list of flags, refer to
+http://php.net/manual/en/function.html-entity-decode.php
 
 ```php
 s('&amp;')->htmlDecode(); // '&'
@@ -401,7 +403,9 @@ s('&amp;')->htmlDecode(); // '&'
 
 ##### htmlEncode()
 
-Convert all applicable characters to HTML entities.
+Convert all applicable characters to HTML entities. An alias of
+htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
+for a list of flags.
 
 ```php
 s('&')->htmlEncode(); // '&amp;'
