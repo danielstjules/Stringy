@@ -1629,6 +1629,50 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider splitProvider()
+     */
+    public function testSplit($expected, $str, $pattern, $limit = null,
+                              $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->split($pattern, $limit);
+
+        $this->assertInternalType('array', $result);
+        foreach ($result as $string) {
+            $this->assertStringy($string);
+        }
+
+        for ($i = 0; $i < count($expected); $i++) {
+            $this->assertEquals($expected[$i], $result[$i]);
+        }
+    }
+
+    public function splitProvider()
+    {
+        return array(
+            array(array('foo,bar,baz'), 'foo,bar,baz', ''),
+            array(array('foo,bar,baz'), 'foo,bar,baz', '-'),
+            array(array('foo', 'bar', 'baz'), 'foo,bar,baz', ','),
+            array(array('foo', 'bar', 'baz'), 'foo,bar,baz', ',', null),
+            array(array('foo', 'bar', 'baz'), 'foo,bar,baz', ',', -1),
+            array(array(), 'foo,bar,baz', ',', 0),
+            array(array('foo'), 'foo,bar,baz', ',', 1),
+            array(array('foo', 'bar'), 'foo,bar,baz', ',', 2),
+            array(array('foo', 'bar', 'baz'), 'foo,bar,baz', ',', 3),
+            array(array('foo', 'bar', 'baz'), 'foo,bar,baz', ',', 10),
+            array(array('fòô,bàř,baz'), 'fòô,bàř,baz', '-', null, 'UTF-8'),
+            array(array('fòô', 'bàř', 'baz'), 'fòô,bàř,baz', ',', null, 'UTF-8'),
+            array(array('fòô', 'bàř', 'baz'), 'fòô,bàř,baz', ',', null, 'UTF-8'),
+            array(array('fòô', 'bàř', 'baz'), 'fòô,bàř,baz', ',', -1, 'UTF-8'),
+            array(array(), 'fòô,bàř,baz', ',', 0, 'UTF-8'),
+            array(array('fòô'), 'fòô,bàř,baz', ',', 1, 'UTF-8'),
+            array(array('fòô', 'bàř'), 'fòô,bàř,baz', ',', 2, 'UTF-8'),
+            array(array('fòô', 'bàř', 'baz'), 'fòô,bàř,baz', ',', 3, 'UTF-8'),
+            array(array('fòô', 'bàř', 'baz'), 'fòô,bàř,baz', ',', 10, 'UTF-8')
+        );
+    }
+
+    /**
      * @dataProvider substrProvider()
      */
     public function testSubstr($expected, $str, $start, $length = null,

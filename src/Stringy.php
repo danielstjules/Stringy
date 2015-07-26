@@ -1333,6 +1333,41 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Splits the string with the provided regular expression, returning an
+     * array of Stringy objects. An optional integer $limit will truncate the
+     * numbers of results returned.
+     *
+     * @param  string    $pattern The regex with which to split the string
+     * @param  int       $limit   Optional maximum number of results to return
+     * @return Stringy[] An array of Stringy objects
+     */
+    public function split($pattern, $limit = null)
+    {
+        if ($limit === 0) {
+            return array();
+        }
+
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
+
+        // mb_split returns the remaining unsplit string in the last index when
+        // supplying a limit
+        $limit = ($limit > 0) ? $limit += 1 : -1;
+        $array = mb_split($pattern, $this->str, $limit);
+        mb_regex_encoding($regexEncoding);
+
+        if ($limit > 0 && count($array) === $limit) {
+            array_pop($array);
+        }
+
+        for ($i = 0; $i < count($array); $i++) {
+            $array[$i] = static::create($array[$i], $this->encoding);
+        }
+
+        return $array;
+    }
+
+    /**
      * Returns the substring beginning at $start with the specified $length.
      * It differs from the mb_substr() function in that providing a $length of
      * null will return the rest of the string, rather than an empty string.

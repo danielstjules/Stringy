@@ -71,6 +71,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [slugify](#slugify-string-replacement----)
     * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
     * [slice](#sliceint-start--int-end-)
+    * [split](#splitstring-pattern--int-limit-)
     * [substr](#substrint-start--int-length-)
     * [surround](#surroundstring-substring)
     * [swapCase](#swapcase)
@@ -257,7 +258,7 @@ Returns an array consisting of the characters in the string.
 
 ```php
 S::create('Fòô Bàř')->chars();
-// array(F', 'ò', 'ô', ' ', 'B', 'à', 'ř')
+// [F', 'ò', 'ô', ' ', 'B', 'à', 'ř']
 ```
 
 ##### collapseWhitespace()
@@ -287,7 +288,7 @@ default the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-S::create('Str contains foo and bar')->containsAll(array('foo', 'bar')); // true
+S::create('Str contains foo and bar')->containsAll(['foo', 'bar']); // true
 ```
 
 ##### containsAny(array $needles [, boolean $caseSensitive = true ])
@@ -297,7 +298,7 @@ default the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-S::create('Str contains foo')->containsAny(array('foo', 'bar')); // true
+S::create('Str contains foo')->containsAny(['foo', 'bar']); // true
 ```
 
 ##### countSubstr(string $substring [, boolean $caseSensitive = true ])
@@ -709,6 +710,16 @@ of the string.
 S::create('fòôbàř')->slice(3, -1); // 'bà'
 ```
 
+##### split(string $pattern [, int $limit ])
+
+Splits the string with the provided regular expression, returning an
+array of Stringy objects. An optional integer $limit will truncate the
+numbers of results returned.
+
+```php
+S::create('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+```
+
 ##### substr(int $start [, int $length ])
 
 Returns the substring beginning at $start with the specified $length.
@@ -751,7 +762,7 @@ Ignores the case of other letters, preserving any acronyms. Also accepts
 an array, $ignore, allowing you to list words not to be capitalized.
 
 ```php
-$ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
+$ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
 S::create('i like to watch DVDs at home')->titleize($ignore);
 // 'I Like to Watch DVDs at Home'
 ```
