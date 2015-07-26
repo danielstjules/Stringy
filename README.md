@@ -259,8 +259,7 @@ s('Camel-Case')->camelize(); // 'camelCase'
 Returns an array consisting of the characters in the string.
 
 ```php
-s('Fòô Bàř')->chars();
-// [F', 'ò', 'ô', ' ', 'B', 'à', 'ř']
+s('fòôbàř')->chars(); // ['f', 'ò', 'ô', 'b', 'à', 'ř']
 ```
 
 ##### collapseWhitespace()
