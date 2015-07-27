@@ -1183,6 +1183,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             return array();
         }
 
+        // mb_split errors when supplied an empty pattern in PHP 5.3
+        if ($pattern === '') {
+            return array(static::create($this->str, $this->encoding));
+        }
+
         $regexEncoding = mb_regex_encoding();
         mb_regex_encoding($this->encoding);
 
