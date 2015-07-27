@@ -622,8 +622,9 @@ s('bàř')->prepend('fòô'); // 'fòôbàř'
 
 Replaces all occurrences of $pattern in $str by $replacement. An alias
 for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
-in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
-in the bundled version of Oniguruma in PHP 5.3.
+in mb_ereg_replace() requires PHP 5.6+ for correct results. This is due
+to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
+and current versions of HHVM (3.8 and below).
 
 ```php
 s('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'

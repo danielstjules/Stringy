@@ -943,8 +943,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Replaces all occurrences of $pattern in $str by $replacement. An alias
      * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
-     * in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
-     * in the bundled version of Oniguruma in PHP 5.3.
+     * in mb_ereg_replace() requires PHP 5.6+ for correct results. This is due
+     * to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
+     * and current versions of HHVM (3.8 and below).
      *
      * @param  string  $pattern     The regular expression pattern
      * @param  string  $replacement The string to replace with
@@ -1183,7 +1184,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             return array();
         }
 
-        // mb_split errors when supplied an empty pattern in PHP 5.3
+        // mb_split errors when supplied an empty pattern in < PHP 5.4.13
+        // and current versions of HHVM (3.8 and below)
         if ($pattern === '') {
             return array(static::create($this->str, $this->encoding));
         }
