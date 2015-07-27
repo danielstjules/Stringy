@@ -76,13 +76,177 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns the encoding used by the Stringy object.
+     * Returns a new string with $string appended.
      *
-     * @return string The current value of the $encoding property
+     * @param  string  $string The string to append
+     * @return Stringy Object with appended $string
      */
-    public function getEncoding()
+    public function append($string)
     {
-        return $this->encoding;
+        return static::create($this->str . $string, $this->encoding);
+    }
+
+    /**
+     * Returns the character at $index, with indexes starting at 0.
+     *
+     * @param  int     $index Position of the character
+     * @return Stringy The character at $index
+     */
+    public function at($index)
+    {
+        return $this->substr($index, 1);
+    }
+
+    /**
+     * Returns the substring between $start and $end, if found, or an empty
+     * string. An optional offset may be supplied from which to begin the
+     * search for the start string.
+     *
+     * @param  string $start  Delimiter marking the start of the substring
+     * @param  string $end    Delimiter marketing the end of the substring
+     * @param  string $offset Index from which to begin the search
+     * @return Stringy Object whose $str has been converted to an URL slug
+     */
+    public function between($start, $end, $offset = 0)
+    {
+        $startIndex = $this->indexOf($start, $offset);
+        if ($startIndex === false) {
+            return static::create('', $this->encoding);
+        }
+
+        $substrIndex = $startIndex + mb_strlen($start, $this->encoding);
+        $endIndex = $this->indexOf($end, $substrIndex);
+        if ($endIndex === false) {
+            return static::create('', $this->encoding);
+        }
+
+        return $this->substr($substrIndex, $endIndex - $substrIndex);
+    }
+
+    /**
+     * Returns a camelCase version of the string. Trims surrounding spaces,
+     * capitalizes letters following digits, spaces, dashes and underscores,
+     * and removes spaces, dashes, as well as underscores.
+     *
+     * @return Stringy Object with $str in camelCase
+     */
+    public function camelize()
+    {
+        $encoding = $this->encoding;
+        $stringy = $this->trim()->lowerCaseFirst();
+
+        $camelCase = preg_replace_callback(
+            '/[-_\s]+(.)?/u',
+            function ($match) use ($encoding) {
+                return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
+            },
+            $stringy->str
+        );
+
+        $stringy->str = preg_replace_callback(
+            '/[\d]+(.)?/u',
+            function ($match) use ($encoding) {
+                return mb_strtoupper($match[0], $encoding);
+            },
+            $camelCase
+        );
+
+        return $stringy;
+    }
+
+    /**
+     * Returns an array consisting of the characters in the string.
+     *
+     * @return array An array of string chars
+     */
+    public function chars()
+    {
+        $chars = array();
+        for ($i = 0, $l = $this->length(); $i < $l; $i++) {
+            $chars[] = $this->at($i)->str;
+        }
+
+        return $chars;
+    }
+
+    /**
+     * Trims the string and replaces consecutive whitespace characters with a
+     * single space. This includes tabs and newline characters, as well as
+     * multibyte whitespace such as the thin space and ideographic space.
+     *
+     * @return Stringy Object with a trimmed $str and condensed whitespace
+     */
+    public function collapseWhitespace()
+    {
+        return $this->regexReplace('[[:space:]]+', ' ')->trim();
+    }
+
+    /**
+     * Returns true if the string contains $needle, false otherwise. By default
+     * the comparison is case-sensitive, but can be made insensitive by setting
+     * $caseSensitive to false.
+     *
+     * @param  string $needle        Substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str contains $needle
+     */
+    public function contains($needle, $caseSensitive = true)
+    {
+        $encoding = $this->encoding;
+
+        if ($caseSensitive) {
+            return (mb_strpos($this->str, $needle, 0, $encoding) !== false);
+        } else {
+            return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
+        }
+    }
+
+    /**
+     * Returns true if the string contains all $needles, false otherwise. By
+     * default the comparison is case-sensitive, but can be made insensitive by
+     * setting $caseSensitive to false.
+     *
+     * @param  array  $needles       Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str contains $needle
+     */
+    public function containsAll($needles, $caseSensitive = true)
+    {
+        if (empty($needles)) {
+            return false;
+        }
+
+        foreach ($needles as $needle) {
+            if (!$this->contains($needle, $caseSensitive)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns true if the string contains any $needles, false otherwise. By
+     * default the comparison is case-sensitive, but can be made insensitive by
+     * setting $caseSensitive to false.
+     *
+     * @param  array  $needles       Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str contains $needle
+     */
+    public function containsAny($needles, $caseSensitive = true)
+    {
+        if (empty($needles)) {
+            return false;
+        }
+
+        foreach ($needles as $needle) {
+            if ($this->contains($needle, $caseSensitive)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -96,6 +260,153 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Returns the number of occurrences of $substring in the given string.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $substring     The substring to search for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return int    The number of $substring occurrences
+     */
+    public function countSubstr($substring, $caseSensitive = true)
+    {
+        if ($caseSensitive) {
+            return mb_substr_count($this->str, $substring, $this->encoding);
+        }
+
+        $str = mb_strtoupper($this->str, $this->encoding);
+        $substring = mb_strtoupper($substring, $this->encoding);
+
+        return mb_substr_count($str, $substring, $this->encoding);
+    }
+
+    /**
+     * Returns a lowercase and trimmed string separated by dashes. Dashes are
+     * inserted before uppercase characters (with the exception of the first
+     * character of the string), and in place of spaces as well as underscores.
+     *
+     * @return Stringy Object with a dasherized $str
+     */
+    public function dasherize()
+    {
+        return $this->delimit('-');
+    }
+
+    /**
+     * Returns a lowercase and trimmed string separated by the given delimiter.
+     * Delimiters are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces, dashes,
+     * and underscores. Alpha delimiters are not converted to lowercase.
+     *
+     * @param  string  $delimiter Sequence used to separate parts of the string
+     * @return Stringy Object with a delimited $str
+     */
+    public function delimit($delimiter)
+    {
+        // Save current regex encoding so we can reset it after
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
+
+        $str = mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
+        $str = mb_strtolower($str, $this->encoding);
+        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
+
+        mb_regex_encoding($regexEncoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Returns true if the string ends with $substring, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $substring     The substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str ends with $substring
+     */
+    public function endsWith($substring, $caseSensitive = true)
+    {
+        $substringLength = mb_strlen($substring, $this->encoding);
+        $strLength = $this->length();
+
+        $endOfStr = mb_substr($this->str, $strLength - $substringLength,
+            $substringLength, $this->encoding);
+
+        if (!$caseSensitive) {
+            $substring = mb_strtolower($substring, $this->encoding);
+            $endOfStr = mb_strtolower($endOfStr, $this->encoding);
+        }
+
+        return (string) $substring === $endOfStr;
+    }
+
+    /**
+     * Ensures that the string begins with $substring. If it doesn't, it's
+     * prepended.
+     *
+     * @param  string  $substring The substring to add if not present
+     * @return Stringy Object with its $str prefixed by the $substring
+     */
+    public function ensureLeft($substring)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if (!$stringy->startsWith($substring)) {
+            $stringy->str = $substring . $stringy->str;
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Ensures that the string begins with $substring. If it doesn't, it's
+     * appended.
+     *
+     * @param  string  $substring The substring to add if not present
+     * @return Stringy Object with its $str suffixed by the $substring
+     */
+    public function ensureRight($substring)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if (!$stringy->endsWith($substring)) {
+            $stringy->str .= $substring;
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Returns the first $n characters of the string.
+     *
+     * @param  int     $n Number of characters to retrieve from the start
+     * @return Stringy Object with its $str being the first $n chars
+     */
+    public function first($n)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if ($n < 0) {
+            $stringy->str = '';
+        } else {
+            return $stringy->substr(0, $n);
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Returns the encoding used by the Stringy object.
+     *
+     * @return string The current value of the $encoding property
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
+
+    /**
      * Returns a new ArrayIterator, thus implementing the IteratorAggregate
      * interface. The ArrayIterator's constructor is passed an array of chars
      * in the multibyte string. This enables the use of foreach with instances
@@ -106,6 +417,373 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function getIterator()
     {
         return new \ArrayIterator($this->chars());
+    }
+
+    /**
+     * Returns true if the string contains a lower case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains a lower case character.
+     */
+    public function hasLowerCase()
+    {
+        return $this->matchesPattern('.*[[:lower:]]');
+    }
+
+    /**
+     * Returns true if the string contains an upper case char, false
+     * otherwise.
+     *
+     * @return bool Whether or not the string contains an upper case character.
+     */
+    public function hasUpperCase()
+    {
+        return $this->matchesPattern('.*[[:upper:]]');
+    }
+
+
+    /**
+     * Convert all HTML entities to their applicable characters. An alias of
+     * html_entity_decode. For a list of flags, refer to
+     * http://php.net/manual/en/function.html-entity-decode.php
+     *
+     * @param  int|null $flags Optional flags
+     * @return Stringy  Object with the resulting $str after being html decoded.
+     */
+    public function htmlDecode($flags = ENT_COMPAT)
+    {
+        $str = html_entity_decode($this->str, $flags, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Convert all applicable characters to HTML entities. An alias of
+     * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
+     * for a list of flags.
+     *
+     * @param  int|null $flags Optional flags
+     * @return Stringy  Object with the resulting $str after being html encoded.
+     */
+    public function htmlEncode($flags = ENT_COMPAT)
+    {
+        $str = htmlentities($this->str, $flags, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Capitalizes the first word of the string, replaces underscores with
+     * spaces, and strips '_id'.
+     *
+     * @return Stringy Object with a humanized $str
+     */
+    public function humanize()
+    {
+        $str = str_replace(array('_id', '_'), array('', ' '), $this->str);
+
+        return static::create($str, $this->encoding)->trim()->upperCaseFirst();
+    }
+
+    /**
+     * Returns the index of the first occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
+     *
+     * @param  string   $needle Substring to look for
+     * @param  int      $offset Offset from which to search
+     * @return int|bool The occurrence's index if found, otherwise false
+     */
+    public function indexOf($needle, $offset = 0)
+    {
+        return mb_strpos($this->str, (string) $needle,
+            (int) $offset, $this->encoding);
+    }
+
+    /**
+     * Returns the index of the last occurrence of $needle in the string,
+     * and false if not found. Accepts an optional offset from which to begin
+     * the search.
+     *
+     * @param  string   $needle Substring to look for
+     * @param  int      $offset Offset from which to search
+     * @return int|bool The last occurrence's index if found, otherwise false
+     */
+    public function indexOfLast($needle, $offset = 0)
+    {
+        return mb_strrpos($this->str, (string) $needle,
+            (int) $offset, $this->encoding);
+    }
+
+    /**
+     * Inserts $substring into the string at the $index provided.
+     *
+     * @param  string  $substring String to be inserted
+     * @param  int     $index     The index at which to insert the substring
+     * @return Stringy Object with the resulting $str after the insertion
+     */
+    public function insert($substring, $index)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+        if ($index > $stringy->length()) {
+            return $stringy;
+        }
+
+        $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
+        $end = mb_substr($stringy->str, $index, $stringy->length(),
+            $stringy->encoding);
+
+        $stringy->str = $start . $substring . $end;
+
+        return $stringy;
+    }
+
+    /**
+     * Returns true if the string contains only alphabetic chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only alphabetic chars
+     */
+    public function isAlpha()
+    {
+        return $this->matchesPattern('^[[:alpha:]]*$');
+    }
+
+    /**
+     * Returns true if the string contains only alphabetic and numeric chars,
+     * false otherwise.
+     *
+     * @return bool Whether or not $str contains only alphanumeric chars
+     */
+    public function isAlphanumeric()
+    {
+        return $this->matchesPattern('^[[:alnum:]]*$');
+    }
+
+    /**
+     * Returns true if the string contains only whitespace chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only whitespace characters
+     */
+    public function isBlank()
+    {
+        return $this->matchesPattern('^[[:space:]]*$');
+    }
+
+    /**
+     * Returns true if the string contains only hexadecimal chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only hexadecimal chars
+     */
+    public function isHexadecimal()
+    {
+        return $this->matchesPattern('^[[:xdigit:]]*$');
+    }
+
+    /**
+     * Returns true if the string is JSON, false otherwise.
+     *
+     * @return bool Whether or not $str is JSON
+     */
+    public function isJson()
+    {
+        json_decode($this->str);
+
+        return (json_last_error() === JSON_ERROR_NONE);
+    }
+
+    /**
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only lower case characters
+     */
+    public function isLowerCase()
+    {
+        return $this->matchesPattern('^[[:lower:]]*$');
+    }
+
+    /**
+     * Returns true if the string is serialized, false otherwise.
+     *
+     * @return bool Whether or not $str is serialized
+     */
+    public function isSerialized()
+    {
+        return $this->str === 'b:0;' || @unserialize($this->str) !== false;
+    }
+
+    /**
+     * Returns true if the string contains only lower case chars, false
+     * otherwise.
+     *
+     * @return bool Whether or not $str contains only lower case characters
+     */
+    public function isUpperCase()
+    {
+        return $this->matchesPattern('^[[:upper:]]*$');
+    }
+
+    /**
+     * Returns the last $n characters of the string.
+     *
+     * @param  int     $n Number of characters to retrieve from the end
+     * @return Stringy Object with its $str being the last $n chars
+     */
+    public function last($n)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if ($n <= 0) {
+            $stringy->str = '';
+        } else {
+            return $stringy->substr(-$n);
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Returns the length of the string. An alias for PHP's mb_strlen() function.
+     *
+     * @return int The number of characters in $str given the encoding
+     */
+    public function length()
+    {
+        return mb_strlen($this->str, $this->encoding);
+    }
+
+    /**
+     * Splits on newlines and carriage returns, returning an array of Stringy
+     * objects corresponding to the lines in the string.
+     *
+     * @return Stringy[] An array of Stringy objects
+     */
+    public function lines()
+    {
+        $array = mb_split('[\r\n]{1,2}', $this->str);
+        for ($i = 0; $i < count($array); $i++) {
+            $array[$i] = static::create($array[$i], $this->encoding);
+        }
+
+        return $array;
+    }
+
+    /**
+     * Returns the longest common prefix between the string and $otherStr.
+     *
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common prefix
+     */
+    public function longestCommonPrefix($otherStr)
+    {
+        $encoding = $this->encoding;
+        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
+
+        $longestCommonPrefix = '';
+        for ($i = 0; $i < $maxLength; $i++) {
+            $char = mb_substr($this->str, $i, 1, $encoding);
+
+            if ($char == mb_substr($otherStr, $i, 1, $encoding)) {
+                $longestCommonPrefix .= $char;
+            } else {
+                break;
+            }
+        }
+
+        return static::create($longestCommonPrefix, $encoding);
+    }
+
+    /**
+     * Returns the longest common suffix between the string and $otherStr.
+     *
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common suffix
+     */
+    public function longestCommonSuffix($otherStr)
+    {
+        $encoding = $this->encoding;
+        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
+
+        $longestCommonSuffix = '';
+        for ($i = 1; $i <= $maxLength; $i++) {
+            $char = mb_substr($this->str, -$i, 1, $encoding);
+
+            if ($char == mb_substr($otherStr, -$i, 1, $encoding)) {
+                $longestCommonSuffix = $char . $longestCommonSuffix;
+            } else {
+                break;
+            }
+        }
+
+        return static::create($longestCommonSuffix, $encoding);
+    }
+
+    /**
+     * Returns the longest common substring between the string and $otherStr.
+     * In the case of ties, it returns that which occurs first.
+     *
+     * @param  string  $otherStr Second string for comparison
+     * @return Stringy Object with its $str being the longest common substring
+     */
+    public function longestCommonSubstring($otherStr)
+    {
+        // Uses dynamic programming to solve
+        // http://en.wikipedia.org/wiki/Longest_common_substring_problem
+        $encoding = $this->encoding;
+        $stringy = static::create($this->str, $encoding);
+        $strLength = $stringy->length();
+        $otherLength = mb_strlen($otherStr, $encoding);
+
+        // Return if either string is empty
+        if ($strLength == 0 || $otherLength == 0) {
+            $stringy->str = '';
+            return $stringy;
+        }
+
+        $len = 0;
+        $end = 0;
+        $table = array_fill(0, $strLength + 1,
+            array_fill(0, $otherLength + 1, 0));
+
+        for ($i = 1; $i <= $strLength; $i++) {
+            for ($j = 1; $j <= $otherLength; $j++) {
+                $strChar = mb_substr($stringy->str, $i - 1, 1, $encoding);
+                $otherChar = mb_substr($otherStr, $j - 1, 1, $encoding);
+
+                if ($strChar == $otherChar) {
+                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
+                    if ($table[$i][$j] > $len) {
+                        $len = $table[$i][$j];
+                        $end = $i;
+                    }
+                } else {
+                    $table[$i][$j] = 0;
+                }
+            }
+        }
+
+        $stringy->str = mb_substr($stringy->str, $end - $len, $len, $encoding);
+
+        return $stringy;
+    }
+
+    /**
+     * Converts the first character of the string to lower case.
+     *
+     * @return Stringy Object with the first character of $str being lower case
+     */
+    public function lowerCaseFirst()
+    {
+        $first = mb_substr($this->str, 0, 1, $this->encoding);
+        $rest = mb_substr($this->str, 1, $this->length() - 1,
+            $this->encoding);
+
+        $str = mb_strtolower($first, $this->encoding) . $rest;
+
+        return static::create($str, $this->encoding);
     }
 
     /**
@@ -179,14 +857,76 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns a new string with $string appended.
+     * Pads the string to a given length with $padStr. If length is less than
+     * or equal to the length of the string, no padding takes places. The
+     * default string used for padding is a space, and the default type (one of
+     * 'left', 'right', 'both') is 'right'. Throws an InvalidArgumentException
+     * if $padType isn't one of those 3 values.
      *
-     * @param  string  $string The string to append
-     * @return Stringy Object with appended $string
+     * @param  int     $length  Desired string length after padding
+     * @param  string  $padStr  String used to pad, defaults to space
+     * @param  string  $padType One of 'left', 'right', 'both'
+     * @return Stringy Object with a padded $str
+     * @throws InvalidArgumentException If $padType isn't one of 'right',
+     *         'left' or 'both'
      */
-    public function append($string)
+    public function pad($length, $padStr = ' ', $padType = 'right')
     {
-        return static::create($this->str . $string, $this->encoding);
+        if (!in_array($padType, array('left', 'right', 'both'))) {
+            throw new \InvalidArgumentException('Pad expects $padType ' .
+                "to be one of 'left', 'right' or 'both'");
+        }
+
+        switch ($padType) {
+            case 'left':
+                return $this->padLeft($length, $padStr);
+            case 'right':
+                return $this->padRight($length, $padStr);
+            default:
+                return $this->padBoth($length, $padStr);
+        }
+    }
+
+    /**
+     * Returns a new string of a given length such that both sides of the
+     * string are padded. Alias for pad() with a $padType of 'both'.
+     *
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy String with padding applied
+     */
+    public function padBoth($length, $padStr = ' ')
+    {
+        $padding = $length - $this->length();
+
+        return $this->applyPadding(floor($padding / 2), ceil($padding / 2),
+            $padStr);
+    }
+
+    /**
+     * Returns a new string of a given length such that the beginning of the
+     * string is padded. Alias for pad() with a $padType of 'left'.
+     *
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy String with left padding
+     */
+    public function padLeft($length, $padStr = ' ')
+    {
+        return $this->applyPadding($length - $this->length(), 0, $padStr);
+    }
+
+    /**
+     * Returns a new string of a given length such that the end of the string
+     * is padded. Alias for pad() with a $padType of 'right'.
+     *
+     * @param  int     $length Desired string length after padding
+     * @param  string  $padStr String used to pad, defaults to space
+     * @return Stringy String with right padding
+     */
+    public function padRight($length, $padStr = ' ')
+    {
+        return $this->applyPadding(0, $length - $this->length(), $padStr);
     }
 
     /**
@@ -201,29 +941,261 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns an array consisting of the characters in the string.
+     * Replaces all occurrences of $pattern in $str by $replacement. An alias
+     * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
+     * in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
+     * in the bundled version of Oniguruma in PHP 5.3.
      *
-     * @return array An array of string chars
+     * @param  string  $pattern     The regular expression pattern
+     * @param  string  $replacement The string to replace with
+     * @param  string  $options     Matching conditions to be used
+     * @return Stringy Object with the resulting $str after the replacements
      */
-    public function chars()
+    public function regexReplace($pattern, $replacement, $options = 'msr')
     {
-        $chars = array();
-        for ($i = 0, $l = $this->length(); $i < $l; $i++) {
-            $chars[] = $this->at($i)->str;
-        }
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
 
-        return $chars;
+        $str = mb_ereg_replace($pattern, $replacement, $this->str, $options);
+        mb_regex_encoding($regexEncoding);
+
+        return static::create($str, $this->encoding);
     }
 
     /**
-     * Splits on newlines and carriage returns, returning an array of Stringy
-     * objects corresponding to the lines in the string.
+     * Returns a new string with the prefix $substring removed, if present.
      *
+     * @param  string  $substring The prefix to remove
+     * @return Stringy Object having a $str without the prefix $substring
+     */
+    public function removeLeft($substring)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if ($stringy->startsWith($substring)) {
+            $substringLength = mb_strlen($substring, $stringy->encoding);
+            return $stringy->substr($substringLength);
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Returns a new string with the suffix $substring removed, if present.
+     *
+     * @param  string  $substring The suffix to remove
+     * @return Stringy Object having a $str without the suffix $substring
+     */
+    public function removeRight($substring)
+    {
+        $stringy = static::create($this->str, $this->encoding);
+
+        if ($stringy->endsWith($substring)) {
+            $substringLength = mb_strlen($substring, $stringy->encoding);
+            return $stringy->substr(0, $stringy->length() - $substringLength);
+        }
+
+        return $stringy;
+    }
+
+    /**
+     * Returns a repeated string given a multiplier. An alias for str_repeat.
+     *
+     * @param  int     $multiplier The number of times to repeat the string
+     * @return Stringy Object with a repeated str
+     */
+    public function repeat($multiplier)
+    {
+        $repeated = str_repeat($this->str, $multiplier);
+
+        return static::create($repeated, $this->encoding);
+    }
+
+    /**
+     * Replaces all occurrences of $search in $str by $replacement.
+     *
+     * @param  string  $search      The needle to search for
+     * @param  string  $replacement The string to replace with
+     * @return Stringy Object with the resulting $str after the replacements
+     */
+    public function replace($search, $replacement)
+    {
+        return $this->regexReplace(preg_quote($search), $replacement);
+    }
+
+    /**
+     * Returns a reversed string. A multibyte version of strrev().
+     *
+     * @return Stringy Object with a reversed $str
+     */
+    public function reverse()
+    {
+        $strLength = $this->length();
+        $reversed = '';
+
+        // Loop from last index of string to first
+        for ($i = $strLength - 1; $i >= 0; $i--) {
+            $reversed .= mb_substr($this->str, $i, 1, $this->encoding);
+        }
+
+        return static::create($reversed, $this->encoding);
+    }
+
+    /**
+     * Truncates the string to a given length, while ensuring that it does not
+     * split words. If $substring is provided, and truncating occurs, the
+     * string is further truncated so that the substring may be appended without
+     * exceeding the desired length.
+     *
+     * @param  int     $length    Desired length of the truncated string
+     * @param  string  $substring The substring to append if it can fit
+     * @return Stringy Object with the resulting $str after truncating
+     */
+    public function safeTruncate($length, $substring = '')
+    {
+        $stringy = static::create($this->str, $this->encoding);
+        if ($length >= $stringy->length()) {
+            return $stringy;
+        }
+
+        // Need to further trim the string so we can append the substring
+        $encoding = $stringy->encoding;
+        $substringLength = mb_strlen($substring, $encoding);
+        $length = $length - $substringLength;
+
+        $truncated = mb_substr($stringy->str, 0, $length, $encoding);
+
+        // If the last word was truncated
+        if (mb_strpos($stringy->str, ' ', $length - 1, $encoding) != $length) {
+            // Find pos of the last occurrence of a space, get up to that
+            $lastPos = mb_strrpos($truncated, ' ', 0, $encoding);
+            $truncated = mb_substr($truncated, 0, $lastPos, $encoding);
+        }
+
+        $stringy->str = $truncated . $substring;
+
+        return $stringy;
+    }
+
+    /*
+     * A multibyte str_shuffle() function. It returns a string with its
+     * characters in random order.
+     *
+     * @return Stringy Object with a shuffled $str
+     */
+    public function shuffle()
+    {
+        $indexes = range(0, $this->length() - 1);
+        shuffle($indexes);
+
+        $shuffledStr = '';
+        foreach ($indexes as $i) {
+            $shuffledStr .= mb_substr($this->str, $i, 1, $this->encoding);
+        }
+
+        return static::create($shuffledStr, $this->encoding);
+    }
+
+    /**
+     * Converts the string into an URL slug. This includes replacing non-ASCII
+     * characters with their closest ASCII equivalents, removing remaining
+     * non-ASCII and non-alphanumeric characters, and replacing whitespace with
+     * $replacement. The replacement defaults to a single dash, and the string
+     * is also converted to lowercase.
+     *
+     * @param  string  $replacement The string used to replace whitespace
+     * @return Stringy Object whose $str has been converted to an URL slug
+     */
+    public function slugify($replacement = '-')
+    {
+        $stringy = $this->toAscii();
+
+        $quotedReplacement = preg_quote($replacement);
+        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
+        $stringy->str = preg_replace($pattern, '', $stringy);
+
+        return $stringy->toLowerCase()->delimit($replacement)
+                       ->removeLeft($replacement)->removeRight($replacement);
+    }
+
+    /**
+     * Returns true if the string begins with $substring, false otherwise. By
+     * default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string $substring     The substring to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str starts with $substring
+     */
+    public function startsWith($substring, $caseSensitive = true)
+    {
+        $substringLength = mb_strlen($substring, $this->encoding);
+        $startOfStr = mb_substr($this->str, 0, $substringLength,
+            $this->encoding);
+
+        if (!$caseSensitive) {
+            $substring = mb_strtolower($substring, $this->encoding);
+            $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+        }
+
+        return (string) $substring === $startOfStr;
+    }
+
+    /**
+     * Returns the substring beginning at $start, and up to, but not including
+     * the index specified by $end. If $end is omitted, the function extracts
+     * the remaining string. If $end is negative, it is computed from the end
+     * of the string.
+     *
+     * @param  int     $start Initial index from which to begin extraction
+     * @param  int     $end   Optional index at which to end extraction
+     * @return Stringy Object with its $str being the extracted substring
+     */
+    public function slice($start, $end = null)
+    {
+        if ($end === null) {
+            $length = $this->length();
+        } elseif ($end >= 0 && $end <= $start) {
+            return static::create('', $this->encoding);
+        } elseif ($end < 0) {
+            $length = $this->length() + $end - $start;
+        } else {
+            $length = $end - $start;
+        }
+
+        $str = mb_substr($this->str, $start, $length, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Splits the string with the provided regular expression, returning an
+     * array of Stringy objects. An optional integer $limit will truncate the
+     * results.
+     *
+     * @param  string    $pattern The regex with which to split the string
+     * @param  int       $limit   Optional maximum number of results to return
      * @return Stringy[] An array of Stringy objects
      */
-    public function lines()
+    public function split($pattern, $limit = null)
     {
-        $array = mb_split('[\r\n]{1,2}', $this->str);
+        if ($limit === 0) {
+            return array();
+        }
+
+        $regexEncoding = mb_regex_encoding();
+        mb_regex_encoding($this->encoding);
+
+        // mb_split returns the remaining unsplit string in the last index when
+        // supplying a limit
+        $limit = ($limit > 0) ? $limit += 1 : -1;
+        $array = mb_split($pattern, $this->str, $limit);
+        mb_regex_encoding($regexEncoding);
+
+        if ($limit > 0 && count($array) === $limit) {
+            array_pop($array);
+        }
+
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = static::create($array[$i], $this->encoding);
         }
@@ -232,125 +1204,32 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Converts the first character of the supplied string to upper case.
+     * Returns the substring beginning at $start with the specified $length.
+     * It differs from the mb_substr() function in that providing a $length of
+     * null will return the rest of the string, rather than an empty string.
      *
-     * @return Stringy Object with the first character of $str being upper case
+     * @param  int     $start  Position of the first character to use
+     * @param  int     $length Maximum number of characters used
+     * @return Stringy Object with its $str being the substring
      */
-    public function upperCaseFirst()
+    public function substr($start, $length = null)
     {
-        $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, $this->length() - 1,
-            $this->encoding);
-
-        $str = mb_strtoupper($first, $this->encoding) . $rest;
+        $length = $length === null ? $this->length() : $length;
+        $str = mb_substr($this->str, $start, $length, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
 
     /**
-     * Converts the first character of the string to lower case.
+     * Surrounds $str with the given substring.
      *
-     * @return Stringy Object with the first character of $str being lower case
+     * @param  string  $substring The substring to add to both sides
+     * @return Stringy Object whose $str had the substring both prepended and
+     *                 appended
      */
-    public function lowerCaseFirst()
+    public function surround($substring)
     {
-        $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, $this->length() - 1,
-            $this->encoding);
-
-        $str = mb_strtolower($first, $this->encoding) . $rest;
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Returns a camelCase version of the string. Trims surrounding spaces,
-     * capitalizes letters following digits, spaces, dashes and underscores,
-     * and removes spaces, dashes, as well as underscores.
-     *
-     * @return Stringy Object with $str in camelCase
-     */
-    public function camelize()
-    {
-        $encoding = $this->encoding;
-        $stringy = $this->trim()->lowerCaseFirst();
-
-        $camelCase = preg_replace_callback(
-            '/[-_\s]+(.)?/u',
-            function ($match) use ($encoding) {
-                return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
-            },
-            $stringy->str
-        );
-
-        $stringy->str = preg_replace_callback(
-            '/[\d]+(.)?/u',
-            function ($match) use ($encoding) {
-                return mb_strtoupper($match[0], $encoding);
-            },
-            $camelCase
-        );
-
-        return $stringy;
-    }
-
-    /**
-     * Returns an UpperCamelCase version of the supplied string. It trims
-     * surrounding spaces, capitalizes letters following digits, spaces, dashes
-     * and underscores, and removes spaces, dashes, underscores.
-     *
-     * @return Stringy Object with $str in UpperCamelCase
-     */
-    public function upperCamelize()
-    {
-        return $this->camelize()->upperCaseFirst();
-    }
-
-    /**
-     * Returns a lowercase and trimmed string separated by dashes. Dashes are
-     * inserted before uppercase characters (with the exception of the first
-     * character of the string), and in place of spaces as well as underscores.
-     *
-     * @return Stringy Object with a dasherized $str
-     */
-    public function dasherize()
-    {
-        return $this->delimit('-');
-    }
-
-    /**
-     * Returns a lowercase and trimmed string separated by underscores.
-     * Underscores are inserted before uppercase characters (with the exception
-     * of the first character of the string), and in place of spaces as well as
-     * dashes.
-     *
-     * @return Stringy Object with an underscored $str
-     */
-    public function underscored()
-    {
-        return $this->delimit('_');
-    }
-
-    /**
-     * Returns a lowercase and trimmed string separated by the given delimiter.
-     * Delimiters are inserted before uppercase characters (with the exception
-     * of the first character of the string), and in place of spaces, dashes,
-     * and underscores. Alpha delimiters are not converted to lowercase.
-     *
-     * @param  string  $delimiter Sequence used to separate parts of the string
-     * @return Stringy Object with a delimited $str
-     */
-    public function delimit($delimiter)
-    {
-        // Save current regex encoding so we can reset it after
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        $str = mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
-        $str = mb_strtolower($str, $this->encoding);
-        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
-
-        mb_regex_encoding($regexEncoding);
+        $str = implode('', array($substring, $this->str, $substring));
 
         return static::create($str, $this->encoding);
     }
@@ -378,6 +1257,30 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         );
 
         return $stringy;
+    }
+
+    /**
+     * Returns a string with smart quotes, ellipsis characters, and dashes from
+     * Windows-1252 (commonly used in Word documents) replaced by their ASCII
+     * equivalents.
+     *
+     * @return Stringy Object whose $str has those characters removed
+     */
+    public function tidy()
+    {
+        $str = preg_replace(array(
+            '/\x{2026}/u',
+            '/[\x{201C}\x{201D}]/u',
+            '/[\x{2018}\x{2019}]/u',
+            '/[\x{2013}\x{2014}]/u',
+        ), array(
+            '...',
+            '"',
+            "'",
+            '-',
+        ), $this->str);
+
+        return static::create($str, $this->encoding);
     }
 
     /**
@@ -410,55 +1313,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Capitalizes the first word of the string, replaces underscores with
-     * spaces, and strips '_id'.
-     *
-     * @return Stringy Object with a humanized $str
-     */
-    public function humanize()
-    {
-        $str = str_replace(array('_id', '_'), array('', ' '), $this->str);
-
-        return static::create($str, $this->encoding)->trim()->upperCaseFirst();
-    }
-
-    /**
-     * Returns a string with smart quotes, ellipsis characters, and dashes from
-     * Windows-1252 (commonly used in Word documents) replaced by their ASCII
-     * equivalents.
-     *
-     * @return Stringy Object whose $str has those characters removed
-     */
-    public function tidy()
-    {
-        $str = preg_replace(array(
-            '/\x{2026}/u',
-            '/[\x{201C}\x{201D}]/u',
-            '/[\x{2018}\x{2019}]/u',
-            '/[\x{2013}\x{2014}]/u',
-        ), array(
-            '...',
-            '"',
-            "'",
-            '-',
-        ), $this->str);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Trims the string and replaces consecutive whitespace characters with a
-     * single space. This includes tabs and newline characters, as well as
-     * multibyte whitespace such as the thin space and ideographic space.
-     *
-     * @return Stringy Object with a trimmed $str and condensed whitespace
-     */
-    public function collapseWhitespace()
-    {
-        return $this->regexReplace('[[:space:]]+', ' ')->trim();
-    }
-
-    /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
      * replaced with their closest ASCII counterparts, and the rest are removed
      * unless instructed otherwise.
@@ -478,6 +1332,221 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         if ($removeUnsupported) {
             $str = preg_replace('/[^\x20-\x7E]/u', '', $str);
         }
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Returns a boolean representation of the given logical string value.
+     * For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
+     * 'off', and 'no' will return false. In all instances, case is ignored.
+     * For other numeric strings, their sign will determine the return value.
+     * In addition, blank strings consisting of only whitespace will return
+     * false. For all other strings, the return value is a result of a
+     * boolean cast.
+     *
+     * @return bool A boolean value for the string
+     */
+    public function toBoolean()
+    {
+        $key = $this->toLowerCase()->str;
+        $map = array(
+            'true'  => true,
+            '1'     => true,
+            'on'    => true,
+            'yes'   => true,
+            'false' => false,
+            '0'     => false,
+            'off'   => false,
+            'no'    => false
+        );
+
+        if (array_key_exists($key, $map)) {
+            return $map[$key];
+        } elseif (is_numeric($this->str)) {
+           return (intval($this->str) > 0);
+        } else {
+            return (bool) $this->regexReplace('[[:space:]]', '')->str;
+        }
+    }
+
+    /**
+     * Converts all characters in the string to lowercase. An alias for PHP's
+     * mb_strtolower().
+     *
+     * @return Stringy Object with all characters of $str being lowercase
+     */
+    public function toLowerCase()
+    {
+        $str = mb_strtolower($this->str, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Converts each tab in the string to some number of spaces, as defined by
+     * $tabLength. By default, each tab is converted to 4 consecutive spaces.
+     *
+     * @param  int     $tabLength Number of spaces to replace each tab with
+     * @return Stringy Object whose $str has had tabs switched to spaces
+     */
+    public function toSpaces($tabLength = 4)
+    {
+        $spaces = str_repeat(' ', $tabLength);
+        $str = str_replace("\t", $spaces, $this->str);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Converts each occurrence of some consecutive number of spaces, as
+     * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
+     * are converted to a tab.
+     *
+     * @param  int     $tabLength Number of spaces to replace with a tab
+     * @return Stringy Object whose $str has had spaces switched to tabs
+     */
+    public function toTabs($tabLength = 4)
+    {
+        $spaces = str_repeat(' ', $tabLength);
+        $str = str_replace($spaces, "\t", $this->str);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Converts the first character of each word in the string to uppercase.
+     *
+     * @return Stringy Object with all characters of $str being title-cased
+     */
+    public function toTitleCase()
+    {
+        $str = mb_convert_case($this->str, MB_CASE_TITLE, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Converts all characters in the string to uppercase. An alias for PHP's
+     * mb_strtoupper().
+     *
+     * @return Stringy Object with all characters of $str being uppercase
+     */
+    public function toUpperCase()
+    {
+        $str = mb_strtoupper($this->str, $this->encoding);
+
+        return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Returns a string with whitespace removed from the start and end of the
+     * string. Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string  $chars Optional string of characters to strip
+     * @return Stringy Object with a trimmed $str
+     */
+    public function trim($chars = null)
+    {
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
+
+        return $this->regexReplace("^[$chars]+|[$chars]+\$", '');
+    }
+
+    /**
+     * Returns a string with whitespace removed from the start of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string  $chars Optional string of characters to strip
+     * @return Stringy Object with a trimmed $str
+     */
+    public function trimLeft($chars = null)
+    {
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
+
+        return $this->regexReplace("^[$chars]+", '');
+    }
+
+    /**
+     * Returns a string with whitespace removed from the end of the string.
+     * Supports the removal of unicode whitespace. Accepts an optional
+     * string of characters to strip instead of the defaults.
+     *
+     * @param  string  $chars Optional string of characters to strip
+     * @return Stringy Object with a trimmed $str
+     */
+    public function trimRight($chars = null)
+    {
+        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
+
+        return $this->regexReplace("[$chars]+\$", '');
+    }
+
+    /**
+     * Truncates the string to a given length. If $substring is provided, and
+     * truncating occurs, the string is further truncated so that the substring
+     * may be appended without exceeding the desired length.
+     *
+     * @param  int     $length    Desired length of the truncated string
+     * @param  string  $substring The substring to append if it can fit
+     * @return Stringy Object with the resulting $str after truncating
+     */
+    public function truncate($length, $substring = '')
+    {
+        $stringy = static::create($this->str, $this->encoding);
+        if ($length >= $stringy->length()) {
+            return $stringy;
+        }
+
+        // Need to further trim the string so we can append the substring
+        $substringLength = mb_strlen($substring, $stringy->encoding);
+        $length = $length - $substringLength;
+
+        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
+        $stringy->str = $truncated . $substring;
+
+        return $stringy;
+    }
+
+    /**
+     * Returns a lowercase and trimmed string separated by underscores.
+     * Underscores are inserted before uppercase characters (with the exception
+     * of the first character of the string), and in place of spaces as well as
+     * dashes.
+     *
+     * @return Stringy Object with an underscored $str
+     */
+    public function underscored()
+    {
+        return $this->delimit('_');
+    }
+
+    /**
+     * Returns an UpperCamelCase version of the supplied string. It trims
+     * surrounding spaces, capitalizes letters following digits, spaces, dashes
+     * and underscores, and removes spaces, dashes, underscores.
+     *
+     * @return Stringy Object with $str in UpperCamelCase
+     */
+    public function upperCamelize()
+    {
+        return $this->camelize()->upperCaseFirst();
+    }
+
+    /**
+     * Converts the first character of the supplied string to upper case.
+     *
+     * @return Stringy Object with the first character of $str being upper case
+     */
+    public function upperCaseFirst()
+    {
+        $first = mb_substr($this->str, 0, 1, $this->encoding);
+        $rest = mb_substr($this->str, 1, $this->length() - 1,
+            $this->encoding);
+
+        $str = mb_strtoupper($first, $this->encoding) . $rest;
 
         return static::create($str, $this->encoding);
     }
@@ -618,79 +1687,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Pads the string to a given length with $padStr. If length is less than
-     * or equal to the length of the string, no padding takes places. The
-     * default string used for padding is a space, and the default type (one of
-     * 'left', 'right', 'both') is 'right'. Throws an InvalidArgumentException
-     * if $padType isn't one of those 3 values.
-     *
-     * @param  int     $length  Desired string length after padding
-     * @param  string  $padStr  String used to pad, defaults to space
-     * @param  string  $padType One of 'left', 'right', 'both'
-     * @return Stringy Object with a padded $str
-     * @throws InvalidArgumentException If $padType isn't one of 'right',
-     *         'left' or 'both'
-     */
-    public function pad($length, $padStr = ' ', $padType = 'right')
-    {
-        if (!in_array($padType, array('left', 'right', 'both'))) {
-            throw new \InvalidArgumentException('Pad expects $padType ' .
-                "to be one of 'left', 'right' or 'both'");
-        }
-
-        switch ($padType) {
-            case 'left':
-                return $this->padLeft($length, $padStr);
-            case 'right':
-                return $this->padRight($length, $padStr);
-            default:
-                return $this->padBoth($length, $padStr);
-        }
-    }
-
-    /**
-     * Returns a new string of a given length such that the beginning of the
-     * string is padded. Alias for pad() with a $padType of 'left'.
-     *
-     * @param  int     $length Desired string length after padding
-     * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy String with left padding
-     */
-    public function padLeft($length, $padStr = ' ')
-    {
-        return $this->applyPadding($length - $this->length(), 0, $padStr);
-    }
-
-    /**
-     * Returns a new string of a given length such that the end of the string
-     * is padded. Alias for pad() with a $padType of 'right'.
-     *
-     * @param  int     $length Desired string length after padding
-     * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy String with right padding
-     */
-    public function padRight($length, $padStr = ' ')
-    {
-        return $this->applyPadding(0, $length - $this->length(), $padStr);
-    }
-
-    /**
-     * Returns a new string of a given length such that both sides of the
-     * string are padded. Alias for pad() with a $padType of 'both'.
-     *
-     * @param  int     $length Desired string length after padding
-     * @param  string  $padStr String used to pad, defaults to space
-     * @return Stringy String with padding applied
-     */
-    public function padBoth($length, $padStr = ' ')
-    {
-        $padding = $length - $this->length();
-
-        return $this->applyPadding(floor($padding / 2), ceil($padding / 2),
-            $padStr);
-    }
-
-    /**
      * Adds the specified amount of left and right padding to the given string.
      * The default character used is a space.
      *
@@ -722,806 +1718,6 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string begins with $substring, false otherwise. By
-     * default, the comparison is case-sensitive, but can be made insensitive
-     * by setting $caseSensitive to false.
-     *
-     * @param  string $substring     The substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str starts with $substring
-     */
-    public function startsWith($substring, $caseSensitive = true)
-    {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $startOfStr = mb_substr($this->str, 0, $substringLength,
-            $this->encoding);
-
-        if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $startOfStr = mb_strtolower($startOfStr, $this->encoding);
-        }
-
-        return (string) $substring === $startOfStr;
-    }
-
-    /**
-     * Returns true if the string ends with $substring, false otherwise. By
-     * default, the comparison is case-sensitive, but can be made insensitive
-     * by setting $caseSensitive to false.
-     *
-     * @param  string $substring     The substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str ends with $substring
-     */
-    public function endsWith($substring, $caseSensitive = true)
-    {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $strLength = $this->length();
-
-        $endOfStr = mb_substr($this->str, $strLength - $substringLength,
-            $substringLength, $this->encoding);
-
-        if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $endOfStr = mb_strtolower($endOfStr, $this->encoding);
-        }
-
-        return (string) $substring === $endOfStr;
-    }
-
-    /**
-     * Returns a boolean representation of the given logical string value.
-     * For example, 'true', '1', 'on' and 'yes' will return true. 'false', '0',
-     * 'off', and 'no' will return false. In all instances, case is ignored.
-     * For other numeric strings, their sign will determine the return value.
-     * In addition, blank strings consisting of only whitespace will return
-     * false. For all other strings, the return value is a result of a
-     * boolean cast.
-     *
-     * @return bool A boolean value for the string
-     */
-    public function toBoolean()
-    {
-        $key = $this->toLowerCase()->str;
-        $map = array(
-            'true'  => true,
-            '1'     => true,
-            'on'    => true,
-            'yes'   => true,
-            'false' => false,
-            '0'     => false,
-            'off'   => false,
-            'no'    => false
-        );
-
-        if (array_key_exists($key, $map)) {
-            return $map[$key];
-        } elseif (is_numeric($this->str)) {
-           return (intval($this->str) > 0);
-        } else {
-            return (bool) $this->regexReplace('[[:space:]]', '')->str;
-        }
-    }
-
-    /**
-     * Converts each tab in the string to some number of spaces, as defined by
-     * $tabLength. By default, each tab is converted to 4 consecutive spaces.
-     *
-     * @param  int     $tabLength Number of spaces to replace each tab with
-     * @return Stringy Object whose $str has had tabs switched to spaces
-     */
-    public function toSpaces($tabLength = 4)
-    {
-        $spaces = str_repeat(' ', $tabLength);
-        $str = str_replace("\t", $spaces, $this->str);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Converts each occurrence of some consecutive number of spaces, as
-     * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
-     * are converted to a tab.
-     *
-     * @param  int     $tabLength Number of spaces to replace with a tab
-     * @return Stringy Object whose $str has had spaces switched to tabs
-     */
-    public function toTabs($tabLength = 4)
-    {
-        $spaces = str_repeat(' ', $tabLength);
-        $str = str_replace($spaces, "\t", $this->str);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Converts the first character of each word in the string to uppercase.
-     *
-     * @return Stringy Object with all characters of $str being title-cased
-     */
-    public function toTitleCase()
-    {
-        $str = mb_convert_case($this->str, MB_CASE_TITLE, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Converts all characters in the string to lowercase. An alias for PHP's
-     * mb_strtolower().
-     *
-     * @return Stringy Object with all characters of $str being lowercase
-     */
-    public function toLowerCase()
-    {
-        $str = mb_strtolower($this->str, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Converts all characters in the string to uppercase. An alias for PHP's
-     * mb_strtoupper().
-     *
-     * @return Stringy Object with all characters of $str being uppercase
-     */
-    public function toUpperCase()
-    {
-        $str = mb_strtoupper($this->str, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Converts the string into an URL slug. This includes replacing non-ASCII
-     * characters with their closest ASCII equivalents, removing remaining
-     * non-ASCII and non-alphanumeric characters, and replacing whitespace with
-     * $replacement. The replacement defaults to a single dash, and the string
-     * is also converted to lowercase.
-     *
-     * @param  string  $replacement The string used to replace whitespace
-     * @return Stringy Object whose $str has been converted to an URL slug
-     */
-    public function slugify($replacement = '-')
-    {
-        $stringy = $this->toAscii();
-
-        $quotedReplacement = preg_quote($replacement);
-        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
-        $stringy->str = preg_replace($pattern, '', $stringy);
-
-        return $stringy->toLowerCase()->delimit($replacement)
-                       ->removeLeft($replacement)->removeRight($replacement);
-    }
-
-    /**
-     * Returns the substring between $start and $end, if found, or an empty
-     * string. An optional offset may be supplied from which to begin the
-     * search for the start string.
-     *
-     * @param  string $start  Delimiter marking the start of the substring
-     * @param  string $end    Delimiter marketing the end of the substring
-     * @param  string $offset Index from which to begin the search
-     * @return Stringy Object whose $str has been converted to an URL slug
-     */
-    public function between($start, $end, $offset = 0)
-    {
-        $startIndex = $this->indexOf($start, $offset);
-        if ($startIndex === false) {
-            return static::create('', $this->encoding);
-        }
-
-        $substrIndex = $startIndex + mb_strlen($start, $this->encoding);
-        $endIndex = $this->indexOf($end, $substrIndex);
-        if ($endIndex === false) {
-            return static::create('', $this->encoding);
-        }
-
-        return $this->substr($substrIndex, $endIndex - $substrIndex);
-    }
-
-    /**
-     * Returns true if the string contains $needle, false otherwise. By default
-     * the comparison is case-sensitive, but can be made insensitive by setting
-     * $caseSensitive to false.
-     *
-     * @param  string $needle        Substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
-     */
-    public function contains($needle, $caseSensitive = true)
-    {
-        $encoding = $this->encoding;
-
-        if ($caseSensitive) {
-            return (mb_strpos($this->str, $needle, 0, $encoding) !== false);
-        } else {
-            return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
-        }
-    }
-
-    /**
-     * Returns true if the string contains any $needles, false otherwise. By
-     * default the comparison is case-sensitive, but can be made insensitive by
-     * setting $caseSensitive to false.
-     *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
-     */
-    public function containsAny($needles, $caseSensitive = true)
-    {
-        if (empty($needles)) {
-            return false;
-        }
-
-        foreach ($needles as $needle) {
-            if ($this->contains($needle, $caseSensitive)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns true if the string contains all $needles, false otherwise. By
-     * default the comparison is case-sensitive, but can be made insensitive by
-     * setting $caseSensitive to false.
-     *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
-     */
-    public function containsAll($needles, $caseSensitive = true)
-    {
-        if (empty($needles)) {
-            return false;
-        }
-
-        foreach ($needles as $needle) {
-            if (!$this->contains($needle, $caseSensitive)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns the index of the first occurrence of $needle in the string,
-     * and false if not found. Accepts an optional offset from which to begin
-     * the search.
-     *
-     * @param  string   $needle Substring to look for
-     * @param  int      $offset Offset from which to search
-     * @return int|bool The occurrence's index if found, otherwise false
-     */
-    public function indexOf($needle, $offset = 0)
-    {
-        return mb_strpos($this->str, (string) $needle,
-            (int) $offset, $this->encoding);
-    }
-
-    /**
-     * Returns the index of the last occurrence of $needle in the string,
-     * and false if not found. Accepts an optional offset from which to begin
-     * the search.
-     *
-     * @param  string   $needle Substring to look for
-     * @param  int      $offset Offset from which to search
-     * @return int|bool The last occurrence's index if found, otherwise false
-     */
-    public function indexOfLast($needle, $offset = 0)
-    {
-        return mb_strrpos($this->str, (string) $needle,
-            (int) $offset, $this->encoding);
-    }
-
-    /**
-     * Surrounds $str with the given substring.
-     *
-     * @param  string  $substring The substring to add to both sides
-     * @return Stringy Object whose $str had the substring both prepended and
-     *                 appended
-     */
-    public function surround($substring)
-    {
-        $str = implode('', array($substring, $this->str, $substring));
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Inserts $substring into the string at the $index provided.
-     *
-     * @param  string  $substring String to be inserted
-     * @param  int     $index     The index at which to insert the substring
-     * @return Stringy Object with the resulting $str after the insertion
-     */
-    public function insert($substring, $index)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-        if ($index > $stringy->length()) {
-            return $stringy;
-        }
-
-        $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
-        $end = mb_substr($stringy->str, $index, $stringy->length(),
-            $stringy->encoding);
-
-        $stringy->str = $start . $substring . $end;
-
-        return $stringy;
-    }
-
-    /**
-     * Truncates the string to a given length. If $substring is provided, and
-     * truncating occurs, the string is further truncated so that the substring
-     * may be appended without exceeding the desired length.
-     *
-     * @param  int     $length    Desired length of the truncated string
-     * @param  string  $substring The substring to append if it can fit
-     * @return Stringy Object with the resulting $str after truncating
-     */
-    public function truncate($length, $substring = '')
-    {
-        $stringy = static::create($this->str, $this->encoding);
-        if ($length >= $stringy->length()) {
-            return $stringy;
-        }
-
-        // Need to further trim the string so we can append the substring
-        $substringLength = mb_strlen($substring, $stringy->encoding);
-        $length = $length - $substringLength;
-
-        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
-        $stringy->str = $truncated . $substring;
-
-        return $stringy;
-    }
-
-    /**
-     * Truncates the string to a given length, while ensuring that it does not
-     * split words. If $substring is provided, and truncating occurs, the
-     * string is further truncated so that the substring may be appended without
-     * exceeding the desired length.
-     *
-     * @param  int     $length    Desired length of the truncated string
-     * @param  string  $substring The substring to append if it can fit
-     * @return Stringy Object with the resulting $str after truncating
-     */
-    public function safeTruncate($length, $substring = '')
-    {
-        $stringy = static::create($this->str, $this->encoding);
-        if ($length >= $stringy->length()) {
-            return $stringy;
-        }
-
-        // Need to further trim the string so we can append the substring
-        $encoding = $stringy->encoding;
-        $substringLength = mb_strlen($substring, $encoding);
-        $length = $length - $substringLength;
-
-        $truncated = mb_substr($stringy->str, 0, $length, $encoding);
-
-        // If the last word was truncated
-        if (mb_strpos($stringy->str, ' ', $length - 1, $encoding) != $length) {
-            // Find pos of the last occurrence of a space, get up to that
-            $lastPos = mb_strrpos($truncated, ' ', 0, $encoding);
-            $truncated = mb_substr($truncated, 0, $lastPos, $encoding);
-        }
-
-        $stringy->str = $truncated . $substring;
-
-        return $stringy;
-    }
-
-    /**
-     * Returns a reversed string. A multibyte version of strrev().
-     *
-     * @return Stringy Object with a reversed $str
-     */
-    public function reverse()
-    {
-        $strLength = $this->length();
-        $reversed = '';
-
-        // Loop from last index of string to first
-        for ($i = $strLength - 1; $i >= 0; $i--) {
-            $reversed .= mb_substr($this->str, $i, 1, $this->encoding);
-        }
-
-        return static::create($reversed, $this->encoding);
-    }
-
-    /**
-     * Returns a repeated string given a multiplier. An alias for str_repeat.
-     *
-     * @param  int     $multiplier The number of times to repeat the string
-     * @return Stringy Object with a repeated str
-     */
-    public function repeat($multiplier)
-    {
-        $repeated = str_repeat($this->str, $multiplier);
-
-        return static::create($repeated, $this->encoding);
-    }
-
-    /*
-     * A multibyte str_shuffle() function. It returns a string with its
-     * characters in random order.
-     *
-     * @return Stringy Object with a shuffled $str
-     */
-    public function shuffle()
-    {
-        $indexes = range(0, $this->length() - 1);
-        shuffle($indexes);
-
-        $shuffledStr = '';
-        foreach ($indexes as $i) {
-            $shuffledStr .= mb_substr($this->str, $i, 1, $this->encoding);
-        }
-
-        return static::create($shuffledStr, $this->encoding);
-    }
-
-    /**
-     * Returns a string with whitespace removed from the start and end of the
-     * string. Supports the removal of unicode whitespace. Accepts an optional
-     * string of characters to strip instead of the defaults.
-     *
-     * @param  string  $chars Optional string of characters to strip
-     * @return Stringy Object with a trimmed $str
-     */
-    public function trim($chars = null)
-    {
-        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
-
-        return $this->regexReplace("^[$chars]+|[$chars]+\$", '');
-    }
-
-    /**
-     * Returns a string with whitespace removed from the start of the string.
-     * Supports the removal of unicode whitespace. Accepts an optional
-     * string of characters to strip instead of the defaults.
-     *
-     * @param  string  $chars Optional string of characters to strip
-     * @return Stringy Object with a trimmed $str
-     */
-    public function trimLeft($chars = null)
-    {
-        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
-
-        return $this->regexReplace("^[$chars]+", '');
-    }
-
-    /**
-     * Returns a string with whitespace removed from the end of the string.
-     * Supports the removal of unicode whitespace. Accepts an optional
-     * string of characters to strip instead of the defaults.
-     *
-     * @param  string  $chars Optional string of characters to strip
-     * @return Stringy Object with a trimmed $str
-     */
-    public function trimRight($chars = null)
-    {
-        $chars = ($chars) ? preg_quote($chars) : '[:space:]';
-
-        return $this->regexReplace("[$chars]+\$", '');
-    }
-
-    /**
-     * Returns the longest common prefix between the string and $otherStr.
-     *
-     * @param  string  $otherStr Second string for comparison
-     * @return Stringy Object with its $str being the longest common prefix
-     */
-    public function longestCommonPrefix($otherStr)
-    {
-        $encoding = $this->encoding;
-        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
-
-        $longestCommonPrefix = '';
-        for ($i = 0; $i < $maxLength; $i++) {
-            $char = mb_substr($this->str, $i, 1, $encoding);
-
-            if ($char == mb_substr($otherStr, $i, 1, $encoding)) {
-                $longestCommonPrefix .= $char;
-            } else {
-                break;
-            }
-        }
-
-        return static::create($longestCommonPrefix, $encoding);
-    }
-
-    /**
-     * Returns the longest common suffix between the string and $otherStr.
-     *
-     * @param  string  $otherStr Second string for comparison
-     * @return Stringy Object with its $str being the longest common suffix
-     */
-    public function longestCommonSuffix($otherStr)
-    {
-        $encoding = $this->encoding;
-        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
-
-        $longestCommonSuffix = '';
-        for ($i = 1; $i <= $maxLength; $i++) {
-            $char = mb_substr($this->str, -$i, 1, $encoding);
-
-            if ($char == mb_substr($otherStr, -$i, 1, $encoding)) {
-                $longestCommonSuffix = $char . $longestCommonSuffix;
-            } else {
-                break;
-            }
-        }
-
-        return static::create($longestCommonSuffix, $encoding);
-    }
-
-    /**
-     * Returns the longest common substring between the string and $otherStr.
-     * In the case of ties, it returns that which occurs first.
-     *
-     * @param  string  $otherStr Second string for comparison
-     * @return Stringy Object with its $str being the longest common substring
-     */
-    public function longestCommonSubstring($otherStr)
-    {
-        // Uses dynamic programming to solve
-        // http://en.wikipedia.org/wiki/Longest_common_substring_problem
-        $encoding = $this->encoding;
-        $stringy = static::create($this->str, $encoding);
-        $strLength = $stringy->length();
-        $otherLength = mb_strlen($otherStr, $encoding);
-
-        // Return if either string is empty
-        if ($strLength == 0 || $otherLength == 0) {
-            $stringy->str = '';
-            return $stringy;
-        }
-
-        $len = 0;
-        $end = 0;
-        $table = array_fill(0, $strLength + 1,
-            array_fill(0, $otherLength + 1, 0));
-
-        for ($i = 1; $i <= $strLength; $i++) {
-            for ($j = 1; $j <= $otherLength; $j++) {
-                $strChar = mb_substr($stringy->str, $i - 1, 1, $encoding);
-                $otherChar = mb_substr($otherStr, $j - 1, 1, $encoding);
-
-                if ($strChar == $otherChar) {
-                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
-                    if ($table[$i][$j] > $len) {
-                        $len = $table[$i][$j];
-                        $end = $i;
-                    }
-                } else {
-                    $table[$i][$j] = 0;
-                }
-            }
-        }
-
-        $stringy->str = mb_substr($stringy->str, $end - $len, $len, $encoding);
-
-        return $stringy;
-    }
-
-    /**
-     * Returns the length of the string. An alias for PHP's mb_strlen() function.
-     *
-     * @return int The number of characters in $str given the encoding
-     */
-    public function length()
-    {
-        return mb_strlen($this->str, $this->encoding);
-    }
-
-    /**
-     * Returns the substring beginning at $start, and up to, but not including
-     * the index specified by $end. If $end is omitted, the function extracts
-     * the remaining string. If $end is negative, it is computed from the end
-     * of the string.
-     *
-     * @param  int     $start Initial index from which to begin extraction
-     * @param  int     $end   Optional index at which to end extraction
-     * @return Stringy Object with its $str being the extracted substring
-     */
-    public function slice($start, $end = null)
-    {
-        if ($end === null) {
-            $length = $this->length();
-        } elseif ($end >= 0 && $end <= $start) {
-            return static::create('', $this->encoding);
-        } elseif ($end < 0) {
-            $length = $this->length() + $end - $start;
-        } else {
-            $length = $end - $start;
-        }
-
-        $str = mb_substr($this->str, $start, $length, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Splits the string with the provided regular expression, returning an
-     * array of Stringy objects. An optional integer $limit will truncate the
-     * results.
-     *
-     * @param  string    $pattern The regex with which to split the string
-     * @param  int       $limit   Optional maximum number of results to return
-     * @return Stringy[] An array of Stringy objects
-     */
-    public function split($pattern, $limit = null)
-    {
-        if ($limit === 0) {
-            return array();
-        }
-
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        // mb_split returns the remaining unsplit string in the last index when
-        // supplying a limit
-        $limit = ($limit > 0) ? $limit += 1 : -1;
-        $array = mb_split($pattern, $this->str, $limit);
-        mb_regex_encoding($regexEncoding);
-
-        if ($limit > 0 && count($array) === $limit) {
-            array_pop($array);
-        }
-
-        for ($i = 0; $i < count($array); $i++) {
-            $array[$i] = static::create($array[$i], $this->encoding);
-        }
-
-        return $array;
-    }
-
-    /**
-     * Returns the substring beginning at $start with the specified $length.
-     * It differs from the mb_substr() function in that providing a $length of
-     * null will return the rest of the string, rather than an empty string.
-     *
-     * @param  int     $start  Position of the first character to use
-     * @param  int     $length Maximum number of characters used
-     * @return Stringy Object with its $str being the substring
-     */
-    public function substr($start, $length = null)
-    {
-        $length = $length === null ? $this->length() : $length;
-        $str = mb_substr($this->str, $start, $length, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Returns the character at $index, with indexes starting at 0.
-     *
-     * @param  int     $index Position of the character
-     * @return Stringy The character at $index
-     */
-    public function at($index)
-    {
-        return $this->substr($index, 1);
-    }
-
-    /**
-     * Returns the first $n characters of the string.
-     *
-     * @param  int     $n Number of characters to retrieve from the start
-     * @return Stringy Object with its $str being the first $n chars
-     */
-    public function first($n)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if ($n < 0) {
-            $stringy->str = '';
-        } else {
-            return $stringy->substr(0, $n);
-        }
-
-        return $stringy;
-    }
-
-    /**
-     * Returns the last $n characters of the string.
-     *
-     * @param  int     $n Number of characters to retrieve from the end
-     * @return Stringy Object with its $str being the last $n chars
-     */
-    public function last($n)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if ($n <= 0) {
-            $stringy->str = '';
-        } else {
-            return $stringy->substr(-$n);
-        }
-
-        return $stringy;
-    }
-
-    /**
-     * Ensures that the string begins with $substring. If it doesn't, it's
-     * prepended.
-     *
-     * @param  string  $substring The substring to add if not present
-     * @return Stringy Object with its $str prefixed by the $substring
-     */
-    public function ensureLeft($substring)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if (!$stringy->startsWith($substring)) {
-            $stringy->str = $substring . $stringy->str;
-        }
-
-        return $stringy;
-    }
-
-    /**
-     * Ensures that the string begins with $substring. If it doesn't, it's
-     * appended.
-     *
-     * @param  string  $substring The substring to add if not present
-     * @return Stringy Object with its $str suffixed by the $substring
-     */
-    public function ensureRight($substring)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if (!$stringy->endsWith($substring)) {
-            $stringy->str .= $substring;
-        }
-
-        return $stringy;
-    }
-
-    /**
-     * Returns a new string with the prefix $substring removed, if present.
-     *
-     * @param  string  $substring The prefix to remove
-     * @return Stringy Object having a $str without the prefix $substring
-     */
-    public function removeLeft($substring)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if ($stringy->startsWith($substring)) {
-            $substringLength = mb_strlen($substring, $stringy->encoding);
-            return $stringy->substr($substringLength);
-        }
-
-        return $stringy;
-    }
-
-    /**
-     * Returns a new string with the suffix $substring removed, if present.
-     *
-     * @param  string  $substring The suffix to remove
-     * @return Stringy Object having a $str without the suffix $substring
-     */
-    public function removeRight($substring)
-    {
-        $stringy = static::create($this->str, $this->encoding);
-
-        if ($stringy->endsWith($substring)) {
-            $substringLength = mb_strlen($substring, $stringy->encoding);
-            return $stringy->substr(0, $stringy->length() - $substringLength);
-        }
-
-        return $stringy;
-    }
-
-    /**
      * Returns true if $str matches the supplied pattern, false otherwise.
      *
      * @param  string $pattern Regex pattern to match against
@@ -1536,200 +1732,5 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         mb_regex_encoding($regexEncoding);
 
         return $match;
-    }
-
-    /**
-     * Returns true if the string contains a lower case char, false
-     * otherwise.
-     *
-     * @return bool Whether or not the string contains a lower case character.
-     */
-    public function hasLowerCase()
-    {
-        return $this->matchesPattern('.*[[:lower:]]');
-    }
-
-    /**
-     * Returns true if the string contains an upper case char, false
-     * otherwise.
-     *
-     * @return bool Whether or not the string contains an upper case character.
-     */
-    public function hasUpperCase()
-    {
-        return $this->matchesPattern('.*[[:upper:]]');
-    }
-
-    /**
-     * Returns true if the string contains only alphabetic chars, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains only alphabetic chars
-     */
-    public function isAlpha()
-    {
-        return $this->matchesPattern('^[[:alpha:]]*$');
-    }
-
-    /**
-     * Returns true if the string contains only alphabetic and numeric chars,
-     * false otherwise.
-     *
-     * @return bool Whether or not $str contains only alphanumeric chars
-     */
-    public function isAlphanumeric()
-    {
-        return $this->matchesPattern('^[[:alnum:]]*$');
-    }
-
-    /**
-     * Returns true if the string contains only hexadecimal chars, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains only hexadecimal chars
-     */
-    public function isHexadecimal()
-    {
-        return $this->matchesPattern('^[[:xdigit:]]*$');
-    }
-
-    /**
-     * Returns true if the string contains only whitespace chars, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains only whitespace characters
-     */
-    public function isBlank()
-    {
-        return $this->matchesPattern('^[[:space:]]*$');
-    }
-
-    /**
-     * Returns true if the string is JSON, false otherwise.
-     *
-     * @return bool Whether or not $str is JSON
-     */
-    public function isJson()
-    {
-        json_decode($this->str);
-
-        return (json_last_error() === JSON_ERROR_NONE);
-    }
-
-    /**
-     * Returns true if the string contains only lower case chars, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains only lower case characters
-     */
-    public function isLowerCase()
-    {
-        return $this->matchesPattern('^[[:lower:]]*$');
-    }
-
-    /**
-     * Returns true if the string contains only lower case chars, false
-     * otherwise.
-     *
-     * @return bool Whether or not $str contains only lower case characters
-     */
-    public function isUpperCase()
-    {
-        return $this->matchesPattern('^[[:upper:]]*$');
-    }
-
-    /**
-     * Returns true if the string is serialized, false otherwise.
-     *
-     * @return bool Whether or not $str is serialized
-     */
-    public function isSerialized()
-    {
-        return $this->str === 'b:0;' || @unserialize($this->str) !== false;
-    }
-
-    /**
-     * Returns the number of occurrences of $substring in the given string.
-     * By default, the comparison is case-sensitive, but can be made insensitive
-     * by setting $caseSensitive to false.
-     *
-     * @param  string $substring     The substring to search for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return int    The number of $substring occurrences
-     */
-    public function countSubstr($substring, $caseSensitive = true)
-    {
-        if ($caseSensitive) {
-            return mb_substr_count($this->str, $substring, $this->encoding);
-        }
-
-        $str = mb_strtoupper($this->str, $this->encoding);
-        $substring = mb_strtoupper($substring, $this->encoding);
-
-        return mb_substr_count($str, $substring, $this->encoding);
-    }
-
-    /**
-     * Replaces all occurrences of $search in $str by $replacement.
-     *
-     * @param  string  $search      The needle to search for
-     * @param  string  $replacement The string to replace with
-     * @return Stringy Object with the resulting $str after the replacements
-     */
-    public function replace($search, $replacement)
-    {
-        return $this->regexReplace(preg_quote($search), $replacement);
-    }
-
-    /**
-     * Replaces all occurrences of $pattern in $str by $replacement. An alias
-     * for mb_ereg_replace(). Note that the 'i' option with multibyte patterns
-     * in mb_ereg_replace() requires PHP 5.4+. This is due to a lack of support
-     * in the bundled version of Oniguruma in PHP 5.3.
-     *
-     * @param  string  $pattern     The regular expression pattern
-     * @param  string  $replacement The string to replace with
-     * @param  string  $options     Matching conditions to be used
-     * @return Stringy Object with the resulting $str after the replacements
-     */
-    public function regexReplace($pattern, $replacement, $options = 'msr')
-    {
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
-
-        $str = mb_ereg_replace($pattern, $replacement, $this->str, $options);
-        mb_regex_encoding($regexEncoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Convert all applicable characters to HTML entities. An alias of
-     * htmlentities. Refer to http://php.net/manual/en/function.htmlentities.php
-     * for a list of flags.
-     *
-     * @param  int|null $flags Optional flags
-     * @return Stringy  Object with the resulting $str after being html encoded.
-     */
-    public function htmlEncode($flags = ENT_COMPAT)
-    {
-        $str = htmlentities($this->str, $flags, $this->encoding);
-
-        return static::create($str, $this->encoding);
-    }
-
-    /**
-     * Convert all HTML entities to their applicable characters. An alias of
-     * html_entity_decode. For a list of flags, refer to
-     * http://php.net/manual/en/function.html-entity-decode.php
-     *
-     * @param  int|null $flags Optional flags
-     * @return Stringy  Object with the resulting $str after being html decoded.
-     */
-    public function htmlDecode($flags = ENT_COMPAT)
-    {
-        $str = html_entity_decode($this->str, $flags, $this->encoding);
-
-        return static::create($str, $this->encoding);
     }
 }
