@@ -1293,31 +1293,31 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * Returns a trimmed string with the first letter of each word capitalized.
-     * Ignores the case of other letters, preserving any acronyms. Also accepts
-     * an array, $ignore, allowing you to list words not to be capitalized.
+     * Also accepts an array, $ignore, allowing you to list words not to be
+     * capitalized.
      *
      * @param  array   $ignore An array of words not to capitalize
      * @return Stringy Object with a titleized $str
      */
     public function titleize($ignore = null)
     {
-        $buffer = $this->trim();
+        $stringy = static::create($this->trim(), $this->encoding);
         $encoding = $this->encoding;
 
-        $buffer = preg_replace_callback(
+        $stringy->str = preg_replace_callback(
             '/([\S]+)/u',
             function ($match) use ($encoding, $ignore) {
                 if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
                 } else {
                     $stringy = new Stringy($match[0], $encoding);
-                    return (string) $stringy->upperCaseFirst();
+                    return (string) $stringy->toLowerCase()->upperCaseFirst();
                 }
             },
-            $buffer
+            $stringy->str
         );
 
-        return new Stringy($buffer, $encoding);
+        return $stringy;
     }
 
     /**

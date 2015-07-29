@@ -551,10 +551,11 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
         $ignore = array('at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the');
 
         return array(
+            array('Title Case', 'TITLE CASE'),
             array('Testing The Method', 'testing the method'),
-            array('Testing the Method', 'testing the method', $ignore, 'UTF-8'),
-            array('I Like to Watch DVDs at Home', 'i like to watch DVDs at home',
-                $ignore, 'UTF-8'),
+            array('Testing the Method', 'testing the method', $ignore),
+            array('I Like to Watch Dvds at Home', 'i like to watch DVDs at home',
+                $ignore),
             array('Θα Ήθελα Να Φύγει', '  Θα ήθελα να φύγει  ', null, 'UTF-8')
         );
     }
