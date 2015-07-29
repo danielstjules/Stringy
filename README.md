@@ -10,6 +10,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
 
+* [Why?](#why)
 * [Installation](#installation)
 * [OO and Chaining](#oo-and-chaining)
 * [Implemented Interfaces](#implemented-interfaces)
@@ -96,6 +97,26 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
+
+## Why?
+
+In part due to a lack of multibyte support (including UTF-8) across many of
+PHP's standard string functions.
+
+```php
+// Standard library
+strtoupper('fòôbàř'); // 'FòôBàř'
+strlen('fòôbàř');     // 10
+
+// Stringy
+s('fòôbàř')->toUpperCase(); // 'FÒÔBÀŘ'
+s('fòôbàř')->length();      // '6'
+```
+
+But also to offer an OO wrapper around the `mbstring` module's
+multibyte-compatible functions. Handling some quirks, bugs, adding some
+additional functionality, and hopefully making strings a little easier to work
+with!
 
 ## Installation
 
