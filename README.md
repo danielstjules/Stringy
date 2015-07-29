@@ -805,8 +805,8 @@ an array, $ignore, allowing you to list words not to be capitalized.
 
 ```php
 $ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
-s('If you optimize everything, you will always be unhappy.')->titleize($ignore);
-// 'I Like to Watch television'
+s('i like to watch television')->titleize($ignore);
+// 'I Like to Watch Television'
 ```
 
 ##### toAscii()
