@@ -101,7 +101,10 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ## Why?
 
 In part due to a lack of multibyte support (including UTF-8) across many of
-PHP's standard string functions.
+PHP's standard string functions. But also to offer an OO wrapper around the
+`mbstring` module's multibyte-compatible functions. Stringy handles some quirks,
+provides additional functionality, and hopefully makes strings a little easier
+to work with!
 
 ```php
 // Standard library
@@ -116,11 +119,6 @@ mb_strlen('fòôbàř');        // '6'
 s('fòôbàř')->toUpperCase(); // 'FÒÔBÀŘ'
 s('fòôbàř')->length();      // '6'
 ```
-
-But also to offer an OO wrapper around the `mbstring` module's
-multibyte-compatible functions. Handling some quirks, bugs, adding some
-additional functionality, and hopefully making strings a little easier to work
-with!
 
 ## Installation
 
