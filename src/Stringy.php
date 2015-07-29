@@ -139,7 +139,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $stringy->str = preg_replace_callback(
             '/[-_\s]+(.)?/u',
             function ($match) use ($encoding) {
-                return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
+                if (isset($match[1])) {
+                    return mb_strtoupper($match[1], $encoding);
+                } else {
+                    return '';
+                }
             },
             $stringy->str
         );
