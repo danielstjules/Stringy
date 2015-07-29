@@ -761,8 +761,8 @@ Ignores the case of other letters, preserving any acronyms. Also accepts
 an array, $ignore, allowing you to list words not to be capitalized.</p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$ignore</span> <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>at<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>by<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>for<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>in<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>of<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>on<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>out<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>to<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>the<span class="pl-pds">'</span></span>];</span>
-<span class="pl-s1">s(<span class="pl-s"><span class="pl-pds">'</span>If you optimize everything, you will always be unhappy.<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>titleize(<span class="pl-smi">$ignore</span>);</span>
-<span class="pl-s1"><span class="pl-c">// 'I Like to Watch television'</span></span></pre></div>
+<span class="pl-s1">s(<span class="pl-s"><span class="pl-pds">'</span>i like to watch television<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>titleize(<span class="pl-smi">$ignore</span>);</span>
+<span class="pl-s1"><span class="pl-c">// 'I Like to Watch Television'</span></span></pre></div>
 
 <h5>
 <a id="toascii" class="anchor" href="#toascii" aria-hidden="true"><span class="octicon octicon-link"></span></a>toAscii()</h5>
