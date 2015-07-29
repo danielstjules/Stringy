@@ -800,8 +800,8 @@ s('“I see…”')->tidy(); // '"I see..."'
 ##### titleize([, array $ignore])
 
 Returns a trimmed string with the first letter of each word capitalized.
-Ignores the case of other letters, preserving any acronyms. Also accepts
-an array, $ignore, allowing you to list words not to be capitalized.
+Also accepts an array, $ignore, allowing you to list words not to be
+capitalized.
 
 ```php
 $ignore = ['at', 'by', 'for', 'in', 'of', 'on', 'out', 'to', 'the'];
