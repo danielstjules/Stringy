@@ -105,8 +105,12 @@ PHP's standard string functions.
 
 ```php
 // Standard library
-strtoupper('fòôbàř'); // 'FòôBàř'
-strlen('fòôbàř');     // 10
+strtoupper('fòôbàř');       // 'FòôBàř'
+strlen('fòôbàř');           // 10
+
+// mbstring
+mb_strtoupper('fòôbàř');    // 'FÒÔBÀŘ'
+mb_strlen('fòôbàř');        // '6'
 
 // Stringy
 s('fòôbàř')->toUpperCase(); // 'FÒÔBÀŘ'
