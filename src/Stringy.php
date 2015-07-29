@@ -134,8 +134,9 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         $encoding = $this->encoding;
         $stringy = $this->trim()->lowerCaseFirst();
+        $stringy->str = preg_replace('/^[-_]+/', '', $stringy->str);
 
-        $camelCase = preg_replace_callback(
+        $stringy->str = preg_replace_callback(
             '/[-_\s]+(.)?/u',
             function ($match) use ($encoding) {
                 return $match[1] ? mb_strtoupper($match[1], $encoding) : '';
@@ -148,7 +149,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             function ($match) use ($encoding) {
                 return mb_strtoupper($match[0], $encoding);
             },
-            $camelCase
+            $stringy->str
         );
 
         return $stringy;
