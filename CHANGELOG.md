@@ -1,3 +1,10 @@
+### 2.0.0 (2015-07-29)
+
+ * Removed StaticStringy class
+ * Added append, prepend, toBoolean, repeat, between, slice, split, and lines
+ * camelize/upperCamelize now strip leading dashes and underscores
+ * titleize converts to lowercase, thus no longer preserving acronyms
+
 ### 1.10.0 (2015-07-22)
 
  * Added trimLeft, trimRight
