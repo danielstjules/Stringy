@@ -504,7 +504,8 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Returns the index of the last occurrence of $needle in the string,
      * and false if not found. Accepts an optional offset from which to begin
-     * the search.
+     * the search. Offsets may be negative to count from the last character
+     * in the string.
      *
      * @param  string   $needle Substring to look for
      * @param  int      $offset Offset from which to search

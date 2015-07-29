@@ -175,10 +175,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function indexOfProvider()
     {
         return array(
-            array(2, 'This is the string', 'is'),
-            array(2, 'This is the string', 'is', 0, 'UTF-8'),
-            array(false, 'This is the string', 'not-found', 0, 'UTF-8'),
-            array(32, 'This is the string... and there is another thing', 'is', 10, 'UTF-8'),
+            array(6, 'foo & bar', 'bar'),
+            array(6, 'foo & bar', 'bar', 0),
+            array(false, 'foo & bar', 'baz'),
+            array(false, 'foo & bar', 'baz', 0),
+            array(0, 'foo & bar & foo', 'foo', 0),
+            array(12, 'foo & bar & foo', 'foo', 5),
+            array(6, 'fòô & bàř', 'bàř', 0, 'UTF-8'),
+            array(false, 'fòô & bàř', 'baz', 0, 'UTF-8'),
+            array(0, 'fòô & bàř & fòô', 'fòô', 0, 'UTF-8'),
+            array(12, 'fòô & bàř & fòô', 'fòô', 5, 'UTF-8'),
         );
     }
 
@@ -194,10 +200,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function indexOfLastProvider()
     {
         return array(
-            array(5, 'This is the string', 'is'),
-            array(5, 'This is the string', 'is', 0, 'UTF-8'),
-            array(false, 'This is the string', 'not-found', 0, 'UTF-8'),
-            array(32, 'This is the string... and there is another thing', 'is', 0, 'UTF-8'),
+            array(6, 'foo & bar', 'bar'),
+            array(6, 'foo & bar', 'bar', 0),
+            array(false, 'foo & bar', 'baz'),
+            array(false, 'foo & bar', 'baz', 0),
+            array(12, 'foo & bar & foo', 'foo', 0),
+            array(0, 'foo & bar & foo', 'foo', -5),
+            array(6, 'fòô & bàř', 'bàř', 0, 'UTF-8'),
+            array(false, 'fòô & bàř', 'baz', 0, 'UTF-8'),
+            array(12, 'fòô & bàř & fòô', 'fòô', 0, 'UTF-8'),
+            array(0, 'fòô & bàř & fòô', 'fòô', -5, 'UTF-8'),
         );
     }
 
@@ -1259,6 +1271,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array('foo bar', 'f bar', 'oo', 1),
             array('f bar', 'f bar', 'oo', 20),
             array('foo bar', 'foo ba', 'r', 6),
+            array('fòôbàř', 'fòôbř', 'à', 4, 'UTF-8'),
             array('fòô bàř', 'òô bàř', 'f', 0, 'UTF-8'),
             array('fòô bàř', 'f bàř', 'òô', 1, 'UTF-8'),
             array('fòô bàř', 'fòô bà', 'ř', 6, 'UTF-8')
