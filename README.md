@@ -15,6 +15,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [OO and Chaining](#oo-and-chaining)
 * [Implemented Interfaces](#implemented-interfaces)
 * [PHP 5.6 Creation](#php-56-creation)
+* [StaticStringy](#staticstringy)
 * [Class methods](#class-methods)
     * [create](#createmixed-str--encoding-)
 * [Instance methods](#instance-methods)
@@ -94,7 +95,6 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [underscored](#underscored)
     * [upperCamelize](#uppercamelize)
     * [upperCaseFirst](#uppercasefirst)
-* [StaticStringy](#staticstringy)
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
@@ -222,6 +222,21 @@ use function Stringy\create as s;
 
 // Instead of: S::create('fòô     bàř')
 s('fòô     bàř')->collapseWhitespace()->swapCase();
+```
+
+## StaticStringy
+
+All methods listed under "Instance methods" are available as part of a static
+wrapper. For StaticStringy methods, the optional encoding is expected to be the
+last argument. The return value is not cast, and may thus be of type Stringy,
+integer, boolean, etc.
+
+```php
+use Stringy\StaticStringy as S;
+
+// Translates to Stringy::create('fòôbàř', 'UTF-8')->slice(0, 3);
+// Returns a Stringy object with the string "fòô"
+S::slice('fòôbàř', 0, 3, 'UTF-8');
 ```
 
 ## Class methods
@@ -947,19 +962,6 @@ Converts the first character of the supplied string to upper case.
 ```php
 s('σ foo')->upperCaseFirst(); // 'Σ foo'
 ```
-
-## StaticStringy
-
-A static wrapper exists for Stringy methods. All the methods list under
-"Instance methods" are available. For StaticStringy method, the optional
-encoding is expected to be the last argument. The result is not cast, so
-the return value may be of type Stringy, integer, boolean, etc.
-
-```php
-// Translates to Stringy::create('fòôbàř', 'UTF-8')->slice(0, 3);
-StaticStringy::slice('fòôbàř', 0, 3, 'UTF-8');
-```
-
 
 ## Extensions
 
