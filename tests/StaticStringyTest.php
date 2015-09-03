@@ -20,6 +20,12 @@ class StaticStringyTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals('', (string) $result);
     }
 
+    public function testInvocation()
+    {
+        $result = S::toLowerCase('FOOBAR');
+        $this->assertEquals('foobar', (string) $result);
+    }
+
     public function testPartialArgsInvocation()
     {
         $result = S::slice('foobar', 0, 3);
