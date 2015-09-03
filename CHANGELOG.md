@@ -1,3 +1,8 @@
+### 2.1.0 (2015-09-02)
+
+* Added simplified StaticStringy class
+* str in Stringy::create and constructor is now optional
+
 ### 2.0.0 (2015-07-29)
 
  * Removed StaticStringy class
