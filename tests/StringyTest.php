@@ -24,6 +24,13 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
+    public function testEmptyConstruct()
+    {
+        $stringy = new S();
+        $this->assertStringy($stringy);
+        $this->assertEquals('', (string) $stringy);
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */

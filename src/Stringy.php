@@ -31,7 +31,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @throws \InvalidArgumentException if an array or object without a
      *         __toString method is passed as the first argument
      */
-    public function __construct($str, $encoding = null)
+    public function __construct($str = '', $encoding = null)
     {
         if (is_array($str)) {
             throw new \InvalidArgumentException(
