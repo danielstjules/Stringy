@@ -5,7 +5,7 @@
     <title>Stringy by danielstjules</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -35,6 +35,7 @@ for older documentation.</p>
 <li><a href="#oo-and-chaining">OO and Chaining</a></li>
 <li><a href="#implemented-interfaces">Implemented Interfaces</a></li>
 <li><a href="#php-56-creation">PHP 5.6 Creation</a></li>
+<li><a href="#staticstringy">StaticStringy</a></li>
 <li>
 <a href="#class-methods">Class methods</a>
 
@@ -157,7 +158,7 @@ to work with!</p>
 in your composer.json file:</p>
 
 <div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>require<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>danielstjules/stringy<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>~2.0<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>danielstjules/stringy<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>~2.1<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <p>Then, after running <code>composer update</code> or <code>php composer.phar update</code>, you can
@@ -238,6 +239,20 @@ you can take advantage of an even simpler API as seen below:</p>
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-c">// Instead of: S::create('fòô     bàř')</span></span>
 <span class="pl-s1">s(<span class="pl-s"><span class="pl-pds">'</span>fòô     bàř<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>collapseWhitespace()<span class="pl-k">-&gt;</span>swapCase();</span></pre></div>
+
+<h2>
+<a id="staticstringy" class="anchor" href="#staticstringy" aria-hidden="true"><span class="octicon octicon-link"></span></a>StaticStringy</h2>
+
+<p>All methods listed under "Instance methods" are available as part of a static
+wrapper. For StaticStringy methods, the optional encoding is expected to be the
+last argument. The return value is not cast, and may thus be of type Stringy,
+integer, boolean, etc.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Stringy\StaticStringy</span> <span class="pl-k">as</span> <span class="pl-c1">S</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Translates to Stringy::create('fòôbàř', 'UTF-8')-&gt;slice(0, 3);</span></span>
+<span class="pl-s1"><span class="pl-c">// Returns a Stringy object with the string "fòô"</span></span>
+<span class="pl-s1"><span class="pl-c1">S</span><span class="pl-k">::</span>slice(<span class="pl-s"><span class="pl-pds">'</span>fòôbàř<span class="pl-pds">'</span></span>, <span class="pl-c1">0</span>, <span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">'</span>UTF-8<span class="pl-pds">'</span></span>);</span></pre></div>
 
 <h2>
 <a id="class-methods" class="anchor" href="#class-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class methods</h2>
@@ -923,4 +938,3 @@ Advanced substring methods</li>
   
   </body>
 </html>
-
