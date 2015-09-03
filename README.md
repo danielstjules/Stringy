@@ -98,6 +98,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
+* [Links](#links)
 
 ## Why?
 
@@ -979,3 +980,8 @@ From the project directory, tests can be ran using `phpunit`
 ## License
 
 Released under the MIT License - see `LICENSE.txt` for details.
+
+## Links
+
+* [Arrayzy](https://github.com/bocharsky-bw/Arrayzy):
+A native PHP arrays easy manipulation library in OOP way.
