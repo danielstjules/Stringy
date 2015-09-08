@@ -396,7 +396,7 @@ s('foobar')->ensureLeft('http://'); // 'http://foobar'
 
 ##### ensureRight(string $substring)
 
-Ensures that the string begins with $substring. If it doesn't, it's appended.
+Ensures that the string ends with $substring. If it doesn't, it's appended.
 
 ```php
 s('foobar')->ensureRight('.com'); // 'foobar.com'
