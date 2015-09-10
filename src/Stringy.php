@@ -365,7 +365,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Ensures that the string begins with $substring. If it doesn't, it's
+     * Ensures that the string ends with $substring. If it doesn't, it's
      * appended.
      *
      * @param  string  $substring The substring to add if not present
