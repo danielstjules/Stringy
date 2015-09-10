@@ -1,7 +1,7 @@
 ![Stringy](http://danielstjules.com/github/stringy-logo.png)
 
 A PHP string manipulation library with multibyte support. Compatible with PHP
-5.3+ and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
+5.3+, PHP 7, and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
 for older documentation.
 
 ``` php
