@@ -527,7 +527,9 @@ s('A102F')->isHexadecimal(); // true
 
 ##### isJson()
 
-Returns true if the string is JSON, false otherwise.
+Returns true if the string is JSON, false otherwise. Unlike json_decode
+in PHP 5.x, this method is consistent with PHP 7 and other JSON parsers,
+in that an empty string is not considered valid JSON.
 
 ```php
 s('{"foo":"bar"}')->isJson(); // true

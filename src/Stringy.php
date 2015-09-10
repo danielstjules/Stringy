@@ -589,12 +589,18 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Returns true if the string is JSON, false otherwise.
+     * Returns true if the string is JSON, false otherwise. Unlike json_decode
+     * in PHP 5.x, this method is consistent with PHP 7 and other JSON parsers,
+     * in that an empty string is not considered valid JSON.
      *
      * @return bool Whether or not $str is JSON
      */
     public function isJson()
     {
+        if (!$this->length()) {
+            return false;
+        }
+
         json_decode($this->str);
 
         return (json_last_error() === JSON_ERROR_NONE);

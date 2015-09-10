@@ -2066,7 +2066,13 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function isJsonProvider()
     {
         return array(
-            array(true, ''),
+            array(false, ''),
+            array(false, '  '),
+            array(true, 'null'),
+            array(true, 'true'),
+            array(true, 'false'),
+            array(true, '[]'),
+            array(true, '{}'),
             array(true, '123'),
             array(true, '{"foo": "bar"}'),
             array(false, '{"foo":"bar",}'),
