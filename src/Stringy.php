@@ -627,6 +627,17 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         return $this->str === 'b:0;' || @unserialize($this->str) !== false;
     }
 
+
+    /**
+     * Returns true if the string is base64 encoded, false otherwise.
+     *
+     * @return bool Whether or not $str is base64 encoded
+     */
+    public function isBase64()
+    {
+        return $this->str !== '' && ( base64_encode( base64_decode( $this->str, true ) ) === $this->str );
+    }
+
     /**
      * Returns true if the string contains only lower case chars, false
      * otherwise.
