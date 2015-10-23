@@ -2171,6 +2171,31 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider isBase64Provider()
+     */
+    public function testIsBase64($expected, $str)
+    {
+        $stringy = S::create($str);
+        $result = $stringy->isBase64();
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function isBase64Provider()
+    {
+        return array(
+            array(false, ' '),
+            array(false, ''),
+            array(true, base64_encode('FooBar') ),
+            array(true, base64_encode(' ') ),
+            array(true, base64_encode('FÒÔBÀŘ') ),
+            array(true, base64_encode('συγγραφέας') ),
+            array(false, 'Foobar'),
+        );
+    }
+
+    /**
      * @dataProvider isUpperCaseProvider()
      */
     public function testIsUpperCase($expected, $str, $encoding = null)
