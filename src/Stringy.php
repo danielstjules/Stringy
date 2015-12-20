@@ -104,7 +104,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param  string $start  Delimiter marking the start of the substring
      * @param  string $end    Delimiter marketing the end of the substring
-     * @param  string $offset Index from which to begin the search
+     * @param  int    $offset Index from which to begin the search
      * @return Stringy Object whose $str has been converted to an URL slug
      */
     public function between($start, $end, $offset = 0)
@@ -501,8 +501,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function indexOf($needle, $offset = 0)
     {
-        return mb_strpos($this->str, (string) $needle,
-            (int) $offset, $this->encoding);
+        return mb_strpos($this->str, (string) $needle, (int) $offset, $this->encoding);
     }
 
     /**
@@ -517,8 +516,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function indexOfLast($needle, $offset = 0)
     {
-        return mb_strrpos($this->str, (string) $needle,
-            (int) $offset, $this->encoding);
+        return mb_strrpos($this->str, (string) $needle, (int) $offset, $this->encoding);
     }
 
     /**
@@ -890,14 +888,14 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  string  $padStr  String used to pad, defaults to space
      * @param  string  $padType One of 'left', 'right', 'both'
      * @return Stringy Object with a padded $str
-     * @throws InvalidArgumentException If $padType isn't one of 'right',
-     *         'left' or 'both'
+     * @throws \InvalidArgumentException If $padType isn't one of 'right', 'left' or 'both'
      */
     public function pad($length, $padStr = ' ', $padType = 'right')
     {
-        if (!in_array($padType, array('left', 'right', 'both'))) {
-            throw new \InvalidArgumentException('Pad expects $padType ' .
-                "to be one of 'left', 'right' or 'both'");
+        if (!in_array($padType, array('left', 'right', 'both'), true)) {
+            throw new \InvalidArgumentException(
+                'Pad expects $padType ' . "to be one of 'left', 'right' or 'both'"
+            );
         }
 
         switch ($padType) {
@@ -922,8 +920,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         $padding = $length - $this->length();
 
-        return $this->applyPadding(floor($padding / 2), ceil($padding / 2),
-            $padStr);
+        return $this->applyPadding(floor($padding / 2), ceil($padding / 2), $padStr);
     }
 
     /**
@@ -1138,8 +1135,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy);
 
-        return $stringy->toLowerCase()->delimit($replacement)
-                       ->removeLeft($replacement)->removeRight($replacement);
+        return $stringy
+            ->toLowerCase()
+            ->delimit($replacement)
+            ->removeLeft($replacement)
+            ->removeRight($replacement);
     }
 
     /**
@@ -1218,7 +1218,12 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
 
         // mb_split returns the remaining unsplit string in the last index when
         // supplying a limit
-        $limit = ($limit > 0) ? $limit += 1 : -1;
+        if ($limit > 0) {
+            $limit += 1;
+        } else {
+            $limit = -1;
+        }
+
         $array = mb_split($pattern, $this->str, $limit);
         mb_regex_encoding($regexEncoding);
 
@@ -1298,17 +1303,21 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function tidy()
     {
-        $str = preg_replace(array(
-            '/\x{2026}/u',
-            '/[\x{201C}\x{201D}]/u',
-            '/[\x{2018}\x{2019}]/u',
-            '/[\x{2013}\x{2014}]/u',
-        ), array(
-            '...',
-            '"',
-            "'",
-            '-',
-        ), $this->str);
+        $str = preg_replace(
+            array(
+                '/\x{2026}/u',
+                '/[\x{201C}\x{201D}]/u',
+                '/[\x{2018}\x{2019}]/u',
+                '/[\x{2013}\x{2014}]/u',
+            ),
+            array(
+                '...',
+                '"',
+                "'",
+                '-',
+            ),
+            $this->str
+        );
 
         return static::create($str, $this->encoding);
     }
@@ -1329,7 +1338,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $stringy->str = preg_replace_callback(
             '/([\S]+)/u',
             function ($match) use ($encoding, $ignore) {
-                if ($ignore && in_array($match[0], $ignore)) {
+                if ($ignore && in_array($match[0], $ignore, true)) {
                     return $match[0];
                 } else {
                     $stringy = new Stringy($match[0], $encoding);
@@ -1589,7 +1598,10 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     protected function charsArray()
     {
         static $charsArray;
-        if (isset($charsArray)) return $charsArray;
+
+        if (isset($charsArray)) {
+            return $charsArray;
+        }
 
         return $charsArray = array(
             'a'    => array(
@@ -1731,6 +1743,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     private function applyPadding($left = 0, $right = 0, $padStr = ' ')
     {
         $stringy = static::create($this->str, $this->encoding);
+
         $length = mb_strlen($padStr, $stringy->encoding);
 
         $strLength = $stringy->length();
@@ -1740,10 +1753,25 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
             return $stringy;
         }
 
-        $leftPadding = mb_substr(str_repeat($padStr, ceil($left / $length)), 0,
-            $left, $stringy->encoding);
-        $rightPadding = mb_substr(str_repeat($padStr, ceil($right / $length)),
-            0, $right, $stringy->encoding);
+        $leftPadding = mb_substr(
+            str_repeat(
+                $padStr,
+                ceil($left / $length)
+            ),
+            0,
+            $left,
+            $stringy->encoding
+        );
+
+        $rightPadding = mb_substr(
+            str_repeat(
+                $padStr,
+                ceil($right / $length)
+            ),
+            0,
+            $right,
+            $stringy->encoding
+        );
 
         $stringy->str = $leftPadding . $stringy->str . $rightPadding;
 
