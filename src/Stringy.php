@@ -104,7 +104,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param  string $start  Delimiter marking the start of the substring
      * @param  string $end    Delimiter marketing the end of the substring
-     * @param  string $offset Index from which to begin the search
+     * @param  int    $offset Index from which to begin the search
      * @return Stringy Object whose $str has been converted to an URL slug
      */
     public function between($start, $end, $offset = 0)
@@ -890,7 +890,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param  string  $padStr  String used to pad, defaults to space
      * @param  string  $padType One of 'left', 'right', 'both'
      * @return Stringy Object with a padded $str
-     * @throws InvalidArgumentException If $padType isn't one of 'right',
+     * @throws /InvalidArgumentException If $padType isn't one of 'right',
      *         'left' or 'both'
      */
     public function pad($length, $padStr = ' ', $padType = 'right')
