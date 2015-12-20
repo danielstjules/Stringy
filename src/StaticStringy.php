@@ -82,8 +82,6 @@ namespace Stringy;
  * @method static string underscored(string $str, string $encoding = null)
  * @method static string upperCamelize(string $str, string $encoding = null)
  * @method static string upperCaseFirst(string $str, string $encoding = null)
- *
- * @package Stringy
  */
 class StaticStringy
 {
