@@ -46,6 +46,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [insert](#insertint-index-string-substring)
     * [isAlpha](#isalpha)
     * [isAlphanumeric](#isalphanumeric)
+    * [isBase64](#isbase64)
     * [isBlank](#isblank)
     * [isHexadecimal](#ishexadecimal)
     * [isJson](#isjson)
@@ -507,6 +508,15 @@ otherwise.
 
 ```php
 s('دانيال1')->isAlphanumeric(); // true
+```
+
+##### isBase64()
+
+Returns true if the string is base64 encoded, false
+otherwise.
+
+```php
+s('Zm9vYmFy')->isBase64(); // true
 ```
 
 ##### isBlank()
