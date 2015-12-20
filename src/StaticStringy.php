@@ -30,11 +30,12 @@ class StaticStringy
     public static function __callStatic($name, $arguments)
     {
         if (!static::$methodArgs) {
-            $methods = (new \ReflectionClass('Stringy\Stringy'))->getMethods(\ReflectionMethod::IS_PUBLIC);
+            $stringyClass = new \ReflectionClass('Stringy\Stringy');
+            $methods = $stringyClass->getMethods(\ReflectionMethod::IS_PUBLIC);
 
             foreach ($methods as $method) {
-                /** @var \ReflectionMethod $method */
-                static::$methodArgs[$method->name] = $method->getNumberOfParameters() + 2;
+                $params = $method->getNumberOfParameters() + 2;
+                static::$methodArgs[$method->name] = $params;
             }
         }
 
