@@ -1394,7 +1394,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         if (array_key_exists($key, $map)) {
             return $map[$key];
         } elseif (is_numeric($this->str)) {
-           return (intval($this->str) > 0);
+            return (intval($this->str) > 0);
         } else {
             return (bool) $this->regexReplace('[[:space:]]', '')->str;
         }
@@ -1592,8 +1592,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         if (isset($charsArray)) return $charsArray;
 
         return $charsArray = array(
-            'a'    => array(
-                            'à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ',
+            'a'    => array('à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ',
                             'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ā', 'ą', 'å',
                             'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
                             'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
