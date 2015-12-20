@@ -512,8 +512,7 @@ s('دانيال1')->isAlphanumeric(); // true
 
 ##### isBase64()
 
-Returns true if the string is base64 encoded, false
-otherwise.
+Returns true if the string is base64 encoded, false otherwise.
 
 ```php
 s('Zm9vYmFy')->isBase64(); // true

@@ -635,7 +635,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function isBase64()
     {
-        return $this->str !== '' && ( base64_encode( base64_decode( $this->str, true ) ) === $this->str );
+        return (base64_encode(base64_decode($this->str, true)) === $this->str);
     }
 
     /**

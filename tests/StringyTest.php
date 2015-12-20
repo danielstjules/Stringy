@@ -2186,7 +2186,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     {
         return array(
             array(false, ' '),
-            array(false, ''),
+            array(true, ''),
             array(true, base64_encode('FooBar') ),
             array(true, base64_encode(' ') ),
             array(true, base64_encode('FÒÔBÀŘ') ),
