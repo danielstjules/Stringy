@@ -1,3 +1,11 @@
+### 2.2.0 (2015-12-20)
+
+* isJSON now returns false for empty strings
+* Update for German umlaut transformation
+* Use reflection to generate method list for StaticStringy
+* Added isBase64 method
+* Improved toAscii char coverage
+
 ### 2.1.0 (2015-09-02)
 
 * Added simplified StaticStringy class

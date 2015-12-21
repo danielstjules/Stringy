@@ -129,7 +129,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~2.1"
+    "danielstjules/stringy": "~2.2"
 }
 ```
 
