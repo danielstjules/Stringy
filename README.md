@@ -9,6 +9,8 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ```
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
+[![Total Downloads](https://poser.pugx.org/danielstjules/stringy/downloads)](https://packagist.org/packages/danielstjules/stringy)
+[![License](https://poser.pugx.org/danielstjules/stringy/license)](https://packagist.org/packages/danielstjules/stringy)
 
 * [Why?](#why)
 * [Installation](#installation)
