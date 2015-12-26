@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__ . '/../src/Create.php';
-
 use function Stringy\create as s;
 
 class CreateTestCase extends PHPUnit_Framework_TestCase
