@@ -2,6 +2,10 @@
 
 namespace Stringy;
 
+use BadMethodCallException;
+use ReflectionClass;
+use ReflectionMethod;
+
 /**
  * Class StaticStringy
  *
@@ -107,12 +111,14 @@ class StaticStringy
      * @param mixed[] $arguments
      *
      * @return Stringy
+     *
+     * @throws \BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
     {
         if (!static::$methodArgs) {
-            $stringyClass = new \ReflectionClass('Stringy\Stringy');
-            $methods = $stringyClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+            $stringyClass = new ReflectionClass('Stringy\Stringy');
+            $methods = $stringyClass->getMethods(ReflectionMethod::IS_PUBLIC);
 
             foreach ($methods as $method) {
                 $params = $method->getNumberOfParameters() + 2;
@@ -121,7 +127,7 @@ class StaticStringy
         }
 
         if (!isset(static::$methodArgs[$name])) {
-            throw new \BadMethodCallException($name . ' is not a valid method');
+            throw new BadMethodCallException($name . ' is not a valid method');
         }
 
         $numArgs = count($arguments);
