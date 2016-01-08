@@ -2,7 +2,15 @@
 
 namespace Stringy;
 
-class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use Exception;
+use InvalidArgumentException;
+use IteratorAggregate;
+use OutOfBoundsException;
+
+class Stringy implements Countable, IteratorAggregate, ArrayAccess
 {
     /**
      * An instance's string.
@@ -34,11 +42,11 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function __construct($str = '', $encoding = null)
     {
         if (is_array($str)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Passed value cannot be an array'
             );
         } elseif (is_object($str) && !method_exists($str, '__toString')) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Passed object must have a __toString method'
             );
         }
@@ -421,7 +429,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->chars());
+        return new ArrayIterator($this->chars());
     }
 
     /**
@@ -846,7 +854,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
         $length = $this->length();
 
         if (($offset >= 0 && $length <= $offset) || $length < abs($offset)) {
-            throw new \OutOfBoundsException('No character exists at the index');
+            throw new OutOfBoundsException('No character exists at the index');
         }
 
         return mb_substr($this->str, $offset, 1, $this->encoding);
@@ -863,7 +871,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function offsetSet($offset, $value)
     {
         // Stringy is immutable, cannot directly set char
-        throw new \Exception('Stringy object is immutable, cannot modify char');
+        throw new Exception('Stringy object is immutable, cannot modify char');
     }
 
     /**
@@ -876,7 +884,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function offsetUnset($offset)
     {
         // Don't allow directly modifying the string
-        throw new \Exception('Stringy object is immutable, cannot unset char');
+        throw new Exception('Stringy object is immutable, cannot unset char');
     }
 
     /**
@@ -896,7 +904,7 @@ class Stringy implements \Countable, \IteratorAggregate, \ArrayAccess
     public function pad($length, $padStr = ' ', $padType = 'right')
     {
         if (!in_array($padType, array('left', 'right', 'both'))) {
-            throw new \InvalidArgumentException('Pad expects $padType ' .
+            throw new InvalidArgumentException('Pad expects $padType ' .
                 "to be one of 'left', 'right' or 'both'");
         }
 
