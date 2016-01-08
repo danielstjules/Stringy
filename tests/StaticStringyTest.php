@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__ . '/../src/StaticStringy.php';
-
 use Stringy\StaticStringy as S;
 
 class StaticStringyTestCase extends PHPUnit_Framework_TestCase
