@@ -37,7 +37,7 @@
             "src/Create.php"
         ],
         "psr-4": {
-            "Stringy\\": "src/"
+            "Stringy\\": "src/Stringy/"
         }
     },
     "autoload-dev": {
