@@ -1,9 +1,10 @@
 language: php
+
 php:
-  - 5.6
-  - 5.5
-  - 5.4
   - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
   - 7.0
   - hhvm
 
@@ -11,4 +12,37 @@ php:
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.3
+      env: polyfill='true'
+    - php: 5.3
+      env: polyfill='false'
+    - php: 5.4
+      env: polyfill='true'
+    - php: 5.4
+      env: polyfill='false'
+    - php: 5.5
+      env: polyfill='true'
+    - php: 5.5
+      env: polyfill='false'
+    - php: 5.6
+      env: polyfill='true'
+    - php: 5.6
+      env: polyfill='false'
+    - php: 7.0
+      env: polyfill='true'
+    - php: 7.0
+      env: polyfill='false'
+
 install: travis_retry composer install --no-interaction --prefer-source
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+  - if [[ $polyfill = 'false' ]]; then travis_retry composer remove symfony/polyfill-mbstring; fi
+
+script:
+  - vendor/bin/phpunit
+
