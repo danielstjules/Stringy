@@ -149,9 +149,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             function ($match) use ($encoding) {
                 if (isset($match[1])) {
                     return mb_strtoupper($match[1], $encoding);
-                } else {
-                    return '';
                 }
+
+                return '';
             },
             $stringy->str
         );
@@ -209,9 +209,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         if ($caseSensitive) {
             return (mb_strpos($this->str, $needle, 0, $encoding) !== false);
-        } else {
-            return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
         }
+
+        return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
     }
 
     /**
@@ -402,11 +402,10 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         if ($n < 0) {
             $stringy->str = '';
-        } else {
-            return $stringy->substr(0, $n);
+            return $stringy;
         }
 
-        return $stringy;
+        return $stringy->substr(0, $n);
     }
 
     /**
@@ -669,11 +668,10 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         if ($n <= 0) {
             $stringy->str = '';
-        } else {
-            return $stringy->substr(-$n);
+            return $stringy;
         }
 
-        return $stringy;
+        return $stringy->substr(-$n);
     }
 
     /**
@@ -1287,9 +1285,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             function ($match) use ($encoding) {
                 if ($match[0] == mb_strtoupper($match[0], $encoding)) {
                     return mb_strtolower($match[0], $encoding);
-                } else {
-                    return mb_strtoupper($match[0], $encoding);
                 }
+
+                return mb_strtoupper($match[0], $encoding);
             },
             $stringy->str
         );
@@ -1339,10 +1337,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             function ($match) use ($encoding, $ignore) {
                 if ($ignore && in_array($match[0], $ignore)) {
                     return $match[0];
-                } else {
-                    $stringy = new Stringy($match[0], $encoding);
-                    return (string) $stringy->toLowerCase()->upperCaseFirst();
                 }
+
+                $stringy = new Stringy($match[0], $encoding);
+
+                return (string) $stringy->toLowerCase()->upperCaseFirst();
             },
             $stringy->str
         );
@@ -1403,9 +1402,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             return $map[$key];
         } elseif (is_numeric($this->str)) {
             return (intval($this->str) > 0);
-        } else {
-            return (bool) $this->regexReplace('[[:space:]]', '')->str;
         }
+
+        return (bool) $this->regexReplace('[[:space:]]', '')->str;
     }
 
     /**
