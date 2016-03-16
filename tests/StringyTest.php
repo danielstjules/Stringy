@@ -45,7 +45,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     {
         (string) new S(new stdClass());
         $this->fail('Expecting exception when the constructor is passed an ' .
-                    'object without a __toString method');
+            'object without a __toString method');
     }
 
     /**
@@ -313,6 +313,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array(array('', 'fòô', 'bàř'), "\r\nfòô\r\nbàř", 'UTF-8'),
         );
     }
+
     /**
      * @dataProvider upperCaseFirstProvider()
      */
@@ -1108,7 +1109,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     {
         return array(
             array(true, 'Str contains foo bar', 'foo bar'),
-            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%'),
+            array(true, '12398!@(*%!@# @!%#*&^%', ' @!%#*&^%'),
             array(true, 'Ο συγγραφέας είπε', 'συγγραφέας', 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å´¥©', true, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'å˚ ∆', true, 'UTF-8'),
@@ -1119,7 +1120,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array(false, 'Ο συγγραφέας είπε', '  συγγραφέας ', true, 'UTF-8'),
             array(false, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', ' ßå˚', true, 'UTF-8'),
             array(true, 'Str contains foo bar', 'Foo bar', false),
-            array(true, '12398!@(*%!@# @!%#*&^%',  ' @!%#*&^%', false),
+            array(true, '12398!@(*%!@# @!%#*&^%', ' @!%#*&^%', false),
             array(true, 'Ο συγγραφέας είπε', 'ΣΥΓΓΡΑΦΈΑΣ', false, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å´¥©', false, 'UTF-8'),
             array(true, 'å´¥©¨ˆßå˚ ∆∂˙©å∑¥øœ¬', 'Å˚ ∆', false, 'UTF-8'),
@@ -2185,10 +2186,10 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
         return array(
             array(false, ' '),
             array(true, ''),
-            array(true, base64_encode('FooBar') ),
-            array(true, base64_encode(' ') ),
-            array(true, base64_encode('FÒÔBÀŘ') ),
-            array(true, base64_encode('συγγραφέας') ),
+            array(true, base64_encode('FooBar')),
+            array(true, base64_encode(' ')),
+            array(true, base64_encode('FÒÔBÀŘ')),
+            array(true, base64_encode('συγγραφέας')),
             array(false, 'Foobar'),
         );
     }
@@ -2420,5 +2421,16 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array('<', '&lt;'),
             array('>', '&gt;'),
         );
+    }
+
+    public function testHighlight()
+    {
+        $this->assertEquals('<span class="highlight">Áci</span>do Úrico', (string) S::create('Ácido Úrico')->highlight('aci'));
+        $this->assertEquals('Ácido <span class="highlight">Úrico</span>', (string) S::create('Ácido Úrico')->highlight('Úrico'));
+        $this->assertEquals('<span class="highlight">Á</span>É-<span class="highlight">Á</span>É', (string) S::create('ÁÉ-ÁÉ')->highlight('Á'));
+        $this->assertEquals('Ci<span class="highlight">ên</span>cia', (string) S::create('Ciência')->highlight('ên'));
+        $this->assertEquals('<span class="highlight">Á</span>cido L<span class="highlight">á</span>tico', (string) S::create('Ácido Lático')->highlight('á'));
+
+
     }
 }
