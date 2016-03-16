@@ -2430,7 +2430,18 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals('<span class="highlight">Á</span>É-<span class="highlight">Á</span>É', (string) S::create('ÁÉ-ÁÉ')->highlight('Á'));
         $this->assertEquals('Ci<span class="highlight">ên</span>cia', (string) S::create('Ciência')->highlight('ên'));
         $this->assertEquals('<span class="highlight">Á</span>cido L<span class="highlight">á</span>tico', (string) S::create('Ácido Lático')->highlight('á'));
+    }
 
+    public function testTag()
+    {
+        $this->assertEquals((string) S::create('Olá')->highlight('á', 'div'), 'Ol<div class="highlight">á</div>');
+        $this->assertEquals((string) S::create('Olá')->highlight('á', 'p'), 'Ol<p class="highlight">á</p>');
+    }
 
+    public function testClassCss()
+    {
+        $this->assertEquals((string) S::create('Olá')->highlight('á', 'div', 'warning'), 'Ol<div class="warning">á</div>');
+        $this->assertEquals((string) S::create('Olá')->highlight('á', 'div', 'sucess'), 'Ol<div class="sucess">á</div>');
+        $this->assertEquals((string) S::create('Olá')->highlight('á', 'div', 'error'), 'Ol<div class="error">á</div>');
     }
 }
