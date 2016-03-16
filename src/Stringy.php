@@ -118,14 +118,14 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     protected function prepare($text)
     {
         $buf = $text;
-        $caracteres = [
+        $caracteres = array(
             'aáàãâäAÁÀÃÂÄ',
             'eéèêëEÉÈÊË',
             'iíìîïIÍÌÎÏ',
             'oóòõôöOÓÒÕÖÔ',
             'uúùûüUÚÙÛÜ',
             'çcÇC'
-        ];
+        );
         foreach ($caracteres as $chars) {
             $buf = preg_replace("/[$chars]/u", "[$chars]", $buf);
         }
