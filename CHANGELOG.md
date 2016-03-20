@@ -1,3 +1,8 @@
+### 2.3.0 (2015-03-19)
+
+* Add Persian characters in Stringy::charsArray()
+* Use symfony/polyfill-mbstring to avoid dependency on ext-mbstring
+
 ### 2.2.0 (2015-12-20)
 
 * isJSON now returns false for empty strings

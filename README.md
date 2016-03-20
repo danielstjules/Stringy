@@ -131,7 +131,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~2.2"
+    "danielstjules/stringy": "~2.3"
 }
 ```
 
@@ -154,11 +154,13 @@ And in either case, I'd suggest using an alias.
 use Stringy\Stringy as S;
 ```
 
-Please note that Stringy relies on the `mbstring` PHP module for its underlying
-multibyte support. This is a non-default, but very common module. For example,
-with debian and ubuntu, it's included in libapache2-mod-php5, php5-cli, and
-php5-fpm. For OSX users, it's a default for any version of PHP installed with
-homebrew. If compiling PHP from scratch, it can be included with the
+Please note that Stringy relies on the `mbstring` module for its underlying
+multibyte support. If the module is not found, Stringy will use
+[symfony/polyfill-mbstring](https://github.com/symfony/polyfill-mbstring).
+ex-mbstring is a non-default, but very common module. For example, with debian
+and ubuntu, it's included in libapache2-mod-php5, php5-cli, and php5-fpm. For
+OSX users, it's a default for any version of PHP installed with homebrew.
+If compiling PHP from scratch, it can be included with the
 `--enable-mbstring` flag.
 
 ## OO and Chaining
