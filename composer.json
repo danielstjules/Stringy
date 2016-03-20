@@ -2,8 +2,15 @@
     "name": "danielstjules/stringy",
     "description": "A string manipulation library with multibyte support",
     "keywords": [
-        "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
-        "helpers", "utils", "utf"
+        "helpers",
+        "manipulation",
+        "methods",
+        "multibyte",
+        "string",
+        "utf",
+        "utf-8",
+        "utility",
+        "utils"
     ],
     "homepage": "https://github.com/danielstjules/Stringy",
     "license": "MIT",
@@ -26,10 +33,16 @@
         "source": "https://github.com/danielstjules/Stringy"
     },
     "autoload": {
-        "psr-4": { "Stringy\\": "src/" },
-        "files": ["src/Create.php"]
+        "files": [
+            "src/Create.php"
+        ],
+        "psr-4": {
+            "Stringy\\": "src/Stringy/"
+        }
     },
     "autoload-dev": {
-        "classmap": [ "tests" ]
+        "classmap": [
+            "tests/"
+        ]
     }
 }
