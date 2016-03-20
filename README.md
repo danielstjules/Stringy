@@ -686,7 +686,8 @@ to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
 and current versions of HHVM (3.8 and below).
 
 ```php
-s('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'
+s('fòô ')->regexReplace('f[òô]+\s', 'bàř'); // 'bàř'
+s('fò')->regexReplace('(ò)', '\\1ô'); // 'fòô'
 ```
 
 ##### removeLeft(string $substring)
