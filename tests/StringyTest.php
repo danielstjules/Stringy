@@ -2372,6 +2372,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array('foo', 'bar', '[[:alpha:]]{3}', 'foo'),
             array('', '', '', '', 'msr', 'UTF-8'),
             array('bàř', 'fòô ', 'f[òô]+\s', 'bàř', 'msr', 'UTF-8'),
+            array('fòô', 'fò', '(ò)', '\\1ô', 'msr', 'UTF-8'),
             array('fòô', 'bàř', '[[:alpha:]]{3}', 'fòô', 'msr', 'UTF-8')
         );
     }
