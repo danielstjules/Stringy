@@ -1,4 +1,4 @@
-### 2.3.0 (2015-03-19)
+### 2.3.0 (2016-03-19)
 
 * Add Persian characters in Stringy::charsArray()
 * Use symfony/polyfill-mbstring to avoid dependency on ext-mbstring
