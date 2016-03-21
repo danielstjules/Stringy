@@ -1,3 +1,7 @@
+### 2.3.1 (2016-03-21)
+
+* Always use root namespace for mbstring functions
+
 ### 2.3.0 (2016-03-19)
 
 * Add Persian characters in Stringy::charsArray()
