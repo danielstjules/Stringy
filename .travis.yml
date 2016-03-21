@@ -36,8 +36,8 @@ install: travis_retry composer install --no-interaction --prefer-source
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source
+  - if [[ $polyfill = 'true' ]]; then cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
   - if [[ $polyfill = 'false' ]]; then travis_retry composer remove symfony/polyfill-mbstring; fi
 
 script:
   - vendor/bin/phpunit
-
