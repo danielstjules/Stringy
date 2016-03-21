@@ -52,7 +52,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         }
 
         $this->str = (string) $str;
-        $this->encoding = $encoding ?: mb_internal_encoding();
+        $this->encoding = $encoding ?: \mb_internal_encoding();
     }
 
     /**
@@ -122,7 +122,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             return static::create('', $this->encoding);
         }
 
-        $substrIndex = $startIndex + mb_strlen($start, $this->encoding);
+        $substrIndex = $startIndex + \mb_strlen($start, $this->encoding);
         $endIndex = $this->indexOf($end, $substrIndex);
         if ($endIndex === false) {
             return static::create('', $this->encoding);
@@ -148,7 +148,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             '/[-_\s]+(.)?/u',
             function ($match) use ($encoding) {
                 if (isset($match[1])) {
-                    return mb_strtoupper($match[1], $encoding);
+                    return \mb_strtoupper($match[1], $encoding);
                 }
 
                 return '';
@@ -159,7 +159,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $stringy->str = preg_replace_callback(
             '/[\d]+(.)?/u',
             function ($match) use ($encoding) {
-                return mb_strtoupper($match[0], $encoding);
+                return \mb_strtoupper($match[0], $encoding);
             },
             $stringy->str
         );
@@ -208,10 +208,10 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $encoding = $this->encoding;
 
         if ($caseSensitive) {
-            return (mb_strpos($this->str, $needle, 0, $encoding) !== false);
+            return (\mb_strpos($this->str, $needle, 0, $encoding) !== false);
         }
 
-        return (mb_stripos($this->str, $needle, 0, $encoding) !== false);
+        return (\mb_stripos($this->str, $needle, 0, $encoding) !== false);
     }
 
     /**
@@ -284,13 +284,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function countSubstr($substring, $caseSensitive = true)
     {
         if ($caseSensitive) {
-            return mb_substr_count($this->str, $substring, $this->encoding);
+            return \mb_substr_count($this->str, $substring, $this->encoding);
         }
 
-        $str = mb_strtoupper($this->str, $this->encoding);
-        $substring = mb_strtoupper($substring, $this->encoding);
+        $str = \mb_strtoupper($this->str, $this->encoding);
+        $substring = \mb_strtoupper($substring, $this->encoding);
 
-        return mb_substr_count($str, $substring, $this->encoding);
+        return \mb_substr_count($str, $substring, $this->encoding);
     }
 
     /**
@@ -317,14 +317,14 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function delimit($delimiter)
     {
         // Save current regex encoding so we can reset it after
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
+        $regexEncoding = \mb_regex_encoding();
+        \mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
-        $str = mb_strtolower($str, $this->encoding);
-        $str = mb_ereg_replace('[-_\s]+', $delimiter, $str);
+        $str = \mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
+        $str = \mb_strtolower($str, $this->encoding);
+        $str = \mb_ereg_replace('[-_\s]+', $delimiter, $str);
 
-        mb_regex_encoding($regexEncoding);
+        \mb_regex_encoding($regexEncoding);
 
         return static::create($str, $this->encoding);
     }
@@ -340,15 +340,15 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function endsWith($substring, $caseSensitive = true)
     {
-        $substringLength = mb_strlen($substring, $this->encoding);
+        $substringLength = \mb_strlen($substring, $this->encoding);
         $strLength = $this->length();
 
-        $endOfStr = mb_substr($this->str, $strLength - $substringLength,
+        $endOfStr = \mb_substr($this->str, $strLength - $substringLength,
             $substringLength, $this->encoding);
 
         if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $endOfStr = mb_strtolower($endOfStr, $this->encoding);
+            $substring = \mb_strtolower($substring, $this->encoding);
+            $endOfStr = \mb_strtolower($endOfStr, $this->encoding);
         }
 
         return (string) $substring === $endOfStr;
@@ -508,7 +508,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function indexOf($needle, $offset = 0)
     {
-        return mb_strpos($this->str, (string) $needle,
+        return \mb_strpos($this->str, (string) $needle,
             (int) $offset, $this->encoding);
     }
 
@@ -524,7 +524,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function indexOfLast($needle, $offset = 0)
     {
-        return mb_strrpos($this->str, (string) $needle,
+        return \mb_strrpos($this->str, (string) $needle,
             (int) $offset, $this->encoding);
     }
 
@@ -542,8 +542,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             return $stringy;
         }
 
-        $start = mb_substr($stringy->str, 0, $index, $stringy->encoding);
-        $end = mb_substr($stringy->str, $index, $stringy->length(),
+        $start = \mb_substr($stringy->str, 0, $index, $stringy->encoding);
+        $end = \mb_substr($stringy->str, $index, $stringy->length(),
             $stringy->encoding);
 
         $stringy->str = $start . $substring . $end;
@@ -681,7 +681,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function length()
     {
-        return mb_strlen($this->str, $this->encoding);
+        return \mb_strlen($this->str, $this->encoding);
     }
 
     /**
@@ -692,7 +692,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function lines()
     {
-        $array = mb_split('[\r\n]{1,2}', $this->str);
+        $array = \mb_split('[\r\n]{1,2}', $this->str);
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = static::create($array[$i], $this->encoding);
         }
@@ -709,13 +709,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function longestCommonPrefix($otherStr)
     {
         $encoding = $this->encoding;
-        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
+        $maxLength = min($this->length(), \mb_strlen($otherStr, $encoding));
 
         $longestCommonPrefix = '';
         for ($i = 0; $i < $maxLength; $i++) {
-            $char = mb_substr($this->str, $i, 1, $encoding);
+            $char = \mb_substr($this->str, $i, 1, $encoding);
 
-            if ($char == mb_substr($otherStr, $i, 1, $encoding)) {
+            if ($char == \mb_substr($otherStr, $i, 1, $encoding)) {
                 $longestCommonPrefix .= $char;
             } else {
                 break;
@@ -734,13 +734,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function longestCommonSuffix($otherStr)
     {
         $encoding = $this->encoding;
-        $maxLength = min($this->length(), mb_strlen($otherStr, $encoding));
+        $maxLength = min($this->length(), \mb_strlen($otherStr, $encoding));
 
         $longestCommonSuffix = '';
         for ($i = 1; $i <= $maxLength; $i++) {
-            $char = mb_substr($this->str, -$i, 1, $encoding);
+            $char = \mb_substr($this->str, -$i, 1, $encoding);
 
-            if ($char == mb_substr($otherStr, -$i, 1, $encoding)) {
+            if ($char == \mb_substr($otherStr, -$i, 1, $encoding)) {
                 $longestCommonSuffix = $char . $longestCommonSuffix;
             } else {
                 break;
@@ -764,7 +764,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $encoding = $this->encoding;
         $stringy = static::create($this->str, $encoding);
         $strLength = $stringy->length();
-        $otherLength = mb_strlen($otherStr, $encoding);
+        $otherLength = \mb_strlen($otherStr, $encoding);
 
         // Return if either string is empty
         if ($strLength == 0 || $otherLength == 0) {
@@ -779,8 +779,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         for ($i = 1; $i <= $strLength; $i++) {
             for ($j = 1; $j <= $otherLength; $j++) {
-                $strChar = mb_substr($stringy->str, $i - 1, 1, $encoding);
-                $otherChar = mb_substr($otherStr, $j - 1, 1, $encoding);
+                $strChar = \mb_substr($stringy->str, $i - 1, 1, $encoding);
+                $otherChar = \mb_substr($otherStr, $j - 1, 1, $encoding);
 
                 if ($strChar == $otherChar) {
                     $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
@@ -794,7 +794,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             }
         }
 
-        $stringy->str = mb_substr($stringy->str, $end - $len, $len, $encoding);
+        $stringy->str = \mb_substr($stringy->str, $end - $len, $len, $encoding);
 
         return $stringy;
     }
@@ -806,11 +806,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function lowerCaseFirst()
     {
-        $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, $this->length() - 1,
+        $first = \mb_substr($this->str, 0, 1, $this->encoding);
+        $rest = \mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
-        $str = mb_strtolower($first, $this->encoding) . $rest;
+        $str = \mb_strtolower($first, $this->encoding) . $rest;
 
         return static::create($str, $this->encoding);
     }
@@ -855,7 +855,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             throw new OutOfBoundsException('No character exists at the index');
         }
 
-        return mb_substr($this->str, $offset, 1, $this->encoding);
+        return \mb_substr($this->str, $offset, 1, $this->encoding);
     }
 
     /**
@@ -983,11 +983,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function regexReplace($pattern, $replacement, $options = 'msr')
     {
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
+        $regexEncoding = \mb_regex_encoding();
+        \mb_regex_encoding($this->encoding);
 
-        $str = mb_ereg_replace($pattern, $replacement, $this->str, $options);
-        mb_regex_encoding($regexEncoding);
+        $str = \mb_ereg_replace($pattern, $replacement, $this->str, $options);
+        \mb_regex_encoding($regexEncoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1003,7 +1003,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $stringy = static::create($this->str, $this->encoding);
 
         if ($stringy->startsWith($substring)) {
-            $substringLength = mb_strlen($substring, $stringy->encoding);
+            $substringLength = \mb_strlen($substring, $stringy->encoding);
             return $stringy->substr($substringLength);
         }
 
@@ -1021,7 +1021,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $stringy = static::create($this->str, $this->encoding);
 
         if ($stringy->endsWith($substring)) {
-            $substringLength = mb_strlen($substring, $stringy->encoding);
+            $substringLength = \mb_strlen($substring, $stringy->encoding);
             return $stringy->substr(0, $stringy->length() - $substringLength);
         }
 
@@ -1065,7 +1065,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         // Loop from last index of string to first
         for ($i = $strLength - 1; $i >= 0; $i--) {
-            $reversed .= mb_substr($this->str, $i, 1, $this->encoding);
+            $reversed .= \mb_substr($this->str, $i, 1, $this->encoding);
         }
 
         return static::create($reversed, $this->encoding);
@@ -1090,16 +1090,16 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         // Need to further trim the string so we can append the substring
         $encoding = $stringy->encoding;
-        $substringLength = mb_strlen($substring, $encoding);
+        $substringLength = \mb_strlen($substring, $encoding);
         $length = $length - $substringLength;
 
-        $truncated = mb_substr($stringy->str, 0, $length, $encoding);
+        $truncated = \mb_substr($stringy->str, 0, $length, $encoding);
 
         // If the last word was truncated
         if (mb_strpos($stringy->str, ' ', $length - 1, $encoding) != $length) {
             // Find pos of the last occurrence of a space, get up to that
-            $lastPos = mb_strrpos($truncated, ' ', 0, $encoding);
-            $truncated = mb_substr($truncated, 0, $lastPos, $encoding);
+            $lastPos = \mb_strrpos($truncated, ' ', 0, $encoding);
+            $truncated = \mb_substr($truncated, 0, $lastPos, $encoding);
         }
 
         $stringy->str = $truncated . $substring;
@@ -1120,7 +1120,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         $shuffledStr = '';
         foreach ($indexes as $i) {
-            $shuffledStr .= mb_substr($this->str, $i, 1, $this->encoding);
+            $shuffledStr .= \mb_substr($this->str, $i, 1, $this->encoding);
         }
 
         return static::create($shuffledStr, $this->encoding);
@@ -1159,13 +1159,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function startsWith($substring, $caseSensitive = true)
     {
-        $substringLength = mb_strlen($substring, $this->encoding);
-        $startOfStr = mb_substr($this->str, 0, $substringLength,
+        $substringLength = \mb_strlen($substring, $this->encoding);
+        $startOfStr = \mb_substr($this->str, 0, $substringLength,
             $this->encoding);
 
         if (!$caseSensitive) {
-            $substring = mb_strtolower($substring, $this->encoding);
-            $startOfStr = mb_strtolower($startOfStr, $this->encoding);
+            $substring = \mb_strtolower($substring, $this->encoding);
+            $startOfStr = \mb_strtolower($startOfStr, $this->encoding);
         }
 
         return (string) $substring === $startOfStr;
@@ -1193,7 +1193,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             $length = $end - $start;
         }
 
-        $str = mb_substr($this->str, $start, $length, $this->encoding);
+        $str = \mb_substr($this->str, $start, $length, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1219,14 +1219,14 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             return array(static::create($this->str, $this->encoding));
         }
 
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
+        $regexEncoding = \mb_regex_encoding();
+        \mb_regex_encoding($this->encoding);
 
         // mb_split returns the remaining unsplit string in the last index when
         // supplying a limit
         $limit = ($limit > 0) ? $limit += 1 : -1;
-        $array = mb_split($pattern, $this->str, $limit);
-        mb_regex_encoding($regexEncoding);
+        $array = \mb_split($pattern, $this->str, $limit);
+        \mb_regex_encoding($regexEncoding);
 
         if ($limit > 0 && count($array) === $limit) {
             array_pop($array);
@@ -1251,7 +1251,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function substr($start, $length = null)
     {
         $length = $length === null ? $this->length() : $length;
-        $str = mb_substr($this->str, $start, $length, $this->encoding);
+        $str = \mb_substr($this->str, $start, $length, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1283,11 +1283,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $stringy->str = preg_replace_callback(
             '/[\S]/u',
             function ($match) use ($encoding) {
-                if ($match[0] == mb_strtoupper($match[0], $encoding)) {
-                    return mb_strtolower($match[0], $encoding);
+                if ($match[0] == \mb_strtoupper($match[0], $encoding)) {
+                    return \mb_strtolower($match[0], $encoding);
                 }
 
-                return mb_strtoupper($match[0], $encoding);
+                return \mb_strtoupper($match[0], $encoding);
             },
             $stringy->str
         );
@@ -1415,7 +1415,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function toLowerCase()
     {
-        $str = mb_strtolower($this->str, $this->encoding);
+        $str = \mb_strtolower($this->str, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1458,7 +1458,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function toTitleCase()
     {
-        $str = mb_convert_case($this->str, MB_CASE_TITLE, $this->encoding);
+        $str = \mb_convert_case($this->str, \MB_CASE_TITLE, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1471,7 +1471,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function toUpperCase()
     {
-        $str = mb_strtoupper($this->str, $this->encoding);
+        $str = \mb_strtoupper($this->str, $this->encoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1538,10 +1538,10 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         }
 
         // Need to further trim the string so we can append the substring
-        $substringLength = mb_strlen($substring, $stringy->encoding);
+        $substringLength = \mb_strlen($substring, $stringy->encoding);
         $length = $length - $substringLength;
 
-        $truncated = mb_substr($stringy->str, 0, $length, $stringy->encoding);
+        $truncated = \mb_substr($stringy->str, 0, $length, $stringy->encoding);
         $stringy->str = $truncated . $substring;
 
         return $stringy;
@@ -1579,11 +1579,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function upperCaseFirst()
     {
-        $first = mb_substr($this->str, 0, 1, $this->encoding);
-        $rest = mb_substr($this->str, 1, $this->length() - 1,
+        $first = \mb_substr($this->str, 0, 1, $this->encoding);
+        $rest = \mb_substr($this->str, 1, $this->length() - 1,
             $this->encoding);
 
-        $str = mb_strtoupper($first, $this->encoding) . $rest;
+        $str = \mb_strtoupper($first, $this->encoding) . $rest;
 
         return static::create($str, $this->encoding);
     }
@@ -1768,7 +1768,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     private function applyPadding($left = 0, $right = 0, $padStr = ' ')
     {
         $stringy = static::create($this->str, $this->encoding);
-        $length = mb_strlen($padStr, $stringy->encoding);
+        $length = \mb_strlen($padStr, $stringy->encoding);
 
         $strLength = $stringy->length();
         $paddedLength = $strLength + $left + $right;
@@ -1777,9 +1777,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             return $stringy;
         }
 
-        $leftPadding = mb_substr(str_repeat($padStr, ceil($left / $length)), 0,
+        $leftPadding = \mb_substr(str_repeat($padStr, ceil($left / $length)), 0,
             $left, $stringy->encoding);
-        $rightPadding = mb_substr(str_repeat($padStr, ceil($right / $length)),
+        $rightPadding = \mb_substr(str_repeat($padStr, ceil($right / $length)),
             0, $right, $stringy->encoding);
 
         $stringy->str = $leftPadding . $stringy->str . $rightPadding;
@@ -1795,11 +1795,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     private function matchesPattern($pattern)
     {
-        $regexEncoding = mb_regex_encoding();
-        mb_regex_encoding($this->encoding);
+        $regexEncoding = \mb_regex_encoding();
+        \mb_regex_encoding($this->encoding);
 
-        $match = mb_ereg_match($pattern, $this->str);
-        mb_regex_encoding($regexEncoding);
+        $match = \mb_ereg_match($pattern, $this->str);
+        \mb_regex_encoding($regexEncoding);
 
         return $match;
     }
