@@ -1,17 +1,16 @@
 {
-    "name": "danielstjules/stringy",
+    "name": "Munawwar/stringy",
     "description": "A string manipulation library with multibyte support",
     "keywords": [
         "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
         "helpers", "utils", "utf"
     ],
-    "homepage": "https://github.com/danielstjules/Stringy",
+    "homepage": "https://github.com/Munawwar/Stringy",
     "license": "MIT",
     "authors": [
         {
-            "name": "Daniel St. Jules",
-            "email": "danielst.jules@gmail.com",
-            "homepage": "http://www.danielstjules.com"
+            "name": "Munawwar",
+            "email": "contact.munawwar@gmail.com"
         }
     ],
     "require": {
@@ -22,8 +21,8 @@
         "phpunit/phpunit": "~4.0"
     },
     "support": {
-        "issues": "https://github.com/danielstjules/Stringy/issues",
-        "source": "https://github.com/danielstjules/Stringy"
+        "issues": "https://github.com/Munawwar/Stringy/issues",
+        "source": "https://github.com/Munawwar/Stringy"
     },
     "autoload": {
         "psr-4": { "Stringy\\": "src/" },
