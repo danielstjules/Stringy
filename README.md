@@ -630,6 +630,14 @@ Converts the first character of the supplied string to lower case.
 s('Σ foo')->lowerCaseFirst(); // 'σ foo'
 ```
 
+##### matches(string $regex)
+
+Does a preg_match() and returns all match groups.
+
+```php
+s('foobar')->matches('foo(.+)'); // ['foobar', 'bar']
+```
+
 ##### pad(int $length [, string $padStr = ' ' [, string $padType = 'right' ]])
 
 Pads the string to a given length with $padStr. If length is less than
