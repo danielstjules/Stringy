@@ -1,5 +1,5 @@
 {
-    "name": "Munawwar/stringy",
+    "name": "munawwar/stringy",
     "description": "A string manipulation library with multibyte support",
     "keywords": [
         "multibyte", "string", "manipulation", "utility", "methods", "utf-8",
