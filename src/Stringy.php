@@ -1788,9 +1788,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
     
     /**
-     * Does a preg_match using pattern returns matches.
+     * Does a preg_match using pattern and returns matches.
      *
-     * @param  string $pattern Regex pattern to match against
+     * @param  string $pattern Regex pattern to match against.
      * @return array  preg_match matches.
      */
     public function matches($pattern)
