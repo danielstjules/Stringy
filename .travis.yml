@@ -31,11 +31,11 @@ matrix:
     - php: 7.0
       env: polyfill='false'
 
-install: travis_retry composer install --no-interaction --prefer-source
+install: travis_retry composer install --no-interaction --prefer-dist
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer install --no-interaction --prefer-dist
   - if [[ $polyfill = 'false' ]]; then travis_retry composer remove symfony/polyfill-mbstring; fi
 
 script:
