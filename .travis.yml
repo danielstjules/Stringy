@@ -39,5 +39,5 @@ before_script:
   - if [[ $polyfill = 'false' ]]; then travis_retry composer remove symfony/polyfill-mbstring; fi
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --verbose
 
