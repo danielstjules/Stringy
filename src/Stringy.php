@@ -316,15 +316,14 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function delimit($delimiter)
     {
-        // Save current regex encoding so we can reset it after
-        $regexEncoding = \mb_regex_encoding();
-        \mb_regex_encoding($this->encoding);
+        $regexEncoding = $this->regexEncoding();
+        $this->regexEncoding($this->encoding);
 
-        $str = \mb_ereg_replace('\B([A-Z])', '-\1', $this->trim());
+        $str = $this->eregReplace('\B([A-Z])', '-\1', $this->trim());
         $str = \mb_strtolower($str, $this->encoding);
-        $str = \mb_ereg_replace('[-_\s]+', $delimiter, $str);
+        $str = $this->eregReplace('[-_\s]+', $delimiter, $str);
 
-        \mb_regex_encoding($regexEncoding);
+        $this->regexEncoding($regexEncoding);
 
         return static::create($str, $this->encoding);
     }
@@ -692,7 +691,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function lines()
     {
-        $array = \mb_split('[\r\n]{1,2}', $this->str);
+        $array = $this->split('[\r\n]{1,2}', $this->str);
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = static::create($array[$i], $this->encoding);
         }
@@ -983,11 +982,11 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function regexReplace($pattern, $replacement, $options = 'msr')
     {
-        $regexEncoding = \mb_regex_encoding();
-        \mb_regex_encoding($this->encoding);
+        $regexEncoding = $this->regexEncoding();
+        $this->regexEncoding($this->encoding);
 
-        $str = \mb_ereg_replace($pattern, $replacement, $this->str, $options);
-        \mb_regex_encoding($regexEncoding);
+        $str = $this->eregReplace($pattern, $replacement, $this->str, $options);
+        $this->regexEncoding($regexEncoding);
 
         return static::create($str, $this->encoding);
     }
@@ -1214,19 +1213,30 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         }
 
         // mb_split errors when supplied an empty pattern in < PHP 5.4.13
-        // and current versions of HHVM (3.8 and below)
+        // and HHVM < 3.8
         if ($pattern === '') {
             return array(static::create($this->str, $this->encoding));
         }
 
-        $regexEncoding = \mb_regex_encoding();
-        \mb_regex_encoding($this->encoding);
+        $regexEncoding = $this->regexEncoding();
+        $this->regexEncoding($this->encoding);
 
         // mb_split returns the remaining unsplit string in the last index when
         // supplying a limit
         $limit = ($limit > 0) ? $limit += 1 : -1;
-        $array = \mb_split($pattern, $this->str, $limit);
-        \mb_regex_encoding($regexEncoding);
+
+        static $functionExists;
+        if ($functionExists === null) {
+            $functionExists = function_exists('\mb_split');
+        }
+
+        if ($functionExists) {
+            $array = \mb_split($pattern, $this->str, $limit);
+        } else if ($this->supportsEncoding()) {
+            $array = \preg_split("/$pattern/", $this->str, $limit);
+        }
+
+        $this->regexEncoding($regexEncoding);
 
         if ($limit > 0 && count($array) === $limit) {
             array_pop($array);
@@ -1632,7 +1642,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                             'ῗ', 'і', 'ї', 'и', 'ဣ', 'ိ', 'ီ', 'ည်', 'ǐ', 'ი',
                             'इ', 'ی'),
             'j'    => array('ĵ', 'ј', 'Ј', 'ჯ', 'ج'),
-            'k'    => array('ķ', 'ĸ', 'к', 'κ', 'Ķ', 'ق', 'ك', 'က', 'კ', 'ქ', 'ک'),
+            'k'    => array('ķ', 'ĸ', 'к', 'κ', 'Ķ', 'ق', 'ك', 'က', 'კ', 'ქ',
+                            'ک'),
             'l'    => array('ł', 'ľ', 'ĺ', 'ļ', 'ŀ', 'л', 'λ', 'ل', 'လ', 'ლ'),
             'm'    => array('м', 'μ', 'م', 'မ', 'მ'),
             'n'    => array('ñ', 'ń', 'ň', 'ņ', 'ŉ', 'ŋ', 'ν', 'н', 'ن', 'န',
@@ -1795,12 +1806,61 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     private function matchesPattern($pattern)
     {
-        $regexEncoding = \mb_regex_encoding();
-        \mb_regex_encoding($this->encoding);
+        $regexEncoding = $this->regexEncoding();
+        $this->regexEncoding($this->encoding);
 
         $match = \mb_ereg_match($pattern, $this->str);
-        \mb_regex_encoding($regexEncoding);
+        $this->regexEncoding($regexEncoding);
 
         return $match;
+    }
+
+    /**
+     * Alias for mb_ereg_replace with a fallback to preg_replace if the
+     * mbstring module is not installed.
+     */
+    private function eregReplace($pattern, $replacement, $string, $option = 'msr')
+    {
+        static $functionExists;
+        if ($functionExists === null) {
+            $functionExists = function_exists('\mb_split');
+        }
+
+        if ($functionExists) {
+            return \mb_ereg_replace($pattern, $replacement, $string, $option);
+        } else if ($this->supportsEncoding()) {
+            $option = str_replace('r', '', $option);
+            return \preg_replace("/$pattern/u$option", $replacement, $string);
+        }
+    }
+
+    /**
+     * Alias for mb_regex_encoding which default to a noop if the mbstring
+     * module is not installed.
+     */
+    private function regexEncoding()
+    {
+        static $functionExists;
+
+        if ($functionExists === null) {
+            $functionExists = function_exists('\mb_regex_encoding');
+        }
+
+        if ($functionExists) {
+            $args = func_get_args();
+            return call_user_func_array('\mb_regex_encoding', $args);
+        }
+    }
+
+    private function supportsEncoding()
+    {
+        $supported = array('UTF-8' => true, 'ASCII' => true);
+
+        if (isset($supported[$this->encoding])) {
+            return true;
+        } else {
+            throw new \RuntimeExpception('Stringy method requires the ' .
+                'mbstring module for encodings other than ASCII and UTF-8');
+        }
     }
 }
