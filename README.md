@@ -239,9 +239,9 @@ integer, boolean, etc.
 ```php
 use Stringy\StaticStringy as S;
 
-// Translates to Stringy::create('fòôbàř', 'UTF-8')->slice(0, 3);
+// Translates to Stringy::create('fòôbàř')->slice(0, 3);
 // Returns a Stringy object with the string "fòô"
-S::slice('fòôbàř', 0, 3, 'UTF-8');
+S::slice('fòôbàř', 0, 3);
 ```
 
 ## Class methods
@@ -255,7 +255,7 @@ then returns the initialized object. Throws an InvalidArgumentException
 if the first argument is an array or object without a __toString method.
 
 ```php
-$stringy = S::create('fòôbàř', 'UTF-8'); // 'fòôbàř'
+$stringy = S::create('fòôbàř'); // 'fòôbàř'
 ```
 
 ## Instance Methods
@@ -420,7 +420,7 @@ s('fòôbàř')->first(3); // 'fòô'
 Returns the encoding used by the Stringy object.
 
 ```php
-s('fòôbàř', 'UTF-8')->getEncoding(); // 'UTF-8'
+s('fòôbàř')->getEncoding(); // 'UTF-8'
 ```
 
 ##### hasLowerCase()
