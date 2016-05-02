@@ -1,3 +1,7 @@
+### 2.3.2 (2016-05-02)
+
+* Improve support without mbstring
+
 ### 2.3.1 (2016-03-21)
 
 * Always use root namespace for mbstring functions
