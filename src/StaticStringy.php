@@ -143,6 +143,12 @@ class StaticStringy
 
         $stringy = Stringy::create($str, $encoding);
 
-        return call_user_func_array([$stringy, $name], $args);
+        $result = call_user_func_array([$stringy, $name], $args);
+
+        if (is_object($result) && $result instanceof Stringy) {
+            return (string) $result;
+        }
+
+        return $result;
     }
 }
