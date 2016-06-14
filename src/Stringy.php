@@ -111,9 +111,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * search for the start string.
      *
      * @param  string $start  Delimiter marking the start of the substring
-     * @param  string $end    Delimiter marketing the end of the substring
+     * @param  string $end    Delimiter marking the end of the substring
      * @param  int    $offset Index from which to begin the search
-     * @return Stringy Object whose $str has been converted to an URL slug
+     * @return Stringy Object whose $str is a substring between $start and $end
      */
     public function between($start, $end, $offset = 0)
     {
