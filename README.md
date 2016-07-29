@@ -25,6 +25,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [at](#atint-index)
     * [between](#betweenstring-start-string-end--int-offset)
     * [camelize](#camelize)
+    * [capitalizePersonName](#capitalizePersonName)
     * [chars](#chars)
     * [collapseWhitespace](#collapsewhitespace)
     * [contains](#containsstring-needle--boolean-casesensitive--true-)
@@ -300,6 +301,15 @@ and removes spaces, dashes, as well as underscores.
 
 ```php
 s('Camel-Case')->camelize(); // 'camelCase'
+```
+
+##### capitalizePersonName()
+
+Returns the string with the first letter of each word capitalized,
+except for when the word is a name which shouldn't be capitalized.
+
+```php
+s('jaap de hoop scheffer')->capitalizePersonName(); // 'Jaap de Hoop Scheffer'
 ```
 
 ##### chars()
