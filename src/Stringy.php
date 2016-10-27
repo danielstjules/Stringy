@@ -1123,7 +1123,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         if (mb_strpos($stringy->str, ' ', $length - 1, $encoding) != $length) {
             // Find pos of the last occurrence of a space, get up to that
             $lastPos = \mb_strrpos($truncated, ' ', 0, $encoding);
-            $truncated = \mb_substr($truncated, 0, $lastPos, $encoding);
+            if ($lastPos !== false) {
+                $truncated = \mb_substr($truncated, 0, $lastPos, $encoding);
+            }
         }
 
         $stringy->str = $truncated . $substring;
