@@ -1171,6 +1171,30 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Returns true if the string begins with any $substrings, false otherwise. By
+     * default the comparison is case-sensitive, but can be made insensitive by
+     * setting $caseSensitive to false.
+     *
+     * @param  array  $substrings    Substrings to look for
+     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool   Whether or not $str starts with $substring
+     */
+    public function startsWithAny($substrings, $caseSensitive = true)
+    {
+        if (empty($substrings)) {
+            return false;
+        }
+
+        foreach ($substrings as $substring) {
+            if ($this->startsWith($substring, $caseSensitive)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Returns the substring beginning at $start, and up to, but not including
      * the index specified by $end. If $end is omitted, the function extracts
      * the remaining string. If $end is negative, it is computed from the end
