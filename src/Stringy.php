@@ -1776,7 +1776,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @param  string  $padStr String used to pad
      * @return Stringy String with padding applied
      */
-    private function applyPadding($left = 0, $right = 0, $padStr = ' ')
+    protected function applyPadding($left = 0, $right = 0, $padStr = ' ')
     {
         $stringy = static::create($this->str, $this->encoding);
         $length = \mb_strlen($padStr, $stringy->encoding);
@@ -1804,7 +1804,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @param  string $pattern Regex pattern to match against
      * @return bool   Whether or not $str matches the pattern
      */
-    private function matchesPattern($pattern)
+    protected function matchesPattern($pattern)
     {
         $regexEncoding = $this->regexEncoding();
         $this->regexEncoding($this->encoding);
@@ -1819,7 +1819,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * Alias for mb_ereg_replace with a fallback to preg_replace if the
      * mbstring module is not installed.
      */
-    private function eregReplace($pattern, $replacement, $string, $option = 'msr')
+    protected function eregReplace($pattern, $replacement, $string, $option = 'msr')
     {
         static $functionExists;
         if ($functionExists === null) {
@@ -1838,7 +1838,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * Alias for mb_regex_encoding which default to a noop if the mbstring
      * module is not installed.
      */
-    private function regexEncoding()
+    protected function regexEncoding()
     {
         static $functionExists;
 
@@ -1852,7 +1852,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         }
     }
 
-    private function supportsEncoding()
+    protected function supportsEncoding()
     {
         $supported = array('UTF-8' => true, 'ASCII' => true);
 
