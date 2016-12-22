@@ -79,6 +79,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
     * [slice](#sliceint-start--int-end-)
     * [split](#splitstring-pattern--int-limit-)
+    * [stripWhitespace](#stripwhitespace)
     * [substr](#substrint-start--int-length-)
     * [surround](#surroundstring-substring)
     * [swapCase](#swapcase)
@@ -792,6 +793,16 @@ results.
 
 ```php
 s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+```
+
+##### stripWhitespace()
+
+Strip all whitespace characters. This includes tabs and newline
+characters, as well as multibyte whitespace such as the thin space
+and ideographic space.
+
+```php
+s('   Ο     συγγραφέας  ')->stripWhitespace(); // 'Οσυγγραφέας'
 ```
 
 ##### substr(int $start [, int $length ])
