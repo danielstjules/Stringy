@@ -1859,8 +1859,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         if (isset($supported[$this->encoding])) {
             return true;
         } else {
-            throw new \RuntimeExpception('Stringy method requires the ' .
-                'mbstring module for encodings other than ASCII and UTF-8');
+            throw new \RuntimeException('Stringy method requires the ' .
+                'mbstring module for encodings other than ASCII and UTF-8. ' .
+                'Encoding used: ' . $this->encoding);
         }
     }
 }
