@@ -1250,6 +1250,18 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Strip all whitespace characters. This includes tabs and newline
+     * characters, as well as multibyte whitespace such as the thin space
+     * and ideographic space.
+     *
+     * @return Stringy Object with whitespace stripped
+     */
+    public function stripWhitespace()
+    {
+        return $this->regexReplace('[[:space:]]+', '');
+    }
+
+    /**
      * Returns the substring beginning at $start with the specified $length.
      * It differs from the mb_substr() function in that providing a $length of
      * null will return the rest of the string, rather than an empty string.
