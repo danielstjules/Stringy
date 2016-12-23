@@ -845,6 +845,36 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider startsWithProviderAny()
+     */
+    public function testStartsWithAny($expected, $str, $substring,
+        $caseSensitive = true, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->startsWithAny($substring, $caseSensitive);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function startsWithProviderAny()
+    {
+        return array(
+            array(true, 'foo bars', array('foo bar')),
+            array(true, 'FOO bars', array('foo bar'), false),
+            array(true, 'FOO bars', array('foo bar', 'foo BAR'), false),
+            array(true, 'FÒÔ bàřs', array('foo bar', 'fòô bàř'), false, 'UTF-8'),
+            array(true, 'fòô bàřs', array('foo bar', 'fòô BÀŘ'), false, 'UTF-8'),
+            array(false, 'foo bar', array('bar')),
+            array(false, 'foo bar', array('foo bars')),
+            array(false, 'FOO bar', array('foo bars')),
+            array(false, 'FOO bars', array('foo BAR')),
+            array(false, 'FÒÔ bàřs', array('fòô bàř'), true, 'UTF-8'),
+            array(false, 'fòô bàřs', array('fòô BÀŘ'), true, 'UTF-8'),
+        );
+    }
+
+    /**
      * @dataProvider endsWithProvider()
      */
     public function testEndsWith($expected, $str, $substring,
