@@ -2498,8 +2498,8 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function stripPunctuationProvider()
     {
         return array(
-            array('foo bar ', '!{foo}:,+"`-=№\/ (&bar.) @#'),
-            array('fòô bàř 123', '!{fòô}: (bàř)? 1;2--__3%', 'UTF-8'),
+            array('foo bar ', '!{foo}:,+"`-=\/ (&bar.) @#'),
+            array('fòô bàř 123', '!{fòô}: (bàř)? №1;2--__3%', 'UTF-8'),
         );
     }
 }
