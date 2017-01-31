@@ -1274,6 +1274,17 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Strip all punctuation characters. This includes any non-alphanumeric
+     * characters. Whitespaces are ignored.
+     *
+     * @return Stringy Object with punctuation stripped
+     */
+    public function stripPunctuation()
+    {
+        return $this->regexReplace('[^[:alnum:][:space:]]+', '');
+    }
+
+    /**
      * Strip all whitespace characters. This includes tabs and newline
      * characters, as well as multibyte whitespace such as the thin space
      * and ideographic space.
