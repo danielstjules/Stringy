@@ -1242,9 +1242,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             $length = $end - $start;
         }
 
-        $str = \mb_substr($this->str, $start, $length, $this->encoding);
-
-        return static::create($str, $this->encoding);
+        return $this->substr($start, $length);
     }
 
     /**
