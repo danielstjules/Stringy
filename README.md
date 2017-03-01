@@ -77,7 +77,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [shuffle](#shuffle)
     * [slugify](#slugify-string-replacement----)
     * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
-    * [startsWithAny](#startswithstring-substrings--boolean-casesensitive--true-)
+    * [startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)
     * [slice](#sliceint-start--int-end-)
     * [split](#splitstring-pattern--int-limit-)
     * [stripWhitespace](#stripwhitespace)
