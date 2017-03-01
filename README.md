@@ -77,6 +77,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     * [shuffle](#shuffle)
     * [slugify](#slugify-string-replacement----)
     * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
+    * [startsWithAny](#startswithstring-substrings--boolean-casesensitive--true-)
     * [slice](#sliceint-start--int-end-)
     * [split](#splitstring-pattern--int-limit-)
     * [stripWhitespace](#stripwhitespace)
@@ -772,6 +773,16 @@ by setting $caseSensitive to false.
 
 ```php
 s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
+```
+
+##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with any of $substrings, false
+otherwise. By default the comparison is case-sensitive, but can be made
+insensitive by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWith(['fòô', 'bàř'], false); // true
 ```
 
 ##### slice(int $start [, int $end ])
