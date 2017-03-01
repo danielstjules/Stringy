@@ -354,6 +354,31 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Returns true if the string ends with any of $substrings, false otherwise.
+     * By default, the comparison is case-sensitive, but can be made insensitive
+     * by setting $caseSensitive to false.
+     *
+     * @param  string[] $substrings    Substrings to look for
+     * @param  bool     $caseSensitive Whether or not to enforce
+     *                                 case-sensitivity
+     * @return bool     Whether or not $str ends with $substring
+     */
+    public function endsWithAny($substrings, $caseSensitive = true)
+    {
+        if (empty($substrings)) {
+            return false;
+        }
+
+        foreach ($substrings as $substring) {
+            if ($this->endsWith($substring, $caseSensitive)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Ensures that the string begins with $substring. If it doesn't, it's
      * prepended.
      *

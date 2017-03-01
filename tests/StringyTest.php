@@ -847,11 +847,11 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider startsWithProviderAny()
      */
-    public function testStartsWithAny($expected, $str, $substring,
-        $caseSensitive = true, $encoding = null)
+    public function testStartsWithAny($expected, $str, $substrings,
+                                      $caseSensitive = true, $encoding = null)
     {
         $stringy = S::create($str, $encoding);
-        $result = $stringy->startsWithAny($substring, $caseSensitive);
+        $result = $stringy->startsWithAny($substrings, $caseSensitive);
         $this->assertInternalType('boolean', $result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
@@ -901,6 +901,36 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array(false, 'FOO bars', 'foo BARS'),
             array(false, 'FÒÔ bàřs', 'fòô bàřs', true, 'UTF-8'),
             array(false, 'fòô bàřs', 'fòô BÀŘS', true, 'UTF-8'),
+        );
+    }
+
+    /**
+     * @dataProvider endsWithAnyProvider()
+     */
+    public function testEndsWithAny($expected, $str, $substrings,
+                                    $caseSensitive = true, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->endsWithAny($substrings, $caseSensitive);
+        $this->assertInternalType('boolean', $result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function endsWithAnyProvider()
+    {
+        return array(
+            array(true, 'foo bars', array('foo', 'o bars')),
+            array(true, 'FOO bars', array('foo', 'o bars'), false),
+            array(true, 'FOO bars', array('foo', 'o BARs'), false),
+            array(true, 'FÒÔ bàřs', array('foo', 'ô bàřs'), false, 'UTF-8'),
+            array(true, 'fòô bàřs', array('foo', 'ô BÀŘs'), false, 'UTF-8'),
+            array(false, 'foo bar', array('foo')),
+            array(false, 'foo bar', array('foo', 'foo bars')),
+            array(false, 'FOO bar', array('foo', 'foo bars')),
+            array(false, 'FOO bars', array('foo', 'foo BARS')),
+            array(false, 'FÒÔ bàřs', array('fòô', 'fòô bàřs'), true, 'UTF-8'),
+            array(false, 'fòô bàřs', array('fòô', 'fòô BÀŘS'), true, 'UTF-8'),
         );
     }
 

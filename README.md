@@ -26,24 +26,23 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[append](#appendstring-string)</td>
         <td>[at](#atint-index)</td>
         <td>[between](#betweenstring-start-string-end--int-offset)</td>
+        <td>[camelize](#camelize)</td>
     </tr>
     <tr>
-        <td>[camelize](#camelize)</td>
         <td>[chars](#chars)</td>
         <td>[collapseWhitespace](#collapsewhitespace)</td>
-    </tr>
-    <tr>
         <td>[contains](#containsstring-needle--boolean-casesensitive--true-)</td>
         <td>[containsAll](#containsallarray-needles--boolean-casesensitive--true-)</td>
-        <td>[containsAny](#containsanyarray-needles--boolean-casesensitive--true-)</td>
     </tr>
     <tr>
+        <td>[containsAny](#containsanyarray-needles--boolean-casesensitive--true-)</td>
         <td>[countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)</td>
         <td>[dasherize](#dasherize)</td>
         <td>[delimit](#delimitint-delimiter)</td>
     </tr>
     <tr>
         <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[endsWithAny](#endsWithAnystring-substrings--boolean-casesensitive--true-)</td>
         <td>[ensureLeft](#ensureleftstring-substring)</td>
         <td>[ensureRight](#ensurerightstring-substring)</td>
     </tr>
@@ -51,18 +50,16 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[first](#firstint-n)</td>
         <td>[getEncoding](#getencoding)</td>
         <td>[hasLowerCase](#haslowercase)</td>
+        <td>[hasUpperCase](#hasuppercase)</td>
     </tr>
     <tr>
-        <td>[hasUpperCase](#hasuppercase)</td>
         <td>[htmlDecode](#htmldecode)</td>
         <td>[htmlEncode](#htmlencode)</td>
-    </tr>
-    <tr>
         <td>[humanize](#humanize)</td>
         <td>[indexOf](#indexofstring-needle--offset--0-)</td>
-        <td>[indexOfLast](#indexoflaststring-needle--offset--0-)</td>
     </tr>
     <tr>
+        <td>[indexOfLast](#indexoflaststring-needle--offset--0-)</td>
         <td>[insert](#insertint-index-string-substring)</td>
         <td>[isAlpha](#isalpha)</td>
         <td>[isAlphanumeric](#isalphanumeric)</td>
@@ -71,18 +68,16 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[isBase64](#isbase64)</td>
         <td>[isBlank](#isblank)</td>
         <td>[isHexadecimal](#ishexadecimal)</td>
+        <td>[isJson](#isjson)</td>
     </tr>
     <tr>
-        <td>[isJson](#isjson)</td>
         <td>[isLowerCase](#islowercase)</td>
         <td>[isSerialized](#isserialized)</td>
-    </tr>
-    <tr>
         <td>[isUpperCase](#isuppercase)</td>
         <td>[last](#last)</td>
-        <td>[length](#length)</td>
     </tr>
     <tr>
+        <td>[length](#length)</td>
         <td>[lines](#lines)</td>
         <td>[longestCommonPrefix](#longestcommonprefixstring-otherstr)</td>
         <td>[longestCommonSuffix](#longestcommonsuffixstring-otherstr)</td>
@@ -91,18 +86,16 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[longestCommonSubstring](#longestcommonsubstringstring-otherstr)</td>
         <td>[lowerCaseFirst](#lowercasefirst)</td>
         <td>[pad](#padint-length--string-padstr-----string-padtype--right-)</td>
+        <td>[padBoth](#padbothint-length--string-padstr----)</td>
     </tr>
     <tr>
-        <td>[padBoth](#padbothint-length--string-padstr----)</td>
         <td>[padLeft](#padleftint-length--string-padstr----)</td>
         <td>[padRight](#padrightint-length--string-padstr----)</td>
-    </tr>
-    <tr>
         <td>[prepend](#prependstring-string)</td>
         <td>[regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)</td>
-        <td>[removeLeft](#removeleftstring-substring)</td>
     </tr>
     <tr>
+        <td>[removeLeft](#removeleftstring-substring)</td>
         <td>[removeRight](#removerightstring-substring)</td>
         <td>[repeat](#repeatmultiplier)</td>
         <td>[replace](#replacestring-search-string-replacement)</td>
@@ -111,18 +104,16 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[reverse](#reverse)</td>
         <td>[safeTruncate](#safetruncateint-length--string-substring---)</td>
         <td>[shuffle](#shuffle)</td>
+        <td>[slugify](#slugify-string-replacement----)</td>
     </tr>
     <tr>
-        <td>[slugify](#slugify-string-replacement----)</td>
         <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
         <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
-    </tr>
-    <tr>
         <td>[slice](#sliceint-start--int-end-)</td>
         <td>[split](#splitstring-pattern--int-limit-)</td>
-        <td>[stripWhitespace](#stripwhitespace)</td>
     </tr>
     <tr>
+        <td>[stripWhitespace](#stripwhitespace)</td>
         <td>[substr](#substrint-start--int-length-)</td>
         <td>[surround](#surroundstring-substring)</td>
         <td>[swapCase](#swapcase)</td>
@@ -131,18 +122,16 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[tidy](#tidy)</td>
         <td>[titleize](#titleize-array-ignore)</td>
         <td>[toAscii](#toascii)</td>
+        <td>[toBoolean](#toboolean)</td>
     </tr>
     <tr>
-        <td>[toBoolean](#toboolean)</td>
         <td>[toLowerCase](#tolowercase)</td>
         <td>[toSpaces](#tospaces-tablength--4-)</td>
-    </tr>
-    <tr>
         <td>[toTabs](#totabs-tablength--4-)</td>
         <td>[toTitleCase](#totitlecase)</td>
-        <td>[toUpperCase](#touppercase)</td>
     </tr>
     <tr>
+        <td>[toUpperCase](#touppercase)</td>
         <td>[trim](#trim-string-chars)</td>
         <td>[trimLeft](#trimleft-string-chars)</td>
         <td>[trimRight](#trimright-string-chars)</td>
@@ -151,8 +140,6 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[truncate](#truncateint-length--string-substring---)</td>
         <td>[underscored](#underscored)</td>
         <td>[upperCamelize](#uppercamelize)</td>
-    </tr>
-    <tr>
         <td>[upperCaseFirst](#uppercasefirst)</td>
     </tr>
 </table>
@@ -447,6 +434,16 @@ setting $caseSensitive to false.
 
 ```php
 s('fòôbàř')->endsWith('bàř', true); // true
+```
+
+##### endsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string ends with any of $substrings, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+s('fòôbàř')->endsWith(['bàř', 'baz'], true); // true
 ```
 
 ##### ensureLeft(string $substring)
