@@ -21,85 +21,141 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Class methods](#class-methods)
     * [create](#createmixed-str--encoding-)
 * [Instance methods](#instance-methods)
-    * [append](#appendstring-string)
-    * [at](#atint-index)
-    * [between](#betweenstring-start-string-end--int-offset)
-    * [camelize](#camelize)
-    * [chars](#chars)
-    * [collapseWhitespace](#collapsewhitespace)
-    * [contains](#containsstring-needle--boolean-casesensitive--true-)
-    * [containsAll](#containsallarray-needles--boolean-casesensitive--true-)
-    * [containsAny](#containsanyarray-needles--boolean-casesensitive--true-)
-    * [countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)
-    * [dasherize](#dasherize)
-    * [delimit](#delimitint-delimiter)
-    * [endsWith](#endswithstring-substring--boolean-casesensitive--true-)
-    * [ensureLeft](#ensureleftstring-substring)
-    * [ensureRight](#ensurerightstring-substring)
-    * [first](#firstint-n)
-    * [getEncoding](#getencoding)
-    * [hasLowerCase](#haslowercase)
-    * [hasUpperCase](#hasuppercase)
-    * [htmlDecode](#htmldecode)
-    * [htmlEncode](#htmlencode)
-    * [humanize](#humanize)
-    * [indexOf](#indexofstring-needle--offset--0-)
-    * [indexOfLast](#indexoflaststring-needle--offset--0-)
-    * [insert](#insertint-index-string-substring)
-    * [isAlpha](#isalpha)
-    * [isAlphanumeric](#isalphanumeric)
-    * [isBase64](#isbase64)
-    * [isBlank](#isblank)
-    * [isHexadecimal](#ishexadecimal)
-    * [isJson](#isjson)
-    * [isLowerCase](#islowercase)
-    * [isSerialized](#isserialized)
-    * [isUpperCase](#isuppercase)
-    * [last](#last)
-    * [length](#length)
-    * [lines](#lines)
-    * [longestCommonPrefix](#longestcommonprefixstring-otherstr)
-    * [longestCommonSuffix](#longestcommonsuffixstring-otherstr)
-    * [longestCommonSubstring](#longestcommonsubstringstring-otherstr)
-    * [lowerCaseFirst](#lowercasefirst)
-    * [pad](#padint-length--string-padstr-----string-padtype--right-)
-    * [padBoth](#padbothint-length--string-padstr----)
-    * [padLeft](#padleftint-length--string-padstr----)
-    * [padRight](#padrightint-length--string-padstr----)
-    * [prepend](#prependstring-string)
-    * [regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)
-    * [removeLeft](#removeleftstring-substring)
-    * [removeRight](#removerightstring-substring)
-    * [repeat](#repeatmultiplier)
-    * [replace](#replacestring-search-string-replacement)
-    * [reverse](#reverse)
-    * [safeTruncate](#safetruncateint-length--string-substring---)
-    * [shuffle](#shuffle)
-    * [slugify](#slugify-string-replacement----)
-    * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
-    * [startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)
-    * [slice](#sliceint-start--int-end-)
-    * [split](#splitstring-pattern--int-limit-)
-    * [stripWhitespace](#stripwhitespace)
-    * [substr](#substrint-start--int-length-)
-    * [surround](#surroundstring-substring)
-    * [swapCase](#swapcase)
-    * [tidy](#tidy)
-    * [titleize](#titleize-array-ignore)
-    * [toAscii](#toascii)
-    * [toBoolean](#toboolean)
-    * [toLowerCase](#tolowercase)
-    * [toSpaces](#tospaces-tablength--4-)
-    * [toTabs](#totabs-tablength--4-)
-    * [toTitleCase](#totitlecase)
-    * [toUpperCase](#touppercase)
-    * [trim](#trim-string-chars)
-    * [trimLeft](#trimleft-string-chars)
-    * [trimRight](#trimright-string-chars)
-    * [truncate](#truncateint-length--string-substring---)
-    * [underscored](#underscored)
-    * [upperCamelize](#uppercamelize)
-    * [upperCaseFirst](#uppercasefirst)
+<table>
+    <tr>
+        <td>[append](#appendstring-string)</td>
+        <td>[at](#atint-index)</td>
+        <td>[between](#betweenstring-start-string-end--int-offset)</td>
+    </tr>
+    <tr>
+        <td>[camelize](#camelize)</td>
+        <td>[chars](#chars)</td>
+        <td>[collapseWhitespace](#collapsewhitespace)</td>
+    </tr>
+    <tr>
+        <td>[contains](#containsstring-needle--boolean-casesensitive--true-)</td>
+        <td>[containsAll](#containsallarray-needles--boolean-casesensitive--true-)</td>
+        <td>[containsAny](#containsanyarray-needles--boolean-casesensitive--true-)</td>
+    </tr>
+    <tr>
+        <td>[countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)</td>
+        <td>[dasherize](#dasherize)</td>
+        <td>[delimit](#delimitint-delimiter)</td>
+    </tr>
+    <tr>
+        <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[ensureLeft](#ensureleftstring-substring)</td>
+        <td>[ensureRight](#ensurerightstring-substring)</td>
+    </tr>
+    <tr>
+        <td>[first](#firstint-n)</td>
+        <td>[getEncoding](#getencoding)</td>
+        <td>[hasLowerCase](#haslowercase)</td>
+    </tr>
+    <tr>
+        <td>[hasUpperCase](#hasuppercase)</td>
+        <td>[htmlDecode](#htmldecode)</td>
+        <td>[htmlEncode](#htmlencode)</td>
+    </tr>
+    <tr>
+        <td>[humanize](#humanize)</td>
+        <td>[indexOf](#indexofstring-needle--offset--0-)</td>
+        <td>[indexOfLast](#indexoflaststring-needle--offset--0-)</td>
+    </tr>
+    <tr>
+        <td>[insert](#insertint-index-string-substring)</td>
+        <td>[isAlpha](#isalpha)</td>
+        <td>[isAlphanumeric](#isalphanumeric)</td>
+    </tr>
+    <tr>
+        <td>[isBase64](#isbase64)</td>
+        <td>[isBlank](#isblank)</td>
+        <td>[isHexadecimal](#ishexadecimal)</td>
+    </tr>
+    <tr>
+        <td>[isJson](#isjson)</td>
+        <td>[isLowerCase](#islowercase)</td>
+        <td>[isSerialized](#isserialized)</td>
+    </tr>
+    <tr>
+        <td>[isUpperCase](#isuppercase)</td>
+        <td>[last](#last)</td>
+        <td>[length](#length)</td>
+    </tr>
+    <tr>
+        <td>[lines](#lines)</td>
+        <td>[longestCommonPrefix](#longestcommonprefixstring-otherstr)</td>
+        <td>[longestCommonSuffix](#longestcommonsuffixstring-otherstr)</td>
+    </tr>
+    <tr>
+        <td>[longestCommonSubstring](#longestcommonsubstringstring-otherstr)</td>
+        <td>[lowerCaseFirst](#lowercasefirst)</td>
+        <td>[pad](#padint-length--string-padstr-----string-padtype--right-)</td>
+    </tr>
+    <tr>
+        <td>[padBoth](#padbothint-length--string-padstr----)</td>
+        <td>[padLeft](#padleftint-length--string-padstr----)</td>
+        <td>[padRight](#padrightint-length--string-padstr----)</td>
+    </tr>
+    <tr>
+        <td>[prepend](#prependstring-string)</td>
+        <td>[regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)</td>
+        <td>[removeLeft](#removeleftstring-substring)</td>
+    </tr>
+    <tr>
+        <td>[removeRight](#removerightstring-substring)</td>
+        <td>[repeat](#repeatmultiplier)</td>
+        <td>[replace](#replacestring-search-string-replacement)</td>
+    </tr>
+    <tr>
+        <td>[reverse](#reverse)</td>
+        <td>[safeTruncate](#safetruncateint-length--string-substring---)</td>
+        <td>[shuffle](#shuffle)</td>
+    </tr>
+    <tr>
+        <td>[slugify](#slugify-string-replacement----)</td>
+        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
+    </tr>
+    <tr>
+        <td>[slice](#sliceint-start--int-end-)</td>
+        <td>[split](#splitstring-pattern--int-limit-)</td>
+        <td>[stripWhitespace](#stripwhitespace)</td>
+    </tr>
+    <tr>
+        <td>[substr](#substrint-start--int-length-)</td>
+        <td>[surround](#surroundstring-substring)</td>
+        <td>[swapCase](#swapcase)</td>
+    </tr>
+    <tr>
+        <td>[tidy](#tidy)</td>
+        <td>[titleize](#titleize-array-ignore)</td>
+        <td>[toAscii](#toascii)</td>
+    </tr>
+    <tr>
+        <td>[toBoolean](#toboolean)</td>
+        <td>[toLowerCase](#tolowercase)</td>
+        <td>[toSpaces](#tospaces-tablength--4-)</td>
+    </tr>
+    <tr>
+        <td>[toTabs](#totabs-tablength--4-)</td>
+        <td>[toTitleCase](#totitlecase)</td>
+        <td>[toUpperCase](#touppercase)</td>
+    </tr>
+    <tr>
+        <td>[trim](#trim-string-chars)</td>
+        <td>[trimLeft](#trimleft-string-chars)</td>
+        <td>[trimRight](#trimright-string-chars)</td>
+    </tr>
+    <tr>
+        <td>[truncate](#truncateint-length--string-substring---)</td>
+        <td>[underscored](#underscored)</td>
+        <td>[upperCamelize](#uppercamelize)</td>
+    </tr>
+    <tr>
+        <td>[upperCaseFirst](#uppercasefirst)</td>
+    </tr>
+</table>
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
