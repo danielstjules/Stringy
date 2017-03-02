@@ -1,3 +1,14 @@
+### 2.4.0 (2017-03-02)
+
+* Add startsWithAny
+* Add endsWithAny
+* Add stripWhitespace
+* Fix error handling for unsupported encodings
+* Change private methods to protected for extending class
+* Fix safeTruncate for strings without spaces
+* Additional char support in toAscii, e.g. full width chars and wide
+  non-breaking space
+
 ### 2.3.2 (2016-05-02)
 
 * Improve support without mbstring
