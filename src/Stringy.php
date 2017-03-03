@@ -1424,15 +1424,21 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
      * replaced with their closest ASCII counterparts, and the rest are removed
-     * unless instructed otherwise.
+     * unless instructed otherwise. The locale can be supplied in any of the
+     * following formats: en, en_GB, or en-GB.
      *
+     * @param  string  $locale            Locale of the source string
      * @param  bool    $removeUnsupported Whether or not to remove the
      *                                    unsupported characters
      * @return static Object whose $str contains only ASCII characters
      */
-    public function toAscii($removeUnsupported = true)
+    public function toAscii($locale = 'en', $removeUnsupported = true)
     {
         $str = $this->str;
+
+        foreach ($this->localeSpecificCharsArray($locale) as $key => $value) {
+            $str = str_replace($value, $key, $str);
+        }
 
         foreach ($this->charsArray() as $key => $value) {
             $str = str_replace($value, $key, $str);
@@ -1686,7 +1692,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                             'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
                             'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
                             'ᾰ', 'ᾱ', 'ᾲ', 'ᾳ', 'ᾴ', 'ᾶ', 'ᾷ', 'а', 'أ', 'အ',
-                            'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ'),
+                            'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ', 'ä'),
             'b'    => array('б', 'β', 'Ъ', 'Ь', 'ب', 'ဗ', 'ბ', 'ｂ'),
             'c'    => array('ç', 'ć', 'č', 'ĉ', 'ċ', 'ｃ'),
             'd'    => array('ď', 'ð', 'đ', 'ƌ', 'ȡ', 'ɖ', 'ɗ', 'ᵭ', 'ᶁ', 'ᶑ',
@@ -1715,7 +1721,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'o'    => array('ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ',
                             'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ', 'ø', 'ō', 'ő',
                             'ŏ', 'ο', 'ὀ', 'ὁ', 'ὂ', 'ὃ', 'ὄ', 'ὅ', 'ὸ', 'ό',
-                            'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ'),
+                            'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ',
+                            'ö'),
             'p'    => array('п', 'π', 'ပ', 'პ', 'پ', 'ｐ'),
             'q'    => array('ყ', 'ｑ'),
             'r'    => array('ŕ', 'ř', 'ŗ', 'р', 'ρ', 'ر', 'რ', 'ｒ'),
@@ -1726,7 +1733,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'u'    => array('ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ',
                             'ự', 'û', 'ū', 'ů', 'ű', 'ŭ', 'ų', 'µ', 'у', 'ဉ',
                             'ု', 'ူ', 'ǔ', 'ǖ', 'ǘ', 'ǚ', 'ǜ', 'უ', 'उ', 'ｕ',
-                            'ў'),
+                            'ў', 'ü'),
             'v'    => array('в', 'ვ', 'ϐ', 'ｖ'),
             'w'    => array('ŵ', 'ω', 'ώ', 'ဝ', 'ွ', 'ｗ'),
             'x'    => array('χ', 'ξ', 'ｘ'),
@@ -1734,7 +1741,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                             'ϋ', 'ύ', 'ΰ', 'ي', 'ယ', 'ｙ'),
             'z'    => array('ź', 'ž', 'ż', 'з', 'ζ', 'ز', 'ဇ', 'ზ', 'ｚ'),
             'aa'   => array('ع', 'आ', 'آ'),
-            'ae'   => array('ä', 'æ', 'ǽ'),
+            'ae'   => array('æ', 'ǽ'),
             'ai'   => array('ऐ'),
             'at'   => array('@'),
             'ch'   => array('ч', 'ჩ', 'ჭ', 'چ'),
@@ -1747,7 +1754,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'kh'   => array('х', 'خ', 'ხ'),
             'lj'   => array('љ'),
             'nj'   => array('њ'),
-            'oe'   => array('ö', 'œ', 'ؤ'),
+            'oe'   => array('œ', 'ؤ'),
             'oi'   => array('ऑ'),
             'oii'  => array('ऒ'),
             'ps'   => array('ψ'),
@@ -1757,7 +1764,6 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'sx'   => array('ŝ'),
             'th'   => array('þ', 'ϑ', 'ث', 'ذ', 'ظ'),
             'ts'   => array('ц', 'ც', 'წ'),
-            'ue'   => array('ü'),
             'uu'   => array('ऊ'),
             'ya'   => array('я'),
             'yu'   => array('ю'),
@@ -1767,7 +1773,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                             'Ặ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Å', 'Ā', 'Ą',
                             'Α', 'Ά', 'Ἀ', 'Ἁ', 'Ἂ', 'Ἃ', 'Ἄ', 'Ἅ', 'Ἆ', 'Ἇ',
                             'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ', 'Ᾱ',
-                            'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ'),
+                            'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ', 'Ä'),
             'B'    => array('Б', 'Β', 'ब', 'Ｂ'),
             'C'    => array('Ç','Ć', 'Č', 'Ĉ', 'Ċ', 'Ｃ'),
             'D'    => array('Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ',
@@ -1791,7 +1797,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'O'    => array('Ó', 'Ò', 'Ỏ', 'Õ', 'Ọ', 'Ô', 'Ố', 'Ồ', 'Ổ', 'Ỗ',
                             'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ', 'Ø', 'Ō', 'Ő',
                             'Ŏ', 'Ο', 'Ό', 'Ὀ', 'Ὁ', 'Ὂ', 'Ὃ', 'Ὄ', 'Ὅ', 'Ὸ',
-                            'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ'),
+                            'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ', 'Ö'),
             'P'    => array('П', 'Π', 'Ｐ'),
             'Q'    => array('Ｑ'),
             'R'    => array('Ř', 'Ŕ', 'Р', 'Ρ', 'Ŗ', 'Ｒ'),
@@ -1799,14 +1805,14 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'T'    => array('Ť', 'Ţ', 'Ŧ', 'Ț', 'Т', 'Τ', 'Ｔ'),
             'U'    => array('Ú', 'Ù', 'Ủ', 'Ũ', 'Ụ', 'Ư', 'Ứ', 'Ừ', 'Ử', 'Ữ',
                             'Ự', 'Û', 'Ū', 'Ů', 'Ű', 'Ŭ', 'Ų', 'У', 'Ǔ', 'Ǖ',
-                            'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў'),
+                            'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў', 'Ü'),
             'V'    => array('В', 'Ｖ'),
             'W'    => array('Ω', 'Ώ', 'Ŵ', 'Ｗ'),
             'X'    => array('Χ', 'Ξ', 'Ｘ'),
             'Y'    => array('Ý', 'Ỳ', 'Ỷ', 'Ỹ', 'Ỵ', 'Ÿ', 'Ῠ', 'Ῡ', 'Ὺ', 'Ύ',
                             'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'),
             'Z'    => array('Ź', 'Ž', 'Ż', 'З', 'Ζ', 'Ｚ'),
-            'AE'   => array('Ä', 'Æ', 'Ǽ'),
+            'AE'   => array('Æ', 'Ǽ'),
             'CH'   => array('Ч'),
             'DJ'   => array('Ђ'),
             'DZ'   => array('Џ'),
@@ -1817,14 +1823,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'KH'   => array('Х'),
             'LJ'   => array('Љ'),
             'NJ'   => array('Њ'),
-            'OE'   => array('Ö', 'Œ'),
+            'OE'   => array('Œ'),
             'PS'   => array('Ψ'),
             'SH'   => array('Ш'),
             'SHCH' => array('Щ'),
             'SS'   => array('ẞ'),
             'TH'   => array('Þ'),
             'TS'   => array('Ц'),
-            'UE'   => array('Ü'),
             'YA'   => array('Я'),
             'YU'   => array('Ю'),
             'ZH'   => array('Ж'),
@@ -1835,6 +1840,42 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                             "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80",
                             "\xEF\xBE\xA0"),
         );
+    }
+
+    /**
+     * Returns the locale-specific replacements for the toAscii() method.
+     *
+     * @param  string $locale Locale of the source string
+     * @return array  An array of replacements.
+     */
+    protected function localeSpecificCharsArray($locale = 'en')
+    {
+        $split = preg_split('/[-_]/', $locale);
+        $locale = strtolower($split[0]);
+
+        static $charsArray = array();
+        if (isset($charsArray[$locale])) {
+            return $charsArray[$locale];
+        }
+
+        $localeSpecific = array(
+            'de' => array(
+                'ae' => array('ä'),
+                'oe' => array('ö'),
+                'ue' => array('ü'),
+                'AE' => array('Ä'),
+                'OE' => array('Ö'),
+                'UE' => array('Ü')
+            )
+        );
+
+        if (isset($localeSpecific[$locale])) {
+            $charsArray[$locale] = $localeSpecific[$locale];
+        } else {
+            $charsArray[$locale] = array();
+        }
+
+        return $charsArray[$locale];
     }
 
     /**

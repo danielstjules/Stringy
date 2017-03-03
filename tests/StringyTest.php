@@ -653,10 +653,11 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider toAsciiProvider()
      */
-    public function testToAscii($expected, $str, $removeUnsupported = true)
+    public function testToAscii($expected, $str, $locale = 'en',
+                                $removeUnsupported = true)
     {
         $stringy = S::create($str);
-        $result = $stringy->toAscii($removeUnsupported);
+        $result = $stringy->toAscii($locale, $removeUnsupported);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
@@ -681,7 +682,10 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             array(' ', ' '), // medium mathematical space (U+205F)
             array(' ', '　'), // ideographic space (U+3000)
             array('', '𐍉'), // some uncommon, unsupported character (U+10349)
-            array('𐍉', '𐍉', false),
+            array('𐍉', '𐍉', 'en', false),
+            array('aouAOU', 'äöüÄÖÜ'),
+            array('aeoeueAEOEUE', 'äöüÄÖÜ', 'de'),
+            array('aeoeueAEOEUE', 'äöüÄÖÜ', 'de_DE')
         );
     }
 

@@ -916,14 +916,18 @@ s('i like to watch television')->titleize($ignore);
 // 'I Like to Watch Television'
 ```
 
-##### toAscii()
+##### toAscii([, string $locale = 'en' [, bool $removeUnsupported = true ]])
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed
-unless instructed otherwise.
+unless instructed otherwise. The locale of the source string can be supplied
+for locale-specific transliteration. The locale can be supplied in any of the
+following formats: en, en_GB, or en-GB.
 
 ```php
 s('fòôbàř')->toAscii(); // 'foobar'
+s('äöü')->toAscii(); // 'aou'
+s('äöü')->toAscii('de'); // 'aeoeue'
 ```
 
 ##### toBoolean()
