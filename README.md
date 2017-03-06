@@ -1,12 +1,15 @@
 ![Stringy](http://danielstjules.com/github/stringy-logo.png)
 
 A PHP string manipulation library with multibyte support. Compatible with PHP
-5.4+, PHP 7, and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
-for older documentation.
+5.4+, PHP 7, and HHVM.
 
 ``` php
 s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ```
+
+Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x) or
+[2.x branch](https://github.com/danielstjules/Stringy/tree/2.x) for older
+documentation.
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
 [![Total Downloads](https://poser.pugx.org/danielstjules/stringy/downloads)](https://packagist.org/packages/danielstjules/stringy)
