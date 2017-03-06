@@ -45,7 +45,7 @@ documentation.
     </tr>
     <tr>
         <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[endsWithAny](#endsWithAnystring-substrings--boolean-casesensitive--true-)</td>
+        <td>[endsWithAny](#endswithanystring-substrings--boolean-casesensitive--true-)</td>
         <td>[ensureLeft](#ensureleftstring-substring)</td>
         <td>[ensureRight](#ensurerightstring-substring)</td>
     </tr>
@@ -77,7 +77,7 @@ documentation.
         <td>[isLowerCase](#islowercase)</td>
         <td>[isSerialized](#isserialized)</td>
         <td>[isUpperCase](#isuppercase)</td>
-        <td>[last](#last)</td>
+        <td>[last](#lastint-n)</td>
     </tr>
     <tr>
         <td>[length](#length)</td>
@@ -100,7 +100,7 @@ documentation.
     <tr>
         <td>[removeLeft](#removeleftstring-substring)</td>
         <td>[removeRight](#removerightstring-substring)</td>
-        <td>[repeat](#repeatmultiplier)</td>
+        <td>[repeat](#repeatint-multiplier)</td>
         <td>[replace](#replacestring-search-string-replacement)</td>
     </tr>
     <tr>
@@ -110,10 +110,10 @@ documentation.
         <td>[slugify](#slugify-string-replacement----)</td>
     </tr>
     <tr>
-        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
         <td>[slice](#sliceint-start--int-end-)</td>
         <td>[split](#splitstring-pattern--int-limit-)</td>
+        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
     </tr>
     <tr>
         <td>[stripWhitespace](#stripwhitespace)</td>
@@ -821,26 +821,6 @@ is also converted to lowercase.
 s('Using strings like fòô bàř')->slugify(); // 'using-strings-like-foo-bar'
 ```
 
-##### startsWith(string $substring [, boolean $caseSensitive = true ])
-
-Returns true if the string begins with $substring, false otherwise.
-By default, the comparison is case-sensitive, but can be made insensitive
-by setting $caseSensitive to false.
-
-```php
-s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
-```
-
-##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
-
-Returns true if the string begins with any of $substrings, false
-otherwise. By default the comparison is case-sensitive, but can be made
-insensitive by setting $caseSensitive to false.
-
-```php
-s('FÒÔbàřbaz')->startsWith(['fòô', 'bàř'], false); // true
-```
-
 ##### slice(int $start [, int $end ])
 
 Returns the substring beginning at $start, and up to, but not including
@@ -860,6 +840,26 @@ results.
 
 ```php
 s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+```
+
+##### startsWith(string $substring [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
+```
+
+##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with any of $substrings, false
+otherwise. By default the comparison is case-sensitive, but can be made
+insensitive by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWith(['fòô', 'bàř'], false); // true
 ```
 
 ##### stripWhitespace()

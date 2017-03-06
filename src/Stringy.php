@@ -219,9 +219,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
+     * @param  string[]  $needles       Substrings to look for
+     * @param  bool      $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool      Whether or not $str contains $needle
      */
     public function containsAll($needles, $caseSensitive = true)
     {
@@ -243,9 +243,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
+     * @param  string[] $needles       Substrings to look for
+     * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool     Whether or not $str contains $needle
      */
     public function containsAny($needles, $caseSensitive = true)
     {
@@ -1180,7 +1180,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * by setting $caseSensitive to false.
      *
      * @param  string $substring     The substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  bool   $caseSensitive Whether or not to enforce
+     *                               case-sensitivity
      * @return bool   Whether or not $str starts with $substring
      */
     public function startsWith($substring, $caseSensitive = true)
