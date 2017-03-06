@@ -143,6 +143,6 @@ class StaticStringy
 
         $stringy = Stringy::create($str, $encoding);
 
-        return call_user_func_array(array($stringy, $name), $args);
+        return call_user_func_array([$stringy, $name], $args);
     }
 }
