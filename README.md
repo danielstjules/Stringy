@@ -124,7 +124,7 @@ documentation.
     <tr>
         <td>[tidy](#tidy)</td>
         <td>[titleize](#titleize-array-ignore)</td>
-        <td>[toAscii](#toascii-string-locale--en--bool-removeunsupported--true-)</td>
+        <td>[toAscii](#toascii-string-language--en--bool-removeunsupported--true-)</td>
         <td>[toBoolean](#toboolean)</td>
     </tr>
     <tr>
@@ -919,7 +919,7 @@ s('i like to watch television')->titleize($ignore);
 // 'I Like to Watch Television'
 ```
 
-##### toAscii([, string $locale = 'en' [, bool $removeUnsupported = true ]])
+##### toAscii([, string $language = 'en' [, bool $removeUnsupported = true ]])
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed
