@@ -1,3 +1,11 @@
+### 3.0.0 (2017-03-08)
+
+* Breaking change: added $language parameter to toAscii, before
+  $removeUnsupported
+* Breaking change: dropped PHP 5.3 support
+* Breaking change: any StaticStringy methods that previously returned instances
+  of Stringy now return strings
+
 ### 2.4.0 (2017-03-02)
 
 * Add startsWithAny

@@ -179,7 +179,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~2.4"
+    "danielstjules/stringy": "~3.0"
 }
 ```
 
