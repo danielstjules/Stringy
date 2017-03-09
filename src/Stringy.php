@@ -1425,20 +1425,23 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
      * replaced with their closest ASCII counterparts, and the rest are removed
-     * unless instructed otherwise. The locale can be supplied in any of the
-     * following formats: en, en_GB, or en-GB.
+     * by default. The language or locale of the source string can be supplied
+     * for language-specific transliteration in any of the following formats:
+     * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+     * to "aeoeue" rather than "aou" as in other languages.
      *
-     * @param  string  $locale            Locale of the source string
+     * @param  string  $language          Language of the source string
      * @param  bool    $removeUnsupported Whether or not to remove the
      *                                    unsupported characters
      * @return static Object whose $str contains only ASCII characters
      */
-    public function toAscii($locale = 'en', $removeUnsupported = true)
+    public function toAscii($language = 'en', $removeUnsupported = true)
     {
         $str = $this->str;
 
-        foreach ($this->localeSpecificCharsArray($locale) as $key => $value) {
-            $str = str_replace($value, $key, $str);
+        $langSpecific = $this->langSpecificCharsArray($language);
+        if (!empty($langSpecific)) {
+            $str = str_replace($langSpecific[0], $langSpecific[1], $str);
         }
 
         foreach ($this->charsArray() as $key => $value) {
@@ -1814,26 +1817,26 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
                         'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'],
             'Z'     => ['Ź', 'Ž', 'Ż', 'З', 'Ζ', 'Ｚ'],
             'AE'    => ['Æ', 'Ǽ'],
-            'CH'    => ['Ч'],
-            'DJ'    => ['Ђ'],
-            'DZ'    => ['Џ'],
-            'GX'    => ['Ĝ'],
-            'HX'    => ['Ĥ'],
-            'IJ'    => ['Ĳ'],
-            'JX'    => ['Ĵ'],
-            'KH'    => ['Х'],
-            'LJ'    => ['Љ'],
-            'NJ'    => ['Њ'],
-            'OE'    => ['Œ'],
-            'PS'    => ['Ψ'],
-            'SH'    => ['Ш'],
-            'SHCH'  => ['Щ'],
-            'SS'    => ['ẞ'],
-            'TH'    => ['Þ'],
-            'TS'    => ['Ц'],
-            'YA'    => ['Я'],
-            'YU'    => ['Ю'],
-            'ZH'    => ['Ж'],
+            'Ch'    => ['Ч'],
+            'Dj'    => ['Ђ'],
+            'Dz'    => ['Џ'],
+            'Gx'    => ['Ĝ'],
+            'Hx'    => ['Ĥ'],
+            'Ij'    => ['Ĳ'],
+            'Jx'    => ['Ĵ'],
+            'Kh'    => ['Х'],
+            'Lj'    => ['Љ'],
+            'Nj'    => ['Њ'],
+            'Oe'    => ['Œ'],
+            'Ps'    => ['Ψ'],
+            'Sh'    => ['Ш'],
+            'Shch'  => ['Щ'],
+            'Ss'    => ['ẞ'],
+            'Th'    => ['Þ'],
+            'Ts'    => ['Ц'],
+            'Ya'    => ['Я'],
+            'Yu'    => ['Ю'],
+            'Zh'    => ['Ж'],
             ' '     => ["\xC2\xA0", "\xE2\x80\x80", "\xE2\x80\x81",
                         "\xE2\x80\x82", "\xE2\x80\x83", "\xE2\x80\x84",
                         "\xE2\x80\x85", "\xE2\x80\x86", "\xE2\x80\x87",
@@ -1844,39 +1847,37 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Returns the locale-specific replacements for the toAscii() method.
+     * Returns language-specific replacements for the toAscii() method.
+     * For example, German will map 'ä' to 'ae', while other languages
+     * will simply return 'a'.
      *
-     * @param  string $locale Locale of the source string
-     * @return array  An array of replacements.
+     * param  string $language Language of the source string
+     * @return array An array of replacements.
      */
-    protected function localeSpecificCharsArray($locale = 'en')
+    protected static function langSpecificCharsArray($language = 'en')
     {
-        $split = preg_split('/[-_]/', $locale);
-        $locale = strtolower($split[0]);
+        $split = preg_split('/[-_]/', $language);
+        $language = strtolower($split[0]);
 
         static $charsArray = [];
-        if (isset($charsArray[$locale])) {
-            return $charsArray[$locale];
+        if (isset($charsArray[$language])) {
+            return $charsArray[$language];
         }
 
-        $localeSpecific = [
+        $languageSpecific = [
             'de' => [
-                'ae' => ['ä'],
-                'oe' => ['ö'],
-                'ue' => ['ü'],
-                'AE' => ['Ä'],
-                'OE' => ['Ö'],
-                'UE' => ['Ü']
+                ['ä',  'ö',  'ü',  'Ä',  'Ö',  'Ü' ],
+                ['ae', 'oe', 'ue', 'AE', 'OE', 'UE'],
             ]
         ];
 
-        if (isset($localeSpecific[$locale])) {
-            $charsArray[$locale] = $localeSpecific[$locale];
+        if (isset($languageSpecific[$language])) {
+            $charsArray[$language] = $languageSpecific[$language];
         } else {
-            $charsArray[$locale] = [];
+            $charsArray[$language] = [];
         }
 
-        return $charsArray[$locale];
+        return $charsArray[$language];
     }
 
     /**

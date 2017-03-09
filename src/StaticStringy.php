@@ -75,7 +75,7 @@ use ReflectionMethod;
  * @method static string swapCase(string $str, string $encoding = null)
  * @method static string tidy(string $str, string $encoding = null)
  * @method static string titleize(string $str, string $encoding = null)
- * @method static string toAscii(string $str, string $locale = 'en', bool $removeUnsupported = true, string $encoding = null)
+ * @method static string toAscii(string $str, string $language = 'en', bool $removeUnsupported = true, string $encoding = null)
  * @method static bool toBoolean(string $str, string $encoding = null)
  * @method static string toLowerCase(string $str, string $encoding = null)
  * @method static string toSpaces(string $str, int $tabLength = 4, string $encoding = null)

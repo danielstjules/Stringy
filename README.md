@@ -923,9 +923,10 @@ s('i like to watch television')->titleize($ignore);
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed
-unless instructed otherwise. The locale of the source string can be supplied
-for locale-specific transliteration. The locale can be supplied in any of the
-following formats: en, en_GB, or en-GB.
+by default. The language or locale of the source string can be supplied
+for language-specific transliteration in any of the following formats:
+en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+to "aeoeue" rather than "aou" as in other languages.
 
 ```php
 s('fòôbàř')->toAscii(); // 'foobar'
