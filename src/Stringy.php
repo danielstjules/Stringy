@@ -174,7 +174,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function chars()
     {
-        $chars = array();
+        $chars = [];
         for ($i = 0, $l = $this->length(); $i < $l; $i++) {
             $chars[] = $this->at($i)->str;
         }
@@ -219,9 +219,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
+     * @param  string[]  $needles       Substrings to look for
+     * @param  bool      $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool      Whether or not $str contains $needle
      */
     public function containsAll($needles, $caseSensitive = true)
     {
@@ -243,9 +243,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * default the comparison is case-sensitive, but can be made insensitive by
      * setting $caseSensitive to false.
      *
-     * @param  array  $needles       Substrings to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
-     * @return bool   Whether or not $str contains $needle
+     * @param  string[] $needles       Substrings to look for
+     * @param  bool     $caseSensitive Whether or not to enforce case-sensitivity
+     * @return bool     Whether or not $str contains $needle
      */
     public function containsAny($needles, $caseSensitive = true)
     {
@@ -516,7 +516,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function humanize()
     {
-        $str = str_replace(array('_id', '_'), array('', ' '), $this->str);
+        $str = str_replace(['_id', '_'], ['', ' '], $this->str);
 
         return static::create($str, $this->encoding)->trim()->upperCaseFirst();
     }
@@ -925,7 +925,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function pad($length, $padStr = ' ', $padType = 'right')
     {
-        if (!in_array($padType, array('left', 'right', 'both'))) {
+        if (!in_array($padType, ['left', 'right', 'both'])) {
             throw new InvalidArgumentException('Pad expects $padType ' .
                 "to be one of 'left', 'right' or 'both'");
         }
@@ -1180,7 +1180,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * by setting $caseSensitive to false.
      *
      * @param  string $substring     The substring to look for
-     * @param  bool   $caseSensitive Whether or not to enforce case-sensitivity
+     * @param  bool   $caseSensitive Whether or not to enforce
+     *                               case-sensitivity
      * @return bool   Whether or not $str starts with $substring
      */
     public function startsWith($substring, $caseSensitive = true)
@@ -1259,13 +1260,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function split($pattern, $limit = null)
     {
         if ($limit === 0) {
-            return array();
+            return [];
         }
 
         // mb_split errors when supplied an empty pattern in < PHP 5.4.13
         // and HHVM < 3.8
         if ($pattern === '') {
-            return array(static::create($this->str, $this->encoding));
+            return [static::create($this->str, $this->encoding)];
         }
 
         $regexEncoding = $this->regexEncoding();
@@ -1337,7 +1338,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function surround($substring)
     {
-        $str = implode('', array($substring, $this->str, $substring));
+        $str = implode('', [$substring, $this->str, $substring]);
 
         return static::create($str, $this->encoding);
     }
@@ -1376,17 +1377,17 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function tidy()
     {
-        $str = preg_replace(array(
+        $str = preg_replace([
             '/\x{2026}/u',
             '/[\x{201C}\x{201D}]/u',
             '/[\x{2018}\x{2019}]/u',
             '/[\x{2013}\x{2014}]/u',
-        ), array(
+        ], [
             '...',
             '"',
             "'",
             '-',
-        ), $this->str);
+        ], $this->str);
 
         return static::create($str, $this->encoding);
     }
@@ -1424,15 +1425,24 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Returns an ASCII version of the string. A set of non-ASCII characters are
      * replaced with their closest ASCII counterparts, and the rest are removed
-     * unless instructed otherwise.
+     * by default. The language or locale of the source string can be supplied
+     * for language-specific transliteration in any of the following formats:
+     * en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+     * to "aeoeue" rather than "aou" as in other languages.
      *
+     * @param  string  $language          Language of the source string
      * @param  bool    $removeUnsupported Whether or not to remove the
      *                                    unsupported characters
      * @return static Object whose $str contains only ASCII characters
      */
-    public function toAscii($removeUnsupported = true)
+    public function toAscii($language = 'en', $removeUnsupported = true)
     {
         $str = $this->str;
+
+        $langSpecific = $this->langSpecificCharsArray($language);
+        if (!empty($langSpecific)) {
+            $str = str_replace($langSpecific[0], $langSpecific[1], $str);
+        }
 
         foreach ($this->charsArray() as $key => $value) {
             $str = str_replace($value, $key, $str);
@@ -1459,7 +1469,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function toBoolean()
     {
         $key = $this->toLowerCase()->str;
-        $map = array(
+        $map = [
             'true'  => true,
             '1'     => true,
             'on'    => true,
@@ -1468,7 +1478,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             '0'     => false,
             'off'   => false,
             'no'    => false
-        );
+        ];
 
         if (array_key_exists($key, $map)) {
             return $map[$key];
@@ -1670,171 +1680,204 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         static $charsArray;
         if (isset($charsArray)) return $charsArray;
 
-        return $charsArray = array(
-            '0'    => array('°', '₀', '۰', '０'),
-            '1'    => array('¹', '₁', '۱', '１'),
-            '2'    => array('²', '₂', '۲', '２'),
-            '3'    => array('³', '₃', '۳', '３'),
-            '4'    => array('⁴', '₄', '۴', '٤', '４'),
-            '5'    => array('⁵', '₅', '۵', '٥', '５'),
-            '6'    => array('⁶', '₆', '۶', '٦', '６'),
-            '7'    => array('⁷', '₇', '۷', '７'),
-            '8'    => array('⁸', '₈', '۸', '８'),
-            '9'    => array('⁹', '₉', '۹', '９'),
-            'a'    => array('à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ',
-                            'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ā', 'ą', 'å',
-                            'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
-                            'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
-                            'ᾰ', 'ᾱ', 'ᾲ', 'ᾳ', 'ᾴ', 'ᾶ', 'ᾷ', 'а', 'أ', 'အ',
-                            'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ'),
-            'b'    => array('б', 'β', 'Ъ', 'Ь', 'ب', 'ဗ', 'ბ', 'ｂ'),
-            'c'    => array('ç', 'ć', 'č', 'ĉ', 'ċ', 'ｃ'),
-            'd'    => array('ď', 'ð', 'đ', 'ƌ', 'ȡ', 'ɖ', 'ɗ', 'ᵭ', 'ᶁ', 'ᶑ',
-                            'д', 'δ', 'د', 'ض', 'ဍ', 'ဒ', 'დ', 'ｄ'),
-            'e'    => array('é', 'è', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ế', 'ề', 'ể', 'ễ',
-                            'ệ', 'ë', 'ē', 'ę', 'ě', 'ĕ', 'ė', 'ε', 'έ', 'ἐ',
-                            'ἑ', 'ἒ', 'ἓ', 'ἔ', 'ἕ', 'ὲ', 'έ', 'е', 'ё', 'э',
-                            'є', 'ə', 'ဧ', 'ေ', 'ဲ', 'ე', 'ए', 'إ', 'ئ', 'ｅ'),
-            'f'    => array('ф', 'φ', 'ف', 'ƒ', 'ფ', 'ｆ'),
-            'g'    => array('ĝ', 'ğ', 'ġ', 'ģ', 'г', 'ґ', 'γ', 'ဂ', 'გ', 'گ',
-                            'ｇ'),
-            'h'    => array('ĥ', 'ħ', 'η', 'ή', 'ح', 'ه', 'ဟ', 'ှ', 'ჰ', 'ｈ'),
-            'i'    => array('í', 'ì', 'ỉ', 'ĩ', 'ị', 'î', 'ï', 'ī', 'ĭ', 'į',
-                            'ı', 'ι', 'ί', 'ϊ', 'ΐ', 'ἰ', 'ἱ', 'ἲ', 'ἳ', 'ἴ',
-                            'ἵ', 'ἶ', 'ἷ', 'ὶ', 'ί', 'ῐ', 'ῑ', 'ῒ', 'ΐ', 'ῖ',
-                            'ῗ', 'і', 'ї', 'и', 'ဣ', 'ိ', 'ီ', 'ည်', 'ǐ', 'ი',
-                            'इ', 'ی', 'ｉ'),
-            'j'    => array('ĵ', 'ј', 'Ј', 'ჯ', 'ج', 'ｊ'),
-            'k'    => array('ķ', 'ĸ', 'к', 'κ', 'Ķ', 'ق', 'ك', 'က', 'კ', 'ქ',
-                            'ک', 'ｋ'),
-            'l'    => array('ł', 'ľ', 'ĺ', 'ļ', 'ŀ', 'л', 'λ', 'ل', 'လ', 'ლ',
-                            'ｌ'),
-            'm'    => array('м', 'μ', 'م', 'မ', 'მ', 'ｍ'),
-            'n'    => array('ñ', 'ń', 'ň', 'ņ', 'ŉ', 'ŋ', 'ν', 'н', 'ن', 'န',
-                            'ნ', 'ｎ'),
-            'o'    => array('ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ',
-                            'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ', 'ø', 'ō', 'ő',
-                            'ŏ', 'ο', 'ὀ', 'ὁ', 'ὂ', 'ὃ', 'ὄ', 'ὅ', 'ὸ', 'ό',
-                            'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ'),
-            'p'    => array('п', 'π', 'ပ', 'პ', 'پ', 'ｐ'),
-            'q'    => array('ყ', 'ｑ'),
-            'r'    => array('ŕ', 'ř', 'ŗ', 'р', 'ρ', 'ر', 'რ', 'ｒ'),
-            's'    => array('ś', 'š', 'ş', 'с', 'σ', 'ș', 'ς', 'س', 'ص', 'စ',
-                            'ſ', 'ს', 'ｓ'),
-            't'    => array('ť', 'ţ', 'т', 'τ', 'ț', 'ت', 'ط', 'ဋ', 'တ', 'ŧ',
-                            'თ', 'ტ', 'ｔ'),
-            'u'    => array('ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ',
-                            'ự', 'û', 'ū', 'ů', 'ű', 'ŭ', 'ų', 'µ', 'у', 'ဉ',
-                            'ု', 'ူ', 'ǔ', 'ǖ', 'ǘ', 'ǚ', 'ǜ', 'უ', 'उ', 'ｕ',
-                            'ў'),
-            'v'    => array('в', 'ვ', 'ϐ', 'ｖ'),
-            'w'    => array('ŵ', 'ω', 'ώ', 'ဝ', 'ွ', 'ｗ'),
-            'x'    => array('χ', 'ξ', 'ｘ'),
-            'y'    => array('ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ', 'ÿ', 'ŷ', 'й', 'ы', 'υ',
-                            'ϋ', 'ύ', 'ΰ', 'ي', 'ယ', 'ｙ'),
-            'z'    => array('ź', 'ž', 'ż', 'з', 'ζ', 'ز', 'ဇ', 'ზ', 'ｚ'),
-            'aa'   => array('ع', 'आ', 'آ'),
-            'ae'   => array('ä', 'æ', 'ǽ'),
-            'ai'   => array('ऐ'),
-            'at'   => array('@'),
-            'ch'   => array('ч', 'ჩ', 'ჭ', 'چ'),
-            'dj'   => array('ђ', 'đ'),
-            'dz'   => array('џ', 'ძ'),
-            'ei'   => array('ऍ'),
-            'gh'   => array('غ', 'ღ'),
-            'ii'   => array('ई'),
-            'ij'   => array('ĳ'),
-            'kh'   => array('х', 'خ', 'ხ'),
-            'lj'   => array('љ'),
-            'nj'   => array('њ'),
-            'oe'   => array('ö', 'œ', 'ؤ'),
-            'oi'   => array('ऑ'),
-            'oii'  => array('ऒ'),
-            'ps'   => array('ψ'),
-            'sh'   => array('ш', 'შ', 'ش'),
-            'shch' => array('щ'),
-            'ss'   => array('ß'),
-            'sx'   => array('ŝ'),
-            'th'   => array('þ', 'ϑ', 'ث', 'ذ', 'ظ'),
-            'ts'   => array('ц', 'ც', 'წ'),
-            'ue'   => array('ü'),
-            'uu'   => array('ऊ'),
-            'ya'   => array('я'),
-            'yu'   => array('ю'),
-            'zh'   => array('ж', 'ჟ', 'ژ'),
-            '(c)'  => array('©'),
-            'A'    => array('Á', 'À', 'Ả', 'Ã', 'Ạ', 'Ă', 'Ắ', 'Ằ', 'Ẳ', 'Ẵ',
-                            'Ặ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Å', 'Ā', 'Ą',
-                            'Α', 'Ά', 'Ἀ', 'Ἁ', 'Ἂ', 'Ἃ', 'Ἄ', 'Ἅ', 'Ἆ', 'Ἇ',
-                            'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ', 'Ᾱ',
-                            'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ'),
-            'B'    => array('Б', 'Β', 'ब', 'Ｂ'),
-            'C'    => array('Ç','Ć', 'Č', 'Ĉ', 'Ċ', 'Ｃ'),
-            'D'    => array('Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ',
-                            'Ｄ'),
-            'E'    => array('É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ',
-                            'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',
-                            'Ἑ', 'Ἒ', 'Ἓ', 'Ἔ', 'Ἕ', 'Έ', 'Ὲ', 'Е', 'Ё', 'Э',
-                            'Є', 'Ə', 'Ｅ'),
-            'F'    => array('Ф', 'Φ', 'Ｆ'),
-            'G'    => array('Ğ', 'Ġ', 'Ģ', 'Г', 'Ґ', 'Γ', 'Ｇ'),
-            'H'    => array('Η', 'Ή', 'Ħ', 'Ｈ'),
-            'I'    => array('Í', 'Ì', 'Ỉ', 'Ĩ', 'Ị', 'Î', 'Ï', 'Ī', 'Ĭ', 'Į',
-                            'İ', 'Ι', 'Ί', 'Ϊ', 'Ἰ', 'Ἱ', 'Ἳ', 'Ἴ', 'Ἵ', 'Ἶ',
-                            'Ἷ', 'Ῐ', 'Ῑ', 'Ὶ', 'Ί', 'И', 'І', 'Ї', 'Ǐ', 'ϒ',
-                            'Ｉ'),
-            'J'    => array('Ｊ'),
-            'K'    => array('К', 'Κ', 'Ｋ'),
-            'L'    => array('Ĺ', 'Ł', 'Л', 'Λ', 'Ļ', 'Ľ', 'Ŀ', 'ल', 'Ｌ'),
-            'M'    => array('М', 'Μ', 'Ｍ'),
-            'N'    => array('Ń', 'Ñ', 'Ň', 'Ņ', 'Ŋ', 'Н', 'Ν', 'Ｎ'),
-            'O'    => array('Ó', 'Ò', 'Ỏ', 'Õ', 'Ọ', 'Ô', 'Ố', 'Ồ', 'Ổ', 'Ỗ',
-                            'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ', 'Ø', 'Ō', 'Ő',
-                            'Ŏ', 'Ο', 'Ό', 'Ὀ', 'Ὁ', 'Ὂ', 'Ὃ', 'Ὄ', 'Ὅ', 'Ὸ',
-                            'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ'),
-            'P'    => array('П', 'Π', 'Ｐ'),
-            'Q'    => array('Ｑ'),
-            'R'    => array('Ř', 'Ŕ', 'Р', 'Ρ', 'Ŗ', 'Ｒ'),
-            'S'    => array('Ş', 'Ŝ', 'Ș', 'Š', 'Ś', 'С', 'Σ', 'Ｓ'),
-            'T'    => array('Ť', 'Ţ', 'Ŧ', 'Ț', 'Т', 'Τ', 'Ｔ'),
-            'U'    => array('Ú', 'Ù', 'Ủ', 'Ũ', 'Ụ', 'Ư', 'Ứ', 'Ừ', 'Ử', 'Ữ',
-                            'Ự', 'Û', 'Ū', 'Ů', 'Ű', 'Ŭ', 'Ų', 'У', 'Ǔ', 'Ǖ',
-                            'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў'),
-            'V'    => array('В', 'Ｖ'),
-            'W'    => array('Ω', 'Ώ', 'Ŵ', 'Ｗ'),
-            'X'    => array('Χ', 'Ξ', 'Ｘ'),
-            'Y'    => array('Ý', 'Ỳ', 'Ỷ', 'Ỹ', 'Ỵ', 'Ÿ', 'Ῠ', 'Ῡ', 'Ὺ', 'Ύ',
-                            'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'),
-            'Z'    => array('Ź', 'Ž', 'Ż', 'З', 'Ζ', 'Ｚ'),
-            'AE'   => array('Ä', 'Æ', 'Ǽ'),
-            'CH'   => array('Ч'),
-            'DJ'   => array('Ђ'),
-            'DZ'   => array('Џ'),
-            'GX'   => array('Ĝ'),
-            'HX'   => array('Ĥ'),
-            'IJ'   => array('Ĳ'),
-            'JX'   => array('Ĵ'),
-            'KH'   => array('Х'),
-            'LJ'   => array('Љ'),
-            'NJ'   => array('Њ'),
-            'OE'   => array('Ö', 'Œ'),
-            'PS'   => array('Ψ'),
-            'SH'   => array('Ш'),
-            'SHCH' => array('Щ'),
-            'SS'   => array('ẞ'),
-            'TH'   => array('Þ'),
-            'TS'   => array('Ц'),
-            'UE'   => array('Ü'),
-            'YA'   => array('Я'),
-            'YU'   => array('Ю'),
-            'ZH'   => array('Ж'),
-            ' '    => array("\xC2\xA0", "\xE2\x80\x80", "\xE2\x80\x81",
-                            "\xE2\x80\x82", "\xE2\x80\x83", "\xE2\x80\x84",
-                            "\xE2\x80\x85", "\xE2\x80\x86", "\xE2\x80\x87",
-                            "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
-                            "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80",
-                            "\xEF\xBE\xA0"),
-        );
+        return $charsArray = [
+            '0'     => ['°', '₀', '۰', '０'],
+            '1'     => ['¹', '₁', '۱', '１'],
+            '2'     => ['²', '₂', '۲', '２'],
+            '3'     => ['³', '₃', '۳', '３'],
+            '4'     => ['⁴', '₄', '۴', '٤', '４'],
+            '5'     => ['⁵', '₅', '۵', '٥', '５'],
+            '6'     => ['⁶', '₆', '۶', '٦', '６'],
+            '7'     => ['⁷', '₇', '۷', '７'],
+            '8'     => ['⁸', '₈', '۸', '８'],
+            '9'     => ['⁹', '₉', '۹', '９'],
+            'a'     => ['à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ',
+                        'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ā', 'ą', 'å',
+                        'α', 'ά', 'ἀ', 'ἁ', 'ἂ', 'ἃ', 'ἄ', 'ἅ', 'ἆ', 'ἇ',
+                        'ᾀ', 'ᾁ', 'ᾂ', 'ᾃ', 'ᾄ', 'ᾅ', 'ᾆ', 'ᾇ', 'ὰ', 'ά',
+                        'ᾰ', 'ᾱ', 'ᾲ', 'ᾳ', 'ᾴ', 'ᾶ', 'ᾷ', 'а', 'أ', 'အ',
+                        'ာ', 'ါ', 'ǻ', 'ǎ', 'ª', 'ა', 'अ', 'ا', 'ａ', 'ä'],
+            'b'     => ['б', 'β', 'Ъ', 'Ь', 'ب', 'ဗ', 'ბ', 'ｂ'],
+            'c'     => ['ç', 'ć', 'č', 'ĉ', 'ċ', 'ｃ'],
+            'd'     => ['ď', 'ð', 'đ', 'ƌ', 'ȡ', 'ɖ', 'ɗ', 'ᵭ', 'ᶁ', 'ᶑ',
+                        'д', 'δ', 'د', 'ض', 'ဍ', 'ဒ', 'დ', 'ｄ'],
+            'e'     => ['é', 'è', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ế', 'ề', 'ể', 'ễ',
+                        'ệ', 'ë', 'ē', 'ę', 'ě', 'ĕ', 'ė', 'ε', 'έ', 'ἐ',
+                        'ἑ', 'ἒ', 'ἓ', 'ἔ', 'ἕ', 'ὲ', 'έ', 'е', 'ё', 'э',
+                        'є', 'ə', 'ဧ', 'ေ', 'ဲ', 'ე', 'ए', 'إ', 'ئ', 'ｅ'],
+            'f'     => ['ф', 'φ', 'ف', 'ƒ', 'ფ', 'ｆ'],
+            'g'     => ['ĝ', 'ğ', 'ġ', 'ģ', 'г', 'ґ', 'γ', 'ဂ', 'გ', 'گ',
+                        'ｇ'],
+            'h'     => ['ĥ', 'ħ', 'η', 'ή', 'ح', 'ه', 'ဟ', 'ှ', 'ჰ', 'ｈ'],
+            'i'     => ['í', 'ì', 'ỉ', 'ĩ', 'ị', 'î', 'ï', 'ī', 'ĭ', 'į',
+                        'ı', 'ι', 'ί', 'ϊ', 'ΐ', 'ἰ', 'ἱ', 'ἲ', 'ἳ', 'ἴ',
+                        'ἵ', 'ἶ', 'ἷ', 'ὶ', 'ί', 'ῐ', 'ῑ', 'ῒ', 'ΐ', 'ῖ',
+                        'ῗ', 'і', 'ї', 'и', 'ဣ', 'ိ', 'ီ', 'ည်', 'ǐ', 'ი',
+                        'इ', 'ی', 'ｉ'],
+            'j'     => ['ĵ', 'ј', 'Ј', 'ჯ', 'ج', 'ｊ'],
+            'k'     => ['ķ', 'ĸ', 'к', 'κ', 'Ķ', 'ق', 'ك', 'က', 'კ', 'ქ',
+                        'ک', 'ｋ'],
+            'l'     => ['ł', 'ľ', 'ĺ', 'ļ', 'ŀ', 'л', 'λ', 'ل', 'လ', 'ლ',
+                        'ｌ'],
+            'm'     => ['м', 'μ', 'م', 'မ', 'მ', 'ｍ'],
+            'n'     => ['ñ', 'ń', 'ň', 'ņ', 'ŉ', 'ŋ', 'ν', 'н', 'ن', 'န',
+                        'ნ', 'ｎ'],
+            'o'     => ['ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ',
+                        'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ', 'ø', 'ō', 'ő',
+                        'ŏ', 'ο', 'ὀ', 'ὁ', 'ὂ', 'ὃ', 'ὄ', 'ὅ', 'ὸ', 'ό',
+                        'о', 'و', 'θ', 'ို', 'ǒ', 'ǿ', 'º', 'ო', 'ओ', 'ｏ',
+                        'ö'],
+            'p'     => ['п', 'π', 'ပ', 'პ', 'پ', 'ｐ'],
+            'q'     => ['ყ', 'ｑ'],
+            'r'     => ['ŕ', 'ř', 'ŗ', 'р', 'ρ', 'ر', 'რ', 'ｒ'],
+            's'     => ['ś', 'š', 'ş', 'с', 'σ', 'ș', 'ς', 'س', 'ص', 'စ',
+                        'ſ', 'ს', 'ｓ'],
+            't'     => ['ť', 'ţ', 'т', 'τ', 'ț', 'ت', 'ط', 'ဋ', 'တ', 'ŧ',
+                        'თ', 'ტ', 'ｔ'],
+            'u'     => ['ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ',
+                        'ự', 'û', 'ū', 'ů', 'ű', 'ŭ', 'ų', 'µ', 'у', 'ဉ',
+                        'ု', 'ူ', 'ǔ', 'ǖ', 'ǘ', 'ǚ', 'ǜ', 'უ', 'उ', 'ｕ',
+                        'ў', 'ü'],
+            'v'     => ['в', 'ვ', 'ϐ', 'ｖ'],
+            'w'     => ['ŵ', 'ω', 'ώ', 'ဝ', 'ွ', 'ｗ'],
+            'x'     => ['χ', 'ξ', 'ｘ'],
+            'y'     => ['ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ', 'ÿ', 'ŷ', 'й', 'ы', 'υ',
+                        'ϋ', 'ύ', 'ΰ', 'ي', 'ယ', 'ｙ'],
+            'z'     => ['ź', 'ž', 'ż', 'з', 'ζ', 'ز', 'ဇ', 'ზ', 'ｚ'],
+            'aa'    => ['ع', 'आ', 'آ'],
+            'ae'    => ['æ', 'ǽ'],
+            'ai'    => ['ऐ'],
+            'at'    => ['@'],
+            'ch'    => ['ч', 'ჩ', 'ჭ', 'چ'],
+            'dj'    => ['ђ', 'đ'],
+            'dz'    => ['џ', 'ძ'],
+            'ei'    => ['ऍ'],
+            'gh'    => ['غ', 'ღ'],
+            'ii'    => ['ई'],
+            'ij'    => ['ĳ'],
+            'kh'    => ['х', 'خ', 'ხ'],
+            'lj'    => ['љ'],
+            'nj'    => ['њ'],
+            'oe'    => ['œ', 'ؤ'],
+            'oi'    => ['ऑ'],
+            'oii'   => ['ऒ'],
+            'ps'    => ['ψ'],
+            'sh'    => ['ш', 'შ', 'ش'],
+            'shch'  => ['щ'],
+            'ss'    => ['ß'],
+            'sx'    => ['ŝ'],
+            'th'    => ['þ', 'ϑ', 'ث', 'ذ', 'ظ'],
+            'ts'    => ['ц', 'ც', 'წ'],
+            'uu'    => ['ऊ'],
+            'ya'    => ['я'],
+            'yu'    => ['ю'],
+            'zh'    => ['ж', 'ჟ', 'ژ'],
+            '(c)'   => ['©'],
+            'A'     => ['Á', 'À', 'Ả', 'Ã', 'Ạ', 'Ă', 'Ắ', 'Ằ', 'Ẳ', 'Ẵ',
+                        'Ặ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Å', 'Ā', 'Ą',
+                        'Α', 'Ά', 'Ἀ', 'Ἁ', 'Ἂ', 'Ἃ', 'Ἄ', 'Ἅ', 'Ἆ', 'Ἇ',
+                        'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ', 'Ᾱ',
+                        'Ὰ', 'Ά', 'ᾼ', 'А', 'Ǻ', 'Ǎ', 'Ａ', 'Ä'],
+            'B'     => ['Б', 'Β', 'ब', 'Ｂ'],
+            'C'     => ['Ç','Ć', 'Č', 'Ĉ', 'Ċ', 'Ｃ'],
+            'D'     => ['Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ',
+                        'Ｄ'],
+            'E'     => ['É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ',
+                        'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',
+                        'Ἑ', 'Ἒ', 'Ἓ', 'Ἔ', 'Ἕ', 'Έ', 'Ὲ', 'Е', 'Ё', 'Э',
+                        'Є', 'Ə', 'Ｅ'],
+            'F'     => ['Ф', 'Φ', 'Ｆ'],
+            'G'     => ['Ğ', 'Ġ', 'Ģ', 'Г', 'Ґ', 'Γ', 'Ｇ'],
+            'H'     => ['Η', 'Ή', 'Ħ', 'Ｈ'],
+            'I'     => ['Í', 'Ì', 'Ỉ', 'Ĩ', 'Ị', 'Î', 'Ï', 'Ī', 'Ĭ', 'Į',
+                        'İ', 'Ι', 'Ί', 'Ϊ', 'Ἰ', 'Ἱ', 'Ἳ', 'Ἴ', 'Ἵ', 'Ἶ',
+                        'Ἷ', 'Ῐ', 'Ῑ', 'Ὶ', 'Ί', 'И', 'І', 'Ї', 'Ǐ', 'ϒ',
+                        'Ｉ'],
+            'J'     => ['Ｊ'],
+            'K'     => ['К', 'Κ', 'Ｋ'],
+            'L'     => ['Ĺ', 'Ł', 'Л', 'Λ', 'Ļ', 'Ľ', 'Ŀ', 'ल', 'Ｌ'],
+            'M'     => ['М', 'Μ', 'Ｍ'],
+            'N'     => ['Ń', 'Ñ', 'Ň', 'Ņ', 'Ŋ', 'Н', 'Ν', 'Ｎ'],
+            'O'     => ['Ó', 'Ò', 'Ỏ', 'Õ', 'Ọ', 'Ô', 'Ố', 'Ồ', 'Ổ', 'Ỗ',
+                        'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ', 'Ø', 'Ō', 'Ő',
+                        'Ŏ', 'Ο', 'Ό', 'Ὀ', 'Ὁ', 'Ὂ', 'Ὃ', 'Ὄ', 'Ὅ', 'Ὸ',
+                        'Ό', 'О', 'Θ', 'Ө', 'Ǒ', 'Ǿ', 'Ｏ', 'Ö'],
+            'P'     => ['П', 'Π', 'Ｐ'],
+            'Q'     => ['Ｑ'],
+            'R'     => ['Ř', 'Ŕ', 'Р', 'Ρ', 'Ŗ', 'Ｒ'],
+            'S'     => ['Ş', 'Ŝ', 'Ș', 'Š', 'Ś', 'С', 'Σ', 'Ｓ'],
+            'T'     => ['Ť', 'Ţ', 'Ŧ', 'Ț', 'Т', 'Τ', 'Ｔ'],
+            'U'     => ['Ú', 'Ù', 'Ủ', 'Ũ', 'Ụ', 'Ư', 'Ứ', 'Ừ', 'Ử', 'Ữ',
+                        'Ự', 'Û', 'Ū', 'Ů', 'Ű', 'Ŭ', 'Ų', 'У', 'Ǔ', 'Ǖ',
+                        'Ǘ', 'Ǚ', 'Ǜ', 'Ｕ', 'Ў', 'Ü'],
+            'V'     => ['В', 'Ｖ'],
+            'W'     => ['Ω', 'Ώ', 'Ŵ', 'Ｗ'],
+            'X'     => ['Χ', 'Ξ', 'Ｘ'],
+            'Y'     => ['Ý', 'Ỳ', 'Ỷ', 'Ỹ', 'Ỵ', 'Ÿ', 'Ῠ', 'Ῡ', 'Ὺ', 'Ύ',
+                        'Ы', 'Й', 'Υ', 'Ϋ', 'Ŷ', 'Ｙ'],
+            'Z'     => ['Ź', 'Ž', 'Ż', 'З', 'Ζ', 'Ｚ'],
+            'AE'    => ['Æ', 'Ǽ'],
+            'Ch'    => ['Ч'],
+            'Dj'    => ['Ђ'],
+            'Dz'    => ['Џ'],
+            'Gx'    => ['Ĝ'],
+            'Hx'    => ['Ĥ'],
+            'Ij'    => ['Ĳ'],
+            'Jx'    => ['Ĵ'],
+            'Kh'    => ['Х'],
+            'Lj'    => ['Љ'],
+            'Nj'    => ['Њ'],
+            'Oe'    => ['Œ'],
+            'Ps'    => ['Ψ'],
+            'Sh'    => ['Ш'],
+            'Shch'  => ['Щ'],
+            'Ss'    => ['ẞ'],
+            'Th'    => ['Þ'],
+            'Ts'    => ['Ц'],
+            'Ya'    => ['Я'],
+            'Yu'    => ['Ю'],
+            'Zh'    => ['Ж'],
+            ' '     => ["\xC2\xA0", "\xE2\x80\x80", "\xE2\x80\x81",
+                        "\xE2\x80\x82", "\xE2\x80\x83", "\xE2\x80\x84",
+                        "\xE2\x80\x85", "\xE2\x80\x86", "\xE2\x80\x87",
+                        "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
+                        "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80",
+                        "\xEF\xBE\xA0"],
+        ];
+    }
+
+    /**
+     * Returns language-specific replacements for the toAscii() method.
+     * For example, German will map 'ä' to 'ae', while other languages
+     * will simply return 'a'.
+     *
+     * param  string $language Language of the source string
+     * @return array An array of replacements.
+     */
+    protected static function langSpecificCharsArray($language = 'en')
+    {
+        $split = preg_split('/[-_]/', $language);
+        $language = strtolower($split[0]);
+
+        static $charsArray = [];
+        if (isset($charsArray[$language])) {
+            return $charsArray[$language];
+        }
+
+        $languageSpecific = [
+            'de' => [
+                ['ä',  'ö',  'ü',  'Ä',  'Ö',  'Ü' ],
+                ['ae', 'oe', 'ue', 'AE', 'OE', 'UE'],
+            ]
+        ];
+
+        if (isset($languageSpecific[$language])) {
+            $charsArray[$language] = $languageSpecific[$language];
+        } else {
+            $charsArray[$language] = [];
+        }
+
+        return $charsArray[$language];
     }
 
     /**
@@ -1924,7 +1967,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
     protected function supportsEncoding()
     {
-        $supported = array('UTF-8' => true, 'ASCII' => true);
+        $supported = ['UTF-8' => true, 'ASCII' => true];
 
         if (isset($supported[$this->encoding])) {
             return true;

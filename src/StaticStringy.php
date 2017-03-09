@@ -16,13 +16,14 @@ use ReflectionMethod;
  * @method static string chars(string $str, string $encoding = null)
  * @method static string collapseWhitespace(string $str, string $encoding = null)
  * @method static bool contains(string $str, string $needle, bool $caseSensitive = true, string $encoding = null)
- * @method static bool containsAll(string $str, string $needle, bool $caseSensitive = true, string $encoding = null)
- * @method static bool containsAny(string $str, string $needle, bool $caseSensitive = true, string $encoding = null)
+ * @method static bool containsAll(string $str, string[] $needle, bool $caseSensitive = true, string $encoding = null)
+ * @method static bool containsAny(string $str, string[] $needle, bool $caseSensitive = true, string $encoding = null)
  * @method static int count(string $str, string $encoding = null)
  * @method static int countSubstr(string $str, string $substring, bool $caseSensitive = true, string $encoding = null)
  * @method static string dasherize(string $str, string $encoding = null)
  * @method static string delimit(string $str, string $delimiter, string $encoding = null)
  * @method static bool endsWith(string $str, string $substring, bool $caseSensitive = true, string $encoding = null)
+ * @method static bool endsWithAny(string $str, string[] $substrings, bool $caseSensitive = true, string $encoding = null)
  * @method static string ensureLeft(string $str, string $substring, string $encoding = null)
  * @method static string ensureRight(string $str, string $substring, string $encoding = null)
  * @method static string first(string $str, int $n, string $encoding = null)
@@ -45,7 +46,7 @@ use ReflectionMethod;
  * @method static bool isUpperCase(string $str, string $encoding = null)
  * @method static string last(string $str, string $encoding = null)
  * @method static int length(string $str, string $encoding = null)
- * @method static Stringy[] lines(string $str, string $encoding = null)
+ * @method static string[] lines(string $str, string $encoding = null)
  * @method static string longestCommonPrefix(string $str, string $otherStr, string $encoding = null)
  * @method static string longestCommonSuffix(string $str, string $otherStr, string $encoding = null)
  * @method static string longestCommonSubstring(string $str, string $otherStr, string $encoding = null)
@@ -64,15 +65,17 @@ use ReflectionMethod;
  * @method static string safeTruncate(string $str, int $length, string $substring = '', string $encoding = null)
  * @method static string shuffle(string $str, string $encoding = null)
  * @method static string slugify(string $str, string $replacement = '-', string $encoding = null)
- * @method static bool startsWith(string $str, string $substring, bool $caseSensitive = true, string $encoding = null)
  * @method static string slice(string $str, int $start, int $end = null, string $encoding = null)
  * @method static string split(string $str, string $pattern, int $limit = null, string $encoding = null)
+ * @method static bool startsWith(string $str, string $substring, bool $caseSensitive = true, string $encoding = null)
+ * @method static bool startsWithAny(string $str, string[] $substrings, bool $caseSensitive = true, string $encoding = null)
+ * @method static string stripWhitespace(string $str, string $encoding = null)
  * @method static string substr(string $str, int $start, int $length = null, string $encoding = null)
  * @method static string surround(string $str, string $substring, string $encoding = null)
  * @method static string swapCase(string $str, string $encoding = null)
  * @method static string tidy(string $str, string $encoding = null)
  * @method static string titleize(string $str, string $encoding = null)
- * @method static string toAscii(string $str, bool $removeUnsupported = true, string $encoding = null)
+ * @method static string toAscii(string $str, string $language = 'en', bool $removeUnsupported = true, string $encoding = null)
  * @method static bool toBoolean(string $str, string $encoding = null)
  * @method static string toLowerCase(string $str, string $encoding = null)
  * @method static string toSpaces(string $str, int $tabLength = 4, string $encoding = null)
@@ -143,6 +146,16 @@ class StaticStringy
 
         $stringy = Stringy::create($str, $encoding);
 
-        return call_user_func_array(array($stringy, $name), $args);
+        $result = call_user_func_array([$stringy, $name], $args);
+
+        $cast = function($val) {
+            if (is_object($val) && $val instanceof Stringy) {
+                return (string) $val;
+            } else {
+                return $val;
+            }
+        };
+
+        return is_array($result) ? array_map($cast, $result) : $cast($result);
     }
 }

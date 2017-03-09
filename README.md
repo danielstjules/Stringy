@@ -1,12 +1,15 @@
 ![Stringy](http://danielstjules.com/github/stringy-logo.png)
 
 A PHP string manipulation library with multibyte support. Compatible with PHP
-5.3+, PHP 7, and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
-for older documentation.
+5.4+, PHP 7, and HHVM.
 
 ``` php
 s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ```
+
+Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x) or
+[2.x branch](https://github.com/danielstjules/Stringy/tree/2.x) for older
+documentation.
 
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
 [![Total Downloads](https://poser.pugx.org/danielstjules/stringy/downloads)](https://packagist.org/packages/danielstjules/stringy)
@@ -42,7 +45,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     </tr>
     <tr>
         <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[endsWithAny](#endsWithAnystring-substrings--boolean-casesensitive--true-)</td>
+        <td>[endsWithAny](#endswithanystring-substrings--boolean-casesensitive--true-)</td>
         <td>[ensureLeft](#ensureleftstring-substring)</td>
         <td>[ensureRight](#ensurerightstring-substring)</td>
     </tr>
@@ -74,7 +77,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[isLowerCase](#islowercase)</td>
         <td>[isSerialized](#isserialized)</td>
         <td>[isUpperCase](#isuppercase)</td>
-        <td>[last](#last)</td>
+        <td>[last](#lastint-n)</td>
     </tr>
     <tr>
         <td>[length](#length)</td>
@@ -97,7 +100,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     <tr>
         <td>[removeLeft](#removeleftstring-substring)</td>
         <td>[removeRight](#removerightstring-substring)</td>
-        <td>[repeat](#repeatmultiplier)</td>
+        <td>[repeat](#repeatint-multiplier)</td>
         <td>[replace](#replacestring-search-string-replacement)</td>
     </tr>
     <tr>
@@ -107,10 +110,10 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
         <td>[slugify](#slugify-string-replacement----)</td>
     </tr>
     <tr>
-        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
         <td>[slice](#sliceint-start--int-end-)</td>
         <td>[split](#splitstring-pattern--int-limit-)</td>
+        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
     </tr>
     <tr>
         <td>[stripWhitespace](#stripwhitespace)</td>
@@ -121,7 +124,7 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
     <tr>
         <td>[tidy](#tidy)</td>
         <td>[titleize](#titleize-array-ignore)</td>
-        <td>[toAscii](#toascii)</td>
+        <td>[toAscii](#toascii-string-locale--en--bool-removeunsupported--true-)</td>
         <td>[toBoolean](#toboolean)</td>
     </tr>
     <tr>
@@ -433,7 +436,7 @@ default, the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-s('fòôbàř')->endsWith('bàř', true); // true
+s('fòôbàř')->endsWith('bàř'); // true
 ```
 
 ##### endsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
@@ -443,7 +446,7 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-s('fòôbàř')->endsWith(['bàř', 'baz'], true); // true
+s('fòôbàř')->endsWithAny(['bàř', 'baz']); // true
 ```
 
 ##### ensureLeft(string $substring)
@@ -818,26 +821,6 @@ is also converted to lowercase.
 s('Using strings like fòô bàř')->slugify(); // 'using-strings-like-foo-bar'
 ```
 
-##### startsWith(string $substring [, boolean $caseSensitive = true ])
-
-Returns true if the string begins with $substring, false otherwise.
-By default, the comparison is case-sensitive, but can be made insensitive
-by setting $caseSensitive to false.
-
-```php
-s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
-```
-
-##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
-
-Returns true if the string begins with any of $substrings, false
-otherwise. By default the comparison is case-sensitive, but can be made
-insensitive by setting $caseSensitive to false.
-
-```php
-s('FÒÔbàřbaz')->startsWith(['fòô', 'bàř'], false); // true
-```
-
 ##### slice(int $start [, int $end ])
 
 Returns the substring beginning at $start, and up to, but not including
@@ -857,6 +840,26 @@ results.
 
 ```php
 s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+```
+
+##### startsWith(string $substring [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
+```
+
+##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with any of $substrings, false
+otherwise. By default the comparison is case-sensitive, but can be made
+insensitive by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWithAny(['fòô', 'bàř'], false); // true
 ```
 
 ##### stripWhitespace()
@@ -916,14 +919,19 @@ s('i like to watch television')->titleize($ignore);
 // 'I Like to Watch Television'
 ```
 
-##### toAscii()
+##### toAscii([, string $locale = 'en' [, bool $removeUnsupported = true ]])
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed
-unless instructed otherwise.
+by default. The language or locale of the source string can be supplied
+for language-specific transliteration in any of the following formats:
+en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+to "aeoeue" rather than "aou" as in other languages.
 
 ```php
 s('fòôbàř')->toAscii(); // 'foobar'
+s('äöü')->toAscii(); // 'aou'
+s('äöü')->toAscii('de'); // 'aeoeue'
 ```
 
 ##### toBoolean()
