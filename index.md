@@ -1,14 +1,19 @@
 ![Stringy](http://danielstjules.com/github/stringy-logo.png)
 
 A PHP string manipulation library with multibyte support. Compatible with PHP
-5.3+ and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
-for older documentation.
+5.4+, PHP 7, and HHVM.
 
 ``` php
 s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 ```
 
+Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x) or
+[2.x branch](https://github.com/danielstjules/Stringy/tree/2.x) for older
+documentation.
+
 [![Build Status](https://api.travis-ci.org/danielstjules/Stringy.svg?branch=master)](https://travis-ci.org/danielstjules/Stringy)
+[![Total Downloads](https://poser.pugx.org/danielstjules/stringy/downloads)](https://packagist.org/packages/danielstjules/stringy)
+[![License](https://poser.pugx.org/danielstjules/stringy/license)](https://packagist.org/packages/danielstjules/stringy)
 
 * [Why?](#why)
 * [Installation](#installation)
@@ -19,82 +24,128 @@ s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
 * [Class methods](#class-methods)
     * [create](#createmixed-str--encoding-)
 * [Instance methods](#instance-methods)
-    * [append](#appendstring-string)
-    * [at](#atint-index)
-    * [between](#betweenstring-start-string-end--int-offset)
-    * [camelize](#camelize)
-    * [chars](#chars)
-    * [collapseWhitespace](#collapsewhitespace)
-    * [contains](#containsstring-needle--boolean-casesensitive--true-)
-    * [containsAll](#containsallarray-needles--boolean-casesensitive--true-)
-    * [containsAny](#containsanyarray-needles--boolean-casesensitive--true-)
-    * [countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)
-    * [dasherize](#dasherize)
-    * [delimit](#delimitint-delimiter)
-    * [endsWith](#endswithstring-substring--boolean-casesensitive--true-)
-    * [ensureLeft](#ensureleftstring-substring)
-    * [ensureRight](#ensurerightstring-substring)
-    * [first](#firstint-n)
-    * [getEncoding](#getencoding)
-    * [hasLowerCase](#haslowercase)
-    * [hasUpperCase](#hasuppercase)
-    * [htmlDecode](#htmldecode)
-    * [htmlEncode](#htmlencode)
-    * [humanize](#humanize)
-    * [indexOf](#indexofstring-needle--offset--0-)
-    * [indexOfLast](#indexoflaststring-needle--offset--0-)
-    * [insert](#insertint-index-string-substring)
-    * [isAlpha](#isalpha)
-    * [isAlphanumeric](#isalphanumeric)
-    * [isBlank](#isblank)
-    * [isHexadecimal](#ishexadecimal)
-    * [isJson](#isjson)
-    * [isLowerCase](#islowercase)
-    * [isSerialized](#isserialized)
-    * [isUpperCase](#isuppercase)
-    * [last](#last)
-    * [length](#length)
-    * [lines](#lines)
-    * [longestCommonPrefix](#longestcommonprefixstring-otherstr)
-    * [longestCommonSuffix](#longestcommonsuffixstring-otherstr)
-    * [longestCommonSubstring](#longestcommonsubstringstring-otherstr)
-    * [lowerCaseFirst](#lowercasefirst)
-    * [pad](#padint-length--string-padstr-----string-padtype--right-)
-    * [padBoth](#padbothint-length--string-padstr----)
-    * [padLeft](#padleftint-length--string-padstr----)
-    * [padRight](#padrightint-length--string-padstr----)
-    * [prepend](#prependstring-string)
-    * [regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)
-    * [removeLeft](#removeleftstring-substring)
-    * [removeRight](#removerightstring-substring)
-    * [repeat](#repeatmultiplier)
-    * [replace](#replacestring-search-string-replacement)
-    * [reverse](#reverse)
-    * [safeTruncate](#safetruncateint-length--string-substring---)
-    * [shuffle](#shuffle)
-    * [slugify](#slugify-string-replacement----)
-    * [startsWith](#startswithstring-substring--boolean-casesensitive--true-)
-    * [slice](#sliceint-start--int-end-)
-    * [split](#splitstring-pattern--int-limit-)
-    * [substr](#substrint-start--int-length-)
-    * [surround](#surroundstring-substring)
-    * [swapCase](#swapcase)
-    * [tidy](#tidy)
-    * [titleize](#titleize-array-ignore)
-    * [toAscii](#toascii)
-    * [toBoolean](#toboolean)
-    * [toLowerCase](#tolowercase)
-    * [toSpaces](#tospaces-tablength--4-)
-    * [toTabs](#totabs-tablength--4-)
-    * [toTitleCase](#totitlecase)
-    * [toUpperCase](#touppercase)
-    * [trim](#trim-string-chars)
-    * [trimLeft](#trimleft-string-chars)
-    * [trimRight](#trimright-string-chars)
-    * [truncate](#truncateint-length--string-substring---)
-    * [underscored](#underscored)
-    * [upperCamelize](#uppercamelize)
-    * [upperCaseFirst](#uppercasefirst)
+<table>
+    <tr>
+        <td>[append](#appendstring-string)</td>
+        <td>[at](#atint-index)</td>
+        <td>[between](#betweenstring-start-string-end--int-offset)</td>
+        <td>[camelize](#camelize)</td>
+    </tr>
+    <tr>
+        <td>[chars](#chars)</td>
+        <td>[collapseWhitespace](#collapsewhitespace)</td>
+        <td>[contains](#containsstring-needle--boolean-casesensitive--true-)</td>
+        <td>[containsAll](#containsallarray-needles--boolean-casesensitive--true-)</td>
+    </tr>
+    <tr>
+        <td>[containsAny](#containsanyarray-needles--boolean-casesensitive--true-)</td>
+        <td>[countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)</td>
+        <td>[dasherize](#dasherize)</td>
+        <td>[delimit](#delimitint-delimiter)</td>
+    </tr>
+    <tr>
+        <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[endsWithAny](#endswithanystring-substrings--boolean-casesensitive--true-)</td>
+        <td>[ensureLeft](#ensureleftstring-substring)</td>
+        <td>[ensureRight](#ensurerightstring-substring)</td>
+    </tr>
+    <tr>
+        <td>[first](#firstint-n)</td>
+        <td>[getEncoding](#getencoding)</td>
+        <td>[hasLowerCase](#haslowercase)</td>
+        <td>[hasUpperCase](#hasuppercase)</td>
+    </tr>
+    <tr>
+        <td>[htmlDecode](#htmldecode)</td>
+        <td>[htmlEncode](#htmlencode)</td>
+        <td>[humanize](#humanize)</td>
+        <td>[indexOf](#indexofstring-needle--offset--0-)</td>
+    </tr>
+    <tr>
+        <td>[indexOfLast](#indexoflaststring-needle--offset--0-)</td>
+        <td>[insert](#insertint-index-string-substring)</td>
+        <td>[isAlpha](#isalpha)</td>
+        <td>[isAlphanumeric](#isalphanumeric)</td>
+    </tr>
+    <tr>
+        <td>[isBase64](#isbase64)</td>
+        <td>[isBlank](#isblank)</td>
+        <td>[isHexadecimal](#ishexadecimal)</td>
+        <td>[isJson](#isjson)</td>
+    </tr>
+    <tr>
+        <td>[isLowerCase](#islowercase)</td>
+        <td>[isSerialized](#isserialized)</td>
+        <td>[isUpperCase](#isuppercase)</td>
+        <td>[last](#lastint-n)</td>
+    </tr>
+    <tr>
+        <td>[length](#length)</td>
+        <td>[lines](#lines)</td>
+        <td>[longestCommonPrefix](#longestcommonprefixstring-otherstr)</td>
+        <td>[longestCommonSuffix](#longestcommonsuffixstring-otherstr)</td>
+    </tr>
+    <tr>
+        <td>[longestCommonSubstring](#longestcommonsubstringstring-otherstr)</td>
+        <td>[lowerCaseFirst](#lowercasefirst)</td>
+        <td>[pad](#padint-length--string-padstr-----string-padtype--right-)</td>
+        <td>[padBoth](#padbothint-length--string-padstr----)</td>
+    </tr>
+    <tr>
+        <td>[padLeft](#padleftint-length--string-padstr----)</td>
+        <td>[padRight](#padrightint-length--string-padstr----)</td>
+        <td>[prepend](#prependstring-string)</td>
+        <td>[regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)</td>
+    </tr>
+    <tr>
+        <td>[removeLeft](#removeleftstring-substring)</td>
+        <td>[removeRight](#removerightstring-substring)</td>
+        <td>[repeat](#repeatint-multiplier)</td>
+        <td>[replace](#replacestring-search-string-replacement)</td>
+    </tr>
+    <tr>
+        <td>[reverse](#reverse)</td>
+        <td>[safeTruncate](#safetruncateint-length--string-substring---)</td>
+        <td>[shuffle](#shuffle)</td>
+        <td>[slugify](#slugify-string-replacement----)</td>
+    </tr>
+    <tr>
+        <td>[slice](#sliceint-start--int-end-)</td>
+        <td>[split](#splitstring-pattern--int-limit-)</td>
+        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
+        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
+    </tr>
+    <tr>
+        <td>[stripWhitespace](#stripwhitespace)</td>
+        <td>[substr](#substrint-start--int-length-)</td>
+        <td>[surround](#surroundstring-substring)</td>
+        <td>[swapCase](#swapcase)</td>
+    </tr>
+    <tr>
+        <td>[tidy](#tidy)</td>
+        <td>[titleize](#titleize-array-ignore)</td>
+        <td>[toAscii](#toascii-string-language--en--bool-removeunsupported--true-)</td>
+        <td>[toBoolean](#toboolean)</td>
+    </tr>
+    <tr>
+        <td>[toLowerCase](#tolowercase)</td>
+        <td>[toSpaces](#tospaces-tablength--4-)</td>
+        <td>[toTabs](#totabs-tablength--4-)</td>
+        <td>[toTitleCase](#totitlecase)</td>
+    </tr>
+    <tr>
+        <td>[toUpperCase](#touppercase)</td>
+        <td>[trim](#trim-string-chars)</td>
+        <td>[trimLeft](#trimleft-string-chars)</td>
+        <td>[trimRight](#trimright-string-chars)</td>
+    </tr>
+    <tr>
+        <td>[truncate](#truncateint-length--string-substring---)</td>
+        <td>[underscored](#underscored)</td>
+        <td>[upperCamelize](#uppercamelize)</td>
+        <td>[upperCaseFirst](#uppercasefirst)</td>
+    </tr>
+</table>
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
@@ -128,7 +179,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~2.1"
+    "danielstjules/stringy": "~3.0"
 }
 ```
 
@@ -151,11 +202,13 @@ And in either case, I'd suggest using an alias.
 use Stringy\Stringy as S;
 ```
 
-Please note that Stringy relies on the `mbstring` PHP module for its underlying
-multibyte support. This is a non-default, but very common module. For example,
-with debian and ubuntu, it's included in libapache2-mod-php5, php5-cli, and
-php5-fpm. For OSX users, it's a default for any version of PHP installed with
-homebrew. If compiling PHP from scratch, it can be included with the
+Please note that Stringy relies on the `mbstring` module for its underlying
+multibyte support. If the module is not found, Stringy will use
+[symfony/polyfill-mbstring](https://github.com/symfony/polyfill-mbstring).
+ex-mbstring is a non-default, but very common module. For example, with debian
+and ubuntu, it's included in libapache2-mod-php5, php5-cli, and php5-fpm. For
+OSX users, it's a default for any version of PHP installed with homebrew.
+If compiling PHP from scratch, it can be included with the
 `--enable-mbstring` flag.
 
 ## OO and Chaining
@@ -234,9 +287,9 @@ integer, boolean, etc.
 ```php
 use Stringy\StaticStringy as S;
 
-// Translates to Stringy::create('fòôbàř', 'UTF-8')->slice(0, 3);
+// Translates to Stringy::create('fòôbàř')->slice(0, 3);
 // Returns a Stringy object with the string "fòô"
-S::slice('fòôbàř', 0, 3, 'UTF-8');
+S::slice('fòôbàř', 0, 3);
 ```
 
 ## Class methods
@@ -250,7 +303,7 @@ then returns the initialized object. Throws an InvalidArgumentException
 if the first argument is an array or object without a __toString method.
 
 ```php
-$stringy = S::create('fòôbàř', 'UTF-8'); // 'fòôbàř'
+$stringy = S::create('fòôbàř'); // 'fòôbàř'
 ```
 
 ## Instance Methods
@@ -383,7 +436,17 @@ default, the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-s('fòôbàř')->endsWith('bàř', true); // true
+s('fòôbàř')->endsWith('bàř'); // true
+```
+
+##### endsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string ends with any of $substrings, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+s('fòôbàř')->endsWithAny(['bàř', 'baz']); // true
 ```
 
 ##### ensureLeft(string $substring)
@@ -396,7 +459,7 @@ s('foobar')->ensureLeft('http://'); // 'http://foobar'
 
 ##### ensureRight(string $substring)
 
-Ensures that the string begins with $substring. If it doesn't, it's appended.
+Ensures that the string ends with $substring. If it doesn't, it's appended.
 
 ```php
 s('foobar')->ensureRight('.com'); // 'foobar.com'
@@ -415,7 +478,7 @@ s('fòôbàř')->first(3); // 'fòô'
 Returns the encoding used by the Stringy object.
 
 ```php
-s('fòôbàř', 'UTF-8')->getEncoding(); // 'UTF-8'
+s('fòôbàř')->getEncoding(); // 'UTF-8'
 ```
 
 ##### hasLowerCase()
@@ -509,6 +572,14 @@ otherwise.
 s('دانيال1')->isAlphanumeric(); // true
 ```
 
+##### isBase64()
+
+Returns true if the string is base64 encoded, false otherwise.
+
+```php
+s('Zm9vYmFy')->isBase64(); // true
+```
+
 ##### isBlank()
 
 Returns true if the string contains only whitespace chars, false otherwise.
@@ -527,7 +598,9 @@ s('A102F')->isHexadecimal(); // true
 
 ##### isJson()
 
-Returns true if the string is JSON, false otherwise.
+Returns true if the string is JSON, false otherwise. Unlike json_decode
+in PHP 5.x, this method is consistent with PHP 7 and other JSON parsers,
+in that an empty string is not considered valid JSON.
 
 ```php
 s('{"foo":"bar"}')->isJson(); // true
@@ -671,7 +744,8 @@ to a lack of support in the bundled version of Oniguruma in PHP < 5.6,
 and current versions of HHVM (3.8 and below).
 
 ```php
-s('fòô ')->regexReplace('f[òô]+\s', 'bàř', 'msr'); // 'bàř'
+s('fòô ')->regexReplace('f[òô]+\s', 'bàř'); // 'bàř'
+s('fò')->regexReplace('(ò)', '\\1ô'); // 'fòô'
 ```
 
 ##### removeLeft(string $substring)
@@ -747,16 +821,6 @@ is also converted to lowercase.
 s('Using strings like fòô bàř')->slugify(); // 'using-strings-like-foo-bar'
 ```
 
-##### startsWith(string $substring [, boolean $caseSensitive = true ])
-
-Returns true if the string begins with $substring, false otherwise.
-By default, the comparison is case-sensitive, but can be made insensitive
-by setting $caseSensitive to false.
-
-```php
-s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
-```
-
 ##### slice(int $start [, int $end ])
 
 Returns the substring beginning at $start, and up to, but not including
@@ -776,6 +840,36 @@ results.
 
 ```php
 s('foo,bar,baz')->split(',', 2); // ['foo', 'bar']
+```
+
+##### startsWith(string $substring [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with $substring, false otherwise.
+By default, the comparison is case-sensitive, but can be made insensitive
+by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWith('fòôbàř', false); // true
+```
+
+##### startsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
+
+Returns true if the string begins with any of $substrings, false
+otherwise. By default the comparison is case-sensitive, but can be made
+insensitive by setting $caseSensitive to false.
+
+```php
+s('FÒÔbàřbaz')->startsWithAny(['fòô', 'bàř'], false); // true
+```
+
+##### stripWhitespace()
+
+Strip all whitespace characters. This includes tabs and newline
+characters, as well as multibyte whitespace such as the thin space
+and ideographic space.
+
+```php
+s('   Ο     συγγραφέας  ')->stripWhitespace(); // 'Οσυγγραφέας'
 ```
 
 ##### substr(int $start [, int $length ])
@@ -825,14 +919,19 @@ s('i like to watch television')->titleize($ignore);
 // 'I Like to Watch Television'
 ```
 
-##### toAscii()
+##### toAscii([, string $language = 'en' [, bool $removeUnsupported = true ]])
 
 Returns an ASCII version of the string. A set of non-ASCII characters are
 replaced with their closest ASCII counterparts, and the rest are removed
-unless instructed otherwise.
+by default. The language or locale of the source string can be supplied
+for language-specific transliteration in any of the following formats:
+en, en_GB, or en-GB. For example, passing "de" results in "äöü" mapping
+to "aeoeue" rather than "aou" as in other languages.
 
 ```php
 s('fòôbàř')->toAscii(); // 'foobar'
+s('äöü')->toAscii(); // 'aou'
+s('äöü')->toAscii('de'); // 'aeoeue'
 ```
 
 ##### toBoolean()
