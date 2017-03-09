@@ -124,7 +124,7 @@ documentation.
     <tr>
         <td>[tidy](#tidy)</td>
         <td>[titleize](#titleize-array-ignore)</td>
-        <td>[toAscii](#toascii)</td>
+        <td>[toAscii](#toascii-string-locale--en--bool-removeunsupported--true-)</td>
         <td>[toBoolean](#toboolean)</td>
     </tr>
     <tr>
@@ -436,7 +436,7 @@ default, the comparison is case-sensitive, but can be made insensitive by
 setting $caseSensitive to false.
 
 ```php
-s('fòôbàř')->endsWith('bàř', true); // true
+s('fòôbàř')->endsWith('bàř'); // true
 ```
 
 ##### endsWithAny(string[] $substrings [, boolean $caseSensitive = true ])
@@ -446,7 +446,7 @@ By default, the comparison is case-sensitive, but can be made insensitive
 by setting $caseSensitive to false.
 
 ```php
-s('fòôbàř')->endsWith(['bàř', 'baz'], true); // true
+s('fòôbàř')->endsWithAny(['bàř', 'baz']); // true
 ```
 
 ##### ensureLeft(string $substring)
@@ -859,7 +859,7 @@ otherwise. By default the comparison is case-sensitive, but can be made
 insensitive by setting $caseSensitive to false.
 
 ```php
-s('FÒÔbàřbaz')->startsWith(['fòô', 'bàř'], false); // true
+s('FÒÔbàřbaz')->startsWithAny(['fòô', 'bàř'], false); // true
 ```
 
 ##### stripWhitespace()
