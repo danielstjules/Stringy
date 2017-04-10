@@ -146,6 +146,7 @@ documentation.
         <td><a href="#uppercasefirst">upperCaseFirst</a></td>
     </tr>
 </table>
+
 * [Extensions](#extensions)
 * [Tests](#tests)
 * [License](#license)
