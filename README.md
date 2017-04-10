@@ -26,124 +26,124 @@ documentation.
 * [Instance methods](#instance-methods)
 <table>
     <tr>
-        <td>[append](#appendstring-string)</td>
-        <td>[at](#atint-index)</td>
-        <td>[between](#betweenstring-start-string-end--int-offset)</td>
-        <td>[camelize](#camelize)</td>
+        <td><a href="#appendstring-string">append</a></td>
+        <td><a href="#atint-index">at</a></td>
+        <td><a href="#betweenstring-start-string-end--int-offset">between</a></td>
+        <td><a href="#camelize">camelize</a></td>
     </tr>
     <tr>
-        <td>[chars](#chars)</td>
-        <td>[collapseWhitespace](#collapsewhitespace)</td>
-        <td>[contains](#containsstring-needle--boolean-casesensitive--true-)</td>
-        <td>[containsAll](#containsallarray-needles--boolean-casesensitive--true-)</td>
+        <td><a href="#chars">chars</a></td>
+        <td><a href="#collapsewhitespace">collapseWhitespace</a></td>
+        <td><a href="#containsstring-needle--boolean-casesensitive--true-">contains</a></td>
+        <td><a href="#containsallarray-needles--boolean-casesensitive--true-">containsAll</a></td>
     </tr>
     <tr>
-        <td>[containsAny](#containsanyarray-needles--boolean-casesensitive--true-)</td>
-        <td>[countSubstr](#countsubstrstring-substring--boolean-casesensitive--true-)</td>
-        <td>[dasherize](#dasherize)</td>
-        <td>[delimit](#delimitint-delimiter)</td>
+        <td><a href="#containsanyarray-needles--boolean-casesensitive--true-">containsAny</a></td>
+        <td><a href="#countsubstrstring-substring--boolean-casesensitive--true-">countSubstr</a></td>
+        <td><a href="#dasherize">dasherize</a></td>
+        <td><a href="#delimitint-delimiter">delimit</a></td>
     </tr>
     <tr>
-        <td>[endsWith](#endswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[endsWithAny](#endswithanystring-substrings--boolean-casesensitive--true-)</td>
-        <td>[ensureLeft](#ensureleftstring-substring)</td>
-        <td>[ensureRight](#ensurerightstring-substring)</td>
+        <td><a href="#endswithstring-substring--boolean-casesensitive--true-">endsWith</a></td>
+        <td><a href="#endswithanystring-substrings--boolean-casesensitive--true-">endsWithAny</a></td>
+        <td><a href="#ensureleftstring-substring">ensureLeft</a></td>
+        <td><a href="#ensurerightstring-substring">ensureRight</a></td>
     </tr>
     <tr>
-        <td>[first](#firstint-n)</td>
-        <td>[getEncoding](#getencoding)</td>
-        <td>[hasLowerCase](#haslowercase)</td>
-        <td>[hasUpperCase](#hasuppercase)</td>
+        <td><a href="#firstint-n">first</a></td>
+        <td><a href="#getencoding">getEncoding</a></td>
+        <td><a href="#haslowercase">hasLowerCase</a></td>
+        <td><a href="#hasuppercase">hasUpperCase</a></td>
     </tr>
     <tr>
-        <td>[htmlDecode](#htmldecode)</td>
-        <td>[htmlEncode](#htmlencode)</td>
-        <td>[humanize](#humanize)</td>
-        <td>[indexOf](#indexofstring-needle--offset--0-)</td>
+        <td><a href="#htmldecode">htmlDecode</a></td>
+        <td><a href="#htmlencode">htmlEncode</a></td>
+        <td><a href="#humanize">humanize</a></td>
+        <td><a href="#indexofstring-needle--offset--0-">indexOf</a></td>
     </tr>
     <tr>
-        <td>[indexOfLast](#indexoflaststring-needle--offset--0-)</td>
-        <td>[insert](#insertint-index-string-substring)</td>
-        <td>[isAlpha](#isalpha)</td>
-        <td>[isAlphanumeric](#isalphanumeric)</td>
+        <td><a href="#indexoflaststring-needle--offset--0-">indexOfLast</a></td>
+        <td><a href="#insertint-index-string-substring">insert</a></td>
+        <td><a href="#isalpha">isAlpha</a></td>
+        <td><a href="#isalphanumeric">isAlphanumeric</a></td>
     </tr>
     <tr>
-        <td>[isBase64](#isbase64)</td>
-        <td>[isBlank](#isblank)</td>
-        <td>[isHexadecimal](#ishexadecimal)</td>
-        <td>[isJson](#isjson)</td>
+        <td><a href="#isbase64">isBase64</a></td>
+        <td><a href="#isblank">isBlank</a></td>
+        <td><a href="#ishexadecimal">isHexadecimal</a></td>
+        <td><a href="#isjson">isJson</a></td>
     </tr>
     <tr>
-        <td>[isLowerCase](#islowercase)</td>
-        <td>[isSerialized](#isserialized)</td>
-        <td>[isUpperCase](#isuppercase)</td>
-        <td>[last](#lastint-n)</td>
+        <td><a href="#islowercase">isLowerCase</a></td>
+        <td><a href="#isserialized">isSerialized</a></td>
+        <td><a href="#isuppercase">isUpperCase</a></td>
+        <td><a href="#lastint-n">last</a></td>
     </tr>
     <tr>
-        <td>[length](#length)</td>
-        <td>[lines](#lines)</td>
-        <td>[longestCommonPrefix](#longestcommonprefixstring-otherstr)</td>
-        <td>[longestCommonSuffix](#longestcommonsuffixstring-otherstr)</td>
+        <td><a href="#length">length</a></td>
+        <td><a href="#lines">lines</a></td>
+        <td><a href="#longestcommonprefixstring-otherstr">longestCommonPrefix</a></td>
+        <td><a href="#longestcommonsuffixstring-otherstr">longestCommonSuffix</a></td>
     </tr>
     <tr>
-        <td>[longestCommonSubstring](#longestcommonsubstringstring-otherstr)</td>
-        <td>[lowerCaseFirst](#lowercasefirst)</td>
-        <td>[pad](#padint-length--string-padstr-----string-padtype--right-)</td>
-        <td>[padBoth](#padbothint-length--string-padstr----)</td>
+        <td><a href="#longestcommonsubstringstring-otherstr">longestCommonSubstring</a></td>
+        <td><a href="#lowercasefirst">lowerCaseFirst</a></td>
+        <td><a href="#padint-length--string-padstr-----string-padtype--right-">pad</a></td>
+        <td><a href="#padbothint-length--string-padstr----">padBoth</a></td>
     </tr>
     <tr>
-        <td>[padLeft](#padleftint-length--string-padstr----)</td>
-        <td>[padRight](#padrightint-length--string-padstr----)</td>
-        <td>[prepend](#prependstring-string)</td>
-        <td>[regexReplace](#regexreplacestring-pattern-string-replacement--string-options--msr)</td>
+        <td><a href="#padleftint-length--string-padstr----">padLeft</a></td>
+        <td><a href="#padrightint-length--string-padstr----">padRight</a></td>
+        <td><a href="#prependstring-string">prepend</a></td>
+        <td><a href="#regexreplacestring-pattern-string-replacement--string-options--msr">regexReplace</a></td>
     </tr>
     <tr>
-        <td>[removeLeft](#removeleftstring-substring)</td>
-        <td>[removeRight](#removerightstring-substring)</td>
-        <td>[repeat](#repeatint-multiplier)</td>
-        <td>[replace](#replacestring-search-string-replacement)</td>
+        <td><a href="#removeleftstring-substring">removeLeft</a></td>
+        <td><a href="#removerightstring-substring">removeRight</a></td>
+        <td><a href="#repeatint-multiplier">repeat</a></td>
+        <td><a href="#replacestring-search-string-replacement">replace</a></td>
     </tr>
     <tr>
-        <td>[reverse](#reverse)</td>
-        <td>[safeTruncate](#safetruncateint-length--string-substring---)</td>
-        <td>[shuffle](#shuffle)</td>
-        <td>[slugify](#slugify-string-replacement----)</td>
+        <td><a href="#reverse">reverse</a></td>
+        <td><a href="#safetruncateint-length--string-substring---">safeTruncate</a></td>
+        <td><a href="#shuffle">shuffle</a></td>
+        <td><a href="#slugify-string-replacement----">slugify</a></td>
     </tr>
     <tr>
-        <td>[slice](#sliceint-start--int-end-)</td>
-        <td>[split](#splitstring-pattern--int-limit-)</td>
-        <td>[startsWith](#startswithstring-substring--boolean-casesensitive--true-)</td>
-        <td>[startsWithAny](#startswithanystring-substrings--boolean-casesensitive--true-)</td>
+        <td><a href="#sliceint-start--int-end-">slice</a></td>
+        <td><a href="#splitstring-pattern--int-limit-">split</a></td>
+        <td><a href="#startswithstring-substring--boolean-casesensitive--true-">startsWith</a></td>
+        <td><a href="#startswithanystring-substrings--boolean-casesensitive--true-">startsWithAny</a></td>
     </tr>
     <tr>
-        <td>[stripWhitespace](#stripwhitespace)</td>
-        <td>[substr](#substrint-start--int-length-)</td>
-        <td>[surround](#surroundstring-substring)</td>
-        <td>[swapCase](#swapcase)</td>
+        <td><a href="#stripwhitespace">stripWhitespace</a></td>
+        <td><a href="#substrint-start--int-length-">substr</a></td>
+        <td><a href="#surroundstring-substring">surround</a></td>
+        <td><a href="#swapcase">swapCase</a></td>
     </tr>
     <tr>
-        <td>[tidy](#tidy)</td>
-        <td>[titleize](#titleize-array-ignore)</td>
-        <td>[toAscii](#toascii-string-language--en--bool-removeunsupported--true-)</td>
-        <td>[toBoolean](#toboolean)</td>
+        <td><a href="#tidy">tidy</a></td>
+        <td><a href="#titleize-array-ignore">titleize</a></td>
+        <td><a href="#toascii-string-language--en--bool-removeunsupported--true-">toAscii</a></td>
+        <td><a href="#toboolean">toBoolean</a></td>
     </tr>
     <tr>
-        <td>[toLowerCase](#tolowercase)</td>
-        <td>[toSpaces](#tospaces-tablength--4-)</td>
-        <td>[toTabs](#totabs-tablength--4-)</td>
-        <td>[toTitleCase](#totitlecase)</td>
+        <td><a href="#tolowercase">toLowerCase</a></td>
+        <td><a href="#tospaces-tablength--4-">toSpaces</a></td>
+        <td><a href="#totabs-tablength--4-">toTabs</a></td>
+        <td><a href="#totitlecase">toTitleCase</a></td>
     </tr>
     <tr>
-        <td>[toUpperCase](#touppercase)</td>
-        <td>[trim](#trim-string-chars)</td>
-        <td>[trimLeft](#trimleft-string-chars)</td>
-        <td>[trimRight](#trimright-string-chars)</td>
+        <td><a href="#touppercase">toUpperCase</a></td>
+        <td><a href="#trim-string-chars">trim</a></td>
+        <td><a href="#trimleft-string-chars">trimLeft</a></td>
+        <td><a href="#trimright-string-chars">trimRight</a></td>
     </tr>
     <tr>
-        <td>[truncate](#truncateint-length--string-substring---)</td>
-        <td>[underscored](#underscored)</td>
-        <td>[upperCamelize](#uppercamelize)</td>
-        <td>[upperCaseFirst](#uppercasefirst)</td>
+        <td><a href="#truncateint-length--string-substring---">truncate</a></td>
+        <td><a href="#underscored">underscored</a></td>
+        <td><a href="#uppercamelize">upperCamelize</a></td>
+        <td><a href="#uppercasefirst">upperCaseFirst</a></td>
     </tr>
 </table>
 * [Extensions](#extensions)
