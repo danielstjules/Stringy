@@ -1166,6 +1166,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     {
         $stringy = $this->toAscii();
 
+        $stringy->str = str_replace('@', $replacement, $stringy);
         $quotedReplacement = preg_quote($replacement);
         $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy);

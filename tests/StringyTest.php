@@ -1108,7 +1108,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             ['another-foo-bar', 'another..& foo -.-"-...bar'],
             ['foo-dbar', " Foo d'Bar "],
             ['a-string-with-dashes', 'A string-with-dashes'],
-            ['userhost', 'user@host'],
+            ['user-host', 'user@host'],
             ['using-strings-like-foo-bar', 'Using strings like fòô bàř'],
             ['numbers-1234', 'numbers 1234'],
             ['perevirka-ryadka', 'перевірка рядка'],
