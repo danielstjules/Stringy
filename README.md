@@ -180,7 +180,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~3.0"
+    "danielstjules/stringy": "~3.0.1"
 }
 ```
 

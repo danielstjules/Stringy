@@ -1,3 +1,7 @@
+### 3.0.1 (2017-04-12)
+* Don't replace @ in toAscii
+* Use normal replacement for @ in slugify, e.g. user@home => user-home
+
 ### 3.0.0 (2017-03-08)
 
 * Breaking change: added $language parameter to toAscii, before
