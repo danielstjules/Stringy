@@ -1679,7 +1679,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     protected function charsArray()
     {
         static $charsArray;
-        if (isset($charsArray)) return $charsArray;
+        if (isset($charsArray)) {
+            return $charsArray;
+        }
 
         return $charsArray = [
             '0'     => ['°', '₀', '۰', '０'],
