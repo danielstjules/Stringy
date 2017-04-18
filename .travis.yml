@@ -27,6 +27,9 @@ matrix:
     - php: 7.0
       env: polyfill='false'
 
+before_install:
+  - pip install --user codecov
+
 install: travis_retry composer install --no-interaction --prefer-source
 
 before_script:
@@ -35,5 +38,7 @@ before_script:
   - if [[ $polyfill = 'false' ]]; then travis_retry composer remove symfony/polyfill-mbstring; fi
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
 
+after_success:
+  - codecov
