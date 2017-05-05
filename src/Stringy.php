@@ -1868,6 +1868,10 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             'de' => [
                 ['ä',  'ö',  'ü',  'Ä',  'Ö',  'Ü' ],
                 ['ae', 'oe', 'ue', 'AE', 'OE', 'UE'],
+            ],
+            'bg' => [
+                ['х', 'Х', 'щ', 'Щ', 'ъ', 'Ъ'],
+                ['h', 'H', 'sht', 'SHT', 'a', 'А']
             ]
         ];
 
