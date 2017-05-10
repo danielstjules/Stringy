@@ -2518,4 +2518,24 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             ['>', '&gt;'],
         ];
     }
+
+    /**
+     * @dataProvider stripPunctuationProvider()
+     */
+    public function testStripPunctuation($expected, $str, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->stripPunctuation();
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    public function stripPunctuationProvider()
+    {
+        return array(
+            array('foo bar ', '!{foo}:,+"`-=\/ (&bar.) @#'),
+            array('fòô bàř 123', '!{fòô}: (bàř)? №1;2--__3%', 'UTF-8'),
+        );
+    }
 }
