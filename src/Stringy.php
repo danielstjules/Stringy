@@ -1914,6 +1914,19 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         return $stringy;
     }
+    
+    /**
+     * Does a preg_match using pattern and returns matches.
+     *
+     * @param  string $pattern Regex pattern to match against.
+     * @return array  preg_match matches.
+     */
+    public function matches($pattern)
+    {
+        $matches = [];
+        preg_match($pattern, $this->str, $matches);
+        return $matches;
+    }
 
     /**
      * Returns true if $str matches the supplied pattern, false otherwise.
