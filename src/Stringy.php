@@ -488,8 +488,21 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function htmlDecode($flags = ENT_COMPAT)
     {
-        $str = html_entity_decode($this->str, $flags, $this->encoding);
+        if (function_exists('html_entity_decode')) {
+            $str = html_entity_decode($this->str, $flags, $this->encoding);
+        } else {
+            // replace numeric entities
+            $str = preg_replace_callback('~&#x([0-9a-f]+);~i', function ($m) {
+                return chr(hexdec($m[1]));
+            }, $this->str);
+            $str = preg_replace_callback('~&#([0-9]+);~', function ($m) {
+                return chr($m[1]);
+            }, $str);
 
+            // replace literal entities
+            $str = strtr($str, array_flip(get_html_translation_table(HTML_ENTITIES)));
+        }
+        
         return static::create($str, $this->encoding);
     }
 
