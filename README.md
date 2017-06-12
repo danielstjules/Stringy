@@ -810,13 +810,14 @@ random order.
 s('fòôbàř')->shuffle(); // 'àôřbòf'
 ```
 
-##### slugify([, string $replacement = '-' ])
+##### slugify([, string $replacement = '-' [, string $language = 'en']])
 
 Converts the string into an URL slug. This includes replacing non-ASCII
 characters with their closest ASCII equivalents, removing remaining
 non-ASCII and non-alphanumeric characters, and replacing whitespace with
 $replacement. The replacement defaults to a single dash, and the string
-is also converted to lowercase.
+is also converted to lowercase. The language of the source string can
+also be supplied for language-specific transliteration.
 
 ```php
 s('Using strings like fòô bàř')->slugify(); // 'using-strings-like-foo-bar'

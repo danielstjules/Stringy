@@ -1157,14 +1157,16 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * characters with their closest ASCII equivalents, removing remaining
      * non-ASCII and non-alphanumeric characters, and replacing whitespace with
      * $replacement. The replacement defaults to a single dash, and the string
-     * is also converted to lowercase.
+     * is also converted to lowercase. The language of the source string can
+     * also be supplied for language-specific transliteration.
      *
      * @param  string $replacement The string used to replace whitespace
+     * @param  string $language    Language of the source string
      * @return static Object whose $str has been converted to an URL slug
      */
-    public function slugify($replacement = '-')
+    public function slugify($replacement = '-', $language = 'en')
     {
-        $stringy = $this->toAscii();
+        $stringy = $this->toAscii($language);
 
         $stringy->str = str_replace('@', $replacement, $stringy);
         $quotedReplacement = preg_quote($replacement);
