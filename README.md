@@ -107,7 +107,7 @@ documentation.
         <td><a href="#reverse">reverse</a></td>
         <td><a href="#safetruncateint-length--string-substring---">safeTruncate</a></td>
         <td><a href="#shuffle">shuffle</a></td>
-        <td><a href="#slugify-string-replacement----">slugify</a></td>
+        <td><a href="#slugify-string-replacement-----string-language--en">slugify</a></td>
     </tr>
     <tr>
         <td><a href="#sliceint-start--int-end-">slice</a></td>
