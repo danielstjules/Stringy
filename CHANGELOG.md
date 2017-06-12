@@ -1,3 +1,8 @@
+### 3.1.0 (2017-06-11)
+* Add $language support to slugify
+* Add bg specific transliteration
+* ЬЪ/ьъ handling is now language-specific
+
 ### 3.0.1 (2017-04-12)
 * Don't replace @ in toAscii
 * Use normal replacement for @ in slugify, e.g. user@home => user-home

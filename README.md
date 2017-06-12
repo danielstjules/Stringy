@@ -1,7 +1,7 @@
 ![Stringy](http://danielstjules.com/github/stringy-logo.png)
 
 A PHP string manipulation library with multibyte support. Compatible with PHP
-5.4+, PHP 7, and HHVM.
+5.4+, PHP 7+, and HHVM.
 
 ``` php
 s('string')->toTitleCase()->ensureRight('y') == 'Stringy'
@@ -180,7 +180,7 @@ in your composer.json file:
 
 ```json
 "require": {
-    "danielstjules/stringy": "~3.0.1"
+    "danielstjules/stringy": "~3.1.0"
 }
 ```
 
