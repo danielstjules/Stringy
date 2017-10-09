@@ -9,6 +9,7 @@ use Exception;
 use InvalidArgumentException;
 use IteratorAggregate;
 use OutOfBoundsException;
+use Stringy\Inflections\Inflector;
 
 class Stringy implements Countable, IteratorAggregate, ArrayAccess
 {
@@ -983,6 +984,18 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Converts $str from singular to plural
+     *
+     * @param string $language
+     *
+     * @return static Object with $str pluralized according to $language
+     */
+    public function pluralize($language = 'en')
+    {
+        return static::create($this->getInflector($language)->pluralize($this));
+    }
+
+    /**
      * Returns a new string starting with $string.
      *
      * @param  string $string The string to append
@@ -1150,6 +1163,18 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         }
 
         return static::create($shuffledStr, $this->encoding);
+    }
+
+    /**
+     * Converts $str from plural to singular
+     *
+     * @param string $language
+     *
+     * @return static Object with $str singularize according to $language
+     */
+    public function singularize($language = 'en')
+    {
+        return static::create($this->getInflector($language)->singularize($this));
     }
 
     /**
@@ -1671,6 +1696,24 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
         $str = \mb_strtoupper($first, $this->encoding) . $rest;
 
         return static::create($str, $this->encoding);
+    }
+
+    /**
+     * Gets the Inflector for $language, if one exists.
+     *
+     * @param string $language
+     *
+     * @return Inflector
+     */
+    protected function getInflector($language)
+    {
+        $inflector = 'Stringy\\Inflections\\' . static::create($language)->upperCamelize();
+
+        if (!class_exists($inflector)) {
+            throw new InvalidArgumentException($language.' is an unsupported language');
+        }
+
+        return new $inflector;
     }
 
     /**
