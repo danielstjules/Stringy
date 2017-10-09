@@ -1396,28 +1396,124 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Returns a trimmed string with the first letter of each word capitalized.
+     * Returns a trimmed string in proper title case.
+     *
      * Also accepts an array, $ignore, allowing you to list words not to be
      * capitalized.
      *
+     * Adapted from John Gruber's script.
+     *
+     * @see https://gist.github.com/gruber/9f9e8650d68b13ce4d78
+     *
      * @param  array  $ignore An array of words not to capitalize
+     *
      * @return static Object with a titleized $str
      */
-    public function titleize($ignore = null)
+    public function titleize($ignore = [])
     {
-        $stringy = static::create($this->trim(), $this->encoding);
-        $encoding = $this->encoding;
+        $smallWords = array_merge(
+            ['(?<!q&)a', 'an', 'and', 'as', 'at(?!&t)', 'but', 'by', 'en', 'for', 'if', 'in', 'of', 'on', 'or', 'the', 'to', 'v[.]?', 'via', 'vs[.]?'],
+            (array)$ignore
+        );
 
+        $smallWordsRx = implode('|', $smallWords);
+
+        $apostropheRx = '(?x: [\'’] [[:lower:]]* )?';
+
+        $stringy = static::create($this->trim(), $this->encoding);
+
+        if (preg_match('/[[:lower:]]/', $stringy) === 0) {
+            $stringy = $stringy->toLowerCase();
+        }
+
+        // The main substitutions
         $stringy->str = preg_replace_callback(
-            '/([\S]+)/u',
-            function ($match) use ($encoding, $ignore) {
-                if ($ignore && in_array($match[0], $ignore)) {
-                    return $match[0];
+            '~\b (_*) (?:                                                         # 1. Leading underscore and
+                        ( (?<=[ ][/\\\\]) [[:alpha:]]+ [-_[:alpha:]/\\\\]+ |              # 2. file path or 
+                          [-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ ' . $apostropheRx . ' ) #    URL, domain, or email
+                        |
+                        ( (?i: ' . $smallWordsRx . ' ) ' . $apostropheRx . ' )            # 3. or small word (case-insensitive)
+                        |
+                        ( [[:alpha:]] [[:lower:]\'’()\[\]{}]* ' . $apostropheRx . ' )     # 4. or word w/o internal caps
+                        |
+                        ( [[:alpha:]] [[:alpha:]\'’()\[\]{}]* ' . $apostropheRx . ' )     # 5. or some other word
+                      ) (_*) \b                                                           # 6. With trailing underscore
+                    ~ux',
+            function ($matches) {
+                // Preserve leading underscore
+                $str = $matches[1];
+
+                if ($matches[2]) {
+                    // Preserve URLs, domains, emails and file paths
+                    $str .= $matches[2];
+                } elseif ($matches[3]) {
+                    // Lower-case small words
+                    $str .= static::create($matches[3], $this->encoding)->toLowerCase();
+                } elseif ($matches[4]) {
+                    // Capitalize word w/o internal caps
+                    $str .= static::create($matches[4], $this->encoding)->upperCaseFirst();
+                } else {
+                    // Preserve other kinds of word (iPhone)
+                    $str .= $matches[5];
                 }
 
-                $stringy = new Stringy($match[0], $encoding);
+                // Preserve trailing underscore
+                $str .= $matches[6];
 
-                return (string) $stringy->toLowerCase()->upperCaseFirst();
+                return $str;
+            },
+            $stringy->str
+        );
+
+        // Exceptions for small words: capitalize at start of title...
+        $stringy->str = preg_replace_callback(
+            '~(  \A [[:punct:]]*           # start of title...
+                      |  [:.;?!][ ]+               # or of subsentence...
+                      |  [ ][\'"“‘(\[][ ]* )       # or of inserted subphrase...
+                      ( ' . $smallWordsRx . ' ) \b # ...followed by small word
+                     ~uxi',
+            function ($matches) {
+                return $matches[1] . static::create($matches[2], $this->encoding)->upperCaseFirst();
+            },
+            $stringy->str
+        );
+
+        // ...and end of title
+        $stringy->str = preg_replace_callback(
+            '~\b ( ' . $smallWordsRx . ' ) # small word...
+                      (?= [[:punct:]]* \Z          # ...at the end of the title...
+                      |   [\'"’”)\]] [ ] )         # ...or of an inserted subphrase?
+                     ~uxi',
+            function ($matches) {
+                return static::create($matches[1], $this->encoding)->upperCaseFirst();
+            },
+            $stringy->str
+        );
+
+        // Exceptions for small words in hyphenated compound words
+        // e.g. "in-flight" -> In-Flight
+        $stringy->str = preg_replace_callback(
+            '~\b
+                        (?<! -)                   # Negative lookbehind for a hyphen; we do not want to match man-in-the-middle but do want (in-flight)
+                        ( ' . $smallWordsRx . ' )
+                        (?= -[[:alpha:]]+)        # lookahead for "-someword"
+                       ~uxi',
+            function ($matches) {
+                return static::create($matches[1], $this->encoding)->upperCaseFirst();
+            },
+            $stringy->str
+        );
+
+        // e.g. "Stand-in" -> "Stand-In" (Stand is already capped at this point)
+        $stringy->str = preg_replace_callback(
+            '~\b
+                      (?<!…)                    # Negative lookbehind for a hyphen; we do not want to match man-in-the-middle but do want (stand-in)
+                      ( [[:alpha:]]+- )         # $1 = first word and hyphen, should already be properly capped
+                      ( ' . $smallWordsRx . ' ) # ...followed by small word
+                      (?!	- )                 # Negative lookahead for another -
+                     ~uxi',
+            function ($matches) {
+                return $matches[1] . static::create($matches[2], $this->encoding)->upperCaseFirst();
             },
             $stringy->str
         );
@@ -1537,15 +1633,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Converts the first character of each word in the string to uppercase.
+     * Returns a trimmed string in proper title case.
      *
      * @return static Object with all characters of $str being title-cased
      */
     public function toTitleCase()
     {
-        $str = \mb_convert_case($this->str, \MB_CASE_TITLE, $this->encoding);
-
-        return static::create($str, $this->encoding);
+        return $this->titleize();
     }
 
     /**
