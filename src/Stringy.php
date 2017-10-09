@@ -1713,7 +1713,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             throw new InvalidArgumentException($language.' is an unsupported language');
         }
 
-        return new $inflector;
+        $inflector = new $inflector;
+
+        if (!$inflector instanceof Inflector) {
+            throw new InvalidArgumentException($language.' class found, but does not extend Stringy\\Inflectors\\Inflector.');
+        }
+
+        return $inflector;
     }
 
     /**
