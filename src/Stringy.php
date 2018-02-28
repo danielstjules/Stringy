@@ -1444,7 +1444,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         $langSpecific = $this->langSpecificCharsArray($language);
         if (!empty($langSpecific)) {
-            $str = str_replace($langSpecific[0], $langSpecific[1], $str);
+            $str = str_replace(array_keys($langSpecific), array_values($langSpecific), $str);
         }
 
         foreach ($this->charsArray() as $key => $value) {
@@ -1868,13 +1868,23 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         $languageSpecific = [
             'de' => [
-                ['ä',  'ö',  'ü',  'Ä',  'Ö',  'Ü' ],
-                ['ae', 'oe', 'ue', 'AE', 'OE', 'UE'],
+                'ä' => 'ae',
+                'ö' => 'oe',
+                'ü' => 'ue',
+                'Ä' => 'AE',
+                'Ö' => 'OE',
+                'Ü' => 'UE',
             ],
             'bg' => [
-                ['х', 'Х', 'щ', 'Щ', 'ъ', 'Ъ', 'ь', 'Ь'],
-                ['h', 'H', 'sht', 'SHT', 'a', 'А', 'y', 'Y']
-            ]
+                'х' => 'h',
+                'Х' => 'H',
+                'щ' => 'sht',
+                'Щ' => 'SHT',
+                'ъ' => 'a',
+                'Ъ' => 'А',
+                'ь' => 'y',
+                'Ь' => 'Y',
+            ],
         ];
 
         if (isset($languageSpecific[$language])) {
