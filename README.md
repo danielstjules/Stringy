@@ -518,13 +518,14 @@ for a list of flags.
 s('&')->htmlEncode(); // '&amp;'
 ```
 
-##### humanize()
+##### humanize([$suffix = ''])
 
 Capitalizes the first word of the string, replaces underscores with
 spaces, and strips '_id'.
 
 ```php
 s('author_id')->humanize(); // 'Author'
+s('first_name_tbl')->humanize('_tbl'); // 'First name'
 ```
 
 ##### indexOf(string $needle [, $offset = 0 ]);
