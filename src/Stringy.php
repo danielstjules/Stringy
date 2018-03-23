@@ -516,8 +516,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function humanize($suffix = '')
     {
-        $from = [];
-        $str = str_replace(['_id', '_', '-', $suffix], ['', ' ', ' ', ''], $this->str);
+        $str = str_replace(['_id', $suffix, '_', '-'], ['', '', ' ', ' '], $this->str);
 
         return static::create($str, $this->encoding)->trim()->upperCaseFirst();
     }
