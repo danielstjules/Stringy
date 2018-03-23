@@ -580,7 +580,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider humanizeProvider()
      */
-    public function testHumanize($expected, $str, $encoding = null, $suffix)
+    public function testHumanize($expected, $str, $encoding = null, $suffix = null)
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->humanize();
@@ -595,7 +595,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             ['Author', 'author_id'],
             ['Test user', ' _test_user_'],
             ['Συγγραφέας', ' συγγραφέας_id ', 'UTF-8'],
-            ['First Name', 'first_name_tbl', null, '_tbl']
+            ['First name', 'first_name_tbl', null, '_tbl']
         ];
     }
 
