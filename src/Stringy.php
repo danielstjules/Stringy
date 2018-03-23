@@ -1,4 +1,4 @@
-<?php
+h<?php
 
 namespace Stringy;
 
@@ -511,12 +511,13 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Capitalizes the first word of the string, replaces underscores with
      * spaces, and strips '_id'.
-     *
+     * @param string $suffix Optional suffix to be removed
      * @return static Object with a humanized $str
      */
-    public function humanize()
+    public function humanize($suffix = '')
     {
-        $str = str_replace(['_id', '_'], ['', ' '], $this->str);
+        $from = [];
+        $str = str_replace(['_id', '_', '-', $suffix], ['', ' ', ' ', ''], $this->str);
 
         return static::create($str, $this->encoding)->trim()->upperCaseFirst();
     }
