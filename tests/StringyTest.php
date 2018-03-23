@@ -583,7 +583,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function testHumanize($expected, $str, $encoding = null, $suffix = null)
     {
         $stringy = S::create($str, $encoding);
-        $result = $stringy->humanize();
+        $result = $stringy->humanize($suffix);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
