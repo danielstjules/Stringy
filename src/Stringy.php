@@ -716,7 +716,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function lines()
     {
-        $array = $this->split('[\r\n]{1,2}', $this->str);
+        $array = $this->split('[\r\n]{1,2}');
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = static::create($array[$i], $this->encoding);
         }
