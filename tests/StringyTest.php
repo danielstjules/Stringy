@@ -56,6 +56,11 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, (string) new S($str));
     }
 
+    public function testToJson($expected, $str)
+    {
+        $this->assertEquals('"  foo bar  "', json_encode(new S('  foo bar  ')));
+    }
+
     public function toStringProvider()
     {
         return [

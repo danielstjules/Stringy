@@ -7,10 +7,11 @@ use ArrayIterator;
 use Countable;
 use Exception;
 use InvalidArgumentException;
+use JsonSerializable;
 use IteratorAggregate;
 use OutOfBoundsException;
 
-class Stringy implements Countable, IteratorAggregate, ArrayAccess
+class Stringy implements Countable, IteratorAggregate, ArrayAccess, JsonSerializable
 {
     /**
      * An instance's string.
@@ -81,6 +82,15 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     public function __toString()
     {
         return $this->str;
+    }
+
+    /**
+     * Returns value which can be serialized by json_encode().
+     *
+     * @return string The current value of the $str property
+     */
+    public function jsonSerialize() {
+        return (string) $this;
     }
 
     /**
