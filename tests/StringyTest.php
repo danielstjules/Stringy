@@ -1,8 +1,9 @@
 <?php
 
 use Stringy\Stringy as S;
+use PHPUnit\Framework\TestCase;
 
-class StringyTestCase extends PHPUnit_Framework_TestCase
+class StringyTestCase extends TestCase
 {
     /**
      * Asserts that a variable is of a Stringy instance.
@@ -847,6 +848,12 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
             [false, 'FÒÔ bàřs', 'fòô bàř', true, 'UTF-8'],
             [false, 'fòô bàřs', 'fòô BÀŘ', true, 'UTF-8'],
         ];
+    }
+
+    public function testStartsWithAnyOnNullSubstring()
+    {
+        $stringy = S::create('foo bar', 'UTF-8');
+        $this->assertFalse($stringy->startsWithAny(null));
     }
 
     /**

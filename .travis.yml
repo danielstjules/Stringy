@@ -10,14 +10,6 @@ sudo: false
 matrix:
   fast_finish: true
   include:
-    - php: 5.4
-      env: polyfill='true'
-    - php: 5.4
-      env: polyfill='false'
-    - php: 5.5
-      env: polyfill='true'
-    - php: 5.5
-      env: polyfill='false'
     - php: 5.6
       env: polyfill='true'
     - php: 5.6
@@ -30,8 +22,11 @@ matrix:
       env: polyfill='true'
     - php: 7.1
       env: polyfill='false'
-
-install: travis_retry composer install --no-interaction --prefer-source
+      env: polyfill='false'
+    - php: 7.2
+      env: polyfill='true'
+    - php: 7.2
+      env: polyfill='false'
 
 before_script:
   - travis_retry composer self-update
