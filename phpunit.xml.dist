@@ -6,9 +6,15 @@
          syntaxCheck="false">
     <testsuites>
         <testsuite name="Stringy">
-            <file>tests/StringyTest.php</file>
-            <file>tests/StaticStringyTest.php</file>
-            <file phpVersion="5.6.0">tests/CreateTest.php</file>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory suffix="include.php">src</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

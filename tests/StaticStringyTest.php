@@ -1,8 +1,9 @@
 <?php
 
 use Stringy\StaticStringy as S;
+use PHPUnit\Framework\TestCase;
 
-class StaticStringyTestCase extends PHPUnit_Framework_TestCase
+class StaticStringyTestCase extends TestCase
 {
     /**
      * @expectedException BadMethodCallException
@@ -23,6 +24,13 @@ class StaticStringyTestCase extends PHPUnit_Framework_TestCase
         $result = S::toLowerCase('FOOBAR');
         $this->assertEquals('foobar', $result);
         $this->assertInternalType('string', $result);
+    }
+
+    public function testEmptyStringToBoolean()
+    {
+        $result = S::toBoolean('');
+        $this->assertFalse($result);
+        $this->assertInternalType('bool', $result);
     }
 
     public function testPartialArgsInvocation()

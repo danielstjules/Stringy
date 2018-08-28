@@ -1,8 +1,9 @@
 <?php
 
 use function Stringy\create as s;
+use PHPUnit\Framework\TestCase;
 
-class CreateTestCase extends PHPUnit_Framework_TestCase
+class CreateTestCase extends TestCase
 {
     public function testCreate()
     {
