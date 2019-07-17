@@ -54,6 +54,7 @@ class StringyTestCase extends PHPUnit_Framework_TestCase
     public function testToString($expected, $str)
     {
         $this->assertEquals($expected, (string) new S($str));
+        $this->assertEquals($expected, (new S($str))->toString());
     }
 
     public function toStringProvider()

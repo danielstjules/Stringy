@@ -80,7 +80,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function __toString()
     {
-        return $this->str;
+        return $this->toString();
     }
 
     /**
@@ -1521,6 +1521,16 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Returns the value in $str.
+     *
+     * @return string The current value of the $str property
+     */
+    public function toString()
+    {
+        return $this->str;
+    }
+
+    /**
      * Converts each occurrence of some consecutive number of spaces, as
      * defined by $tabLength, to a tab. By default, each 4 consecutive spaces
      * are converted to a tab.
@@ -1535,7 +1545,6 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         return static::create($str, $this->encoding);
     }
-
     /**
      * Converts the first character of each word in the string to uppercase.
      *
