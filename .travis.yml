@@ -30,6 +30,18 @@ matrix:
       env: polyfill='true'
     - php: 7.1
       env: polyfill='false'
+    - php: 7.2
+      env: polyfill='true'
+    - php: 7.2
+      env: polyfill='false'
+    - php: 7.3
+      env: polyfill='true'
+    - php: 7.3
+      env: polyfill='false'
+    - php: 7.4snapshot
+      env: polyfill='true'
+    - php: 7.4snapshot
+      env: polyfill='false'
 
 install: travis_retry composer install --no-interaction --prefer-source
 
