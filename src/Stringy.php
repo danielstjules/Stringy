@@ -1153,7 +1153,8 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Converts the string into an URL slug. This includes replacing non-ASCII
+     * Converts the string into an URL 
+     g. This includes replacing non-ASCII
      * characters with their closest ASCII equivalents, removing remaining
      * non-ASCII and non-alphanumeric characters, and replacing whitespace with
      * $replacement. The replacement defaults to a single dash, and the string
@@ -1170,7 +1171,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         $stringy->str = str_replace('@', $replacement, $stringy);
         $quotedReplacement = preg_quote($replacement);
-        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
+        $pattern = "/[^a-zA-Z\d\s\-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy);
 
         return $stringy->toLowerCase()->delimit($replacement)
