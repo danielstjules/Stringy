@@ -1877,13 +1877,9 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
             ]
         ];
 
-        if (isset($languageSpecific[$language])) {
-            $charsArray[$language] = $languageSpecific[$language];
-        } else {
-            $charsArray[$language] = [];
-        }
-
-        return $charsArray[$language];
+        return $charsArray[$language] = isset($languageSpecific[$language])
+            ? $languageSpecific[$language]
+            : [];
     }
 
     /**
