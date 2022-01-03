@@ -267,6 +267,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return int The number of characters in the string, given the encoding
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->length();
@@ -450,6 +451,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return \ArrayIterator An iterator for the characters in the string
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->chars());
@@ -716,7 +718,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      */
     public function lines()
     {
-        $array = $this->split('[\r\n]{1,2}', $this->str);
+        $array = $this->split('[\r\n]{1,2}');
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = static::create($array[$i], $this->encoding);
         }
@@ -847,6 +849,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @param  mixed   $offset The index to check
      * @return boolean Whether or not the index exists
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         $length = $this->length();
@@ -870,6 +873,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @throws \OutOfBoundsException If the positive or negative offset does
      *                               not exist
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $offset = (int) $offset;
@@ -890,6 +894,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @param  mixed      $value  Value to set
      * @throws \Exception When called
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         // Stringy is immutable, cannot directly set char
@@ -903,6 +908,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
      * @param  mixed      $offset The index of the character
      * @throws \Exception When called
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         // Don't allow directly modifying the string
@@ -1170,7 +1176,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         $stringy->str = str_replace('@', $replacement, $stringy);
         $quotedReplacement = preg_quote($replacement);
-        $pattern = "/[^a-zA-Z\d\s-_$quotedReplacement]/u";
+        $pattern = "/[^a-zA-Z\d\s\-_$quotedReplacement]/u";
         $stringy->str = preg_replace($pattern, '', $stringy);
 
         return $stringy->toLowerCase()->delimit($replacement)
@@ -1277,7 +1283,7 @@ class Stringy implements Countable, IteratorAggregate, ArrayAccess
 
         // mb_split returns the remaining unsplit string in the last index when
         // supplying a limit
-        $limit = ($limit > 0) ? $limit += 1 : -1;
+        $limit = ($limit > 0) ? $limit + 1 : -1;
 
         static $functionExists;
         if ($functionExists === null) {

@@ -14,12 +14,25 @@
             "homepage": "http://www.danielstjules.com"
         }
     ],
+    "repositories": {
+        "phpunit/phpunit": {
+            "type": "github",
+            "url": "https://github.com/Sweetchuck/phpunit.git",
+            "branch": "4.x-php8"
+        },
+        "phpunit/php-file-iterator": {
+            "type": "github",
+            "url": "https://github.com/Sweetchuck/php-file-iterator.git",
+            "branch": "1.4-php8"
+        }
+    },
     "require": {
         "php": ">=5.4.0",
         "symfony/polyfill-mbstring": "~1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "dev-4.x-php8#f7f5b1d9a8c733b2ba8e665b2e8a0f04e208ed9d",
+        "phpunit/php-file-iterator": "dev-1.4-php8#0bf836b26a9789e7cd634c43dc468428c8fa77d6 as 1.4.5"
     },
     "support": {
         "issues": "https://github.com/danielstjules/Stringy/issues",
