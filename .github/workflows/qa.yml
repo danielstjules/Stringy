@@ -1,0 +1,51 @@
+##
+# @link https://github.com/shivammathur/setup-php
+##
+
+'on':
+    push:
+        branches:
+            - '3.x'
+    pull_request:
+        branches:
+            - '3.x'
+
+jobs:
+    run:
+        strategy:
+            matrix:
+                operating-system:
+                    - 'ubuntu-latest'
+#                    - 'windows-latest'
+#                    - 'macOS-latest'
+                php-versions:
+                    - '7.0'
+                    - '7.1'
+                    - '7.2'
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+                    - '8.1'
+        name: 'PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}'
+        runs-on: '${{ matrix.operating-system }}'
+        steps:
+            -
+                name: 'Checkout'
+                uses: 'actions/checkout@v2'
+            -
+                name: 'Install PHP'
+                uses: 'shivammathur/setup-php@v2'
+                with:
+                    php-version: '${{ matrix.php-versions }}'
+                    extensions: 'intl, mbstring'
+            -
+                name: 'Check PHP Version'
+                run: 'php -v'
+            -
+                name: 'Lint - composer'
+                run: |
+                    composer validate
+            -
+                name: 'Test'
+                run: |
+                    "$(composer config bin-dir)/phpunit"
